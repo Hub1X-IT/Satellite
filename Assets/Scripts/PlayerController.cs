@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour {
@@ -9,22 +8,20 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField] private Transform cameraFollowObject;
 
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private float mouseSensitivity; // Temporary solution; remember to make it possible to change sensitivity in settings!\
-    [SerializeField] private float gravityMultiplier;
-
 
     private CharacterController characterController;
 
-
-    private Vector3 movementInput;
+        
     private Vector3 moveDirection;
+    private float moveSpeed = 5f;
 
 
     private Vector2 rotationInput;
+    private float mouseSensitivity = 5f; // Temporary solution; remember to make it possible to change sensitivity in settings!
 
 
     private const float gravity = -9.81f;
+    private float gravityMultiplier = 3f;
     private float verticalVelocity;
 
 
@@ -32,34 +29,25 @@ public class PlayerController : MonoBehaviour {
         characterController = GetComponent<CharacterController>();
     }
 
+
     private void Update() {
         HandleGravity();
         HandleRotation();
         HandleMovement();
     }
 
-
-    public void OnMove(InputAction.CallbackContext callbackContext) {
-        Vector2 input = callbackContext.ReadValue<Vector2>();
-        movementInput = new Vector3(input.x, 0f, input.y);
-    }
-
-    public void OnRotate(InputAction.CallbackContext callbackContext) {
-        rotationInput = callbackContext.ReadValue<Vector2>();
-    }
-
-    public void OnInteract() {
-        Debug.Log("Player: OnInteract");
-    }
-
-
-    private void HandleMovement() {
+    private void HandleMovement() {        
+        Vector2 inputVector = GameInput.Instance.GetMovementVectorNormalized();
+        Vector3 movementInput = new Vector3(inputVector.x, 0f, inputVector.y);
+        
         moveDirection = transform.right * movementInput.x + transform.forward * movementInput.z;
         moveDirection.y = verticalVelocity;
         characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
     }
-
+    
     private void HandleRotation() {
+        rotationInput = GameInput.Instance.GetRotationVector();
+
         // Handle Y axis rotation - rotating the player
         Vector3 playerRotation = new Vector3(0f, rotationInput.x, 0f);
         transform.Rotate(playerRotation * mouseSensitivity * Time.deltaTime);

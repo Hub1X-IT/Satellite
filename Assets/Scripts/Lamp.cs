@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lamp : MonoBehaviour {
+public class Lamp : MonoBehaviour, IInteractable {
 
     
     [SerializeField] private GameObject[] turnedOnObjects;
@@ -12,18 +12,6 @@ public class Lamp : MonoBehaviour {
     private bool isTurnedOn;
     private int onOffCycles;
     private int maxOnOffCycles = 5;
-
-
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.F) && onOffCycles < maxOnOffCycles) {
-            if (!isTurnedOn) {
-                TurnOn();
-            }
-            else {
-                TurnOff();
-            }
-        }
-    }
 
 
     private void TurnOn() {
@@ -52,5 +40,18 @@ public class Lamp : MonoBehaviour {
         }
 
         onOffCycles++;
+    }
+
+    public void Interact() {
+        if (!isTurnedOn) {
+            TurnOn();
+        }
+        else {
+            TurnOff();
+        }
+    }
+
+    public Transform GetTransform() {
+        return transform;
     }
 }
