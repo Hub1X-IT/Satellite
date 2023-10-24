@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour {
         if (cameraRotation.x > 180f) {
             cameraRotation.x -= 360f;
         }
-        {   // eulerAngles always maps rotation to a positive value so if it more than 180 degrees, we have to make it negative so that we can clamp it
+        {   // eulerAngles always maps rotation to a positive value so if it is more than 180 degrees, we have to make it negative so that we can clamp it
             // For example: when rotation equals -20, we get 340 which is greater than 90 so it would be clamped to 90 degrees, although it should have been left as it is
         }
         cameraRotation.x += -rotationInput.y * mouseSensitivity * Time.deltaTime;
