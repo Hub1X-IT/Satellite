@@ -1,6 +1,16 @@
 public class CalculationData {
 
 
+    public CalculationData() {
+
+    }
+
+    public CalculationData(int result, Calculation calculation) {
+        this.result = result;
+        this.calculation = calculation;
+    }
+
+
     public enum Calculation {        
         None,
         Add,
