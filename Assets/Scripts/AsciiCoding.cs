@@ -26,8 +26,4 @@ public class AsciiCoding : MonoBehaviour {
         }
         return intList.ToArray();
     }
-
-
-
-
 }

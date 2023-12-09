@@ -1,9 +1,8 @@
 public class CalculationData {
 
 
-    public CalculationData() {
-
-    }
+    public CalculationData() { }
+    
 
     public CalculationData(int result, Calculation calculation) {
         this.result = result;
@@ -36,5 +35,4 @@ public class CalculationData {
     public void SetValue2(int value) { value2 = value; }
     public void SetResult(int value) { result = value; }
     public void SetCalculation(Calculation calculation) { this.calculation = calculation; }
-
 }

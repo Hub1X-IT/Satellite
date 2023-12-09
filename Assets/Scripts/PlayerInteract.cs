@@ -12,10 +12,12 @@ public class PlayerInteract : MonoBehaviour {
         GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
     }
 
+
     private void GameInput_OnInteractAction(object sender, System.EventArgs e) {
         IInteractable interactable = GetInteractableObject();
         interactable?.Interact(); // ? -> Check if not null
     }
+
 
     public IInteractable GetInteractableObject() {
         List<IInteractable> interactableList = new List<IInteractable>();

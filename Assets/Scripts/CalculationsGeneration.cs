@@ -1,20 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CalculationsGeneration : MonoBehaviour {
-
-    /*
-    private CalculationData calculationData0 = new CalculationData();
-    private CalculationData calculationData1 = new CalculationData();
-    private CalculationData calculationData2 = new CalculationData();
-    */
-
-
-    private void Start() {
-        Debug.Log(IsPrime(1));
-    }
 
 
     private void Update() {
@@ -26,7 +14,7 @@ public class CalculationsGeneration : MonoBehaviour {
 
     private void TestCalculations() {
         CalculationData.Calculation calculation = CalculationData.Calculation.Multiply;
-        int number = 102;
+        int number = 113;
 
         CalculationData testCalculationData = new CalculationData(number, calculation);
         testCalculationData = GenerateCalculationData(testCalculationData);
@@ -42,14 +30,23 @@ public class CalculationsGeneration : MonoBehaviour {
         int result = 102;
         CalculationData calculationData0, calculationData1, calculationData2;
 
-        GenerateAllCalculations(result, out calculationData0, out calculationData1, out calculationData2);
+        GenerateCalculationsForNumber(result, out calculationData0, out calculationData1, out calculationData2);
 
-        string calculation0 = "Calculation 0\nCalculation: " + calculationData0.GetCalculation() + "\nResult: " + calculationData0.GetResult()
-            + "\nValue1: " + calculationData0.GetValue1() + "\nValue2: " + calculationData0.GetValue2();
-        string calculation1 = "Calculation 1\nCalculation: " + calculationData1.GetCalculation() + "\nResult: " + calculationData1.GetResult()
-            + "\nValue1: " + calculationData1.GetValue1() + "\nValue2: " + calculationData1.GetValue2();
-        string calculation2 = "Calculation 2\nCalculation: " + calculationData2.GetCalculation() + "\nResult: " + calculationData2.GetResult()
-            + "\nValue1: " + calculationData2.GetValue1() + "\nValue2: " + calculationData2.GetValue2();
+        string calculation0 = 
+            "Calculation 0\nCalculation: " + calculationData0.GetCalculation() 
+            + "\nResult: " + calculationData0.GetResult()
+            + "\nValue1: " + calculationData0.GetValue1()
+            + "\nValue2: " + calculationData0.GetValue2();
+        string calculation1 = 
+            "Calculation 1\nCalculation: " + calculationData1.GetCalculation() 
+            + "\nResult: " + calculationData1.GetResult()
+            + "\nValue1: " + calculationData1.GetValue1() 
+            + "\nValue2: " + calculationData1.GetValue2();
+        string calculation2 = 
+            "Calculation 2\nCalculation: " + calculationData2.GetCalculation() 
+            + "\nResult: " + calculationData2.GetResult()
+            + "\nValue1: " + calculationData2.GetValue1() 
+            + "\nValue2: " + calculationData2.GetValue2();
 
         Debug.Log(calculation0);
         Debug.Log(calculation1);
@@ -57,13 +54,13 @@ public class CalculationsGeneration : MonoBehaviour {
     }
 
     
-    public void GenerateAllCalculations(int number, out CalculationData calculationData0, out CalculationData calculationData1, out CalculationData calculationData2) {
+    public void GenerateCalculationsForNumber(int number, out CalculationData calculationData0, out CalculationData calculationData1, out CalculationData calculationData2) {
         calculationData0 = new CalculationData();
         calculationData0.SetResult(number);
         // Calculation 0
         {
-            // Randomise between addition and subtraction - the middle calculation
-            int randomNum = UnityEngine.Random.Range(0, 2);
+            // Randomize between addition and subtraction - the middle calculation
+            int randomNum = Random.Range(0, 2);
             if (randomNum == 0) {
                 calculationData0.SetCalculation(CalculationData.Calculation.Add);
             }
@@ -78,49 +75,13 @@ public class CalculationsGeneration : MonoBehaviour {
         calculationData1 = GenerateCalculation(calculationData0.GetValue1());
         calculationData2 = GenerateCalculation(calculationData0.GetValue2());
     }
-    
-
-    private CalculationData GenerateCalculationData(CalculationData calculationData) {
-        // Returns null when trying to multiply and the number is prime!
-        // Input calculation data must have the variables: result and calculation set; otherwise, the function returns null!
-
-        if (calculationData.GetResult() == 0 || calculationData.GetCalculation() == CalculationData.Calculation.None) return null;
-
-        
-        if (calculationData.GetCalculation() == CalculationData.Calculation.Add) {
-            calculationData.SetValue1(UnityEngine.Random.Range(1, calculationData.GetResult()));
-            calculationData.SetValue2(calculationData.GetResult() - calculationData.GetValue1());
-        }
-        else if (calculationData.GetCalculation() == CalculationData.Calculation.Subtract) {
-            int rangeMultiplier = 5;
-            calculationData.SetValue1(UnityEngine.Random.Range(calculationData.GetResult(), calculationData.GetResult() * rangeMultiplier)
-                - UnityEngine.Random.Range(0, rangeMultiplier));
-            calculationData.SetValue2(calculationData.GetValue1() - calculationData.GetResult());
-        }
-        else if (calculationData.GetCalculation() == CalculationData.Calculation.Multiply) {
-            List<int> divisorsList = GetDivisors(calculationData.GetResult(), out bool isPrime);
-            if (isPrime) return null;
-            divisorsList.Remove(1);
-            divisorsList.Remove(calculationData.GetResult());
-            calculationData.SetValue1(GetRandomNumber(divisorsList.ToArray()));
-            calculationData.SetValue2(calculationData.GetResult() / calculationData.GetValue1());
-        }
-        else if (calculationData.GetCalculation() == CalculationData.Calculation.Divide) {
-            int range = 10;
-            calculationData.SetValue2(UnityEngine.Random.Range(2, range));
-            calculationData.SetValue1(calculationData.GetValue2() * calculationData.GetResult());
-        }
-        
-        return calculationData;
-
-    }
 
 
     private CalculationData GenerateCalculation(int result) {
         CalculationData calculationData = new CalculationData();
         calculationData.SetResult(result);
 
-        bool multiplicationAllowed = !IsPrime(calculationData.GetResult());
+        bool multiplicationAllowed = CanAllowMultiplication(calculationData.GetResult());
         calculationData.SetCalculation(GetRandomCalculation(multiplicationAllowed));
 
         calculationData = GenerateCalculationData(calculationData);
@@ -128,6 +89,75 @@ public class CalculationsGeneration : MonoBehaviour {
         return calculationData;
     }
 
+
+    private CalculationData.Calculation GetRandomCalculation(bool multiplicationAllowed) {
+        int randomNum;
+        if (multiplicationAllowed) {
+            randomNum = Random.Range(0, 4);
+        }
+        else {
+            randomNum = Random.Range(0, 3);
+        }
+
+
+        switch (randomNum) {
+            case 0:
+                return CalculationData.Calculation.Add;
+            case 1:
+                return CalculationData.Calculation.Subtract;
+            case 2:
+                return CalculationData.Calculation.Divide;
+            case 3:
+                return CalculationData.Calculation.Multiply;
+            default:
+                return CalculationData.Calculation.None;
+        }
+    }
+
+
+    private CalculationData GenerateCalculationData(CalculationData calculationData) {
+        // Input calculation data must have the result and calculation variables set; otherwise, the function returns null!
+        // Returns null when trying to multiply and the result is prime!
+
+
+        if (calculationData.GetResult() == 0 || calculationData.GetCalculation() == CalculationData.Calculation.None) return null;
+
+
+        // Add
+        if (calculationData.GetCalculation() == CalculationData.Calculation.Add) {
+            calculationData.SetValue1(Random.Range(1, calculationData.GetResult()));
+            calculationData.SetValue2(calculationData.GetResult() - calculationData.GetValue1());
+        }
+
+        // Subtract
+        if (calculationData.GetCalculation() == CalculationData.Calculation.Subtract) {
+            int rangeMultiplier = 5;
+            // Setting a random value (not necessarily a multiply of the rangeMultiplier, also it can't be the result itself - that'a why there are so many calculations)
+            calculationData.SetValue1(Random.Range(calculationData.GetResult() + rangeMultiplier, calculationData.GetResult() * rangeMultiplier)
+                - Random.Range(0, rangeMultiplier));
+            calculationData.SetValue2(calculationData.GetValue1() - calculationData.GetResult());
+        }
+
+        // Multiply
+        if (calculationData.GetCalculation() == CalculationData.Calculation.Multiply) {
+            List<int> divisorsList = GetDivisors(calculationData.GetResult(), out bool isPrime);
+            if (isPrime) return null;
+            divisorsList.Remove(1);
+            divisorsList.Remove(calculationData.GetResult());
+            calculationData.SetValue1(GetRandomNumberFromArray(divisorsList.ToArray()));
+            calculationData.SetValue2(calculationData.GetResult() / calculationData.GetValue1());
+        }
+
+        // Divide
+        if (calculationData.GetCalculation() == CalculationData.Calculation.Divide) {
+            int range = 10;
+            calculationData.SetValue2(Random.Range(2, range));
+            calculationData.SetValue1(calculationData.GetValue2() * calculationData.GetResult());
+        }
+        
+        return calculationData;
+    }
+    
 
     private List<int> GetDivisors(int number, out bool isPrime) {
         if (number <= 0) {
@@ -151,44 +181,22 @@ public class CalculationsGeneration : MonoBehaviour {
     }
 
 
-    private bool IsPrime(int number) {
+    private bool CanAllowMultiplication(int number) {
         if (number <= 1) {
             return false;
         }
 
-        for (int i = 1; i < number; i++) {
-            if (number % i == 0) {
-                return false;
+        for (int i = 2; i < number / 2; i++) {
+            if (number % i == 0) {                
+                return true;
             }
         }
-        return true;
+
+        return false;
     }
 
 
-    private int GetRandomNumber(int[] numbers) {
-        return numbers[UnityEngine.Random.Range(0, numbers.Length)];
-    }
-
-
-    private CalculationData.Calculation GetRandomCalculation(bool multiplicationAllowed) {
-        int randomNum = -1;
-        if (multiplicationAllowed) {
-            randomNum = UnityEngine.Random.Range(0, 4);
-        }
-        else {
-            randomNum = UnityEngine.Random.Range(0, 3);
-        }
-        switch (randomNum) {
-            case 0:
-                return CalculationData.Calculation.Add;                
-            case 1:
-                return CalculationData.Calculation.Subtract;                
-            case 2:
-                return CalculationData.Calculation.Divide;
-            case 3:
-                return CalculationData.Calculation.Multiply;                
-            default:
-                return CalculationData.Calculation.None;
-        }        
+    private int GetRandomNumberFromArray(int[] numbers) {
+        return numbers[Random.Range(0, numbers.Length)];
     }
 }
