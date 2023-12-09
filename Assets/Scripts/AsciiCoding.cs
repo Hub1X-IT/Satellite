@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class AsciiCoding : MonoBehaviour {
 
+
     public class CodedPassword {
         public string password;
-        public int[] asciiNumbers;        
+        public int[] asciiNumbers;
     }
 
 
