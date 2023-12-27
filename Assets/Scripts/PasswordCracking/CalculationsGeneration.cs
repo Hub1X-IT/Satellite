@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class CalculationsGeneration : MonoBehaviour {
 
-
+    
     private void Update() {
         if (Input.GetKeyDown(KeyCode.T)) {
-            TestCalculationsFull();
+            TestEncrypting();
         }
     }
 
@@ -53,27 +53,47 @@ public class CalculationsGeneration : MonoBehaviour {
         Debug.Log(calculation2);
     }
 
-    
-    public void GenerateCalculationsForNumber(int number, out CalculationData calculationData0, out CalculationData calculationData1, out CalculationData calculationData2) {
-        calculationData0 = new CalculationData();
-        calculationData0.SetResult(number);
+
+    private void TestEncrypting() {
+        int result = 102;
+
+        EncryptedPassword encryptedPassword = GetEncryptedPassword(result);
+
+        string debugString = encryptedPassword.GetEncryptedPasswordString() + " = " + encryptedPassword.GetResult();
+        Debug.Log(debugString);
+    }
+
+
+    public EncryptedPassword GetEncryptedPassword(int number) {
+        CalculationData calculationDataMiddle, calculationDataFirst, calculationDataLast;
+        GenerateCalculationsForNumber(number, out calculationDataMiddle, out calculationDataFirst, out calculationDataLast);
+
+        EncryptedPassword encryptedPassword = new EncryptedPassword(calculationDataMiddle, calculationDataFirst, calculationDataLast);
+
+        return encryptedPassword;
+    }
+
+
+    private void GenerateCalculationsForNumber(int number, out CalculationData calculationDataMiddle, out CalculationData calculationDataFirst, out CalculationData calculationDataLast) {
+        calculationDataMiddle = new CalculationData();
+        calculationDataMiddle.SetResult(number);
         // Calculation 0
         {
             // Randomize between addition and subtraction - the middle calculation
             int randomNum = Random.Range(0, 2);
             if (randomNum == 0) {
-                calculationData0.SetCalculation(CalculationData.Calculation.Add);
+                calculationDataMiddle.SetCalculation(CalculationData.Calculation.Add);
             }
             else {
-                calculationData0.SetCalculation(CalculationData.Calculation.Subtract);
+                calculationDataMiddle.SetCalculation(CalculationData.Calculation.Subtract);
             }
 
-            calculationData0 = GenerateCalculationData(calculationData0);
+            calculationDataMiddle = GenerateCalculationData(calculationDataMiddle);
         }
 
         // Calculations 1 & 2
-        calculationData1 = GenerateCalculation(calculationData0.GetValue1());
-        calculationData2 = GenerateCalculation(calculationData0.GetValue2());
+        calculationDataFirst = GenerateCalculation(calculationDataMiddle.GetValue1());
+        calculationDataLast = GenerateCalculation(calculationDataMiddle.GetValue2());
     }
 
 
