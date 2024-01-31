@@ -10,8 +10,8 @@ public class Lamp : MonoBehaviour, IInteractable {
 
 
     private bool isTurnedOn;
-    private int onOffCycles;
-    private int maxOnOffCycles = 5;
+    // private int onOffCycles;
+    // private int maxOnOffCycles = 5;
 
 
     private void TurnOn() {
@@ -39,7 +39,7 @@ public class Lamp : MonoBehaviour, IInteractable {
             obj.SetActive(false);
         }
 
-        onOffCycles++;
+        // onOffCycles++;
     }
 
     public void Interact() {
