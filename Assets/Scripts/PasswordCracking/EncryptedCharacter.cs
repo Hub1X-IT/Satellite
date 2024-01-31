@@ -1,6 +1,6 @@
-public class EncryptedPassword {
+public class EncryptedCharacter {
 
-    public EncryptedPassword(int result, int number1, int number2, int number3, int number4, CalculationData.Calculation calculation1, CalculationData.Calculation calculation2, CalculationData.Calculation calculation3) {
+    public EncryptedCharacter(int result, int number1, int number2, int number3, int number4, CalculationData.Calculation calculation1, CalculationData.Calculation calculation2, CalculationData.Calculation calculation3) {
         this.result = result;
         this.number1 = number1;
         this.number2 = number2;
@@ -14,7 +14,7 @@ public class EncryptedPassword {
     }
 
 
-    public EncryptedPassword(CalculationData calculationDataMiddle, CalculationData calculationDataFirst, CalculationData calculationDataLast) {
+    public EncryptedCharacter(CalculationData calculationDataMiddle, CalculationData calculationDataFirst, CalculationData calculationDataLast) {
         result = calculationDataMiddle.GetResult();
 
         number1 = calculationDataFirst.GetValue1();

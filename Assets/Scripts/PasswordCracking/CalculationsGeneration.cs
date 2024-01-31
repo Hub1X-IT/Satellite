@@ -57,18 +57,18 @@ public class CalculationsGeneration : MonoBehaviour {
     private void TestEncrypting() {
         int result = 102;
 
-        EncryptedPassword encryptedPassword = GetEncryptedPassword(result);
+        EncryptedCharacter encryptedPassword = GetEncryptedPassword(result);
 
         string debugString = encryptedPassword.GetEncryptedPasswordString() + " = " + encryptedPassword.GetResult();
         Debug.Log(debugString);
     }
 
 
-    public EncryptedPassword GetEncryptedPassword(int number) {
+    public EncryptedCharacter GetEncryptedPassword(int number) {
         CalculationData calculationDataMiddle, calculationDataFirst, calculationDataLast;
         GenerateCalculationsForNumber(number, out calculationDataMiddle, out calculationDataFirst, out calculationDataLast);
 
-        EncryptedPassword encryptedPassword = new EncryptedPassword(calculationDataMiddle, calculationDataFirst, calculationDataLast);
+        EncryptedCharacter encryptedPassword = new EncryptedCharacter(calculationDataMiddle, calculationDataFirst, calculationDataLast);
 
         return encryptedPassword;
     }
