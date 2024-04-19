@@ -24,6 +24,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     ""name"": ""PlayerInputActions"",
     ""maps"": [
         {
+            ""name"": ""All"",
+            ""id"": ""0b743467-d1fe-4221-9b89-039eeaf463bb"",
+            ""actions"": [],
+            ""bindings"": []
+        },
+        {
             ""name"": ""PlayerWalking"",
             ""id"": ""d03916ab-8bca-4e1d-b0c5-2392b4dc05d2"",
             ""actions"": [
@@ -134,15 +140,174 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Desk"",
+            ""id"": ""69ef7312-dcbb-4a29-a88d-7ed7793b1001"",
+            ""actions"": [
+                {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Value"",
+                    ""id"": ""a568a4f7-cd75-45cd-8093-f297049281cb"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""3cea411e-9de8-4283-8774-7273cabfaa22"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""9139da65-472c-4c9c-9c98-f15c0c09b599"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a1e6e3c3-2200-4c80-81cc-858a619994b2"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Monitor"",
+            ""id"": ""e92ca324-be7b-435a-b7b1-d850e85f4422"",
+            ""actions"": [
+                {
+                    ""name"": ""Submit"",
+                    ""type"": ""Button"",
+                    ""id"": ""7b6be9f5-8fed-4963-bc53-368e7f01d91f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""type"": ""Button"",
+                    ""id"": ""2651e297-53fd-426d-bda9-3bf0d473953a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Remove"",
+                    ""type"": ""Button"",
+                    ""id"": ""2127ceda-c8ea-4e4f-8709-81fae5dee2a0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Exit"",
+                    ""type"": ""Button"",
+                    ""id"": ""19962de8-e56b-4786-ab33-54700e35800e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""48996b9e-577b-4ea7-a7b4-9bd4be7abbb1"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""86cc0bc6-f8b9-41d3-94cb-9e1473d47aa1"",
+                    ""path"": ""<Keyboard>/numpadEnter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dbc3b9f9-7490-4c9b-908c-b04047b47463"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Keyboard"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""157f9962-13f1-48e9-896c-410fcd61ad42"",
+                    ""path"": ""<Keyboard>/backspace"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Remove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1de083ec-0b8d-4de4-bd80-155fb6301931"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
 }");
+        // All
+        m_All = asset.FindActionMap("All", throwIfNotFound: true);
         // PlayerWalking
         m_PlayerWalking = asset.FindActionMap("PlayerWalking", throwIfNotFound: true);
         m_PlayerWalking_Move = m_PlayerWalking.FindAction("Move", throwIfNotFound: true);
         m_PlayerWalking_Rotate = m_PlayerWalking.FindAction("Rotate", throwIfNotFound: true);
         m_PlayerWalking_Interact = m_PlayerWalking.FindAction("Interact", throwIfNotFound: true);
+        // Desk
+        m_Desk = asset.FindActionMap("Desk", throwIfNotFound: true);
+        m_Desk_Rotate = m_Desk.FindAction("Rotate", throwIfNotFound: true);
+        m_Desk_Interact = m_Desk.FindAction("Interact", throwIfNotFound: true);
+        // Monitor
+        m_Monitor = asset.FindActionMap("Monitor", throwIfNotFound: true);
+        m_Monitor_Submit = m_Monitor.FindAction("Submit", throwIfNotFound: true);
+        m_Monitor_Keyboard = m_Monitor.FindAction("Keyboard", throwIfNotFound: true);
+        m_Monitor_Remove = m_Monitor.FindAction("Remove", throwIfNotFound: true);
+        m_Monitor_Exit = m_Monitor.FindAction("Exit", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -200,6 +365,44 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         return asset.FindBinding(bindingMask, out action);
     }
+
+    // All
+    private readonly InputActionMap m_All;
+    private List<IAllActions> m_AllActionsCallbackInterfaces = new List<IAllActions>();
+    public struct AllActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public AllActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputActionMap Get() { return m_Wrapper.m_All; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(AllActions set) { return set.Get(); }
+        public void AddCallbacks(IAllActions instance)
+        {
+            if (instance == null || m_Wrapper.m_AllActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_AllActionsCallbackInterfaces.Add(instance);
+        }
+
+        private void UnregisterCallbacks(IAllActions instance)
+        {
+        }
+
+        public void RemoveCallbacks(IAllActions instance)
+        {
+            if (m_Wrapper.m_AllActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IAllActions instance)
+        {
+            foreach (var item in m_Wrapper.m_AllActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_AllActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public AllActions @All => new AllActions(this);
 
     // PlayerWalking
     private readonly InputActionMap m_PlayerWalking;
@@ -262,10 +465,149 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public PlayerWalkingActions @PlayerWalking => new PlayerWalkingActions(this);
+
+    // Desk
+    private readonly InputActionMap m_Desk;
+    private List<IDeskActions> m_DeskActionsCallbackInterfaces = new List<IDeskActions>();
+    private readonly InputAction m_Desk_Rotate;
+    private readonly InputAction m_Desk_Interact;
+    public struct DeskActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public DeskActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Rotate => m_Wrapper.m_Desk_Rotate;
+        public InputAction @Interact => m_Wrapper.m_Desk_Interact;
+        public InputActionMap Get() { return m_Wrapper.m_Desk; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DeskActions set) { return set.Get(); }
+        public void AddCallbacks(IDeskActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DeskActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DeskActionsCallbackInterfaces.Add(instance);
+            @Rotate.started += instance.OnRotate;
+            @Rotate.performed += instance.OnRotate;
+            @Rotate.canceled += instance.OnRotate;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
+        }
+
+        private void UnregisterCallbacks(IDeskActions instance)
+        {
+            @Rotate.started -= instance.OnRotate;
+            @Rotate.performed -= instance.OnRotate;
+            @Rotate.canceled -= instance.OnRotate;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
+        }
+
+        public void RemoveCallbacks(IDeskActions instance)
+        {
+            if (m_Wrapper.m_DeskActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IDeskActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DeskActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DeskActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public DeskActions @Desk => new DeskActions(this);
+
+    // Monitor
+    private readonly InputActionMap m_Monitor;
+    private List<IMonitorActions> m_MonitorActionsCallbackInterfaces = new List<IMonitorActions>();
+    private readonly InputAction m_Monitor_Submit;
+    private readonly InputAction m_Monitor_Keyboard;
+    private readonly InputAction m_Monitor_Remove;
+    private readonly InputAction m_Monitor_Exit;
+    public struct MonitorActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public MonitorActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Submit => m_Wrapper.m_Monitor_Submit;
+        public InputAction @Keyboard => m_Wrapper.m_Monitor_Keyboard;
+        public InputAction @Remove => m_Wrapper.m_Monitor_Remove;
+        public InputAction @Exit => m_Wrapper.m_Monitor_Exit;
+        public InputActionMap Get() { return m_Wrapper.m_Monitor; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MonitorActions set) { return set.Get(); }
+        public void AddCallbacks(IMonitorActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MonitorActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MonitorActionsCallbackInterfaces.Add(instance);
+            @Submit.started += instance.OnSubmit;
+            @Submit.performed += instance.OnSubmit;
+            @Submit.canceled += instance.OnSubmit;
+            @Keyboard.started += instance.OnKeyboard;
+            @Keyboard.performed += instance.OnKeyboard;
+            @Keyboard.canceled += instance.OnKeyboard;
+            @Remove.started += instance.OnRemove;
+            @Remove.performed += instance.OnRemove;
+            @Remove.canceled += instance.OnRemove;
+            @Exit.started += instance.OnExit;
+            @Exit.performed += instance.OnExit;
+            @Exit.canceled += instance.OnExit;
+        }
+
+        private void UnregisterCallbacks(IMonitorActions instance)
+        {
+            @Submit.started -= instance.OnSubmit;
+            @Submit.performed -= instance.OnSubmit;
+            @Submit.canceled -= instance.OnSubmit;
+            @Keyboard.started -= instance.OnKeyboard;
+            @Keyboard.performed -= instance.OnKeyboard;
+            @Keyboard.canceled -= instance.OnKeyboard;
+            @Remove.started -= instance.OnRemove;
+            @Remove.performed -= instance.OnRemove;
+            @Remove.canceled -= instance.OnRemove;
+            @Exit.started -= instance.OnExit;
+            @Exit.performed -= instance.OnExit;
+            @Exit.canceled -= instance.OnExit;
+        }
+
+        public void RemoveCallbacks(IMonitorActions instance)
+        {
+            if (m_Wrapper.m_MonitorActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMonitorActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MonitorActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MonitorActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MonitorActions @Monitor => new MonitorActions(this);
+    public interface IAllActions
+    {
+    }
     public interface IPlayerWalkingActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnRotate(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+    }
+    public interface IDeskActions
+    {
+        void OnRotate(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
+    }
+    public interface IMonitorActions
+    {
+        void OnSubmit(InputAction.CallbackContext context);
+        void OnKeyboard(InputAction.CallbackContext context);
+        void OnRemove(InputAction.CallbackContext context);
+        void OnExit(InputAction.CallbackContext context);
     }
 }
