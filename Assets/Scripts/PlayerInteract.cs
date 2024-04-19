@@ -5,7 +5,16 @@ using UnityEngine;
 public class PlayerInteract : MonoBehaviour {
 
 
-    float interactRange = 2f;
+    [SerializeField] private Transform cameraFollowObject;
+
+
+    [SerializeField] private LayerMask interactableLayerMasks;
+
+
+    private readonly float raycastInteractRange = 1f;
+
+
+    // private float interactRange = 2f;
 
 
     private void Start() {
@@ -14,11 +23,12 @@ public class PlayerInteract : MonoBehaviour {
 
 
     private void GameInput_OnInteractAction(object sender, System.EventArgs e) {
+        Debug.Log("Interact");
         IInteractable interactable = GetInteractableObject();
         interactable?.Interact(); // ? -> Check if not null
     }
 
-
+    /*
     public IInteractable GetInteractableObject() {
         List<IInteractable> interactableList = new List<IInteractable>();
         Collider[] colliderArray = Physics.OverlapSphere(transform.position, interactRange);
@@ -44,5 +54,27 @@ public class PlayerInteract : MonoBehaviour {
         }
 
         return closestInteractable;
+    }
+    */
+
+
+    public IInteractable GetInteractableObject() {        
+        /*
+        Returns the IInteractable component of an object hit by a raycast.
+        If the object doesn't have the component, returns the IInteractable component of the parent object.
+        If neither the object nor any parent object have the IInteractable component, or the raycast doesn't hit anything, returns null.
+        */
+        
+        if (Physics.Raycast(cameraFollowObject.position, cameraFollowObject.forward, out RaycastHit hit, raycastInteractRange)) {
+
+            Debug.Log(hit.transform.gameObject);
+
+            if (hit.transform.gameObject.TryGetComponent<IInteractable>(out IInteractable interactable)) {
+                return interactable;
+            }
+            interactable = hit.transform.gameObject.GetComponentInParent<IInteractable>();
+            return interactable;
+        }
+        return null;
     }
 }
