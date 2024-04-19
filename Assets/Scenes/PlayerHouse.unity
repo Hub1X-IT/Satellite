@@ -1023,17 +1023,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 345759843}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &348948580 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4776513477670729289, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
-  m_PrefabInstance: {fileID: 5464987152256901626}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &361776738
 GameObject:
   m_ObjectHideFlags: 0
@@ -5356,11 +5345,11 @@ PrefabInstance:
     - target: {fileID: 5665739053115977755, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
       propertyPath: objectiveTitle
       value: 
-      objectReference: {fileID: 348948580}
+      objectReference: {fileID: 0}
     - target: {fileID: 5665739053115977755, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
       propertyPath: objectiveDescription
       value: 
-      objectReference: {fileID: 5464987152256901627}
+      objectReference: {fileID: 0}
     - target: {fileID: 7270752805344175518, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
       propertyPath: m_Name
       value: Objectives
@@ -5374,17 +5363,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
---- !u!114 &5464987152256901627 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3920448347659649719, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
-  m_PrefabInstance: {fileID: 5464987152256901626}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6403728298310877871
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5543,6 +5521,7 @@ SceneRoots:
   - {fileID: 2020080405}
   - {fileID: 5464987152256901626}
   - {fileID: 679777571}
+  - {fileID: 2090091409}
   - {fileID: 8120450397115224306}
   - {fileID: 6403728298310877871}
   - {fileID: 1933118585648592940}
@@ -5558,4 +5537,3 @@ SceneRoots:
   - {fileID: 1372630138}
   - {fileID: 1913375579}
   - {fileID: 589229787}
-  - {fileID: 2090091409}
