@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
-    public TMP_Text objectiveTitle;
+    public TMP_Text chapter;
     public TMP_Text objectiveDescription;
 
     void Awake()
@@ -16,7 +16,7 @@ public class PlayerUI : MonoBehaviour
 
     public void SetObjective(string title, string description)
     {
-        objectiveTitle.text = title.Replace(objectiveTitle.text, title);
+        chapter.text = title.Replace(chapter.text, title);
         objectiveDescription.text = description.Replace(objectiveDescription.text, description);
     }
     void Update()
