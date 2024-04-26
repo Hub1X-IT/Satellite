@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour {
@@ -17,7 +19,7 @@ public class PlayerController : MonoBehaviour {
 
 
     private Vector2 rotationInput;
-    private float mouseSensitivity = 5f; // Temporary solution; remember to make it possible to change sensitivity in settings!
+    public float mouseSensitivity = 25f; // Temporary solution; remember to make it possible to change sensitivity in settings!
 
 
     private const float gravity = -9.81f;
@@ -25,15 +27,25 @@ public class PlayerController : MonoBehaviour {
     private float verticalVelocity;
 
 
+    public Slider slider;
+    public TMP_Text sensitivityPercentValue;
+
     private void Awake() {
         characterController = GetComponent<CharacterController>();
     }
 
+    private void Start()
+    {
+        mouseSensitivity = PlayerPrefs.GetFloat("currentSensitivity", 25);
+        slider.value = mouseSensitivity;
+        SensitivityPercentValueChange();
+    }
 
     private void Update() {
         HandleGravity();
         HandleRotation();
         HandleMovement();
+        PlayerPrefs.SetFloat("currentSensitivity", mouseSensitivity);
     }
 
     private void HandleMovement() {        
@@ -69,6 +81,17 @@ public class PlayerController : MonoBehaviour {
         cameraRotation.x = Mathf.Clamp(cameraRotation.x, minXRotation, maxXRotation);
 
         cameraFollowObject.rotation = Quaternion.Euler(cameraRotation);
+    }
+
+    public void AdjustSensitivityFromSlider()
+    {
+        mouseSensitivity = slider.value;
+        SensitivityPercentValueChange();
+    }
+
+    private void SensitivityPercentValueChange()
+    {
+        sensitivityPercentValue.text = Mathf.Round(slider.value * 4).ToString();
     }
 
     private void HandleGravity() {

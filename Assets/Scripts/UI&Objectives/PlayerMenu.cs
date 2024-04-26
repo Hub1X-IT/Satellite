@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PlayerMenu : MonoBehaviour
@@ -34,12 +33,14 @@ public class PlayerMenu : MonoBehaviour
             }
         }
     }
-    public void Resume()
+    private void Resume()
     {
         playerPauseMenu.SetActive(false);
         playerHud.enabled = true;
         Time.timeScale = 1f;
         GameIsPaused = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
     private void Pause()
     {
@@ -48,13 +49,15 @@ public class PlayerMenu : MonoBehaviour
         playerHud.enabled = false;
         Time.timeScale = 0f;
         GameIsPaused = true;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
-    public void Options()
+    private void Options()
     {
         playerOptions.SetActive(true);
         playerPauseMenu.SetActive(false);
     }
-    public void Menu()
+    private void Menu()
     {
         Debug.Log("Loading Menu...");
     }
