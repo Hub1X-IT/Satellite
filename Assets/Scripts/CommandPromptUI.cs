@@ -15,8 +15,10 @@ public class CommandPromptUI : MonoBehaviour {
 
     private void Start() {
         CommandPromptManager.Instance.OnSubmitCommand += CommandPromptManager_OnSubmitCommand;
-        CommandPromptManager.Instance.OnAddCharacter += CommandPromptManager_OnAddCharacter;
+        // CommandPromptManager.Instance.OnAddCharacter += CommandPromptManager_OnAddCharacter;
+        CommandPromptManager.Instance.OnChangeCommand += CommandPromptManager_OnChangeCommand;
     }
+
 
 
     private void Update() {
@@ -28,12 +30,17 @@ public class CommandPromptUI : MonoBehaviour {
         Submit();
     }
 
-
+    /*
     private void CommandPromptManager_OnAddCharacter(object sender, CommandPromptManager.OnAddCharacterEventArgs e) {
         char character = e.character;
         inputField.text += character;
     }
+    */
 
+    private void CommandPromptManager_OnChangeCommand(object sender, CommandPromptManager.OnChangeCommandEventArgs e) {
+        string inputFieldText = e.command;
+        inputField.text = inputFieldText;
+    }
 
     private void Submit() {
         inputString = inputField.text;

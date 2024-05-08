@@ -1,13 +1,13 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.PlayerLoop;
 
 public class GameInput : MonoBehaviour {
     
 
     public static GameInput Instance { get; private set; }
     
+    public event EventHandler OnPauseAction;
 
     public event EventHandler OnInteractAction;
 
@@ -19,7 +19,8 @@ public class GameInput : MonoBehaviour {
         public char key;
     }
 
-    public event EventHandler OnRemoveAction;
+    public event EventHandler OnSubmitAction;
+
 
     private PlayerInputActions playerInputActions;
 
@@ -29,29 +30,31 @@ public class GameInput : MonoBehaviour {
 
 
         playerInputActions = new PlayerInputActions();
+        playerInputActions.All.Enable();
+        playerInputActions.PlayerWalkingAndDesk.Enable();
         playerInputActions.PlayerWalking.Enable();
 
+        // !!!!!!!!!!!!!! disable !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        playerInputActions.Monitor.Enable();
 
-        // playerInputActions.Monitor.Enable();
 
-
-        playerInputActions.PlayerWalking.Interact.performed += Interact_performed;
-        //playerInputActions.PlayerWalking.Pause.performed += Pause_performed;
+        playerInputActions.PlayerWalkingAndDesk.Interact.performed += Interact_performed;
+        playerInputActions.All.Pause.performed += Pause_performed;
 
         Keyboard.current.onTextInput += Keyboard_onTextInput;
         playerInputActions.Monitor.Exit.performed += Exit_performed;
-        playerInputActions.Monitor.Remove.performed += Remove_performed;
+        playerInputActions.Monitor.Submit.performed += Submit_performed;
     }
 
 
     private void OnDestroy() {
-        playerInputActions.PlayerWalking.Interact.performed -= Interact_performed;
-        //playerInputActions.PlayerWalking.Pause.performed -= Pause_performed;
+        playerInputActions.PlayerWalkingAndDesk.Interact.performed -= Interact_performed;
+        playerInputActions.All.Pause.performed -= Pause_performed;
 
 
         Keyboard.current.onTextInput -= Keyboard_onTextInput;
         playerInputActions.Monitor.Exit.performed -= Exit_performed;
-        playerInputActions.Monitor.Remove.performed -= Remove_performed;
+        playerInputActions.Monitor.Submit.performed -= Submit_performed;
 
 
         playerInputActions.Dispose();
@@ -76,17 +79,22 @@ public class GameInput : MonoBehaviour {
     }
 
     public Vector2 GetRotationVector() {
-        Vector2 rotationVector = playerInputActions.PlayerWalking.Rotate.ReadValue<Vector2>();
+        Vector2 rotationVector = playerInputActions.PlayerWalkingAndDesk.Rotate.ReadValue<Vector2>();
         return rotationVector;
     }
 
 
-    private void Keyboard_onTextInput(char obj) {
+    private void Keyboard_onTextInput(char c) {
         if (playerInputActions.Monitor.enabled) {
             OnKeyboardInputAction?.Invoke(this, new OnKeyboardInputActionEventArgs {
-                key = obj
+                key = c
             });
-        }
+        }        
+    }
+
+
+    private void Pause_performed(InputAction.CallbackContext obj) {
+        OnPauseAction?.Invoke(this, EventArgs.Empty);
     }
 
 
@@ -95,8 +103,8 @@ public class GameInput : MonoBehaviour {
     }
 
 
-    private void Remove_performed(InputAction.CallbackContext obj) {
-        OnRemoveAction?.Invoke(this, EventArgs.Empty);
+    private void Submit_performed(InputAction.CallbackContext obj) {
+        OnSubmitAction?.Invoke(this, EventArgs.Empty);
     }
 
 
