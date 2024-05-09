@@ -3438,25 +3438,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1541739622 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7505395271842919727, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
-  m_PrefabInstance: {fileID: 5464987152256901626}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1541739628
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1541739622}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79b6f4388e1c7bb4782faf8b476e9ef4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactionText: {fileID: 0}
-  interactKeyString: '[F]'
 --- !u!4 &1544294300 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7950827217174508885, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
@@ -5791,10 +5772,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4213837772143755452, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
-      propertyPath: interactionText
-      value: 
-      objectReference: {fileID: 1451979008}
-    - target: {fileID: 4213837772143755452, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
       propertyPath: textMeshProUGUI
       value: 
       objectReference: {fileID: 1451979008}
@@ -6082,16 +6059,12 @@ PrefabInstance:
       propertyPath: m_ReferenceResolution.y
       value: 1080
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4213837772143755452, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 2882322933315585269, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
     - {fileID: 6461323252305612388, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7505395271842919727, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1541739628}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
 --- !u!1 &5464987152256901627 stripped
 GameObject:
