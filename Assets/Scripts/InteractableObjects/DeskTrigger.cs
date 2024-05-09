@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Desk : MonoBehaviour, IInteractable {
+public class DeskTrigger : MonoBehaviour, IInteractable {
 
 
     private readonly CameraController.Cameras deskCamera = CameraController.Cameras.DeskCamera;
@@ -14,6 +14,7 @@ public class Desk : MonoBehaviour, IInteractable {
 
 
     public void Interact() {
+        Debug.Log("Desk: Interact()");
         EnterDeskView();
     }
 

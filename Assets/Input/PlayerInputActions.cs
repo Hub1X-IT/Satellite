@@ -26,8 +26,98 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         {
             ""name"": ""All"",
             ""id"": ""0b743467-d1fe-4221-9b89-039eeaf463bb"",
-            ""actions"": [],
-            ""bindings"": []
+            ""actions"": [
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""67e90970-f792-4505-9853-0f2fbb229af3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""ccfe2312-f3e6-4655-90af-6fea7b7602cf"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""PlayerWalkingAndDesk"",
+            ""id"": ""4d7aed84-4714-4abd-b129-52277757db92"",
+            ""actions"": [
+                {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Value"",
+                    ""id"": ""d57dce0d-08b7-47b5-bf9b-f1e5970acce9"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""779c7c53-43e8-480a-99df-51dd49b0d68e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SmartphoneToggle"",
+                    ""type"": ""Button"",
+                    ""id"": ""ec7cb3d2-4248-4cf7-bae4-b2efd974dc60"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""e5e723eb-09f7-47de-8c9d-40b9d644966f"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1b0ee327-bb7e-421a-91e4-6566c18a22b4"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""abf23dd0-5b7f-4b2a-b160-e53c9bde3969"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SmartphoneToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         },
         {
             ""name"": ""PlayerWalking"",
@@ -41,24 +131,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Rotate"",
-                    ""type"": ""Value"",
-                    ""id"": ""a397f17b-a118-4e2f-ad49-b8fcadacaedf"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Interact"",
-                    ""type"": ""Button"",
-                    ""id"": ""1c11d463-af7f-4be3-8b9c-7eb99967a77b"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -116,78 +188,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6396f43e-f301-4618-ad2d-b18df25306c7"",
-                    ""path"": ""<Mouse>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Rotate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""05b96616-ea75-4e8f-9245-982105eabec5"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },
         {
             ""name"": ""Desk"",
             ""id"": ""69ef7312-dcbb-4a29-a88d-7ed7793b1001"",
-            ""actions"": [
-                {
-                    ""name"": ""Rotate"",
-                    ""type"": ""Value"",
-                    ""id"": ""a568a4f7-cd75-45cd-8093-f297049281cb"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Interact"",
-                    ""type"": ""Button"",
-                    ""id"": ""3cea411e-9de8-4283-8774-7273cabfaa22"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""9139da65-472c-4c9c-9c98-f15c0c09b599"",
-                    ""path"": ""<Mouse>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Rotate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a1e6e3c3-2200-4c80-81cc-858a619994b2"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
+            ""actions"": [],
+            ""bindings"": []
         },
         {
             ""name"": ""Monitor"",
@@ -293,15 +301,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
 }");
         // All
         m_All = asset.FindActionMap("All", throwIfNotFound: true);
+        m_All_Pause = m_All.FindAction("Pause", throwIfNotFound: true);
+        // PlayerWalkingAndDesk
+        m_PlayerWalkingAndDesk = asset.FindActionMap("PlayerWalkingAndDesk", throwIfNotFound: true);
+        m_PlayerWalkingAndDesk_Rotate = m_PlayerWalkingAndDesk.FindAction("Rotate", throwIfNotFound: true);
+        m_PlayerWalkingAndDesk_Interact = m_PlayerWalkingAndDesk.FindAction("Interact", throwIfNotFound: true);
+        m_PlayerWalkingAndDesk_SmartphoneToggle = m_PlayerWalkingAndDesk.FindAction("SmartphoneToggle", throwIfNotFound: true);
         // PlayerWalking
         m_PlayerWalking = asset.FindActionMap("PlayerWalking", throwIfNotFound: true);
         m_PlayerWalking_Move = m_PlayerWalking.FindAction("Move", throwIfNotFound: true);
-        m_PlayerWalking_Rotate = m_PlayerWalking.FindAction("Rotate", throwIfNotFound: true);
-        m_PlayerWalking_Interact = m_PlayerWalking.FindAction("Interact", throwIfNotFound: true);
         // Desk
         m_Desk = asset.FindActionMap("Desk", throwIfNotFound: true);
-        m_Desk_Rotate = m_Desk.FindAction("Rotate", throwIfNotFound: true);
-        m_Desk_Interact = m_Desk.FindAction("Interact", throwIfNotFound: true);
         // Monitor
         m_Monitor = asset.FindActionMap("Monitor", throwIfNotFound: true);
         m_Monitor_Submit = m_Monitor.FindAction("Submit", throwIfNotFound: true);
@@ -369,10 +379,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     // All
     private readonly InputActionMap m_All;
     private List<IAllActions> m_AllActionsCallbackInterfaces = new List<IAllActions>();
+    private readonly InputAction m_All_Pause;
     public struct AllActions
     {
         private @PlayerInputActions m_Wrapper;
         public AllActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Pause => m_Wrapper.m_All_Pause;
         public InputActionMap Get() { return m_Wrapper.m_All; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -382,10 +394,16 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_AllActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_AllActionsCallbackInterfaces.Add(instance);
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(IAllActions instance)
         {
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(IAllActions instance)
@@ -404,19 +422,77 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     }
     public AllActions @All => new AllActions(this);
 
+    // PlayerWalkingAndDesk
+    private readonly InputActionMap m_PlayerWalkingAndDesk;
+    private List<IPlayerWalkingAndDeskActions> m_PlayerWalkingAndDeskActionsCallbackInterfaces = new List<IPlayerWalkingAndDeskActions>();
+    private readonly InputAction m_PlayerWalkingAndDesk_Rotate;
+    private readonly InputAction m_PlayerWalkingAndDesk_Interact;
+    private readonly InputAction m_PlayerWalkingAndDesk_SmartphoneToggle;
+    public struct PlayerWalkingAndDeskActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public PlayerWalkingAndDeskActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Rotate => m_Wrapper.m_PlayerWalkingAndDesk_Rotate;
+        public InputAction @Interact => m_Wrapper.m_PlayerWalkingAndDesk_Interact;
+        public InputAction @SmartphoneToggle => m_Wrapper.m_PlayerWalkingAndDesk_SmartphoneToggle;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerWalkingAndDesk; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PlayerWalkingAndDeskActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerWalkingAndDeskActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PlayerWalkingAndDeskActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerWalkingAndDeskActionsCallbackInterfaces.Add(instance);
+            @Rotate.started += instance.OnRotate;
+            @Rotate.performed += instance.OnRotate;
+            @Rotate.canceled += instance.OnRotate;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
+            @SmartphoneToggle.started += instance.OnSmartphoneToggle;
+            @SmartphoneToggle.performed += instance.OnSmartphoneToggle;
+            @SmartphoneToggle.canceled += instance.OnSmartphoneToggle;
+        }
+
+        private void UnregisterCallbacks(IPlayerWalkingAndDeskActions instance)
+        {
+            @Rotate.started -= instance.OnRotate;
+            @Rotate.performed -= instance.OnRotate;
+            @Rotate.canceled -= instance.OnRotate;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
+            @SmartphoneToggle.started -= instance.OnSmartphoneToggle;
+            @SmartphoneToggle.performed -= instance.OnSmartphoneToggle;
+            @SmartphoneToggle.canceled -= instance.OnSmartphoneToggle;
+        }
+
+        public void RemoveCallbacks(IPlayerWalkingAndDeskActions instance)
+        {
+            if (m_Wrapper.m_PlayerWalkingAndDeskActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPlayerWalkingAndDeskActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PlayerWalkingAndDeskActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PlayerWalkingAndDeskActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PlayerWalkingAndDeskActions @PlayerWalkingAndDesk => new PlayerWalkingAndDeskActions(this);
+
     // PlayerWalking
     private readonly InputActionMap m_PlayerWalking;
     private List<IPlayerWalkingActions> m_PlayerWalkingActionsCallbackInterfaces = new List<IPlayerWalkingActions>();
     private readonly InputAction m_PlayerWalking_Move;
-    private readonly InputAction m_PlayerWalking_Rotate;
-    private readonly InputAction m_PlayerWalking_Interact;
     public struct PlayerWalkingActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerWalkingActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PlayerWalking_Move;
-        public InputAction @Rotate => m_Wrapper.m_PlayerWalking_Rotate;
-        public InputAction @Interact => m_Wrapper.m_PlayerWalking_Interact;
         public InputActionMap Get() { return m_Wrapper.m_PlayerWalking; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -429,12 +505,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
-            @Rotate.started += instance.OnRotate;
-            @Rotate.performed += instance.OnRotate;
-            @Rotate.canceled += instance.OnRotate;
-            @Interact.started += instance.OnInteract;
-            @Interact.performed += instance.OnInteract;
-            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IPlayerWalkingActions instance)
@@ -442,12 +512,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
-            @Rotate.started -= instance.OnRotate;
-            @Rotate.performed -= instance.OnRotate;
-            @Rotate.canceled -= instance.OnRotate;
-            @Interact.started -= instance.OnInteract;
-            @Interact.performed -= instance.OnInteract;
-            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IPlayerWalkingActions instance)
@@ -469,14 +533,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     // Desk
     private readonly InputActionMap m_Desk;
     private List<IDeskActions> m_DeskActionsCallbackInterfaces = new List<IDeskActions>();
-    private readonly InputAction m_Desk_Rotate;
-    private readonly InputAction m_Desk_Interact;
     public struct DeskActions
     {
         private @PlayerInputActions m_Wrapper;
         public DeskActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Rotate => m_Wrapper.m_Desk_Rotate;
-        public InputAction @Interact => m_Wrapper.m_Desk_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Desk; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -486,22 +546,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_DeskActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_DeskActionsCallbackInterfaces.Add(instance);
-            @Rotate.started += instance.OnRotate;
-            @Rotate.performed += instance.OnRotate;
-            @Rotate.canceled += instance.OnRotate;
-            @Interact.started += instance.OnInteract;
-            @Interact.performed += instance.OnInteract;
-            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IDeskActions instance)
         {
-            @Rotate.started -= instance.OnRotate;
-            @Rotate.performed -= instance.OnRotate;
-            @Rotate.canceled -= instance.OnRotate;
-            @Interact.started -= instance.OnInteract;
-            @Interact.performed -= instance.OnInteract;
-            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IDeskActions instance)
@@ -591,17 +639,20 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public MonitorActions @Monitor => new MonitorActions(this);
     public interface IAllActions
     {
+        void OnPause(InputAction.CallbackContext context);
+    }
+    public interface IPlayerWalkingAndDeskActions
+    {
+        void OnRotate(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
+        void OnSmartphoneToggle(InputAction.CallbackContext context);
     }
     public interface IPlayerWalkingActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnRotate(InputAction.CallbackContext context);
-        void OnInteract(InputAction.CallbackContext context);
     }
     public interface IDeskActions
     {
-        void OnRotate(InputAction.CallbackContext context);
-        void OnInteract(InputAction.CallbackContext context);
     }
     public interface IMonitorActions
     {
