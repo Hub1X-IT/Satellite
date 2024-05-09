@@ -11,6 +11,7 @@ public class Smartphone : MonoBehaviour
     public Image smartphone;
     public GameObject Crosshair;
     public GameObject email;
+    public Animator animator;
 
     bool smartphoneOn = false;
 
@@ -32,7 +33,7 @@ public class Smartphone : MonoBehaviour
         
         if (smartphoneOn == false)
         {
-            smartphone.rectTransform.localPosition = new Vector2(640, -100);
+            animator.SetBool("TurnPhone", true);
             smartphoneOn = true;
             Crosshair.SetActive(false);
             Cursor.visible = true;
@@ -41,7 +42,7 @@ public class Smartphone : MonoBehaviour
         }
         else
         {
-            smartphone.rectTransform.localPosition = new Vector2(640, -800);
+            animator.SetBool("TurnPhone", false);
             smartphoneOn = false;
             Crosshair.SetActive(true);
             Cursor.visible = false;
