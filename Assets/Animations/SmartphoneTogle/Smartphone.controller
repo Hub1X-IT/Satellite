@@ -31,7 +31,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: TurnPhone
+    m_ConditionEvent: PhoneOn
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -733851439348343534}
@@ -104,8 +104,8 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 2
-    m_ConditionEvent: TurnPhone
+  - m_ConditionMode: 1
+    m_ConditionEvent: PhoneOff
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8084557758488124522}
@@ -130,8 +130,14 @@ AnimatorController:
   m_Name: Smartphone
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: TurnPhone
-    m_Type: 4
+  - m_Name: PhoneOn
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: PhoneOff
+    m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
