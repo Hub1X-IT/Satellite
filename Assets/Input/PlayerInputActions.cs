@@ -72,6 +72,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Smartphone"",
+                    ""type"": ""Button"",
+                    ""id"": ""ec7cb3d2-4248-4cf7-bae4-b2efd974dc60"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -96,6 +105,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""abf23dd0-5b7f-4b2a-b160-e53c9bde3969"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Smartphone"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -111,15 +131,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Smartphone"",
-                    ""type"": ""Button"",
-                    ""id"": ""eeef7769-080c-4a8c-bca5-1299b0d50faf"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -177,17 +188,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4da19c33-3405-4982-91e9-14b5bdc56f29"",
-                    ""path"": ""<Keyboard>/tab"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Smartphone"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -306,10 +306,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_PlayerWalkingAndDesk = asset.FindActionMap("PlayerWalkingAndDesk", throwIfNotFound: true);
         m_PlayerWalkingAndDesk_Rotate = m_PlayerWalkingAndDesk.FindAction("Rotate", throwIfNotFound: true);
         m_PlayerWalkingAndDesk_Interact = m_PlayerWalkingAndDesk.FindAction("Interact", throwIfNotFound: true);
+        m_PlayerWalkingAndDesk_Smartphone = m_PlayerWalkingAndDesk.FindAction("Smartphone", throwIfNotFound: true);
         // PlayerWalking
         m_PlayerWalking = asset.FindActionMap("PlayerWalking", throwIfNotFound: true);
         m_PlayerWalking_Move = m_PlayerWalking.FindAction("Move", throwIfNotFound: true);
-        m_PlayerWalking_Smartphone = m_PlayerWalking.FindAction("Smartphone", throwIfNotFound: true);
         // Desk
         m_Desk = asset.FindActionMap("Desk", throwIfNotFound: true);
         // Monitor
@@ -427,12 +427,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private List<IPlayerWalkingAndDeskActions> m_PlayerWalkingAndDeskActionsCallbackInterfaces = new List<IPlayerWalkingAndDeskActions>();
     private readonly InputAction m_PlayerWalkingAndDesk_Rotate;
     private readonly InputAction m_PlayerWalkingAndDesk_Interact;
+    private readonly InputAction m_PlayerWalkingAndDesk_Smartphone;
     public struct PlayerWalkingAndDeskActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerWalkingAndDeskActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Rotate => m_Wrapper.m_PlayerWalkingAndDesk_Rotate;
         public InputAction @Interact => m_Wrapper.m_PlayerWalkingAndDesk_Interact;
+        public InputAction @Smartphone => m_Wrapper.m_PlayerWalkingAndDesk_Smartphone;
         public InputActionMap Get() { return m_Wrapper.m_PlayerWalkingAndDesk; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -448,6 +450,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @Smartphone.started += instance.OnSmartphone;
+            @Smartphone.performed += instance.OnSmartphone;
+            @Smartphone.canceled += instance.OnSmartphone;
         }
 
         private void UnregisterCallbacks(IPlayerWalkingAndDeskActions instance)
@@ -458,6 +463,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @Smartphone.started -= instance.OnSmartphone;
+            @Smartphone.performed -= instance.OnSmartphone;
+            @Smartphone.canceled -= instance.OnSmartphone;
         }
 
         public void RemoveCallbacks(IPlayerWalkingAndDeskActions instance)
@@ -480,13 +488,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerWalking;
     private List<IPlayerWalkingActions> m_PlayerWalkingActionsCallbackInterfaces = new List<IPlayerWalkingActions>();
     private readonly InputAction m_PlayerWalking_Move;
-    private readonly InputAction m_PlayerWalking_Smartphone;
     public struct PlayerWalkingActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerWalkingActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PlayerWalking_Move;
-        public InputAction @Smartphone => m_Wrapper.m_PlayerWalking_Smartphone;
         public InputActionMap Get() { return m_Wrapper.m_PlayerWalking; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -499,9 +505,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
-            @Smartphone.started += instance.OnSmartphone;
-            @Smartphone.performed += instance.OnSmartphone;
-            @Smartphone.canceled += instance.OnSmartphone;
         }
 
         private void UnregisterCallbacks(IPlayerWalkingActions instance)
@@ -509,9 +512,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
-            @Smartphone.started -= instance.OnSmartphone;
-            @Smartphone.performed -= instance.OnSmartphone;
-            @Smartphone.canceled -= instance.OnSmartphone;
         }
 
         public void RemoveCallbacks(IPlayerWalkingActions instance)
@@ -645,11 +645,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnRotate(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnSmartphone(InputAction.CallbackContext context);
     }
     public interface IPlayerWalkingActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnSmartphone(InputAction.CallbackContext context);
     }
     public interface IDeskActions
     {

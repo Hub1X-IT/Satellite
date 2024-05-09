@@ -1,3 +1,4 @@
+/*
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine;
 public class PlayerInteraction : MonoBehaviour
 {
     public float playerReach = 3f;
-    Interactable currentInteractable;
+    InteractVisual currentInteractable;
 
     // Update is called once per frame
     void Update()
@@ -13,7 +14,7 @@ public class PlayerInteraction : MonoBehaviour
         CheckInteraction();
         if(Input.GetKey(KeyCode.F) && currentInteractable != null) 
         {
-            currentInteractable.Interact();
+            // currentInteractable.Interact();
         }
     }
 
@@ -25,7 +26,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (hit.collider.tag == "Interactable")
             {
-                Interactable newInteractable = hit.collider.GetComponent<Interactable>();
+                InteractVisual newInteractable = hit.collider.GetComponent<InteractVisual>();
                 if (currentInteractable && newInteractable != currentInteractable)
                 {
                     currentInteractable.DisableOutline();
@@ -46,15 +47,17 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    private void SetNewCurrentInteractable(Interactable newInteractable)
+    private void SetNewCurrentInteractable(InteractVisual newInteractable)
     {
         currentInteractable = newInteractable;
         currentInteractable.EnableOutline();
-        InteractionHudController.instance.EnableInteractionText(currentInteractable.message);
+        InteractionHudManager.Instance.EnableInteractionText(currentInteractable.GetInteractMessage());
     }
+
+
     private void DisableCurrentInteractable()
     {
-        InteractionHudController.instance.DisableInteractionText();
+        InteractionHudManager.Instance.DisableInteractionText();
         if (currentInteractable)
         {
             currentInteractable.DisableOutline();
@@ -62,3 +65,4 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 }
+*/

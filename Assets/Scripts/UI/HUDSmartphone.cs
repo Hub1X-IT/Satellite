@@ -1,14 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Smartphone : MonoBehaviour
+public class HUDSmartphone : MonoBehaviour
 {
-
-    public Image smartphone;
+    public Image smartphoneImage;
     public GameObject Crosshair;
     public GameObject email;
     public Animator animator;
@@ -17,18 +14,20 @@ public class Smartphone : MonoBehaviour
 
     private void Start()
     {
-        smartphone.rectTransform.localPosition = new Vector2(640, -800);
+        smartphoneImage.rectTransform.localPosition = new Vector2(640, -800);
     }
+
 
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Tab))
         {
-            SmartphoneOn();
+            SmartphoneOnOff();
         }
     }
 
-    void SmartphoneOn()
+
+    void SmartphoneOnOff()
     {
         
         if (smartphoneOn == false)

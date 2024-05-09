@@ -1653,11 +1653,12 @@ GameObject:
   - component: {fileID: 4195053427897529104}
   - component: {fileID: 6481753855220561565}
   - component: {fileID: 1861445443321875357}
+  - component: {fileID: 5654319357124655371}
   - component: {fileID: 8511834410274031493}
+  - component: {fileID: 6943858128412320002}
   - component: {fileID: 8750038163779465293}
   - component: {fileID: 401671745419835157}
   - component: {fileID: 5484438112983108418}
-  - component: {fileID: 7723530368350342454}
   - component: {fileID: 6976668323731249492}
   m_Layer: 0
   m_Name: Player
@@ -1728,6 +1729,23 @@ MonoBehaviour:
   mouseSensitivity: 25
   slider: {fileID: 0}
   sensitivityPercentValue: {fileID: 0}
+--- !u!114 &5654319357124655371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4948149093367096019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d84f7db212d8fce48838926344726450, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraFollowObject: {fileID: 7950827217174508885}
+  interactableLayerMasks:
+    serializedVersion: 2
+    m_Bits: 8
+  interactRange: 3
 --- !u!114 &8511834410274031493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1740,10 +1758,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b7adfbd6c2325d40b6bd958bd1fd493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraFollowObject: {fileID: 7950827217174508885}
-  interactableLayerMasks:
-    serializedVersion: 2
-    m_Bits: 0
+--- !u!114 &6943858128412320002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4948149093367096019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9468c508871cd243b4f17f69306a33b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionUI: {fileID: 4213837772143755452}
 --- !u!114 &8750038163779465293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1794,19 +1821,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPauseMenu: {fileID: 4333151558034885982}
   playerOptions: {fileID: 7984628953923590696}
---- !u!114 &7723530368350342454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4948149093367096019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f58a103f8f14d7459961c19e52388ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerReach: 3
 --- !u!114 &6976668323731249492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1819,7 +1833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4006133d2475f274384331a3bcfea5ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smartphone: {fileID: 460618608806234191}
+  smartphoneImage: {fileID: 0}
   Crosshair: {fileID: 4253260281097845449}
   email: {fileID: 0}
   animator: {fileID: 0}
@@ -3484,7 +3498,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79b6f4388e1c7bb4782faf8b476e9ef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionText: {fileID: 0}
+  interactionText: {fileID: 6052134084969920193}
+  interactKeyString: '[F]'
 --- !u!1 &7984628953923590696
 GameObject:
   m_ObjectHideFlags: 0
