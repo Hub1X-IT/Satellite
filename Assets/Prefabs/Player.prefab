@@ -1822,6 +1822,7 @@ MonoBehaviour:
   smartphone: {fileID: 460618608806234191}
   Crosshair: {fileID: 4253260281097845449}
   email: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!1 &4955631818831169554
 GameObject:
   m_ObjectHideFlags: 0
@@ -2886,6 +2887,7 @@ GameObject:
   - component: {fileID: 1475711429010925146}
   - component: {fileID: 5353482847910965765}
   - component: {fileID: 460618608806234191}
+  - component: {fileID: 5155652181397001448}
   m_Layer: 0
   m_Name: Phone
   m_TagString: Untagged
@@ -2952,6 +2954,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &5155652181397001448
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7020763950190893934}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 49155283de798b545a77a19c1dddb05d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7067503225468465035
 GameObject:
   m_ObjectHideFlags: 0
