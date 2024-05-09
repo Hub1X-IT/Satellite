@@ -31,10 +31,6 @@ public class CommandPromptManager : MonoBehaviour {
 
 
     private void Awake() {
-        foreach (char character in excludedCharacters) {
-            int i = character;
-            Debug.Log(i.ToString());
-        }
         Instance = this;
     }
 
@@ -73,7 +69,8 @@ public class CommandPromptManager : MonoBehaviour {
         foreach (char c in excludedCharacters) {
             if (character == c) {
                 int i = c;
-                Debug.Log("False, " + i);
+                // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! debug log !!!!!!!!!!!!
+                // Debug.Log("False, " + i);
                 return false;
             }
         }
@@ -81,7 +78,8 @@ public class CommandPromptManager : MonoBehaviour {
     }
 
     private void RemoveCharacter() {
-        Debug.Log("CommandPromptManager: RemoveCharacter()");
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! debug log !!!!!!!!!!!!
+        // Debug.Log("CommandPromptManager: RemoveCharacter()");
         if (command.Length > 0) {
             Debug.Log(command.Length);
             command = command.Remove(command.Length - 1);
@@ -94,7 +92,8 @@ public class CommandPromptManager : MonoBehaviour {
             command = this.command
         });
 
-        Debug.Log(command);
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! debug log !!!!!!!!!!!!
+        // Debug.Log(command);
     }
 
     private void SubmitCommand() {

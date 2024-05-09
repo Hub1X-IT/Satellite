@@ -1,38 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Smartphone : MonoBehaviour
+public class HUDSmartphone : MonoBehaviour
 {
-
-    public Image smartphone;
+    public Image smartphoneImage;
     public GameObject Crosshair;
     public GameObject email;
+    public Animator animator;
 
     bool smartphoneOn = false;
 
     private void Start()
     {
-        smartphone.rectTransform.localPosition = new Vector2(640, -800);
+        smartphoneImage.rectTransform.localPosition = new Vector2(640, -800);
     }
+
 
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Tab))
         {
-            SmartphoneOn();
+            SmartphoneOnOff();
         }
     }
 
-    void SmartphoneOn()
+
+    void SmartphoneOnOff()
     {
         
         if (smartphoneOn == false)
         {
-            smartphone.rectTransform.localPosition = new Vector2(640, -100);
+            animator.SetBool("TurnPhone", true);
             smartphoneOn = true;
             Crosshair.SetActive(false);
             Cursor.visible = true;
@@ -41,7 +41,7 @@ public class Smartphone : MonoBehaviour
         }
         else
         {
-            smartphone.rectTransform.localPosition = new Vector2(640, -800);
+            animator.SetBool("TurnPhone", false);
             smartphoneOn = false;
             Crosshair.SetActive(true);
             Cursor.visible = false;

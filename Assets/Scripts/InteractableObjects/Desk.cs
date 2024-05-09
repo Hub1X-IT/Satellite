@@ -5,7 +5,7 @@ using UnityEngine;
 public class Desk : MonoBehaviour, IInteractable {
 
 
-    private CameraController.Cameras deskCamera = CameraController.Cameras.DeskCamera;
+    private readonly CameraController.Cameras deskCamera = CameraController.Cameras.DeskCamera;
 
 
     public Transform GetTransform() {
