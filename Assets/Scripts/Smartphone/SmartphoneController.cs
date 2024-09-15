@@ -10,9 +10,6 @@ public class SmartphoneController : MonoBehaviour {
     [SerializeField] private Vector2 defaultSmartphonePosition = new Vector2(640, -800);
 
 
-    // [SerializeField] private GameObject email;
-
-
     bool smartphoneOn = false;    
 
 

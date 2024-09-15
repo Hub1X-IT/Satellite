@@ -2339,19 +2339,7 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1861445443321875357}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: AdjustSensitivityFromSlider
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &7020763950190893934
 GameObject:
   m_ObjectHideFlags: 0
@@ -3001,6 +2989,7 @@ GameObject:
   - component: {fileID: 3064265917253816767}
   - component: {fileID: 1726423976827551534}
   - component: {fileID: 2861580159657209694}
+  - component: {fileID: 6124866602172284957}
   m_Layer: 0
   m_Name: InGameOptions
   m_TagString: Untagged
@@ -3091,6 +3080,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &6124866602172284957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7984628953923590696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a2d1778ffc82ae4e84425f499429881, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 1861445443321875357}
+  sensitivitySlider: {fileID: 2596614774782366910}
+  sliderValueTextField: {fileID: 1864927063265876944}
 --- !u!1 &8323825558549977515
 GameObject:
   m_ObjectHideFlags: 0
