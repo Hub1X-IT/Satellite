@@ -17,6 +17,7 @@ public class SensitivitySlider : MonoBehaviour {
 
 
     [SerializeField] private float maxSliderValue;
+    [SerializeField] private float minSliderValue;
 
 
     private void Awake() {
@@ -26,8 +27,11 @@ public class SensitivitySlider : MonoBehaviour {
 
     private void Start() {
         sensitivitySlider.maxValue = maxSliderValue;
+        sensitivitySlider.minValue = minSliderValue;
         sensitivitySlider.value = playerController.GetMouseSensitivity();
         SetTextField();
+        Debug.Log("val: " + sensitivitySlider.value);
+        Debug.Log("max_val: " + sensitivitySlider.maxValue);
     }
 
 
