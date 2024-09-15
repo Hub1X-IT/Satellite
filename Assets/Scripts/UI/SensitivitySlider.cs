@@ -30,8 +30,6 @@ public class SensitivitySlider : MonoBehaviour {
         sensitivitySlider.minValue = minSliderValue;
         sensitivitySlider.value = playerController.GetMouseSensitivity();
         SetTextField();
-        Debug.Log("val: " + sensitivitySlider.value);
-        Debug.Log("max_val: " + sensitivitySlider.maxValue);
     }
 
 

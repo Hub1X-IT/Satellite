@@ -11,8 +11,8 @@ public class SmartphoneVisual : MonoBehaviour
     private Image smartphoneImage;
 
 
-    private static string PHONE_ON = "PhoneOn";
-    private static string PHONE_OFF = "PhoneOff";
+    private const string PHONE_ON = "PhoneOn";
+    private const string PHONE_OFF = "PhoneOff";
 
 
     private void Awake() {

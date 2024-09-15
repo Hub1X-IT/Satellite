@@ -4,23 +4,28 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerUI : MonoBehaviour
-{
+public class PlayerUI : MonoBehaviour {
+    
+    
     public TMP_Text chapter;
     public TMP_Text objectiveDescription;
 
-    void Awake()
-    {
+
+    void Awake() {
         SetObjective("Day 1", "Take the phone from night table");
     }
 
-    public void SetObjective(string title, string description)
-    {
+
+    public void SetObjective(string title, string description) {
+        // chapter.text = title;
+        // objectiveDescription.text = description;
+
         chapter.text = title.Replace(chapter.text, title);
         objectiveDescription.text = description.Replace(objectiveDescription.text, description);
     }
-    void Update()
-    {
-        
+
+
+    void Update() {
+
     }
 }

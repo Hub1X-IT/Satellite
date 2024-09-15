@@ -19,7 +19,10 @@ public class PlayerController : MonoBehaviour {
 
 
     private Vector2 rotationInput;
-    public float mouseSensitivity = 25f; // Temporary solution; remember to make it possible to change sensitivity in settings!
+
+    [SerializeField] private float defaultMouseSensitivity = 25f;
+    private float mouseSensitivity;
+    private const string PLAYER_PREFS_MOUSE_SENSITIVITY = "mouseSensitivity";
 
 
     private const float gravity = -9.81f;
@@ -32,9 +35,8 @@ public class PlayerController : MonoBehaviour {
     }
 
 
-    private void Start()
-    {
-        mouseSensitivity = PlayerPrefs.GetFloat("currentSensitivity", 25);
+    private void Start() {
+        mouseSensitivity = PlayerPrefs.GetFloat(PLAYER_PREFS_MOUSE_SENSITIVITY, defaultMouseSensitivity);
     }
 
 
@@ -42,7 +44,6 @@ public class PlayerController : MonoBehaviour {
         HandleGravity();
         HandleRotation();
         HandleMovement();
-        PlayerPrefs.SetFloat("currentSensitivity", mouseSensitivity);
     }
 
 
@@ -97,6 +98,7 @@ public class PlayerController : MonoBehaviour {
 
     public void SetMouseSensitivity(float sensitivityValue) {
         mouseSensitivity = sensitivityValue;
+        PlayerPrefs.SetFloat(PLAYER_PREFS_MOUSE_SENSITIVITY, mouseSensitivity);
     }
 
 

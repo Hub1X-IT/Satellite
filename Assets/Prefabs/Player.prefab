@@ -1349,9 +1349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraFollowObject: {fileID: 7950827217174508885}
-  mouseSensitivity: 25
-  slider: {fileID: 0}
-  sensitivityPercentValue: {fileID: 0}
+  defaultMouseSensitivity: 25
 --- !u!114 &5654319357124655371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1406,7 +1404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdf4c210813e62c44a1c7808389d19ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chapter: {fileID: 0}
+  chapter: {fileID: 1289167043093973395}
   objectiveDescription: {fileID: 1082748632295368985}
 --- !u!114 &5484438112983108418
 MonoBehaviour:
@@ -1929,7 +1927,7 @@ GameObject:
   - component: {fileID: 8622926747902407180}
   - component: {fileID: 1864927063265876944}
   m_Layer: 0
-  m_Name: SensValue%
+  m_Name: SensitivitySliderValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2261,7 +2259,7 @@ GameObject:
   - component: {fileID: 4331232576170876389}
   - component: {fileID: 2596614774782366910}
   m_Layer: 0
-  m_Name: SensSlider
+  m_Name: SensitivitySlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3095,6 +3093,8 @@ MonoBehaviour:
   playerController: {fileID: 1861445443321875357}
   sensitivitySlider: {fileID: 2596614774782366910}
   sliderValueTextField: {fileID: 1864927063265876944}
+  maxSliderValue: 50
+  minSliderValue: 0
 --- !u!1 &8323825558549977515
 GameObject:
   m_ObjectHideFlags: 0
