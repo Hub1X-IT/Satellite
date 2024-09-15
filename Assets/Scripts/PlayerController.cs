@@ -27,19 +27,16 @@ public class PlayerController : MonoBehaviour {
     private float verticalVelocity;
 
 
-    public Slider slider;
-    public TMP_Text sensitivityPercentValue;
-
     private void Awake() {
         characterController = GetComponent<CharacterController>();
     }
 
+
     private void Start()
     {
         mouseSensitivity = PlayerPrefs.GetFloat("currentSensitivity", 25);
-        slider.value = mouseSensitivity;
-        SensitivityPercentValueChange();
     }
+
 
     private void Update() {
         HandleGravity();
@@ -47,6 +44,7 @@ public class PlayerController : MonoBehaviour {
         HandleMovement();
         PlayerPrefs.SetFloat("currentSensitivity", mouseSensitivity);
     }
+
 
     private void HandleMovement() {        
         Vector2 inputVector = GameInput.Instance.GetMovementVectorNormalized();
@@ -57,6 +55,7 @@ public class PlayerController : MonoBehaviour {
         characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
     }
     
+
     private void HandleRotation() {
         rotationInput = GameInput.Instance.GetRotationVector();
 
@@ -84,16 +83,6 @@ public class PlayerController : MonoBehaviour {
         cameraFollowObject.rotation = Quaternion.Euler(cameraRotation);
     }
 
-    public void AdjustSensitivityFromSlider()
-    {
-        mouseSensitivity = slider.value;
-        SensitivityPercentValueChange();
-    }
-
-    private void SensitivityPercentValueChange()
-    {
-        sensitivityPercentValue.text = Mathf.Round(slider.value * 4).ToString();
-    }
 
     private void HandleGravity() {
         if (characterController.isGrounded && verticalVelocity < 0f) {
@@ -105,4 +94,13 @@ public class PlayerController : MonoBehaviour {
         moveDirection.y = verticalVelocity;
     }
 
+
+    public void SetMouseSensitivity(float sensitivityValue) {
+        mouseSensitivity = sensitivityValue;
+    }
+
+
+    public float GetMouseSensitivity() {
+        return mouseSensitivity;
+    }
 }
