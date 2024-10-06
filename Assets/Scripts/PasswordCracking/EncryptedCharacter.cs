@@ -1,16 +1,36 @@
 public class EncryptedCharacter {
 
-    public EncryptedCharacter(int result, int number1, int number2, int number3, int number4, CalculationData.Calculation calculation1, CalculationData.Calculation calculation2, CalculationData.Calculation calculation3) {
+
+    private int result;
+
+    private int number1;
+    private int number2;
+    private int number3;
+    private int number4;
+
+    private CalculationData.Calculation calculation1; // Between numbers 1 & 2
+    private CalculationData.Calculation calculation2; // Between numbers 2 & 3
+    private CalculationData.Calculation calculation3; // Between numbers 3 & 4
+
+
+    private string[] encryptedCharacterStringArray;
+    private string encryptedCharacterString;
+
+
+    public EncryptedCharacter(int result, int number1, int number2, int number3, int number4,
+        CalculationData.Calculation calculation1, CalculationData.Calculation calculation2, CalculationData.Calculation calculation3) {
         this.result = result;
+
         this.number1 = number1;
         this.number2 = number2;
         this.number3 = number3;
         this.number4 = number4;
+
         this.calculation1 = calculation1;
         this.calculation2 = calculation2;
         this.calculation3 = calculation3;
 
-        CreateEncryptedPasswordStrings();
+        CreateEncryptedCharacterStrings();
     }
 
 
@@ -26,17 +46,17 @@ public class EncryptedCharacter {
         calculation2 = calculationDataMiddle.GetCalculation();
         calculation3 = calculationDataLast.GetCalculation();
 
-        CreateEncryptedPasswordStrings();
+        CreateEncryptedCharacterStrings();
     }
 
 
-    private void CreateEncryptedPasswordStrings() {
-        encryptedPasswordStringArray = CreateEncryptedPasswordStringArray();
-        encryptedPasswordString = CreateEncryptedPasswordString();
+    private void CreateEncryptedCharacterStrings() {
+        encryptedCharacterStringArray = CreateEncryptedCharacterStringArray();
+        encryptedCharacterString = CreateEncryptedCharacterString();
     }
 
 
-    private string[] CreateEncryptedPasswordStringArray() {
+    private string[] CreateEncryptedCharacterStringArray() {
         string[] stringArray = new string[7];
 
         stringArray[0] = number1.ToString();
@@ -51,16 +71,16 @@ public class EncryptedCharacter {
     }
 
 
-    private string CreateEncryptedPasswordString() {
-        string encryptedPasswordString = encryptedPasswordStringArray[0] + " " +
-            encryptedPasswordStringArray[1] + " " +
-            encryptedPasswordStringArray[2] + " " +
-            encryptedPasswordStringArray[3] + " " +
-            encryptedPasswordStringArray[4] + " " +
-            encryptedPasswordStringArray[5] + " " +
-            encryptedPasswordStringArray[6] + " ";
+    private string CreateEncryptedCharacterString() {
+        string encryptedCharacterString = encryptedCharacterStringArray[0] + " " +
+            encryptedCharacterStringArray[1] + " " +
+            encryptedCharacterStringArray[2] + " " +
+            encryptedCharacterStringArray[3] + " " +
+            encryptedCharacterStringArray[4] + " " +
+            encryptedCharacterStringArray[5] + " " +
+            encryptedCharacterStringArray[6] + " ";
 
-        return encryptedPasswordString;
+        return encryptedCharacterString;
     }
 
 
@@ -80,22 +100,6 @@ public class EncryptedCharacter {
     }
 
 
-    private int result;
-
-    private int number1;
-    private int number2;
-    private int number3;
-    private int number4;
-
-    private CalculationData.Calculation calculation1; // Between numbers 1 & 2
-    private CalculationData.Calculation calculation2; // Between numbers 2 & 3
-    private CalculationData.Calculation calculation3; // Between numbers 3 & 4
-
-
-    private string[] encryptedPasswordStringArray;
-    private string encryptedPasswordString;
-
-
     public int GetResult() { return result; }
     public int GetNumber1() { return number1; }
     public int GetNumber2() { return number2; }
@@ -104,6 +108,6 @@ public class EncryptedCharacter {
     public CalculationData.Calculation GetCalculation1() { return calculation1; }
     public CalculationData.Calculation GetCalculation2() { return calculation2; }
     public CalculationData.Calculation GetCalculation3() { return calculation3; }
-    public string GetEncryptedPasswordString() { return encryptedPasswordString; }
-    public string[] GetEncryptedPasswordStringArray() { return encryptedPasswordStringArray; }
+    public string GetEncryptedCharacterString() { return encryptedCharacterString; }
+    public string[] GetEncryptedCharacterStringArray() { return encryptedCharacterStringArray; }
 }

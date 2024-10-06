@@ -2,7 +2,67 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CalculationsGeneration {
+public class CalculationsGenerationTestCopy : MonoBehaviour {
+    /// Works only for positive numbers!
+    
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.T)) {
+            TestEncrypting();
+        }
+    }
+
+
+    private void TestCalculations() {
+        CalculationData.Calculation calculation = CalculationData.Calculation.Multiply;
+        int number = 102;
+
+        CalculationData testCalculationData = new CalculationData(number, calculation);
+        testCalculationData = GenerateCalculationData(testCalculationData);
+
+        Debug.Log("Calculation: " + calculation);
+        Debug.Log("Value1: " + testCalculationData.GetValue1());
+        Debug.Log("Value2: " + testCalculationData.GetValue2());
+        Debug.Log("Result: " + testCalculationData.GetResult());
+    }
+
+
+    private void TestCalculationsFull() {
+        int result = 102;
+        CalculationData calculationData0, calculationData1, calculationData2;
+
+        GenerateCalculationsForNumber(result, out calculationData0, out calculationData1, out calculationData2);
+
+        string calculation0 = 
+            "Calculation 0\nCalculation: " + calculationData0.GetCalculation() 
+            + "\nResult: " + calculationData0.GetResult()
+            + "\nValue1: " + calculationData0.GetValue1()
+            + "\nValue2: " + calculationData0.GetValue2();
+        string calculation1 = 
+            "Calculation 1\nCalculation: " + calculationData1.GetCalculation() 
+            + "\nResult: " + calculationData1.GetResult()
+            + "\nValue1: " + calculationData1.GetValue1() 
+            + "\nValue2: " + calculationData1.GetValue2();
+        string calculation2 = 
+            "Calculation 2\nCalculation: " + calculationData2.GetCalculation() 
+            + "\nResult: " + calculationData2.GetResult()
+            + "\nValue1: " + calculationData2.GetValue1() 
+            + "\nValue2: " + calculationData2.GetValue2();
+
+        Debug.Log(calculation0);
+        Debug.Log(calculation1);
+        Debug.Log(calculation2);
+    }
+
+
+    private void TestEncrypting() {
+        int result = 102;
+
+        EncryptedCharacter encryptedPassword = GetEncryptedCharacter(result);
+
+        string debugString = encryptedPassword.GetEncryptedCharacterString() + " = " + encryptedPassword.GetResult();
+        Debug.Log(debugString);
+    }
+
 
     public static EncryptedCharacter GetEncryptedCharacter(int number) {
         GenerateCalculationsForNumber(number, out CalculationData calculationDataMiddle, out CalculationData calculationDataFirst, out CalculationData calculationDataLast);

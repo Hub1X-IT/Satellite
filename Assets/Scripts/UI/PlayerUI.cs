@@ -6,9 +6,8 @@ using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour {
     
-    
-    public TMP_Text chapter;
-    public TMP_Text objectiveDescription;
+    [SerializeField] private TMP_Text chapter;
+    [SerializeField] private TMP_Text objectiveDescription;
 
 
     void Awake() {
@@ -17,15 +16,10 @@ public class PlayerUI : MonoBehaviour {
 
 
     public void SetObjective(string title, string description) {
-        // chapter.text = title;
-        // objectiveDescription.text = description;
+        chapter.text = title;
+        objectiveDescription.text = description;
 
-        chapter.text = title.Replace(chapter.text, title);
-        objectiveDescription.text = description.Replace(objectiveDescription.text, description);
-    }
-
-
-    void Update() {
-
+        // chapter.text = title.Replace(chapter.text, title);
+        // objectiveDescription.text = description.Replace(objectiveDescription.text, description);
     }
 }

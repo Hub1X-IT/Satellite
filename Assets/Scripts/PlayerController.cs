@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour {
@@ -15,7 +13,7 @@ public class PlayerController : MonoBehaviour {
 
         
     private Vector3 moveDirection;
-    private float moveSpeed = 5f;
+    [SerializeField] private float moveSpeed = 5f;
 
 
     private Vector2 rotationInput;
@@ -26,7 +24,7 @@ public class PlayerController : MonoBehaviour {
 
 
     private const float gravity = -9.81f;
-    private float gravityMultiplier = 3f;
+    [SerializeField] private float gravityMultiplier = 1f;
     private float verticalVelocity;
 
 
@@ -87,12 +85,13 @@ public class PlayerController : MonoBehaviour {
 
     private void HandleGravity() {
         if (characterController.isGrounded && verticalVelocity < 0f) {
-            verticalVelocity = -1f;
+            verticalVelocity = -0.1f;
         }
         else {
             verticalVelocity += gravity * gravityMultiplier * Time.deltaTime;
         }
         moveDirection.y = verticalVelocity;
+        // Debug.Log(verticalVelocity);
     }
 
 
