@@ -21,9 +21,7 @@ public class AsciiCoding : MonoBehaviour {
 
     private static int[] EncodeToAscii(string password) {
         List<int> intList = new List<int>();
-        foreach (int i in password) {
-            intList.Add(i);
-        }
+        foreach (int i in password) { intList.Add(i); }
         return intList.ToArray();
     }
 }
