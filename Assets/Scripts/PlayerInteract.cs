@@ -11,7 +11,7 @@ public class PlayerInteract : MonoBehaviour {
 
 
     private void GameInput_OnInteractAction(object sender, System.EventArgs e) {
-        Debug.Log("Interact");
+        Debug.Log("Interact"); // !!!!!!!!!!!!!!!!!!!!!!!! Debug log !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         IInteractable interactable = GetInteractableObject();
         interactable?.Interact();
     }
@@ -25,7 +25,7 @@ public class PlayerInteract : MonoBehaviour {
             // !!!!!!!!!!!!!!!!!!!!!!!! Debug log !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             Debug.Log(hit.transform.gameObject);
 
-            IInteractable interactable = hit.transform.gameObject.GetComponent<IInteractable>();
+            IInteractable interactable = hit.transform.GetComponent<IInteractable>();
             return interactable;
             
         }

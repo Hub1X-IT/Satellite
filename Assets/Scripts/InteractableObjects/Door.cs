@@ -2,31 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Door : MonoBehaviour, IInteractable
-{
-    private Animator doorAnimator;
+public class Door : MonoBehaviour, IInteractable {
 
-    private const string DOOR_OPEN = "DoorOpen";
-    private const string DOOR_CLOSE = "DoorClose";
+    [SerializeField] private Animator doorAnimator;
 
-    private bool doorOpened = false;
-    public Transform GetTransform() { return transform; }
 
-    public void Awake()
-    {
+    private const string DOOR_OPEN_TRIGGER = "DoorOpen";
+    private const string DOOR_CLOSE_TRIGGER = "DoorClose";
+
+
+    private bool doorOpened;
+
+    
+    public void Awake() {
         doorAnimator = GetComponent<Animator>();
+        doorOpened = false;
     }
-    public void Interact()
-    {
-        if (doorOpened)
-        {
-            doorOpened = true;
-            doorAnimator.SetTrigger(DOOR_OPEN);
-        }
-        else
-        {
-            doorOpened = false;
-            doorAnimator.SetTrigger(DOOR_CLOSE);
-        }
+
+
+    public void Interact() {
+        OpenClose();
     }
+
+
+    private void OpenClose() {
+        if (!doorOpened) { // open door
+            doorAnimator.SetTrigger(DOOR_OPEN_TRIGGER);
+        }
+        
+        else { // close door
+            doorAnimator.SetTrigger(DOOR_CLOSE_TRIGGER);
+        }
+        doorOpened = !doorOpened;
+        
+    }
+
+
+    public Transform GetTransform() { return transform; }
 }
