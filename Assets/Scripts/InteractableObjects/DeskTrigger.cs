@@ -5,11 +5,13 @@ using UnityEngine;
 public class DeskTrigger : MonoBehaviour, IInteractable {
 
 
-    private readonly CameraController.Cameras deskCamera = CameraController.Cameras.DeskCamera;
+    private CameraController.Cameras deskCamera = CameraController.Cameras.DeskCamera;
+
+    private PlayerInputActions playerInputActions;
 
 
-    public Transform GetTransform() {
-        return transform;
+    private void Start() {
+        playerInputActions = GameInput.Instance.GetInputActions();
     }
 
 
@@ -19,8 +21,19 @@ public class DeskTrigger : MonoBehaviour, IInteractable {
     }
 
 
+    public Transform GetTransform() { return transform; }
+
+
     private void EnterDeskView() {
         CameraController.Instance.SetActiveCamera(deskCamera);
+        playerInputActions.PlayerWalking.Disable();
         // change active input preset
+        // to do: change to controlling desk camera instead of player camera
+    }
+
+
+    private void ExitDeskView() {
+        CameraController.Instance.SetActiveCamera(CameraController.Cameras.MainCamera);
+        playerInputActions.PlayerWalking.Enable();
     }
 }

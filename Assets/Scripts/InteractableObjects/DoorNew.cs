@@ -32,5 +32,4 @@ public class DoorNew : MonoBehaviour, IInteractable {
 
 
     public Transform GetTransform() { return transform; }
-
 }
