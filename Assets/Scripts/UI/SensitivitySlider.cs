@@ -6,18 +6,12 @@ using UnityEngine.UI;
 
 public class SensitivitySlider : MonoBehaviour {
 
-
-    [SerializeField] private PlayerController playerController;
-
-
     [SerializeField] private Slider sensitivitySlider;
-
 
     [SerializeField] private TextMeshProUGUI sliderValueTextField;
 
-
-    [SerializeField] private float maxSliderValue;
-    [SerializeField] private float minSliderValue;
+    private float minSliderValue = 0f;
+    private float maxSliderValue = 50f;   
 
 
     private void Awake() {
@@ -28,13 +22,13 @@ public class SensitivitySlider : MonoBehaviour {
     private void Start() {
         sensitivitySlider.maxValue = maxSliderValue;
         sensitivitySlider.minValue = minSliderValue;
-        sensitivitySlider.value = playerController.GetMouseSensitivity();
+        sensitivitySlider.value = GameSettings.MouseSensitivity;
         SetTextField();
     }
 
 
     private void ChangeSensitivity(float sensitivityValue) {
-        playerController.SetMouseSensitivity(sensitivityValue);
+        GameSettings.SetMouseSensitivity(sensitivityValue);
         SetTextField();
     }
 

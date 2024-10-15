@@ -12,4 +12,8 @@ public class GameManager : MonoBehaviour
 
         CursorController.Instance.HideCursor();
     }
+
+    private void Start() {
+        GameSettings.SettingsReset();
+    }
 }
