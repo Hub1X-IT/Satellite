@@ -16,6 +16,9 @@ public class SmartphoneController : MonoBehaviour {
     private void Start() {
         GameInput.Instance.OnSmartphoneToggleAction += GameInput_OnSmartphoneToggleAction;
 
+        Debug.Log(smartphoneVisual);
+        Debug.Log(defaultSmartphonePosition);
+
         smartphoneVisual.SetPosition(defaultSmartphonePosition);
     }
 

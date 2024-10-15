@@ -36,7 +36,7 @@ public class GameInput : MonoBehaviour {
         playerInputActions.PlayerWalking.Enable();
 
         // !!!!!!!!!!!!!! disable !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        playerInputActions.Monitor.Enable();
+        // playerInputActions.Monitor.Enable();
 
         
         playerInputActions.All.Pause.performed += Pause_performed;
