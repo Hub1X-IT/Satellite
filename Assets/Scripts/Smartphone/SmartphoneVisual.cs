@@ -33,5 +33,5 @@ public class SmartphoneVisual : MonoBehaviour
 
     public void SetPosition(Vector2 position) {
         smartphoneImage.rectTransform.localPosition = position;
-    }    
+    }
 }
