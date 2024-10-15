@@ -8,7 +8,7 @@ public class SmartphoneVisual : MonoBehaviour
     private Animator smartphoneAnimator;
 
 
-    private Image smartphoneImage;
+    private RectTransform smartphoneTransform;
 
 
     private const string PHONE_ON = "PhoneOn";
@@ -17,7 +17,7 @@ public class SmartphoneVisual : MonoBehaviour
 
     private void Awake() {
         smartphoneAnimator = GetComponent<Animator>();
-        smartphoneImage = GetComponent<Image>();
+        smartphoneTransform = GetComponent<RectTransform>();
     }
 
 
@@ -32,6 +32,6 @@ public class SmartphoneVisual : MonoBehaviour
 
 
     public void SetPosition(Vector2 position) {
-        smartphoneImage.rectTransform.localPosition = position;
+        smartphoneTransform.localPosition = position;
     }
 }
