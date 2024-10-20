@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class InteractionVisualControl : MonoBehaviour {
+public class InteractionVisualController : MonoBehaviour {
 
 
     [SerializeField] private InteractionUI interactionUI;

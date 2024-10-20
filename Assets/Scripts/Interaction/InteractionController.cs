@@ -20,7 +20,6 @@ public class InteractionController : MonoBehaviour {
 
 
     private void GameInput_OnInteractAction(object sender, System.EventArgs e) {
-        // Debug.Log("Interact"); // !!!!!!!!!!! Debug log !!!!!!!!!!!
         if (TryGetInteractableObject(out IInteractable interactableObject)) interactableObject.Interact();
     }   
 
@@ -35,8 +34,8 @@ public class InteractionController : MonoBehaviour {
         return false;
     }
 
-    
-    public bool TryGetInteractableObject_2(out IInteractable interactableObject) {
+    /*
+    public bool TryGetInteractableObject(out IInteractable interactableObject) {
         if (Physics.Raycast(cameraFollowObject.position, cameraFollowObject.forward, out RaycastHit hit,
             interactRange, InteractionData.Instance.InteractableLayerMasks)) {
 
@@ -48,4 +47,5 @@ public class InteractionController : MonoBehaviour {
         interactableObject = null;
         return false;
     }
+    */
 }

@@ -8,8 +8,8 @@ public class SmartphoneVisual : MonoBehaviour
     private RectTransform smartphoneTransform;
 
 
-    private const string PHONE_ON = "PhoneOn";
-    private const string PHONE_OFF = "PhoneOff";
+    private const string PHONE_ON_TRIGGER = "PhoneOn";
+    private const string PHONE_OFF_TRIGGER = "PhoneOff";
 
 
     private void Awake() {
@@ -18,13 +18,9 @@ public class SmartphoneVisual : MonoBehaviour
     }
 
 
-    public void TurnOn() {
-        smartphoneAnimator.SetTrigger(PHONE_ON);
-    }
-
-
-    public void TurnOff() {
-        smartphoneAnimator.SetTrigger(PHONE_OFF);
+    public void TurnOn(bool targetState) {
+        if (targetState) smartphoneAnimator.SetTrigger(PHONE_ON_TRIGGER);
+        else smartphoneAnimator.SetTrigger(PHONE_OFF_TRIGGER);
     }
 
 

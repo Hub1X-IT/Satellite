@@ -12,8 +12,7 @@ public class SmartphoneMenuUI : MonoBehaviour {
     private void Awake() {
         emailButton.onClick.AddListener(() => {
             emailUI.Show(Show);
-            Hide();
-            
+            Hide();            
         });
     }
 

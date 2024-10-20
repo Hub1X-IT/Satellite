@@ -34,10 +34,7 @@ public class GameInput : MonoBehaviour {
         playerInputActions.All.Enable();
         playerInputActions.PlayerWalkingAndDesk.Enable();
         playerInputActions.PlayerWalking.Enable();
-
-        // !!!!!!!!!!!!!! disable !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // playerInputActions.Monitor.Enable();
-
+        playerInputActions.Monitor.Disable(); // should be enabled to test monitor
         
         playerInputActions.All.Pause.performed += Pause_performed;
 
@@ -84,9 +81,7 @@ public class GameInput : MonoBehaviour {
 
     private void Keyboard_onTextInput(char c) {
         if (playerInputActions.Monitor.enabled) {
-            OnKeyboardInputAction?.Invoke(this, new OnKeyboardInputActionEventArgs {
-                key = c
-            });
+            OnKeyboardInputAction?.Invoke(this, new OnKeyboardInputActionEventArgs { key = c });
         }        
     }
 

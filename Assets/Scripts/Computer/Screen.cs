@@ -7,17 +7,8 @@ public class Screen : MonoBehaviour {
     private bool isTurnedOn;
 
 
-    public void TurnOn() {
-        isTurnedOn = true;
-        screen.SetActive(true);
-    }
-    
-    public void TurnOff() {
-        isTurnedOn = false;
-        screen.SetActive(false);
-    }
-
-    public bool IsTurnedOn() {
-        return isTurnedOn;
+    public void TurnOn(bool targetState) {
+        isTurnedOn = targetState;
+        screen.SetActive(targetState);
     }
 }

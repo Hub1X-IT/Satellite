@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerMenu : MonoBehaviour
 {
+    /*
     public static bool GameIsPaused = false;
     public GameObject playerPauseMenu;
     public GameObject playerOptions;
@@ -59,4 +60,5 @@ public class PlayerMenu : MonoBehaviour
     {
         Debug.Log("Loading Menu...");
     }
+    */
 }

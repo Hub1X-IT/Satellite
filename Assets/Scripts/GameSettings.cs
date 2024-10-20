@@ -6,7 +6,7 @@ public class GameSettings : MonoBehaviour {
     private const float defaultMouseSensitivity = 25f;
     private const string PLAYER_PREFS_MOUSE_SENSITIVITY = "mouseSensitivity";
 
-    public static void SettingsReset() {
+    public static void ResetSettings() {
         MouseSensitivity = PlayerPrefs.GetFloat(PLAYER_PREFS_MOUSE_SENSITIVITY, defaultMouseSensitivity);
     }
 
