@@ -1,27 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractVisual : MonoBehaviour
+public class InteractionVisual : MonoBehaviour
 {
     private Outline outline;
 
     [SerializeField] private string interactMessage;
-    
 
-    void Start()
-    {
+
+    void Start() {
         outline = GetComponent<Outline>();
         DisableOutline();
     }
 
-    public void EnableOutline()
-    {
+    public void EnableOutline() {
         outline.enabled = true;
     }
-    
-    public void DisableOutline()
-    {
+
+    public void DisableOutline() {
         outline.enabled = false;
     }
 

@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class DeskCameraMovementController : MonoBehaviour {
-
+public class PlayerCameraController : MonoBehaviour {
 
     [SerializeField] private Transform cameraFollowObject;
+
 
     private Vector2 rotationInput;
 
@@ -25,13 +23,13 @@ public class DeskCameraMovementController : MonoBehaviour {
         // Handle X axis rotation - rotating only the camera
         Vector3 cameraRotation = cameraFollowObject.rotation.eulerAngles;
 
-        if (cameraRotation.x > 180f) {
-            cameraRotation.x -= 360f;
-        }
-        {
-            // eulerAngles always maps rotation to a positive value so if it is more than 180 degrees, you have to make it negative so that you can clamp it
-            // For example: when rotation equals -20, you get 340 which is greater than 90 so it would be clamped to 90 degrees, although it should have been left as it is
-        }
+        if (cameraRotation.x > 180f) cameraRotation.x -= 360f;
+
+        /*
+        eulerAngles always maps rotation to a positive value so if it is more than 180 degrees, you have to make it negative so that you can clamp it
+        For example: when rotation equals -20, you get 340 which is greater than 90 so it would be clamped to 90 degrees, although it should have been left as it is
+        */
+
         cameraRotation.x += -rotationInput.y * GameSettings.MouseSensitivity * Time.deltaTime;
 
         // Clamp camera X rotation

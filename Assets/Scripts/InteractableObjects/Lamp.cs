@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Lamp : MonoBehaviour, IInteractable {
@@ -13,45 +11,24 @@ public class Lamp : MonoBehaviour, IInteractable {
     // private int onOffCycles;
     // private int maxOnOffCycles = 5;
 
+    private void TurnOnOff(bool targetState) {
+        Debug.Log("Lamp: TurnOnOff(), TargetState: " + targetState);
 
-    private void TurnOn() {
-        Debug.Log("TurnOn");
-
-        isTurnedOn = true;
+        isTurnedOn = targetState;
 
         foreach (GameObject obj in turnedOnObjects) {
-            obj.SetActive(true);
+            obj.SetActive(targetState);
         }
         foreach (GameObject obj in turnedOffObjects) {
-            obj.SetActive(false);
+            obj.SetActive(!targetState);
         }
+
+        // if (!targetState) onOffCycles++;
     }
-
-    private void TurnOff() {
-        Debug.Log("TurnOff");
-
-        isTurnedOn = false;
-        foreach (GameObject obj in turnedOnObjects) {
-            obj.SetActive(true);
-        }
-
-        foreach (GameObject obj in turnedOnObjects) {
-            obj.SetActive(false);
-        }
-
-        // onOffCycles++;
-    }
-
+        
     public void Interact() {
-        if (!isTurnedOn) {
-            TurnOn();
-        }
-        else {
-            TurnOff();
-        }
+        TurnOnOff(!isTurnedOn);
     }
 
-    public Transform GetTransform() {
-        return transform;
-    }
+    public Transform GetTransform() { return transform; }
 }

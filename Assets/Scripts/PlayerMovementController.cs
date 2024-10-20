@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -13,7 +11,7 @@ public class PlayerMovementController : MonoBehaviour {
 
 
     private const float gravity = -9.81f;
-    [SerializeField] private float gravityMultiplier = 1f;
+    [SerializeField] private float gravityMultiplier = 0.8f;
     private float verticalVelocity;
 
 

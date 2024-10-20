@@ -1,39 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class DeskTrigger : MonoBehaviour, IInteractable {
 
-
-    private CameraController.Cameras deskCamera = CameraController.Cameras.DeskCamera;
-
-    private PlayerInputActions playerInputActions;
-
-
-    private void Start() {
-        playerInputActions = GameInput.Instance.GetInputActions();
-    }
+    public event EventHandler OnDeskTrigger;
 
 
     public void Interact() {
-        Debug.Log("Desk: Interact()");
-        EnterDeskView();
+        OnDeskTrigger?.Invoke(this, EventArgs.Empty);
+        // Debug.Log("DeskTrigger: Interact()"); // !!!!!!!!!! Debug Log !!!!!!!!!!
     }
 
 
     public Transform GetTransform() { return transform; }
-
-
-    private void EnterDeskView() {
-        CameraController.Instance.SetActiveCamera(deskCamera);
-        playerInputActions.PlayerWalking.Disable();
-        // change active input preset
-        // to do: change to controlling desk camera instead of player camera
-    }
-
-
-    private void ExitDeskView() {
-        CameraController.Instance.SetActiveCamera(CameraController.Cameras.MainCamera);
-        playerInputActions.PlayerWalking.Enable();
-    }
 }
