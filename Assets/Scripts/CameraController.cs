@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Cinemachine;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour {
@@ -8,8 +8,8 @@ public class CameraController : MonoBehaviour {
     public static CameraController Instance { get; private set; }
 
 
-    [SerializeField] private SerializableDictionary<Cameras, CinemachineVirtualCamera> cameraSerializableDictionary;
-    private Dictionary<Cameras, CinemachineVirtualCamera> cameraDictionary;
+    [SerializeField] private SerializableDictionary<Cameras, CinemachineCamera> cameraSerializableDictionary;
+    private Dictionary<Cameras, CinemachineCamera> cameraDictionary;
     
 
     public enum Cameras {
