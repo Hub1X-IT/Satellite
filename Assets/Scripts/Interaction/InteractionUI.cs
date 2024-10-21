@@ -6,11 +6,9 @@ public class InteractionUI : MonoBehaviour  {
 
     [SerializeField] private TextMeshProUGUI interactionText;
 
-
-    private string defaultText;
-    
+    private string defaultText;    
         
-    [SerializeField] private string interactKeyString = "[F]";
+    private const string INTERACT_KEY_STRING = "[E]";
 
 
     private void Awake() {
@@ -20,7 +18,7 @@ public class InteractionUI : MonoBehaviour  {
 
 
     public void EnableInteractionText(string interactString) {
-        interactionText.text = interactString + " " + interactKeyString;
+        interactionText.text = interactString + INTERACT_KEY_STRING;
         interactionText.gameObject.SetActive(true);
     }
 

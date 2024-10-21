@@ -48,12 +48,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 0.56294703, z: 1}
-  m_Center: {x: 0, y: 0.062140226, z: 0}
+  m_Size: {x: 2.06, y: 0.8, z: 1.1}
+  m_Center: {x: 0, y: -0.5, z: 0}
 --- !u!114 &7979755530245201006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,6 +78,8 @@ GameObject:
   - component: {fileID: 1431579275035812333}
   - component: {fileID: 2943672292617445798}
   - component: {fileID: 8723946184278597100}
+  - component: {fileID: 7529500277441552196}
+  - component: {fileID: 7909298574141089393}
   m_Layer: 0
   m_Name: Desk
   m_TagString: Untagged
@@ -158,6 +160,38 @@ MonoBehaviour:
   clampYRotation: 0
   minYRotation: 0
   maxYRotation: 0
+--- !u!114 &7529500277441552196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5895523851997491013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 274a9761aec9c4248b09ded75a53ea14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outline: {fileID: 7909298574141089393}
+  interactMessage: 'Desk - interact: '
+--- !u!114 &7909298574141089393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5895523851997491013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &7114843106205404417
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,12 +238,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Priority:
-    Enabled: 0
-    m_Value: 0
+    Enabled: 1
+    m_Value: 10
   OutputChannel: 1
   StandbyUpdate: 2
-  m_StreamingVersion: 20170927
-  m_LegacyPriority: 10
+  m_StreamingVersion: 20241001
+  m_LegacyPriority: 0
   Target:
     TrackingTarget: {fileID: 4203882949880567831}
     LookAtTarget: {fileID: 0}

@@ -65,36 +65,16 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Interact"",
-                    ""type"": ""Button"",
-                    ""id"": ""779c7c53-43e8-480a-99df-51dd49b0d68e"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""SmartphoneToggle"",
                     ""type"": ""Button"",
                     ""id"": ""ec7cb3d2-4248-4cf7-bae4-b2efd974dc60"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""e5e723eb-09f7-47de-8c9d-40b9d644966f"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": """",
                     ""id"": ""1b0ee327-bb7e-421a-91e4-6566c18a22b4"",
@@ -131,6 +111,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""6a99ab8b-a478-4638-8b28-c9da480ce756"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -188,14 +177,95 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""47ee5e07-b34b-4595-9c22-4ced412dc79d"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
         {
             ""name"": ""Desk"",
             ""id"": ""69ef7312-dcbb-4a29-a88d-7ed7793b1001"",
-            ""actions"": [],
-            ""bindings"": []
+            ""actions"": [
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""575a4810-4699-4057-8b1d-bcf519d97db2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ExitDeskView"",
+                    ""type"": ""Button"",
+                    ""id"": ""34c9a93b-8748-4a42-a1e9-ba1ec4ada3f5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""403a7fea-24cd-4aa5-bb50-78ab88a8eebb"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ee2bb422-c6d2-40e6-8f05-330437abea2e"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ExitDeskView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""LaptopAndMonitor"",
+            ""id"": ""e78e4f17-246c-4115-8ccc-6fb6703ab68a"",
+            ""actions"": [
+                {
+                    ""name"": ""Exit"",
+                    ""type"": ""Button"",
+                    ""id"": ""0ae32724-6d25-45e3-93bf-86c4d5056b46"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""a31fc6a1-5db2-4c27-b45b-fc4248275547"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         },
         {
             ""name"": ""Monitor"",
@@ -205,7 +275,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""Submit"",
                     ""type"": ""Button"",
                     ""id"": ""7b6be9f5-8fed-4963-bc53-368e7f01d91f"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -305,13 +375,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // PlayerWalkingAndDesk
         m_PlayerWalkingAndDesk = asset.FindActionMap("PlayerWalkingAndDesk", throwIfNotFound: true);
         m_PlayerWalkingAndDesk_Rotate = m_PlayerWalkingAndDesk.FindAction("Rotate", throwIfNotFound: true);
-        m_PlayerWalkingAndDesk_Interact = m_PlayerWalkingAndDesk.FindAction("Interact", throwIfNotFound: true);
         m_PlayerWalkingAndDesk_SmartphoneToggle = m_PlayerWalkingAndDesk.FindAction("SmartphoneToggle", throwIfNotFound: true);
         // PlayerWalking
         m_PlayerWalking = asset.FindActionMap("PlayerWalking", throwIfNotFound: true);
         m_PlayerWalking_Move = m_PlayerWalking.FindAction("Move", throwIfNotFound: true);
+        m_PlayerWalking_Interact = m_PlayerWalking.FindAction("Interact", throwIfNotFound: true);
         // Desk
         m_Desk = asset.FindActionMap("Desk", throwIfNotFound: true);
+        m_Desk_Interact = m_Desk.FindAction("Interact", throwIfNotFound: true);
+        m_Desk_ExitDeskView = m_Desk.FindAction("ExitDeskView", throwIfNotFound: true);
+        // LaptopAndMonitor
+        m_LaptopAndMonitor = asset.FindActionMap("LaptopAndMonitor", throwIfNotFound: true);
+        m_LaptopAndMonitor_Exit = m_LaptopAndMonitor.FindAction("Exit", throwIfNotFound: true);
         // Monitor
         m_Monitor = asset.FindActionMap("Monitor", throwIfNotFound: true);
         m_Monitor_Submit = m_Monitor.FindAction("Submit", throwIfNotFound: true);
@@ -326,6 +401,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         UnityEngine.Debug.Assert(!m_PlayerWalkingAndDesk.enabled, "This will cause a leak and performance issues, PlayerInputActions.PlayerWalkingAndDesk.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_PlayerWalking.enabled, "This will cause a leak and performance issues, PlayerInputActions.PlayerWalking.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Desk.enabled, "This will cause a leak and performance issues, PlayerInputActions.Desk.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_LaptopAndMonitor.enabled, "This will cause a leak and performance issues, PlayerInputActions.LaptopAndMonitor.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Monitor.enabled, "This will cause a leak and performance issues, PlayerInputActions.Monitor.Disable() has not been called.");
     }
 
@@ -435,14 +511,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerWalkingAndDesk;
     private List<IPlayerWalkingAndDeskActions> m_PlayerWalkingAndDeskActionsCallbackInterfaces = new List<IPlayerWalkingAndDeskActions>();
     private readonly InputAction m_PlayerWalkingAndDesk_Rotate;
-    private readonly InputAction m_PlayerWalkingAndDesk_Interact;
     private readonly InputAction m_PlayerWalkingAndDesk_SmartphoneToggle;
     public struct PlayerWalkingAndDeskActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerWalkingAndDeskActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Rotate => m_Wrapper.m_PlayerWalkingAndDesk_Rotate;
-        public InputAction @Interact => m_Wrapper.m_PlayerWalkingAndDesk_Interact;
         public InputAction @SmartphoneToggle => m_Wrapper.m_PlayerWalkingAndDesk_SmartphoneToggle;
         public InputActionMap Get() { return m_Wrapper.m_PlayerWalkingAndDesk; }
         public void Enable() { Get().Enable(); }
@@ -456,9 +530,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Rotate.started += instance.OnRotate;
             @Rotate.performed += instance.OnRotate;
             @Rotate.canceled += instance.OnRotate;
-            @Interact.started += instance.OnInteract;
-            @Interact.performed += instance.OnInteract;
-            @Interact.canceled += instance.OnInteract;
             @SmartphoneToggle.started += instance.OnSmartphoneToggle;
             @SmartphoneToggle.performed += instance.OnSmartphoneToggle;
             @SmartphoneToggle.canceled += instance.OnSmartphoneToggle;
@@ -469,9 +540,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Rotate.started -= instance.OnRotate;
             @Rotate.performed -= instance.OnRotate;
             @Rotate.canceled -= instance.OnRotate;
-            @Interact.started -= instance.OnInteract;
-            @Interact.performed -= instance.OnInteract;
-            @Interact.canceled -= instance.OnInteract;
             @SmartphoneToggle.started -= instance.OnSmartphoneToggle;
             @SmartphoneToggle.performed -= instance.OnSmartphoneToggle;
             @SmartphoneToggle.canceled -= instance.OnSmartphoneToggle;
@@ -497,11 +565,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerWalking;
     private List<IPlayerWalkingActions> m_PlayerWalkingActionsCallbackInterfaces = new List<IPlayerWalkingActions>();
     private readonly InputAction m_PlayerWalking_Move;
+    private readonly InputAction m_PlayerWalking_Interact;
     public struct PlayerWalkingActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerWalkingActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PlayerWalking_Move;
+        public InputAction @Interact => m_Wrapper.m_PlayerWalking_Interact;
         public InputActionMap Get() { return m_Wrapper.m_PlayerWalking; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -514,6 +584,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IPlayerWalkingActions instance)
@@ -521,6 +594,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IPlayerWalkingActions instance)
@@ -542,10 +618,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     // Desk
     private readonly InputActionMap m_Desk;
     private List<IDeskActions> m_DeskActionsCallbackInterfaces = new List<IDeskActions>();
+    private readonly InputAction m_Desk_Interact;
+    private readonly InputAction m_Desk_ExitDeskView;
     public struct DeskActions
     {
         private @PlayerInputActions m_Wrapper;
         public DeskActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Interact => m_Wrapper.m_Desk_Interact;
+        public InputAction @ExitDeskView => m_Wrapper.m_Desk_ExitDeskView;
         public InputActionMap Get() { return m_Wrapper.m_Desk; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -555,10 +635,22 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_DeskActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_DeskActionsCallbackInterfaces.Add(instance);
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
+            @ExitDeskView.started += instance.OnExitDeskView;
+            @ExitDeskView.performed += instance.OnExitDeskView;
+            @ExitDeskView.canceled += instance.OnExitDeskView;
         }
 
         private void UnregisterCallbacks(IDeskActions instance)
         {
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
+            @ExitDeskView.started -= instance.OnExitDeskView;
+            @ExitDeskView.performed -= instance.OnExitDeskView;
+            @ExitDeskView.canceled -= instance.OnExitDeskView;
         }
 
         public void RemoveCallbacks(IDeskActions instance)
@@ -576,6 +668,52 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public DeskActions @Desk => new DeskActions(this);
+
+    // LaptopAndMonitor
+    private readonly InputActionMap m_LaptopAndMonitor;
+    private List<ILaptopAndMonitorActions> m_LaptopAndMonitorActionsCallbackInterfaces = new List<ILaptopAndMonitorActions>();
+    private readonly InputAction m_LaptopAndMonitor_Exit;
+    public struct LaptopAndMonitorActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public LaptopAndMonitorActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Exit => m_Wrapper.m_LaptopAndMonitor_Exit;
+        public InputActionMap Get() { return m_Wrapper.m_LaptopAndMonitor; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(LaptopAndMonitorActions set) { return set.Get(); }
+        public void AddCallbacks(ILaptopAndMonitorActions instance)
+        {
+            if (instance == null || m_Wrapper.m_LaptopAndMonitorActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_LaptopAndMonitorActionsCallbackInterfaces.Add(instance);
+            @Exit.started += instance.OnExit;
+            @Exit.performed += instance.OnExit;
+            @Exit.canceled += instance.OnExit;
+        }
+
+        private void UnregisterCallbacks(ILaptopAndMonitorActions instance)
+        {
+            @Exit.started -= instance.OnExit;
+            @Exit.performed -= instance.OnExit;
+            @Exit.canceled -= instance.OnExit;
+        }
+
+        public void RemoveCallbacks(ILaptopAndMonitorActions instance)
+        {
+            if (m_Wrapper.m_LaptopAndMonitorActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ILaptopAndMonitorActions instance)
+        {
+            foreach (var item in m_Wrapper.m_LaptopAndMonitorActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_LaptopAndMonitorActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public LaptopAndMonitorActions @LaptopAndMonitor => new LaptopAndMonitorActions(this);
 
     // Monitor
     private readonly InputActionMap m_Monitor;
@@ -653,15 +791,21 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public interface IPlayerWalkingAndDeskActions
     {
         void OnRotate(InputAction.CallbackContext context);
-        void OnInteract(InputAction.CallbackContext context);
         void OnSmartphoneToggle(InputAction.CallbackContext context);
     }
     public interface IPlayerWalkingActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
     public interface IDeskActions
     {
+        void OnInteract(InputAction.CallbackContext context);
+        void OnExitDeskView(InputAction.CallbackContext context);
+    }
+    public interface ILaptopAndMonitorActions
+    {
+        void OnExit(InputAction.CallbackContext context);
     }
     public interface IMonitorActions
     {

@@ -7,5 +7,7 @@ public class Smartphone : MonoBehaviour, IInteractable {
         gameObject.SetActive(false);
     }
 
+    public InteractionVisual GetInteractionVisual() { return null; }
+
     public Transform GetTransform() { return transform; }
 }

@@ -1,14 +1,14 @@
 using System;
 using UnityEngine;
 
-public class DoorTrigger : MonoBehaviour, IInteractable {
-
+public class DoorTrigger : MonoBehaviour, IInteractable {  
 
     public event EventHandler OnDoorInteract;
 
+    private InteractionVisual interactionVisual;
 
     private void Start() {
-        // gameObject.layer = InteractionData.Instance.DefaultInteractableLayerMask;
+        // gameObject.layer = InteractionController.Instance.DefaultInteractableLayerMask;
     }
 
 
@@ -16,6 +16,9 @@ public class DoorTrigger : MonoBehaviour, IInteractable {
         OnDoorInteract?.Invoke(this, EventArgs.Empty);
     }
 
+    public void SetInteractionVisual(InteractionVisual interactionVisual) { this.interactionVisual = interactionVisual; } // may not be an optimal solution
+
+    public InteractionVisual GetInteractionVisual() { return interactionVisual; }
 
     public Transform GetTransform() { return transform; }
 }

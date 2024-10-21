@@ -30,5 +30,7 @@ public class Lamp : MonoBehaviour, IInteractable {
         TurnOnOff(!isTurnedOn);
     }
 
+    public InteractionVisual GetInteractionVisual() { return null; }
+
     public Transform GetTransform() { return transform; }
 }

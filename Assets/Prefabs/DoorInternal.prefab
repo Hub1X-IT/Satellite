@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6180264497928875334}
   - component: {fileID: 3797692325558940782}
+  - component: {fileID: 7089593630320063831}
   m_Layer: 0
   m_Name: DoorInternal
   m_TagString: Untagged
@@ -49,6 +50,20 @@ MonoBehaviour:
   doorAnimator: {fileID: 7123476716468756282}
   isInverted: 0
   defaultDoorState: 0
+--- !u!114 &7089593630320063831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4621514317816309410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 274a9761aec9c4248b09ded75a53ea14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outline: {fileID: 2826446713497991706}
+  interactMessage: 'Door - interact: '
 --- !u!1 &6965882521952114633
 GameObject:
   m_ObjectHideFlags: 0
@@ -60,6 +75,7 @@ GameObject:
   - component: {fileID: 3418960463295932478}
   - component: {fileID: 3715997302311126500}
   - component: {fileID: 7123476716468756282}
+  - component: {fileID: 2826446713497991706}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -127,6 +143,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2826446713497991706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6965882521952114633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &7954484941315031076
 GameObject:
   m_ObjectHideFlags: 0

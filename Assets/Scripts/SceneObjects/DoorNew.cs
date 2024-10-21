@@ -16,32 +16,37 @@ public class DoorNew : MonoBehaviour {
 
     private const string IS_INVERTED_BOOL = "IsInverted";
     private const string DOOR_OPEN_BOOL = "DoorOpen";
-    
+
+
+    private InteractionVisual interactionVisual;
+
 
     private void Awake() {
         // doorTrigger = GetComponentInChildren<DoorTrigger>();
         // doorAnimator = GetComponentInChildren<Animator>();
         doorAnimator.SetBool(IS_INVERTED_BOOL, isInverted);
+        interactionVisual = GetComponent<InteractionVisual>();
     }
 
 
     private void Start() {
         doorTrigger.OnDoorInteract += DoorTrigger_OnDoorInteract;
+        doorTrigger.SetInteractionVisual(interactionVisual);
     }
 
 
     private void OnEnable() {
         doorOpen = defaultDoorState;
-        DoorOpenClose(doorOpen);
+        OpenDoor(doorOpen);
     }
 
 
     private void DoorTrigger_OnDoorInteract(object sender, System.EventArgs e) {
-        DoorOpenClose(!doorOpen);
+        OpenDoor(!doorOpen);
     }
 
 
-    public void DoorOpenClose(bool targetState) {
+    public void OpenDoor(bool targetState) {        
         doorAnimator.SetBool(IS_INVERTED_BOOL, isInverted);
         doorAnimator.SetBool(DOOR_OPEN_BOOL, targetState);
         doorOpen = targetState;

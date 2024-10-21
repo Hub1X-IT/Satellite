@@ -13,7 +13,11 @@ public class GameInput : MonoBehaviour {
 
     public event EventHandler OnSmartphoneToggleAction;
 
-    public event EventHandler OnExitAction;
+    public event EventHandler OnExitDeskViewAction;
+
+    public event EventHandler OnLaptopAndMonitorExitAction;
+
+    public event EventHandler OnMonitorExitAction;
 
     public event EventHandler<OnKeyboardInputActionEventArgs> OnKeyboardInputAction;
     public class OnKeyboardInputActionEventArgs : EventArgs {        
@@ -29,35 +33,48 @@ public class GameInput : MonoBehaviour {
     private void Awake() {
         Instance = this;
 
-
         playerInputActions = new PlayerInputActions();
         playerInputActions.All.Enable();
         playerInputActions.PlayerWalkingAndDesk.Enable();
         playerInputActions.PlayerWalking.Enable();
-        playerInputActions.Monitor.Disable(); // should be enabled to test monitor
+        playerInputActions.LaptopAndMonitor.Disable();
+        playerInputActions.Monitor.Disable(); // should be enabled when testing monitor command prompt
         
         playerInputActions.All.Pause.performed += Pause_performed;
 
-        playerInputActions.PlayerWalkingAndDesk.Interact.performed += Interact_performed;
+        playerInputActions.PlayerWalking.Interact.performed += Interact_performed;
+
         playerInputActions.PlayerWalkingAndDesk.SmartphoneToggle.performed += SmartphoneToggle_performed;
+
+        playerInputActions.Desk.Interact.performed += Interact_performed; // Interact in Desk does the same thing as Interact in PlayerWalking
+        playerInputActions.Desk.ExitDeskView.performed += ExitDeskView_performed;
+
+        playerInputActions.LaptopAndMonitor.Exit.performed += LaptopAndMonitorExit_performed; // update the naming style/convention
 
         Keyboard.current.onTextInput += Keyboard_onTextInput;
 
-        playerInputActions.Monitor.Exit.performed += Exit_performed;
-        playerInputActions.Monitor.Submit.performed += Submit_performed;
+        playerInputActions.Monitor.Exit.performed += MonitorExit_performed;
+        playerInputActions.Monitor.Submit.performed += MonitorSubmit_performed;
     }
 
+    
 
     private void OnDestroy() {        
         playerInputActions.All.Pause.performed -= Pause_performed;
 
-        playerInputActions.PlayerWalkingAndDesk.Interact.performed -= Interact_performed;
+        playerInputActions.PlayerWalking.Interact.performed -= Interact_performed;
+
         playerInputActions.PlayerWalkingAndDesk.SmartphoneToggle.performed -= SmartphoneToggle_performed;
+
+        playerInputActions.Desk.Interact.performed -= Interact_performed;
+        playerInputActions.Desk.ExitDeskView.performed -= ExitDeskView_performed;
+
+        playerInputActions.LaptopAndMonitor.Exit.performed -= LaptopAndMonitorExit_performed;
 
         Keyboard.current.onTextInput -= Keyboard_onTextInput;
 
-        playerInputActions.Monitor.Exit.performed -= Exit_performed;
-        playerInputActions.Monitor.Submit.performed -= Submit_performed;
+        playerInputActions.Monitor.Exit.performed -= MonitorExit_performed;
+        playerInputActions.Monitor.Submit.performed -= MonitorSubmit_performed;
 
 
         playerInputActions.Dispose();
@@ -100,13 +117,20 @@ public class GameInput : MonoBehaviour {
         OnSmartphoneToggleAction?.Invoke(this, EventArgs.Empty);
     }
 
+    private void ExitDeskView_performed(InputAction.CallbackContext obj) {
+        OnExitDeskViewAction?.Invoke(this, EventArgs.Empty);
+    }
 
-    private void Exit_performed(InputAction.CallbackContext obj) {
-        OnExitAction?.Invoke(this, EventArgs.Empty);
+    private void LaptopAndMonitorExit_performed(InputAction.CallbackContext obj) {
+        OnLaptopAndMonitorExitAction?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void MonitorExit_performed(InputAction.CallbackContext obj) {
+        OnMonitorExitAction?.Invoke(this, EventArgs.Empty);
     }
 
 
-    private void Submit_performed(InputAction.CallbackContext obj) {
+    private void MonitorSubmit_performed(InputAction.CallbackContext obj) {
         OnSubmitAction?.Invoke(this, EventArgs.Empty);
     }
 

@@ -35,6 +35,7 @@ public class Door : MonoBehaviour, IInteractable {
         
     }
 
+    public InteractionVisual GetInteractionVisual() { return null; }
 
     public Transform GetTransform() { return transform; }
 }

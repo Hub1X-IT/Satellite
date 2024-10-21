@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class InteractionVisualController : MonoBehaviour {
 
+    // should be put in the HUD object
 
     [SerializeField] private InteractionUI interactionUI;
 
@@ -35,14 +36,12 @@ public class InteractionVisualController : MonoBehaviour {
     }
     
 
-
     private void ChangeInteractVisuals(IInteractable interactableObject) {
-        Debug.Log("InteractionVisualControl: ChangeInteractVisual()");
-
         DisableInteractVisual(previousInteractVisual);
         previousInteractVisual = null;       
 
-        if (interactableObject.GetTransform().TryGetComponent<InteractionVisual>(out InteractionVisual interactVisual)) {
+        InteractionVisual interactVisual = interactableObject.GetInteractionVisual();
+        if (interactVisual != null) {
             EnableInteractVisual(interactVisual);
             previousInteractVisual = interactVisual;
         }
@@ -52,8 +51,7 @@ public class InteractionVisualController : MonoBehaviour {
 
 
     private void EnableInteractVisual(InteractionVisual interactVisual) {
-        Debug.Log("InteractionVisualControl: EnableInteractVisual()");
-        interactVisual.EnableOutline();
+        interactVisual.EnableOutline(true);
         string interactMessage = interactVisual.GetInteractMessage();
         interactionUI.EnableInteractionText(interactMessage);
 
@@ -62,9 +60,8 @@ public class InteractionVisualController : MonoBehaviour {
 
 
     private void DisableInteractVisual(InteractionVisual interactVisual) {
-        Debug.Log("InteractionVisualControl: DisableInteractVisual()");
         if (interactVisual != null) {
-            interactVisual.DisableOutline();
+            interactVisual.EnableOutline(false);
         }
         
         interactionUI.DisableInteractionText();
