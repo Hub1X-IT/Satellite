@@ -4,7 +4,7 @@ public class InteractionVisualController : MonoBehaviour {
 
     // should be put in the HUD object
 
-    [SerializeField] private InteractionUI interactionUI;
+    private InteractionUI interactionUI;
 
 
     private InteractionVisual previousInteractVisual;
@@ -14,7 +14,10 @@ public class InteractionVisualController : MonoBehaviour {
     private IInteractable previousInteractableObject;    
     private bool interactVisualEnabled;
 
-        
+    private void Awake() {
+        interactionUI = GetComponentInChildren<InteractionUI>();
+    }
+
     private void Update() {
         CheckForInteraction();
     }

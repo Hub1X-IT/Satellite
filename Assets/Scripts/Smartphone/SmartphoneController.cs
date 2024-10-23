@@ -2,14 +2,17 @@ using UnityEngine;
 
 public class SmartphoneController : MonoBehaviour {
 
-    [SerializeField] SmartphoneVisual smartphoneVisual;
+    private SmartphoneVisual smartphoneVisual;
 
 
     [SerializeField] private Vector2 defaultSmartphonePosition = new Vector2(640, -800);
 
 
-    bool smartphoneOn = false;    
+    bool smartphoneOn = false;
 
+    private void Awake() {
+        smartphoneVisual = GetComponentInChildren<SmartphoneVisual>();
+    }
 
     private void Start() {
         GameInput.Instance.OnSmartphoneToggleAction += GameInput_OnSmartphoneToggleAction;

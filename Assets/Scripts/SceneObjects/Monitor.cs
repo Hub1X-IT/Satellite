@@ -4,7 +4,9 @@ public class Monitor : MonoBehaviour {
 
     private PlayerInputActions playerInputActions;
 
-    [SerializeField] MonitorTrigger monitorTrigger;
+    private MonitorTrigger monitorTrigger;
+
+    private Desk desk;
 
     private bool isInMonitorView;
 
@@ -12,8 +14,16 @@ public class Monitor : MonoBehaviour {
 
     private InteractionVisual interactionVisual;
 
+    public bool CanExitMonitorView { get; set; }
+
     private void Awake() {
+        monitorTrigger = GetComponentInChildren<MonitorTrigger>();
+
+        desk = GetComponentInParent<Desk>();
+
         interactionVisual = GetComponent<InteractionVisual>();
+
+        CanExitMonitorView = true;
     }
 
     private void Start() {
@@ -34,12 +44,20 @@ public class Monitor : MonoBehaviour {
 
 
     private void GameInput_OnLaptopAndMonitorExitAction(object sender, System.EventArgs e) {
-        ExitMonitorView();
+        if (CanExitMonitorView) ExitMonitorView();
+    }
+
+
+    public void EnableMonitorTrigger(bool targetState) {
+        monitorTrigger.gameObject.SetActive(targetState);
     }
 
 
     private void EnterMonitorView() {
         isInMonitorView = true;
+
+        desk.CanExitDeskView = false;
+        desk.EnableDeskCameraRotationController(false);
 
         CameraController.Instance.SetActiveCamera(MONITOR_CAMERA);
         GameManager.Instance.ShowCrosshair(false);
@@ -50,13 +68,15 @@ public class Monitor : MonoBehaviour {
 
 
     private void ExitMonitorView() {
-        playerInputActions.LaptopAndMonitor.Disable();
+        playerInputActions.LaptopAndMonitor.Disable();        
         
         GameManager.Instance.ShowCursor(false);
         GameManager.Instance.ShowCrosshair(true);
         CameraController.Instance.SetActiveCamera(CameraController.Cameras.MainCamera);
 
+        desk.EnableDeskCameraRotationController(true);
+        desk.CanExitDeskView = true;
+
         isInMonitorView = false;
     }
-
 }

@@ -5,11 +5,13 @@ public class GameManager : MonoBehaviour {
 
     public bool GamePaused { get; private set; }
 
-    [SerializeField] CanvasRenderer crosshair; // probably should be moved to a script
+    private CrosshairController crosshairController;
 
 
     private void Awake() {
         Instance = this;
+        
+        crosshairController = FindAnyObjectByType<CrosshairController>(); // there should be only one CrosshairController in the scene
 
         ShowCursor(false);
     }
@@ -47,6 +49,6 @@ public class GameManager : MonoBehaviour {
 
 
     public void ShowCrosshair(bool targetState) {
-        crosshair.gameObject.SetActive(targetState);
+        crosshairController.ShowCrosshair(targetState);
     }
 }

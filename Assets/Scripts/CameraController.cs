@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour {
 
-
     public static CameraController Instance { get; private set; }
 
 
@@ -39,7 +38,7 @@ public class CameraController : MonoBehaviour {
     private void Awake() {
         Instance = this;
         cameraDictionary = CameraSerializableDictionary.GetDictionary();
-        cinemachineCameraDictionary = CinemachineCameraSerializableDictionary.GetDictionary();        
+        cinemachineCameraDictionary = CinemachineCameraSerializableDictionary.GetDictionary();
     }
 
 
@@ -52,7 +51,6 @@ public class CameraController : MonoBehaviour {
         TurnCameraOn(currentCamera, true);
     }
 
-
     private void UpdateCinemachineCamera() {
         TurnCinemachineCameraOn(previousCinemachineCamera, false);
         TurnCinemachineCameraOn(currentCinemachineCamera, true);
@@ -64,23 +62,19 @@ public class CameraController : MonoBehaviour {
         UpdateCamera();
     }
 
-
     public void SetActiveCinemachineCamera(CinemachineCameras cinemachineCamera) {
         previousCinemachineCamera = currentCinemachineCamera;
         currentCinemachineCamera = cinemachineCamera;
         UpdateCinemachineCamera();
     }
 
-
     private void TurnCameraOn(Cameras camera, bool targetState) {
         if (cameraDictionary[camera] != null) cameraDictionary[camera].gameObject.SetActive(targetState);
     }
 
-
     private void TurnCinemachineCameraOn(CinemachineCameras cinemachineCamera, bool targetState) {
         if (cinemachineCameraDictionary[cinemachineCamera] != null) cinemachineCameraDictionary[cinemachineCamera].gameObject.SetActive(targetState);
     }
-
 
     private void InitializeMainCamera() {
         foreach (Cameras camera in cameraDictionary.Keys) {
@@ -98,7 +92,7 @@ public class CameraController : MonoBehaviour {
         TurnCinemachineCameraOn(currentCinemachineCamera, true);
     }
 
-    public CinemachineCameras GetActiveCinemachineCamera() { return currentCinemachineCamera; }
-
     public Cameras GetActiveCamera() { return currentCamera; }
+
+    public CinemachineCameras GetActiveCinemachineCamera() { return currentCinemachineCamera; }
 }

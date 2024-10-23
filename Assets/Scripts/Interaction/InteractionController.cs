@@ -13,7 +13,7 @@ public class InteractionController : MonoBehaviour {
     
 
     [SerializeField][Tooltip("Only one should be selected!")] private LayerMask defaultInteractableLayerMask;
-    [SerializeField] private LayerMask interactableLayerMasks;
+    [SerializeField][Tooltip("Select also the layers that interaction should not pass through")] private LayerMask interactableLayerMasks;
 
 
     public Camera MainCamera { get; private set; } // optional - can use Camera.main
@@ -46,19 +46,4 @@ public class InteractionController : MonoBehaviour {
         interactableObject = null;
         return false;
     }
-
-    /*
-    public bool TryGetInteractableObject(out IInteractable interactableObject) {
-        if (Physics.Raycast(cameraFollowObject.position, cameraFollowObject.forward, out RaycastHit hit,
-            interactRange, InteractionData.Instance.InteractableLayerMasks)) {
-
-            Debug.Log(hit.transform.gameObject); // !!!!! Debug log !!!!!!!!!!
-
-            interactableObject = hit.transform.GetComponent<IInteractable>();
-            if (interactableObject != null) return true;
-        }
-        interactableObject = null;
-        return false;
-    }
-    */
 }
