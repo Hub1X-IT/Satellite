@@ -8,11 +8,11 @@ public class MonitorUI : MonoBehaviour {
     [SerializeField] private TMP_InputField[] inputFields;
 
     private void Start() {
-        // monitor = FindFirstObjectByType<Monitor>();
+        // monitor = FindAnyObjectByType<Monitor>();
         inputFields = GetComponentsInChildren<TMP_InputField>();
         foreach (TMP_InputField inputField in inputFields) {
-            inputField.onSelect.AddListener((string _) => { monitor.CanExitMonitorView = false; });
-            inputField.onDeselect.AddListener((string _) => { monitor.CanExitMonitorView = true; });
+            inputField.onSelect.AddListener((_) => { monitor.CanExitMonitorView = false; });
+            inputField.onDeselect.AddListener((_) => { monitor.CanExitMonitorView = true; });
         }
     }
 }

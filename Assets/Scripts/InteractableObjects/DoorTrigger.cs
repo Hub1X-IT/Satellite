@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DoorTrigger : MonoBehaviour, IInteractable {  
 
-    public event EventHandler OnDoorInteract;
+    public event Action OnDoorInteract;
 
     private InteractionVisual interactionVisual;
 
@@ -13,7 +13,7 @@ public class DoorTrigger : MonoBehaviour, IInteractable {
 
 
     public void Interact() {
-        OnDoorInteract?.Invoke(this, EventArgs.Empty);
+        OnDoorInteract?.Invoke();
     }
 
     public void SetInteractionVisual(InteractionVisual interactionVisual) { this.interactionVisual = interactionVisual; } // may not be an optimal solution

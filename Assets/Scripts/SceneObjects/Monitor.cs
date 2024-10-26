@@ -10,7 +10,7 @@ public class Monitor : MonoBehaviour {
 
     private bool isInMonitorView;
 
-    private const CameraController.Cameras MONITOR_CAMERA = CameraController.Cameras.MonitorUICamera;
+    [SerializeField] private Camera monitorUICamera;
 
     private InteractionVisual interactionVisual;
 
@@ -23,28 +23,23 @@ public class Monitor : MonoBehaviour {
 
         interactionVisual = GetComponent<InteractionVisual>();
 
+        EnableMonitorTrigger(false);
+
+        isInMonitorView = false;
+        monitorUICamera.gameObject.SetActive(false);
+
         CanExitMonitorView = true;
     }
 
     private void Start() {
-        monitorTrigger.OnMonitorInteract += MonitorTrigger_OnMonitorInteract;
+        monitorTrigger.OnMonitorInteract += () => { EnterMonitorView(); };
         monitorTrigger.SetInteractionVisual(interactionVisual);
+
+        desk.OnDeskViewEnterExit += (bool state) => { EnableMonitorTrigger(state); };
 
         playerInputActions = GameInput.Instance.GetInputActions();
 
-        GameInput.Instance.OnLaptopAndMonitorExitAction += GameInput_OnLaptopAndMonitorExitAction;
-
-        isInMonitorView = false;
-    }
-        
-
-    private void MonitorTrigger_OnMonitorInteract(object sender, System.EventArgs e) {
-        EnterMonitorView();
-    }
-
-
-    private void GameInput_OnLaptopAndMonitorExitAction(object sender, System.EventArgs e) {
-        if (CanExitMonitorView) ExitMonitorView();
+        GameInput.Instance.OnLaptopAndMonitorExitAction += () => { if (CanExitMonitorView) ExitMonitorView(); };
     }
 
 
@@ -59,7 +54,7 @@ public class Monitor : MonoBehaviour {
         desk.CanExitDeskView = false;
         desk.EnableDeskCameraRotationController(false);
 
-        CameraController.Instance.SetActiveCamera(MONITOR_CAMERA);
+        CameraController.Instance.ChangeCamera(monitorUICamera);
         GameManager.Instance.ShowCrosshair(false);
         GameManager.Instance.ShowCursor(true);
 
@@ -72,7 +67,7 @@ public class Monitor : MonoBehaviour {
         
         GameManager.Instance.ShowCursor(false);
         GameManager.Instance.ShowCrosshair(true);
-        CameraController.Instance.SetActiveCamera(CameraController.Cameras.MainCamera);
+        CameraController.Instance.ChangeToMainCamera();
 
         desk.EnableDeskCameraRotationController(true);
         desk.CanExitDeskView = true;

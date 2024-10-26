@@ -27,7 +27,7 @@ public class DoorNew : MonoBehaviour {
 
 
     private void Start() {
-        doorTrigger.OnDoorInteract += DoorTrigger_OnDoorInteract;
+        doorTrigger.OnDoorInteract += () => { OpenDoor(!doorOpen); };
         doorTrigger.SetInteractionVisual(interactionVisual);
     }
 
@@ -36,12 +36,6 @@ public class DoorNew : MonoBehaviour {
         doorOpen = defaultDoorState;
         OpenDoor(doorOpen);
     }
-
-
-    private void DoorTrigger_OnDoorInteract(object sender, System.EventArgs e) {
-        OpenDoor(!doorOpen);
-    }
-
 
     public void OpenDoor(bool targetState) {
         doorAnimator.SetBool(IS_INVERTED_BOOL, isInverted);

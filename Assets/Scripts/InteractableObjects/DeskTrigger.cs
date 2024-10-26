@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class DeskTrigger : MonoBehaviour, IInteractable {
 
-    public event EventHandler OnDeskTrigger;
+    public event Action OnDeskTrigger;
 
     private InteractionVisual interactionVisual;
 
     public void Interact() {
-        OnDeskTrigger?.Invoke(this, EventArgs.Empty);
+        OnDeskTrigger?.Invoke();
     }
 
     public void SetInteractionVisual(InteractionVisual interactionVisual) { this.interactionVisual = interactionVisual; }

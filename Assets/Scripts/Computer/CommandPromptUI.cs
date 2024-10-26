@@ -24,20 +24,18 @@ public class CommandPromptUI : MonoBehaviour {
     }
 
 
-    private void CommandPromptManager_OnSubmitCommand(object sender, System.EventArgs e) {
+    private void CommandPromptManager_OnSubmitCommand() {
         Submit();
     }
 
     /*
-    private void CommandPromptManager_OnAddCharacter(object sender, CommandPromptManager.OnAddCharacterEventArgs e) {
-        char character = e.character;
+    private void CommandPromptManager_OnAddCharacter(char character) {
         inputField.text += character;
     }
     */
 
-    private void CommandPromptManager_OnChangeCommand(object sender, CommandPromptManager.OnChangeCommandEventArgs e) {
-        string inputFieldText = e.command;
-        inputField.text = inputFieldText;
+    private void CommandPromptManager_OnChangeCommand(string command) {
+        inputField.text = command;
     }
 
     private void Submit() {

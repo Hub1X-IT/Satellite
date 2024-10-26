@@ -3,17 +3,12 @@ using UnityEngine;
 
 public class MonitorTrigger : MonoBehaviour, IInteractable {
 
-    public event EventHandler OnMonitorInteract;
+    public event Action OnMonitorInteract;
 
     private InteractionVisual interactionVisual;
 
-    private void Start() {
-        // gameObject.layer = InteractionController.Instance.DefaultInteractableLayerMask;
-    }
-
-
     public void Interact() {
-        OnMonitorInteract?.Invoke(this, EventArgs.Empty);
+        OnMonitorInteract?.Invoke();
     }
 
     public void SetInteractionVisual(InteractionVisual interactionVisual) { this.interactionVisual = interactionVisual; }

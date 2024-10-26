@@ -16,13 +16,10 @@ public class CommandPromptManager : MonoBehaviour {
     public static CommandPromptManager Instance { get; private set; }
 
 
-    public event EventHandler OnSubmitCommand;
+    public event Action OnSubmitCommand;
 
 
-    public event EventHandler<OnChangeCommandEventArgs> OnChangeCommand;
-    public class OnChangeCommandEventArgs : EventArgs {
-        public string command;
-    }
+    public event Action<string> OnChangeCommand;
 
 
     private string command;
@@ -40,13 +37,12 @@ public class CommandPromptManager : MonoBehaviour {
     }
 
 
-    private void GameInput_OnKeyboardInputAction(object sender, GameInput.OnKeyboardInputActionEventArgs e) {
-        char character = e.key;
+    private void GameInput_OnKeyboardInputAction(char character) {
         AddCharacter(character);
     }
 
 
-    private void GameInput_OnSubmitAction(object sender, EventArgs e) {
+    private void GameInput_OnSubmitAction() {
         SubmitCommand();
     }
 
@@ -86,16 +82,14 @@ public class CommandPromptManager : MonoBehaviour {
     }
 
     private void CommandChanged() {
-        OnChangeCommand?.Invoke(this, new OnChangeCommandEventArgs {
-            command = this.command
-        });
+        OnChangeCommand?.Invoke(command);
 
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! debug log !!!!!!!!!!!!
         // Debug.Log(command);
     }
 
     private void SubmitCommand() {
-        OnSubmitCommand?.Invoke(this, EventArgs.Empty);
+        OnSubmitCommand?.Invoke();
         RunCommand();
     }
 

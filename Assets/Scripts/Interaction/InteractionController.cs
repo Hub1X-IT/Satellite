@@ -32,7 +32,7 @@ public class InteractionController : MonoBehaviour {
     }
 
 
-    private void GameInput_OnInteractAction(object sender, System.EventArgs e) {
+    private void GameInput_OnInteractAction() {
         if (TryGetInteractableObject(out IInteractable interactableObject)) interactableObject.Interact();
     }   
 

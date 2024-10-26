@@ -1,3 +1,5 @@
+using System;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class Desk : MonoBehaviour {
@@ -6,7 +8,7 @@ public class Desk : MonoBehaviour {
 
     private DeskTrigger deskTrigger;
 
-    private Monitor monitor;
+    public event Action<bool> OnDeskViewEnterExit;
 
     private PlayerScriptsController playerScriptsController;
 
@@ -14,8 +16,7 @@ public class Desk : MonoBehaviour {
     private CameraRotationController deskCameraRotationController;
     private Vector3 deskCameraDefaultRotation = new Vector3(0f, 180f, 0f);
 
-
-    private const CameraController.CinemachineCameras DESK_CAMERA = CameraController.CinemachineCameras.CinemachineDeskCamera;
+    [SerializeField] private CinemachineCamera cinemachineDeskCamera;
 
 
     private InteractionVisual interactionVisual;
@@ -27,14 +28,14 @@ public class Desk : MonoBehaviour {
     private void Awake() {
         deskTrigger = GetComponentInChildren<DeskTrigger>();
 
-        monitor = GetComponentInChildren<Monitor>();
-
         playerScriptsController = FindAnyObjectByType<PlayerScriptsController>();
 
         deskCameraRotationController = GetComponent<CameraRotationController>();
         deskCameraRotationController.enabled = false;
 
         interactionVisual = GetComponent<InteractionVisual>();
+
+        cinemachineDeskCamera.gameObject.SetActive(false);
 
         CanExitDeskView = true;
     }
@@ -46,18 +47,16 @@ public class Desk : MonoBehaviour {
 
         GameInput.Instance.OnExitDeskViewAction += GameInput_OnExitDeskViewAction;
 
-        monitor.EnableMonitorTrigger(false);
-
         playerInputActions = GameInput.Instance.GetInputActions();
     }
 
 
-    private void DeskTrigger_OnDeskTrigger(object sender, System.EventArgs e) {
+    private void DeskTrigger_OnDeskTrigger() {
         EnterDeskView();
     }
 
 
-    private void GameInput_OnExitDeskViewAction(object sender, System.EventArgs e) {
+    private void GameInput_OnExitDeskViewAction() {
         if (CanExitDeskView) ExitDeskView();
     }
 
@@ -68,21 +67,21 @@ public class Desk : MonoBehaviour {
 
 
     private void EnterDeskView() {
-        deskTrigger.gameObject.SetActive(false); // disable the desk triggerbox
+        deskTrigger.gameObject.SetActive(false); // disable desk triggerbox
 
         playerInputActions.PlayerWalking.Disable();
 
         playerScriptsController.EnablePlayerMovement(false);
 
-        CameraController.Instance.SetActiveCinemachineCamera(DESK_CAMERA);
+        CameraController.Instance.ChangeCinemachineCamera(cinemachineDeskCamera);
 
         deskCameraRotationController.enabled = true;
         // Reset camera rotation
         // deskCameraRotationController.SetLocalRotation(deskCameraDefaultRotation.x, deskCameraDefaultRotation.y);
 
-        monitor.EnableMonitorTrigger(true);
-
         playerInputActions.Desk.Enable();
+
+        OnDeskViewEnterExit?.Invoke(true);
     }
 
 
@@ -91,16 +90,16 @@ public class Desk : MonoBehaviour {
 
         playerInputActions.Desk.Disable();
 
-        monitor.EnableMonitorTrigger(false);
-                
         deskCameraRotationController.enabled = false;
 
-        CameraController.Instance.SetActiveCinemachineCamera(CameraController.CinemachineCameras.CinemachineMainCamera);
+        CameraController.Instance.ChangeToCinemachineMainCamera();
 
         playerScriptsController.EnablePlayerMovement(true);
 
         playerInputActions.PlayerWalking.Enable();
 
         deskTrigger.gameObject.SetActive(true);
+
+        OnDeskViewEnterExit?.Invoke(false);
     }
 }

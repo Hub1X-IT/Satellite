@@ -1,7 +1,11 @@
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
+
     public static GameManager Instance { get; private set; }
+
+    public event Action<bool> OnGamePauseUnpause;
 
     public bool GamePaused { get; private set; }
 
@@ -13,14 +17,22 @@ public class GameManager : MonoBehaviour {
         
         crosshairController = FindAnyObjectByType<CrosshairController>(); // there should be only one CrosshairController in the scene
 
+        GameSettings.ResetSettings();
+
         ShowCursor(false);
     }
 
 
     private void Start() {
-        GameSettings.ResetSettings();
+        GameInput.Instance.OnPauseAction += GameInput_OnPauseAction;
+
+
     }
 
+    private void GameInput_OnPauseAction() {
+        OnGamePauseUnpause?.Invoke(!GamePaused);
+        PauseGame(!GamePaused);
+    }
 
     public void PauseGame(bool targetState) {
         StartTime(!targetState);

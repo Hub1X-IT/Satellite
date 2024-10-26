@@ -21,7 +21,7 @@ public class SmartphoneController : MonoBehaviour {
     }
 
 
-    private void GameInput_OnSmartphoneToggleAction(object sender, System.EventArgs e) {
+    private void GameInput_OnSmartphoneToggleAction() {
         TurnOn(!smartphoneOn);
     }
 
