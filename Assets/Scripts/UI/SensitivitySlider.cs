@@ -8,14 +8,13 @@ public class SensitivitySlider : MonoBehaviour {
 
     [SerializeField] private TextMeshProUGUI sliderValueTextField;
 
-    private float minSliderValue = 0f;
-    private float maxSliderValue = 50f;   
+    [SerializeField] private float minSliderValue = 0f;
+    [SerializeField] private float maxSliderValue = 50f;
 
 
     private void Awake() {
         sensitivitySlider.onValueChanged.AddListener(ChangeSensitivity);
     }
-
 
     private void Start() {
         sensitivitySlider.maxValue = maxSliderValue;
@@ -24,15 +23,12 @@ public class SensitivitySlider : MonoBehaviour {
         SetTextField();
     }
 
-
     private void ChangeSensitivity(float sensitivityValue) {
         GameSettings.SetMouseSensitivity(sensitivityValue);
         SetTextField();
     }
 
-
     private void SetTextField() {
-        string textFieldContent = (Mathf.Round(sensitivitySlider.value / sensitivitySlider.maxValue * 100)).ToString() + "%";
-        sliderValueTextField.text = textFieldContent;
+        sliderValueTextField.text = (Mathf.Round(sensitivitySlider.value / sensitivitySlider.maxValue * 100)).ToString() + "%";
     }
 }

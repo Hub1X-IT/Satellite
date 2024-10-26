@@ -9,38 +9,34 @@ public class GameManager : MonoBehaviour {
 
     public bool GamePaused { get; private set; }
 
-    private CrosshairController crosshairController;
-
 
     private void Awake() {
         Instance = this;
-        
-        crosshairController = FindAnyObjectByType<CrosshairController>(); // there should be only one CrosshairController in the scene
 
         GameSettings.ResetSettings();
 
         ShowCursor(false);
+
+        GamePaused = false;
     }
 
 
     private void Start() {
-        GameInput.Instance.OnPauseAction += GameInput_OnPauseAction;
+        GameInput.Instance.OnPauseAction += () => { PauseGameToMenu(!GamePaused); };
 
-
-    }
-
-    private void GameInput_OnPauseAction() {
-        OnGamePauseUnpause?.Invoke(!GamePaused);
-        PauseGame(!GamePaused);
+        PauseGameToMenu(false);
     }
 
     public void PauseGame(bool targetState) {
         StartTime(!targetState);
         ShowCursor(targetState);
-        ShowCrosshair(!targetState);
         GamePaused = targetState;
     }
 
+    public void PauseGameToMenu(bool targetState) {
+        OnGamePauseUnpause?.Invoke(targetState);
+        PauseGame(targetState);
+    }
 
     public void ShowCursor(bool targetState) {
         if (targetState) Cursor.lockState = CursorLockMode.None;
@@ -57,10 +53,5 @@ public class GameManager : MonoBehaviour {
 
     public void SetTimeScale(float timeScale) {
         Time.timeScale = timeScale;
-    }
-
-
-    public void ShowCrosshair(bool targetState) {
-        crosshairController.ShowCrosshair(targetState);
     }
 }

@@ -55,7 +55,6 @@ public class Monitor : MonoBehaviour {
         desk.EnableDeskCameraRotationController(false);
 
         CameraController.Instance.ChangeCamera(monitorUICamera);
-        GameManager.Instance.ShowCrosshair(false);
         GameManager.Instance.ShowCursor(true);
 
         playerInputActions.LaptopAndMonitor.Enable();
@@ -66,7 +65,6 @@ public class Monitor : MonoBehaviour {
         playerInputActions.LaptopAndMonitor.Disable();        
         
         GameManager.Instance.ShowCursor(false);
-        GameManager.Instance.ShowCrosshair(true);
         CameraController.Instance.ChangeToMainCamera();
 
         desk.EnableDeskCameraRotationController(true);

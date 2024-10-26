@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CrosshairController : MonoBehaviour {
+public class CrosshairControllerOld : MonoBehaviour {
 
     [SerializeField] private CanvasRenderer crosshair;
 

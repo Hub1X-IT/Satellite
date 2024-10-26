@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class PlayerScriptsController_1 : MonoBehaviour {
+public class PlayerScriptsControllerOld : MonoBehaviour {
     
-    public static PlayerScriptsController_1 Instance { get; private set; }
+    public static PlayerScriptsControllerOld Instance { get; private set; }
 
     [SerializeField] private PlayerMovementController playerMovementController;
 

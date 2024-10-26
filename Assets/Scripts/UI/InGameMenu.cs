@@ -1,16 +1,23 @@
+using System;
 using UnityEngine;
 
-public class InGameMenu : MonoBehaviour
-{
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
+public class InGameMenu : MonoBehaviour {
+
+    private PlayerUIController playerUIController;
+
+    public event Action<bool> OnOptionsOpenClose;
+
+    private void Awake() {
+        playerUIController = GetComponentInParent<PlayerUIController>();
+
+        playerUIController.OnPauseUnpause += (bool targetState) => { gameObject.SetActive(targetState); };
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private void OnEnable() { // the options need to be closed when pausing
+        OpenOptions(false);
+    }
+
+    public void OpenOptions(bool targetState) {
+        OnOptionsOpenClose(targetState);
     }
 }

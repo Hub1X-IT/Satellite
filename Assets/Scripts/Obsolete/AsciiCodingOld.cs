@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AsciiCoding : MonoBehaviour {
+public class AsciiCodingOld : MonoBehaviour {
 
 
     public class CodedPassword {
