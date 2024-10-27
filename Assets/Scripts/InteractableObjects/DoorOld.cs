@@ -1,7 +1,7 @@
 using UnityEngine;
 
-public class Door : MonoBehaviour, IInteractable {
-
+public class DoorOld : MonoBehaviour, IInteractable
+{
     [SerializeField] private Animator doorAnimator;
 
 
@@ -11,31 +11,37 @@ public class Door : MonoBehaviour, IInteractable {
 
     private bool doorOpened;
 
-    
-    public void Awake() {
+    public InteractionVisual InteractVisual { get; set; }
+
+    public Transform Transform { get; set; }
+
+    public void Awake()
+    {
+        Transform = transform;
+
         doorAnimator = GetComponent<Animator>();
         doorOpened = false;
     }
 
 
-    public void Interact() {
+    public void Interact()
+    {
         OpenClose();
     }
 
 
-    private void OpenClose() {
-        if (!doorOpened) { // open door
+    private void OpenClose()
+    {
+        if (!doorOpened)
+        { // open door
             doorAnimator.SetTrigger(DOOR_OPEN_TRIGGER);
         }
-        
-        else { // close door
+
+        else
+        { // close door
             doorAnimator.SetTrigger(DOOR_CLOSE_TRIGGER);
         }
         doorOpened = !doorOpened;
-        
+
     }
-
-    public InteractionVisual GetInteractionVisual() { return null; }
-
-    public Transform GetTransform() { return transform; }
 }

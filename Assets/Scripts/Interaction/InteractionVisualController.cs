@@ -1,70 +1,76 @@
 using UnityEngine;
 
-public class InteractionVisualController : MonoBehaviour {
-
+public class InteractionVisualController : MonoBehaviour
+{
     private InteractionUI interactionUI;
+
 
     private InteractionVisual previousInteractVisual;
 
-    // To make sure the methods don't run every frame
-    private IInteractable previousInteractableObject;    
-    private bool interactVisualEnabled;
 
-    private void Awake() {
+    // To make sure the methods don't run every frame
+    private IInteractable previousInteractableObject;
+
+
+    private void Awake()
+    {
         interactionUI = GetComponent<InteractionUI>();
     }
 
-    private void Update() {
+
+    private void Update()
+    {
         CheckForInteraction();
     }
 
 
-    private void CheckForInteraction() {
-        if (InteractionController.Instance.TryGetInteractableObject(out IInteractable interactableObject)) {
-            if (interactableObject != previousInteractableObject) {
-                ChangeInteractVisuals(interactableObject);
+    private void CheckForInteraction()
+    {
+        if (InteractionController.TryGetInteractableObject(out IInteractable interactableObject))
+        {
+            if (interactableObject != previousInteractableObject)
+            {
+                ChangeInteractVisual(interactableObject);
+                previousInteractableObject = interactableObject;
             }
         }
-        else {
-            if (interactVisualEnabled) {
-                DisableInteractVisual(previousInteractVisual);
-                previousInteractVisual = null;
+        else
+        {
+            if (previousInteractVisual != null && previousInteractVisual.IsEnabled)
+            {
+                ChangeInteractVisual(null);
                 previousInteractableObject = null;
             }
         }
     }
-    
 
-    private void ChangeInteractVisuals(IInteractable interactableObject) {
-        DisableInteractVisual(previousInteractVisual);
-        previousInteractVisual = null;       
 
-        InteractionVisual interactVisual = interactableObject.GetInteractionVisual();
-        if (interactVisual != null) {
-            EnableInteractVisual(interactVisual);
-            previousInteractVisual = interactVisual;
+    private void ChangeInteractVisual(IInteractable interactableObject)
+    {
+        EnableDisableInteractVisual(previousInteractVisual, false);
+        previousInteractVisual = null;
+
+        if (interactableObject != null && interactableObject.InteractVisual != null)
+        {
+            EnableDisableInteractVisual(interactableObject.InteractVisual, true);
+            previousInteractVisual = interactableObject.InteractVisual;
         }
-
-        previousInteractableObject = interactableObject;
     }
 
 
-    private void EnableInteractVisual(InteractionVisual interactVisual) {
-        interactVisual.EnableOutline(true);
-        string interactMessage = interactVisual.GetInteractMessage();
-        interactionUI.EnableInteractionText(interactMessage);
-
-        interactVisualEnabled = true;
-    }
-
-
-    private void DisableInteractVisual(InteractionVisual interactVisual) {
-        if (interactVisual != null) {
-            interactVisual.EnableOutline(false);
+    private void EnableDisableInteractVisual(InteractionVisual interactVisual, bool state)
+    {
+        if (interactVisual != null)
+        {
+            interactVisual.IsEnabled = state;
         }
-        
-        interactionUI.DisableInteractionText();
 
-        interactVisualEnabled = false;
+        if (state)
+        {
+            string interactMessage = interactVisual.InteractMessage;
+            interactionUI.InteractionText = interactMessage;
+        }
+
+        interactionUI.IsInteractionTextEnabled = state;
     }
 }

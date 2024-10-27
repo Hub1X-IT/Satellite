@@ -1,16 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AsciiCodingOld : MonoBehaviour {
-
-
-    public class CodedPassword {
+public class AsciiCodingObsolete : MonoBehaviour
+{
+    public class CodedPassword
+    {
         public string password;
         public int[] asciiNumbers;
     }
 
 
-    public static CodedPassword EncodePassword(string password) {
+    public static CodedPassword EncodePassword(string password)
+    {
         CodedPassword codedPassword = new CodedPassword();
         codedPassword.password = password;
         codedPassword.asciiNumbers = EncodeToAscii(password);
@@ -18,7 +19,8 @@ public class AsciiCodingOld : MonoBehaviour {
     }
 
 
-    private static int[] EncodeToAscii(string password) {
+    private static int[] EncodeToAscii(string password)
+    {
         List<int> intList = new List<int>();
         foreach (int i in password) { intList.Add(i); }
         return intList.ToArray();

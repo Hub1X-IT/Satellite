@@ -1,36 +1,51 @@
 using UnityEngine;
 
-public class Lamp : MonoBehaviour, IInteractable {
+public class Lamp : MonoBehaviour, IInteractable
+{
+    public InteractionVisual InteractVisual { get; set; }
 
-    
-    [SerializeField] private GameObject[] turnedOnObjects;
-    [SerializeField] private GameObject[] turnedOffObjects;
-
+    public Transform Transform { get; set; }
 
     private bool isTurnedOn;
+    private bool IsTurnedOn
+    {
+        get => isTurnedOn;
+        set
+        {
+            Debug.Log("Lamp: TurnOnOff(), TargetState: " + value);
+                        
+
+            foreach (GameObject obj in turnedOnObjects)
+            {
+                obj.SetActive(value);
+            }
+            foreach (GameObject obj in turnedOffObjects)
+            {
+                obj.SetActive(!value);
+            }
+
+            // if (!targetState) onOffCycles++;
+
+            isTurnedOn = value;
+        }
+    }
+
+    [SerializeField]
+    private GameObject[] turnedOnObjects;
+
+    [SerializeField]
+    private GameObject[] turnedOffObjects;
+
     // private int onOffCycles;
     // private int maxOnOffCycles = 5;
 
-    private void TurnOnOff(bool targetState) {
-        Debug.Log("Lamp: TurnOnOff(), TargetState: " + targetState);
-
-        isTurnedOn = targetState;
-
-        foreach (GameObject obj in turnedOnObjects) {
-            obj.SetActive(targetState);
-        }
-        foreach (GameObject obj in turnedOffObjects) {
-            obj.SetActive(!targetState);
-        }
-
-        // if (!targetState) onOffCycles++;
-    }
-        
-    public void Interact() {
-        TurnOnOff(!isTurnedOn);
+    private void Awake()
+    {
+        Transform = transform;
     }
 
-    public InteractionVisual GetInteractionVisual() { return null; }
-
-    public Transform GetTransform() { return transform; }
+    public void Interact()
+    {
+        IsTurnedOn = !IsTurnedOn;
+    }
 }

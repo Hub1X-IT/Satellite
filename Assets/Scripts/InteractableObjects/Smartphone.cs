@@ -1,13 +1,18 @@
 using UnityEngine;
 
-public class Smartphone : MonoBehaviour, IInteractable {
+public class Smartphone : MonoBehaviour, IInteractable
+{
+    public InteractionVisual InteractVisual { get; set; }
 
+    public Transform Transform { get; set; }
 
-    public void Interact() {
-        gameObject.SetActive(false);
+    private void Awake()
+    {
+        Transform = transform;
     }
 
-    public InteractionVisual GetInteractionVisual() { return null; }
-
-    public Transform GetTransform() { return transform; }
+    public void Interact()
+    {
+        gameObject.SetActive(false);
+    }
 }

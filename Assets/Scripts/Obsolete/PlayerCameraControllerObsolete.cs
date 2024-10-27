@@ -1,20 +1,22 @@
 using UnityEngine;
 
-public class PlayerCameraControllerOld : MonoBehaviour {
-
+public class PlayerCameraControllerObsolete : MonoBehaviour
+{
     [SerializeField] private Transform cameraFollowObject;
 
 
     private Vector2 rotationInput;
 
 
-    private void Update() {
+    private void Update()
+    {
         HandleRotation();
     }
 
 
-    private void HandleRotation() {
-        rotationInput = GameInput.GetRotationVector();
+    private void HandleRotation()
+    {
+        rotationInput = GameInput.RotationVector;
 
         // Handle Y axis rotation - rotating the player
         Vector3 playerRotation = new Vector3(0f, rotationInput.x, 0f);

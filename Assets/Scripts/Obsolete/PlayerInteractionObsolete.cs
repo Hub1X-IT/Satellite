@@ -1,7 +1,7 @@
 /*
 using UnityEngine;
 
-public class PlayerInteractionOld : MonoBehaviour
+public class PlayerInteractionObsolete : MonoBehaviour
 {
     public float playerReach = 3f;
     InteractVisual currentInteractable;

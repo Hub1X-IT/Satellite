@@ -1,19 +1,23 @@
 using System;
 using UnityEngine;
 
-public class InGameMenu : MonoBehaviour {
-
+public class InGameMenu : MonoBehaviour
+{
     public event Action<bool> OnOptionsOpenClose;
 
-    private void Awake() {
-        GameManager.OnGamePauseUnpause += (bool targetState) => { gameObject.SetActive(targetState); };
+    private void Awake()
+    {
+        GameManager.GamePausedUnpaused += (state) => gameObject.SetActive(state);
     }
 
-    private void OnEnable() { // the options need to be closed when pausing
-        OpenOptions(false);
+    private void OnEnable()
+    {
+        // The options need to be closed when pausing.
+        OpenCloseOptions(false);
     }
 
-    public void OpenOptions(bool targetState) {
-        OnOptionsOpenClose?.Invoke(targetState);
+    public void OpenCloseOptions(bool state)
+    {
+        OnOptionsOpenClose?.Invoke(state);
     }
 }

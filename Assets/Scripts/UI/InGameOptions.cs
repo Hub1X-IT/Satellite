@@ -1,20 +1,28 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InGameOptions : MonoBehaviour {
-
+public class InGameOptions : MonoBehaviour
+{
     private InGameMenu inGameMenu;
 
-    [SerializeField] private Button backButton;
+    [SerializeField]
+    private Button backButton;
 
-    [SerializeField] private Dropdown resolutionDropdown;
-    [SerializeField] private Dropdown graphicsDropdown;
 
-    private void Awake() {
+    [SerializeField]
+    private TMP_Dropdown resolutionDropdown;
+
+    [SerializeField]
+    private TMP_Dropdown graphicsDropdown;
+
+
+    private void Awake()
+    {
         inGameMenu = GetComponentInParent<InGameMenu>();
 
-        inGameMenu.OnOptionsOpenClose += (bool targetState) => { gameObject.SetActive(targetState); };
+        inGameMenu.OnOptionsOpenClose += (state) => gameObject.SetActive(state);
 
-        backButton.onClick.AddListener(() => inGameMenu.OpenOptions(false));
+        backButton.onClick.AddListener(() => inGameMenu.OpenCloseOptions(false));
     }
 }

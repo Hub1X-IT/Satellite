@@ -4343,7 +4343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79b6f4388e1c7bb4782faf8b476e9ef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionText: {fileID: 1467499386615958453}
+  interactionTextField: {fileID: 1467499386615958453}
 --- !u!114 &4465428535032801500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5394,8 +5394,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backButton: {fileID: 4194757214672261113}
-  resolutionDropdown: {fileID: 0}
-  graphicsDropdown: {fileID: 0}
+  resolutionDropdown: {fileID: 7709011160419110467}
+  graphicsDropdown: {fileID: 5368653952528243087}
 --- !u!114 &6858009101416048534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5410,8 +5410,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensitivitySlider: {fileID: 5585356472826234072}
   sliderValueTextField: {fileID: 6684213369813071692}
-  minSliderValue: 0
-  maxSliderValue: 50
 --- !u!114 &2765078576872309164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5424,7 +5422,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b62ad6f1125dae4e89368003467b681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultSliderValue: 0.5
   mainVolumeSlider: {fileID: 3852004717027252983}
   musicVolumeSlider: {fileID: 4871614232696479587}
   soundVolumeSlider: {fileID: 7483202387190763558}
@@ -6013,7 +6010,6 @@ GameObject:
   - component: {fileID: 4887561090581194680}
   - component: {fileID: 2647461879677087915}
   - component: {fileID: 5035661426129660611}
-  - component: {fileID: 4388347653828611274}
   m_Layer: 5
   m_Name: PlayerUI
   m_TagString: Untagged
@@ -6105,18 +6101,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &4388347653828611274
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7809237348274262115}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3968b42b496b064eb89d6d7d4cca3c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8066441561134080017
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerMenuOld : MonoBehaviour
+public class PlayerMenuObsolete : MonoBehaviour
 {
     /*
     public static bool GameIsPaused = false;

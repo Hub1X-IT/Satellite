@@ -1,27 +1,31 @@
-public class EncodedPassword {
-
+public class EncodedPassword
+{
     private string password;
-    
+
     private int[] asciiCodes;
     private EncryptedCharacter[] encryptedCharacters;
 
 
-    public EncodedPassword(string password) {
+    public EncodedPassword(string password)
+    {
         this.password = password;
         asciiCodes = EncodeToAscii();
         encryptedCharacters = EncryptCharacters();
     }
 
 
-    private EncryptedCharacter[] EncryptCharacters() {
+    private EncryptedCharacter[] EncryptCharacters()
+    {
         EncryptedCharacter[] encryptedCharacters = new EncryptedCharacter[asciiCodes.Length];
-        for (int i = 0; i < asciiCodes.Length; i++) {
+        for (int i = 0; i < asciiCodes.Length; i++)
+        {
             encryptedCharacters[i] = CalculationsGeneration.GetEncryptedCharacter(asciiCodes[i]);
         }
         return encryptedCharacters;
     }
 
-    private int[] EncodeToAscii() {
+    private int[] EncodeToAscii()
+    {
         int[] asciiCodes = new int[password.Length];
         for (int i = 0; i < password.Length; i++) { asciiCodes[i] = password[i]; }
         /*

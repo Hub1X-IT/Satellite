@@ -1,28 +1,39 @@
 using UnityEngine;
 
-public class PlayerScriptsController : MonoBehaviour {
-
+public class PlayerScriptsController : MonoBehaviour
+{
     private static PlayerMovementController playerMovementController;
     private static CameraRotationController playerCameraRotationController;
 
     private static PlayerHUDController playerHUDController;
 
-    private void Awake() {
+    private static bool isPlayerMovementEnabled;
+    public static bool IsPlayerMovementEnabled
+    {
+        get => isPlayerMovementEnabled;
+        set
+        {
+            // Enable/disable player movement.
+            playerMovementController.enabled = value;
+            playerCameraRotationController.enabled = value;
+
+            isPlayerMovementEnabled = value;
+        }
+    }
+
+    private void Awake()
+    {
         playerMovementController = GetComponent<PlayerMovementController>();
         playerCameraRotationController = GetComponent<CameraRotationController>();
 
         playerHUDController = GetComponentInChildren<PlayerHUDController>();
 
         CanShowPlayerHUD(true);
-        EnablePlayerMovement(true);
+        IsPlayerMovementEnabled = true;
     }
 
-    public static void EnablePlayerMovement(bool targetState) {
-        playerMovementController.enabled = targetState;
-        playerCameraRotationController.enabled = targetState;
-    }
-
-    public static void CanShowPlayerHUD(bool targetState) {
-        playerHUDController.CanShowPlayerHUD(targetState);
+    public static void CanShowPlayerHUD(bool state)
+    {
+        playerHUDController.CanShowPlayerHUD = state;
     }
 }

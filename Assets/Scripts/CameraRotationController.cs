@@ -22,7 +22,7 @@ public class CameraRotationController : MonoBehaviour {
 
 
     private void HandleRotation() {
-        Vector2 rotationInput = GameInput.GetRotationVector();
+        Vector2 rotationInput = GameInput.RotationVector;
 
 
         Vector3 xAxisRotationObjectRotation = xAxisRotationObject.rotation.eulerAngles;

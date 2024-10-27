@@ -1,19 +1,38 @@
 using UnityEngine;
 
-public class PlayerHUDController : MonoBehaviour {
+public class PlayerHUDController : MonoBehaviour
+{
 
     private bool canShowPlayerHUD;
 
-    private void Awake() {
-        GameManager.OnGamePauseUnpause += PauseUnpause;
+    private bool isEnabled;
+
+
+    public bool CanShowPlayerHUD
+    {
+        get => canShowPlayerHUD;
+        set
+        {
+            canShowPlayerHUD = value;
+            IsEnabled = !GameManager.IsGamePaused;
+        }
     }
 
-    private void PauseUnpause(bool paused) {
-        gameObject.SetActive(!paused && canShowPlayerHUD);
+    private bool IsEnabled
+    {
+        get => isEnabled;
+        set
+        {
+            // Enable/disable player HUD if it is allowed
+            value = value && CanShowPlayerHUD;
+            gameObject.SetActive(value);
+            isEnabled = value;
+        }
     }
 
-    public void CanShowPlayerHUD(bool targetState) {
-        canShowPlayerHUD = targetState;
-        PauseUnpause(GameManager.GamePaused);
+
+    private void Awake()
+    {
+        GameManager.GamePausedUnpaused += (state) => IsEnabled = !state;
     }
 }

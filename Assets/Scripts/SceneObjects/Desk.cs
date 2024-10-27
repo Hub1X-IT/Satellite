@@ -2,35 +2,88 @@ using System;
 using Unity.Cinemachine;
 using UnityEngine;
 
-public class Desk : MonoBehaviour {
-
-    private PlayerInputActions playerInputActions;
-
-    private DeskTrigger deskTrigger;
-
-    public event Action<bool> OnDeskViewEnterExit;
+public class Desk : MonoBehaviour
+{
+    public event Action<bool> DeskViewEnterExit;
 
 
-    private CameraRotationController deskCameraRotationController;
-    private Vector3 deskCameraDefaultRotation = new Vector3(0f, 180f, 0f);
-
-
-    [SerializeField] private CinemachineCamera cinemachineDeskCamera;
-
-
-    private InteractionVisual interactionVisual;
+    [SerializeField]
+    private CinemachineCamera cinemachineDeskCamera;
 
 
     public bool CanExitDeskView { get; set; }
 
 
-    private void Awake() {
+    private DeskTrigger deskTrigger;
+
+
+    private CameraRotationController deskCameraRotationController;
+    private readonly Vector3 deskCameraDefaultRotation = new(0f, 180f, 0f);
+
+
+    private bool isDeskCameraRotationEnabled;
+    public bool IsDeskCameraRotationEnabled
+    {
+        get => isDeskCameraRotationEnabled;
+        set
+        {
+            deskCameraRotationController.enabled = value;
+            isDeskCameraRotationEnabled = value;
+        }
+    }
+
+    private bool isInDeskView;
+    private bool IsInDeskView
+    {
+        get => isInDeskView;
+        set
+        {
+            // Enter/exit desk view
+
+            // Disable or enable desk trigger.
+            deskTrigger.gameObject.SetActive(!value);
+
+            // Disable or enable player movement.
+            PlayerScriptsController.IsPlayerMovementEnabled = !value;
+
+            // Enable or disable desk camera control.
+            IsDeskCameraRotationEnabled = value;
+
+            // Invoke enter/exit event.
+            DeskViewEnterExit?.Invoke(value);
+
+            // Disable/enable specific input actions.
+            // Change active Cinemachine camera.
+            if (value)
+            {
+                GameInput.PlayerInputActions.PlayerWalking.Disable();
+                CameraController.CurrentCinemachineCamera = cinemachineDeskCamera;
+                // To reset camera rotation when entering desk view, uncomment the following line:
+                // deskCameraRotationController.SetLocalRotation(deskCameraDefaultRotation.x, deskCameraDefaultRotation.y);
+                GameInput.PlayerInputActions.Desk.Enable();
+            }
+            else
+            {
+                GameInput.PlayerInputActions.Desk.Disable();
+                CameraController.ChangeToCinemachineMainCamera();
+                GameInput.PlayerInputActions.PlayerWalking.Enable();
+            }
+
+            isInDeskView = value;
+        }
+    }
+
+
+    private void Awake()
+    {
         deskTrigger = GetComponentInChildren<DeskTrigger>();
 
-        deskCameraRotationController = GetComponent<CameraRotationController>();
-        deskCameraRotationController.enabled = false;
+        deskTrigger.OnDeskTrigger += () => IsInDeskView = true;
 
-        interactionVisual = GetComponent<InteractionVisual>();
+        deskTrigger.InteractVisual = GetComponent<InteractionVisual>();
+
+        deskCameraRotationController = GetComponent<CameraRotationController>();
+        deskCameraRotationController.enabled = false;        
 
         cinemachineDeskCamera.gameObject.SetActive(false);
 
@@ -38,63 +91,14 @@ public class Desk : MonoBehaviour {
     }
 
 
-    private void Start() {
-        deskTrigger.OnDeskTrigger += DeskTrigger_OnDeskTrigger;
-        deskTrigger.SetInteractionVisual(interactionVisual);
-
-        GameInput.OnExitDeskViewAction += GameInput_OnExitDeskViewAction;
-
-        playerInputActions = GameInput.GetInputActions();
-    }
-
-
-    private void DeskTrigger_OnDeskTrigger() {
-        EnterDeskView();
-    }
-
-
-    private void GameInput_OnExitDeskViewAction() {
-        if (CanExitDeskView) ExitDeskView();
-    }
-
-
-    public void EnableDeskCameraRotationController(bool targetState) {
-        deskCameraRotationController.enabled = targetState;
-    }
-
-
-    private void EnterDeskView() {
-        deskTrigger.gameObject.SetActive(false); // disable desk triggerbox
-
-        playerInputActions.PlayerWalking.Disable();
-
-        PlayerScriptsController.EnablePlayerMovement(false);
-
-        CameraController.ChangeCinemachineCamera(cinemachineDeskCamera);
-
-        deskCameraRotationController.enabled = true;
-        // Reset camera rotation
-        // deskCameraRotationController.SetLocalRotation(deskCameraDefaultRotation.x, deskCameraDefaultRotation.y);
-
-        playerInputActions.Desk.Enable();
-
-        OnDeskViewEnterExit?.Invoke(true);
-    }
-
-
-    private void ExitDeskView() {
-        playerInputActions.Desk.Disable();
-
-        deskCameraRotationController.enabled = false;
-
-        CameraController.Instance.ChangeToCinemachineMainCamera();
-
-        PlayerScriptsController.EnablePlayerMovement(true);
-
-        playerInputActions.PlayerWalking.Enable();
-
-        deskTrigger.gameObject.SetActive(true);
-
-        OnDeskViewEnterExit?.Invoke(false);
+    private void Start()
+    {
+        GameInput.OnExitDeskViewAction += () =>
+        {
+            if (CanExitDeskView)
+            {
+                IsInDeskView = false;
+            }
+        };
     }
 }

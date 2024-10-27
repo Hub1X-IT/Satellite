@@ -1,16 +1,17 @@
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoader {
-
-    public enum Scenes {
+public static class SceneLoader
+{
+    public enum Scene
+    {
         MainMenu,
         PlayerHouse,
     }
 
-    private static Scenes targetScene;
+    private static Scene targetScene;
 
-    public static void LoadScene(Scenes scene) {
+    public static void LoadScene(Scene scene)
+    {
         targetScene = scene;
 
         SceneManager.LoadScene(targetScene.ToString());

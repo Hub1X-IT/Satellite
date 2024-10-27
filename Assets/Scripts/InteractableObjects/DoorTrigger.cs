@@ -1,24 +1,21 @@
 using System;
 using UnityEngine;
 
-public class DoorTrigger : MonoBehaviour, IInteractable {  
-
+public class DoorTrigger : MonoBehaviour, IInteractable
+{
     public event Action OnDoorInteract;
 
-    private InteractionVisual interactionVisual;
+    public InteractionVisual InteractVisual { get; set; }
 
-    private void Start() {
-        // gameObject.layer = InteractionController.Instance.DefaultInteractableLayerMask;
+    public Transform Transform { get; set; }
+
+    private void Awake()
+    {
+        Transform = transform;
     }
 
-
-    public void Interact() {
+    public void Interact()
+    {
         OnDoorInteract?.Invoke();
     }
-
-    public void SetInteractionVisual(InteractionVisual interactionVisual) { this.interactionVisual = interactionVisual; } // may not be an optimal solution
-
-    public InteractionVisual GetInteractionVisual() { return interactionVisual; }
-
-    public Transform GetTransform() { return transform; }
 }

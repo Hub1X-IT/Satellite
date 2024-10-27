@@ -1,67 +1,83 @@
 using System;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
-
-    public static GameManager Instance { get; private set; }
-
-    public float interactRange;
-
-    [Tooltip("Only one should be selected!")] public LayerMask defaultInteractableLayerMask;
-    [Tooltip("Select also the layers that interaction should not pass through")] public LayerMask interactableLayerMasks;
-
-    public static event Action<bool> OnGamePauseUnpause;
-
-    public static bool GamePaused { get; private set; }
+public static class GameManager
+{
+    public static event Action<bool> GamePausedUnpaused;
 
 
-    private void Awake() {
-        Instance = this;
-        GameInput.InitializeInput();
+    private static bool isGamePaused;
 
-        GameSettingsManager.LoadSettings();
+    private static bool isCursorShown;
 
-        ShowCursor(false);
+    private static bool isTimeStarted;
 
-        GamePaused = false;
+    private static float timeScale;
+
+
+    public static bool IsGamePaused
+    {
+        get => isGamePaused;
+        set
+        {
+            // Pause or unpause game.
+            IsTimeStarted = !value;
+            IsCursorShown = value;
+
+            isGamePaused = value;
+        }
     }
 
+    public static bool IsCursorShown
+    {
+        get => isCursorShown;
+        set
+        {
+            // Show or hide cursor.
+            if (value) Cursor.lockState = CursorLockMode.None;
+            else Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = value;
 
-    private void Start() {
-        GameInput.OnPauseAction += () => { PauseGameToMenu(!GamePaused); };
+            isCursorShown = value;
+        }
+    }
 
+    public static bool IsTimeStarted
+    {
+        get => isTimeStarted;
+        set
+        {
+            // Start or stop time.
+            if (value) TimeScale = 1f;
+            else TimeScale = 0f;
+
+            isTimeStarted = value;
+        }
+    }
+
+    public static float TimeScale
+    {
+        get => timeScale;
+        set
+        {
+            // Set time scale
+            Time.timeScale = value;
+
+            timeScale = value;
+        }
+    }
+
+    public static void InitializeOnStart()
+    {
+        GameInput.OnPauseAction += () => { PauseGameToMenu(!IsGamePaused); };
+
+        IsCursorShown = false;
         PauseGameToMenu(false);
     }
 
-    private void OnDestroy() {
-        GameInput.RemoveInput();
-    }
-
-    public static void PauseGame(bool targetState) {
-        StartTime(!targetState);
-        ShowCursor(targetState);
-        GamePaused = targetState;
-    }
-
-    public static void PauseGameToMenu(bool targetState) {
-        OnGamePauseUnpause?.Invoke(targetState);
-        PauseGame(targetState);
-    }
-
-    public static void ShowCursor(bool targetState) {
-        if (targetState) Cursor.lockState = CursorLockMode.None;
-        else Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = targetState;
-    }
-
-
-    public static void StartTime(bool targetState) {
-        if (targetState) SetTimeScale(1f);
-        else SetTimeScale(0f);
-    }
-
-
-    public static void SetTimeScale(float timeScale) {
-        Time.timeScale = timeScale;
+    public static void PauseGameToMenu(bool targetState)
+    {
+        GamePausedUnpaused?.Invoke(targetState);
+        IsGamePaused = targetState;
     }
 }

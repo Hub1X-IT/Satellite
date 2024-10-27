@@ -1,59 +1,75 @@
+using System;
 using Unity.Cinemachine;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour {
-
-    public static CameraController Instance { get; private set; }
-    
-    private static Camera currentCamera;
-    public Camera mainCamera;
-    
-    private static CinemachineCamera currentCinemachineCamera;
-    public CinemachineCamera cinemachineMainCamera;
-
-
-    private void Awake() {
-        Instance = this;
+public static class CameraController
+{
+    [Serializable]
+    public struct InitializationData
+    {
+        public Camera mainCamera;
+        public CinemachineCamera cinemachineMainCamera;
     }
 
-    private void Start() {
+    private static Camera currentCamera;
+
+    private static CinemachineCamera currentCinemachineCamera;
+
+    private static Camera mainCamera;
+
+    private static CinemachineCamera cinemachineMainCamera;
+
+    public static Camera CurrentCamera
+    {
+        get { return currentCamera; }
+        set
+        {
+            // Change active camera
+            currentCamera.gameObject.SetActive(false);
+            value.gameObject.SetActive(true);
+            currentCamera = value;
+        }
+    }
+
+    public static CinemachineCamera CurrentCinemachineCamera
+    {
+        get { return currentCinemachineCamera; }
+        set
+        {
+            // Change active Cinemachine camera
+            currentCinemachineCamera.gameObject.SetActive(false);
+            value.gameObject.SetActive(true);
+            currentCinemachineCamera = value;
+        }
+    }
+
+    public static CinemachineCamera CinemachineMainCamera => cinemachineMainCamera;
+
+    public static Camera MainCamera => mainCamera;
+
+    public static void InitializeOnAwake(InitializationData data)
+    {
+        mainCamera = data.mainCamera;
+        cinemachineMainCamera = data.cinemachineMainCamera;
         InitializeMainCamera();
     }
 
-
-    public static void ChangeCamera(Camera newCamera) {
-        currentCamera.gameObject.SetActive(false);
-        newCamera.gameObject.SetActive(true);
-        currentCamera = newCamera;
+    public static void ChangeToMainCamera()
+    {
+        CurrentCamera = mainCamera;
     }
 
-    public static void ChangeCinemachineCamera(CinemachineCamera newCinemachineCamera) {
-        currentCinemachineCamera.gameObject.SetActive(false);
-        newCinemachineCamera.gameObject.SetActive(true);
-        currentCinemachineCamera = newCinemachineCamera;
+    public static void ChangeToCinemachineMainCamera()
+    {
+        CurrentCinemachineCamera = cinemachineMainCamera;
     }
 
-    public void ChangeToMainCamera() {
-        currentCamera.gameObject.SetActive(false);
-        mainCamera.gameObject.SetActive(true);
-        currentCamera = mainCamera;
-    }
-
-    public void ChangeToCinemachineMainCamera() {
-        currentCinemachineCamera.gameObject.SetActive(false);
-        cinemachineMainCamera.gameObject.SetActive(true);
-        currentCinemachineCamera = cinemachineMainCamera;
-    }
-
-    private void InitializeMainCamera() {
-        currentCamera = mainCamera;
+    private static void InitializeMainCamera()
+    {
+        currentCamera = MainCamera;
         currentCamera.gameObject.SetActive(true);
 
-        currentCinemachineCamera = cinemachineMainCamera;
+        currentCinemachineCamera = CinemachineMainCamera;
         currentCinemachineCamera.gameObject.SetActive(true);
     }
-
-    public Camera GetCurrentCamera() { return currentCamera; }
-
-    public CinemachineCamera GetCurrentCinemachineCamera() { return currentCinemachineCamera; }
 }

@@ -1,45 +1,57 @@
 using UnityEngine;
 
-public class DoorNew : MonoBehaviour {
+public class DoorNew : MonoBehaviour
+{
+    private DoorTrigger doorTrigger;
 
-    DoorTrigger doorTrigger;
-    [SerializeField] Animator doorAnimator;
 
-    [SerializeField] private bool isInverted = false;
+    [SerializeField]
+    private Animator doorAnimator;
 
-    private bool doorOpen;
 
-    [SerializeField][Tooltip("checked = door open\nunchecked = door closed")] private bool defaultDoorState = false;
+    [SerializeField]
+    private bool isInverted = false;
+
+
+    private bool isOpen;
+    private bool IsOpen
+    {
+        get => isOpen;
+        set
+        {
+            // Open/close door.
+            doorAnimator.SetBool(IS_INVERTED_BOOL, isInverted);
+            doorAnimator.SetBool(DOOR_OPEN_BOOL, value);
+            isOpen = value;
+        }
+    }
+
+
+    [SerializeField][Tooltip("True: door open\nFalse: door closed")]
+    private bool defaultState = false;
 
 
     private const string IS_INVERTED_BOOL = "IsInverted";
     private const string DOOR_OPEN_BOOL = "DoorOpen";
 
 
-    private InteractionVisual interactionVisual;
-
-
-    private void Awake() {
+    private void Awake()
+    {
         doorTrigger = GetComponentInChildren<DoorTrigger>();
         doorAnimator.SetBool(IS_INVERTED_BOOL, isInverted);
-        interactionVisual = GetComponent<InteractionVisual>();
+
+        doorTrigger.InteractVisual = GetComponent<InteractionVisual>();
     }
 
 
-    private void Start() {
-        doorTrigger.OnDoorInteract += () => { OpenDoor(!doorOpen); };
-        doorTrigger.SetInteractionVisual(interactionVisual);
+    private void Start()
+    {
+        doorTrigger.OnDoorInteract += () => IsOpen = !IsOpen;
     }
 
 
-    private void OnEnable() {
-        doorOpen = defaultDoorState;
-        OpenDoor(doorOpen);
-    }
-
-    public void OpenDoor(bool targetState) {
-        doorAnimator.SetBool(IS_INVERTED_BOOL, isInverted);
-        doorAnimator.SetBool(DOOR_OPEN_BOOL, targetState);
-        doorOpen = targetState;
+    private void OnEnable()
+    {
+        IsOpen = defaultState;
     }
 }

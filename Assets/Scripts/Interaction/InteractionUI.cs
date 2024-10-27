@@ -1,28 +1,36 @@
 using TMPro;
 using UnityEngine;
 
-public class InteractionUI : MonoBehaviour  {
+public class InteractionUI : MonoBehaviour
+{
+    [SerializeField]
+    private TextMeshProUGUI interactionTextField;
 
+    private string interactionText;
+    public string InteractionText
+    {
+        get => interactionText;
+        set
+        {
+            interactionTextField.text = value;
+            interactionText = value;
+        }
+    }
 
-    [SerializeField] private TextMeshProUGUI interactionText;
-
-    private string defaultText;
-
-
-    private void Awake() {
-        defaultText = interactionText.text;
-        DisableInteractionText();        
+    private bool isInteractionTextEnabled;
+    public bool IsInteractionTextEnabled
+    {
+        get => isInteractionTextEnabled;
+        set
+        {
+            interactionTextField.gameObject.SetActive(value);
+            isInteractionTextEnabled = value;
+        }
     }
 
 
-    public void EnableInteractionText(string interactString) {
-        interactionText.text = interactString;
-        interactionText.gameObject.SetActive(true);
-    }
-
-
-    public void DisableInteractionText() {
-        interactionText.text = defaultText;
-        interactionText.gameObject.SetActive(false);
+    private void Awake()
+    {
+        IsInteractionTextEnabled = false;
     }
 }

@@ -1,59 +1,48 @@
 using TMPro;
 using UnityEngine;
 
-public class CommandPromptUI : MonoBehaviour {
-
-
+public class CommandPromptUI : MonoBehaviour
+{
     [SerializeField] TMP_InputField inputField;
-    [SerializeField] TMP_Text outputField;
+    [SerializeField] TMP_Text outputTextField;
 
-    private string inputString;
-    private string outputString;
+    private string inputText;
+
+    private string outputText;
 
 
-    private void Start() {
-        CommandPromptManager.Instance.OnSubmitCommand += CommandPromptManager_OnSubmitCommand;
-        // CommandPromptManager.Instance.OnAddCharacter += CommandPromptManager_OnAddCharacter;
-        CommandPromptManager.Instance.OnChangeCommand += CommandPromptManager_OnChangeCommand;
+    private void Start()
+    {
+        CommandPromptManager.OnSubmitCommand += Submit;
+        // CommandPromptManager.OnAddCharacter += (character) => inputField.text += character;
+        CommandPromptManager.OnChangeCommand += (command) => inputField.text = command;
+
+        inputField.onDeselect.AddListener((_) => inputField.ActivateInputField());
     }
 
 
-
-    private void Update() {
-        inputField.onDeselect.AddListener((string inputString) => inputField.ActivateInputField());               
-    }
-
-
-    private void CommandPromptManager_OnSubmitCommand() {
-        Submit();
-    }
-
-    /*
-    private void CommandPromptManager_OnAddCharacter(char character) {
-        inputField.text += character;
-    }
-    */
-
-    private void CommandPromptManager_OnChangeCommand(string command) {
-        inputField.text = command;
-    }
-
-    private void Submit() {
-        inputString = inputField.text;
+    private void Submit()
+    {
+        inputText = inputField.text;
         ChangeOutputText();
         inputField.text = null;
         inputField.ActivateInputField();
     }
 
-    private void ChangeOutputText() {
-        if (inputString.Length > 0) {
-            outputString += "\n>>> " + inputString;
-            outputField.text = outputString;
+
+    private void ChangeOutputText()
+    {
+        if (inputText.Length > 0)
+        {
+            outputText += "\n>>> " + inputText;
+            outputTextField.text = outputText;
         }
     }
 
-    private void AddOutputText(string text) {
-        outputString += text;
-        outputField.text = outputString;
+
+    private void AddOutputText(string text)
+    {
+        outputText += text;
+        outputTextField.text = outputText;
     }
 }

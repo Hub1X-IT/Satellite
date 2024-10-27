@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 
-public class CameraControllerOld : MonoBehaviour {
-
-    public static CameraControllerOld Instance { get; private set; }
+public class CameraControllerObsolete : MonoBehaviour
+{
+    public static CameraControllerObsolete Instance { get; private set; }
 
 
     [SerializeField] private SerializableDictionary<Cameras, Camera> CameraSerializableDictionary;
@@ -15,14 +15,16 @@ public class CameraControllerOld : MonoBehaviour {
     private Dictionary<CinemachineCameras, CinemachineCamera> cinemachineCameraDictionary;
 
 
-    public enum Cameras {
+    public enum Cameras
+    {
         MainCamera,
         MonitorUICamera,
         LaptopUICamera,
     }
 
 
-    public enum CinemachineCameras {
+    public enum CinemachineCameras
+    {
         CinemachineMainCamera,
         CinemachineDeskCamera,
     }
@@ -32,61 +34,72 @@ public class CameraControllerOld : MonoBehaviour {
 
 
     private CinemachineCameras previousCinemachineCamera;
-    private CinemachineCameras currentCinemachineCamera;   
+    private CinemachineCameras currentCinemachineCamera;
 
 
-    private void Awake() {
+    private void Awake()
+    {
         Instance = this;
-        cameraDictionary = CameraSerializableDictionary.GetDictionary();
-        cinemachineCameraDictionary = CinemachineCameraSerializableDictionary.GetDictionary();
+        cameraDictionary = CameraSerializableDictionary.Dictionary;
+        cinemachineCameraDictionary = CinemachineCameraSerializableDictionary.Dictionary;
     }
 
 
-    private void Start() {
+    private void Start()
+    {
         InitializeMainCamera();
     }
 
-    private void UpdateCamera() {
+    private void UpdateCamera()
+    {
         TurnCameraOn(previousCamera, false);
         TurnCameraOn(currentCamera, true);
     }
 
-    private void UpdateCinemachineCamera() {
+    private void UpdateCinemachineCamera()
+    {
         TurnCinemachineCameraOn(previousCinemachineCamera, false);
         TurnCinemachineCameraOn(currentCinemachineCamera, true);
     }
 
-    public void SetActiveCamera(Cameras camera) {
+    public void SetActiveCamera(Cameras camera)
+    {
         previousCamera = currentCamera;
         currentCamera = camera;
         UpdateCamera();
     }
 
-    public void SetActiveCinemachineCamera(CinemachineCameras cinemachineCamera) {
+    public void SetActiveCinemachineCamera(CinemachineCameras cinemachineCamera)
+    {
         previousCinemachineCamera = currentCinemachineCamera;
         currentCinemachineCamera = cinemachineCamera;
         UpdateCinemachineCamera();
     }
 
-    private void TurnCameraOn(Cameras camera, bool targetState) {
+    private void TurnCameraOn(Cameras camera, bool targetState)
+    {
         if (cameraDictionary[camera] != null) cameraDictionary[camera].gameObject.SetActive(targetState);
     }
 
-    private void TurnCinemachineCameraOn(CinemachineCameras cinemachineCamera, bool targetState) {
+    private void TurnCinemachineCameraOn(CinemachineCameras cinemachineCamera, bool targetState)
+    {
         if (cinemachineCameraDictionary[cinemachineCamera] != null) cinemachineCameraDictionary[cinemachineCamera].gameObject.SetActive(targetState);
     }
 
-    private void InitializeMainCamera() {
-        foreach (Cameras camera in cameraDictionary.Keys) {
+    private void InitializeMainCamera()
+    {
+        foreach (Cameras camera in cameraDictionary.Keys)
+        {
             TurnCameraOn(camera, false);
         }
         previousCamera = Cameras.MainCamera;
         currentCamera = Cameras.MainCamera;
         TurnCameraOn(currentCamera, true);
 
-        foreach (CinemachineCameras cinemachineCamera in cinemachineCameraDictionary.Keys) {
+        foreach (CinemachineCameras cinemachineCamera in cinemachineCameraDictionary.Keys)
+        {
             TurnCinemachineCameraOn(cinemachineCamera, false);
-        }        
+        }
         previousCinemachineCamera = CinemachineCameras.CinemachineMainCamera;
         currentCinemachineCamera = CinemachineCameras.CinemachineMainCamera;
         TurnCinemachineCameraOn(currentCinemachineCamera, true);

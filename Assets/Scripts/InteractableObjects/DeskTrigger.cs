@@ -1,19 +1,22 @@
 using System;
 using UnityEngine;
 
-public class DeskTrigger : MonoBehaviour, IInteractable {
+public class DeskTrigger : MonoBehaviour, IInteractable
+{
 
     public event Action OnDeskTrigger;
 
-    private InteractionVisual interactionVisual;
+    public InteractionVisual InteractVisual { get; set; }
 
-    public void Interact() {
-        OnDeskTrigger?.Invoke();
+    public Transform Transform { get; set; }
+
+    private void Awake()
+    {
+        Transform = transform;
     }
 
-    public void SetInteractionVisual(InteractionVisual interactionVisual) { this.interactionVisual = interactionVisual; }
-
-    public InteractionVisual GetInteractionVisual()  { return interactionVisual; }
-
-    public Transform GetTransform() { return transform; }
+    public void Interact()
+    {
+        OnDeskTrigger?.Invoke();
+    }
 }

@@ -2,10 +2,19 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class GameInput {
+public class GameInput
+{
+    public static PlayerInputActions PlayerInputActions { get; private set; }
 
-    private static PlayerInputActions playerInputActions;
+    public static Vector2 MovementVectorNormalized
+    {
+        get => PlayerInputActions.PlayerWalking.Move.ReadValue<Vector2>().normalized;
+    }
 
+    public static Vector2 RotationVector
+    {
+        get => PlayerInputActions.PlayerWalkingAndDesk.Rotate.ReadValue<Vector2>();
+    }
 
     public static event Action OnPauseAction;
 
@@ -24,59 +33,56 @@ public class GameInput {
     public static event Action OnSubmitAction;
 
 
-    public static void InitializeInput() {
-        playerInputActions = new PlayerInputActions();
-        playerInputActions.All.Enable();
-        playerInputActions.PlayerWalkingAndDesk.Enable();
-        playerInputActions.PlayerWalking.Enable();
-        playerInputActions.LaptopAndMonitor.Disable();
-        playerInputActions.Monitor.Disable(); // should be enabled when testing monitor command prompt
+    public static void InitializeInput()
+    {
+        PlayerInputActions = new PlayerInputActions();
+        PlayerInputActions.All.Enable();
+        PlayerInputActions.PlayerWalkingAndDesk.Enable();
+        PlayerInputActions.PlayerWalking.Enable();
+        PlayerInputActions.LaptopAndMonitor.Disable();
+        PlayerInputActions.Monitor.Disable(); // should be enabled when testing monitor command prompt
 
-        playerInputActions.All.Pause.performed += Pause_performed;
+        PlayerInputActions.All.Pause.performed += Pause_performed;
 
-        playerInputActions.PlayerWalking.Interact.performed += Interact_performed;
+        PlayerInputActions.PlayerWalking.Interact.performed += Interact_performed;
 
-        playerInputActions.PlayerWalkingAndDesk.SmartphoneToggle.performed += SmartphoneToggle_performed;
+        PlayerInputActions.PlayerWalkingAndDesk.SmartphoneToggle.performed += SmartphoneToggle_performed;
 
-        playerInputActions.Desk.Interact.performed += Interact_performed; // Interact in Desk does the same thing as Interact in PlayerWalking
-        playerInputActions.Desk.ExitDeskView.performed += ExitDeskView_performed;
+        PlayerInputActions.Desk.Interact.performed += Interact_performed; // Interact in Desk does the same thing as Interact in PlayerWalking
+        PlayerInputActions.Desk.ExitDeskView.performed += ExitDeskView_performed;
 
-        playerInputActions.LaptopAndMonitor.Exit.performed += LaptopAndMonitorExit_performed;
+        PlayerInputActions.LaptopAndMonitor.Exit.performed += LaptopAndMonitorExit_performed;
 
         Keyboard.current.onTextInput += Keyboard_onTextInput;
 
-        playerInputActions.Monitor.Exit.performed += MonitorExit_performed;
-        playerInputActions.Monitor.Submit.performed += MonitorSubmit_performed;
+        PlayerInputActions.Monitor.Exit.performed += MonitorExit_performed;
+        PlayerInputActions.Monitor.Submit.performed += MonitorSubmit_performed;
     }
-    
 
-    public static void RemoveInput() {        
-        playerInputActions.All.Pause.performed -= Pause_performed;
 
-        playerInputActions.PlayerWalking.Interact.performed -= Interact_performed;
+    public static void RemoveInput()
+    {
+        PlayerInputActions.All.Pause.performed -= Pause_performed;
 
-        playerInputActions.PlayerWalkingAndDesk.SmartphoneToggle.performed -= SmartphoneToggle_performed;
+        PlayerInputActions.PlayerWalking.Interact.performed -= Interact_performed;
 
-        playerInputActions.Desk.Interact.performed -= Interact_performed;
-        playerInputActions.Desk.ExitDeskView.performed -= ExitDeskView_performed;
+        PlayerInputActions.PlayerWalkingAndDesk.SmartphoneToggle.performed -= SmartphoneToggle_performed;
 
-        playerInputActions.LaptopAndMonitor.Exit.performed -= LaptopAndMonitorExit_performed;
+        PlayerInputActions.Desk.Interact.performed -= Interact_performed;
+        PlayerInputActions.Desk.ExitDeskView.performed -= ExitDeskView_performed;
+
+        PlayerInputActions.LaptopAndMonitor.Exit.performed -= LaptopAndMonitorExit_performed;
 
         Keyboard.current.onTextInput -= Keyboard_onTextInput;
 
-        playerInputActions.Monitor.Exit.performed -= MonitorExit_performed;
-        playerInputActions.Monitor.Submit.performed -= MonitorSubmit_performed;
+        PlayerInputActions.Monitor.Exit.performed -= MonitorExit_performed;
+        PlayerInputActions.Monitor.Submit.performed -= MonitorSubmit_performed;
 
 
-        playerInputActions.Dispose();
+        PlayerInputActions.Dispose();
     }
 
-
-    public static Vector2 GetMovementVectorNormalized() { return playerInputActions.PlayerWalking.Move.ReadValue<Vector2>().normalized; }
-
-    public static Vector2 GetRotationVector() { return playerInputActions.PlayerWalkingAndDesk.Rotate.ReadValue<Vector2>(); }
-
-    private static void Keyboard_onTextInput(char c) { if (playerInputActions.Monitor.enabled) OnKeyboardInputAction?.Invoke(c); }
+    private static void Keyboard_onTextInput(char c) { if (PlayerInputActions.Monitor.enabled) OnKeyboardInputAction?.Invoke(c); }
 
     private static void Pause_performed(InputAction.CallbackContext _) { OnPauseAction?.Invoke(); }
 
@@ -91,7 +97,4 @@ public class GameInput {
     private static void MonitorExit_performed(InputAction.CallbackContext _) { OnMonitorExitAction?.Invoke(); }
 
     private static void MonitorSubmit_performed(InputAction.CallbackContext _) { OnSubmitAction?.Invoke(); }
-
-
-    public static PlayerInputActions GetInputActions() { return playerInputActions; }
 }

@@ -1,17 +1,12 @@
-public class Email {
-
-
-    public Email(string title, string content) {
-        this.title = title;
-        this.content = content;
+public class Email
+{
+    public Email(string title, string content)
+    {
+        Title = title;
+        Content = content;
     }
 
 
-    private string title;
-    private string content;
-
-
-    public string GetTitle() { return title; }
-
-    public string GetContent() { return content; }
+    public string Title { get; private set; }
+    public string Content { get; private set; }
 }

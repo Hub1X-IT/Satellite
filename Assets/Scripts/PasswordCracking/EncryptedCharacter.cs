@@ -1,6 +1,5 @@
-public class EncryptedCharacter {
-
-
+public class EncryptedCharacter
+{
     private int result;
 
     private int number1;
@@ -18,7 +17,8 @@ public class EncryptedCharacter {
 
 
     public EncryptedCharacter(int result, int number1, int number2, int number3, int number4,
-        CalculationData.Calculation calculation1, CalculationData.Calculation calculation2, CalculationData.Calculation calculation3) {
+        CalculationData.Calculation calculation1, CalculationData.Calculation calculation2, CalculationData.Calculation calculation3)
+    {
         this.result = result;
 
         this.number1 = number1;
@@ -34,7 +34,8 @@ public class EncryptedCharacter {
     }
 
 
-    public EncryptedCharacter(CalculationData calculationDataMiddle, CalculationData calculationDataFirst, CalculationData calculationDataLast) {
+    public EncryptedCharacter(CalculationData calculationDataMiddle, CalculationData calculationDataFirst, CalculationData calculationDataLast)
+    {
         result = calculationDataMiddle.GetResult();
 
         number1 = calculationDataFirst.GetValue1();
@@ -50,13 +51,15 @@ public class EncryptedCharacter {
     }
 
 
-    private void CreateEncryptedCharacterStrings() {
+    private void CreateEncryptedCharacterStrings()
+    {
         encryptedCharacterStringArray = CreateEncryptedCharacterStringArray();
         encryptedCharacterString = CreateEncryptedCharacterString();
     }
 
 
-    private string[] CreateEncryptedCharacterStringArray() {
+    private string[] CreateEncryptedCharacterStringArray()
+    {
         string[] stringArray = new string[7];
 
         stringArray[0] = number1.ToString();
@@ -71,7 +74,8 @@ public class EncryptedCharacter {
     }
 
 
-    private string CreateEncryptedCharacterString() {
+    private string CreateEncryptedCharacterString()
+    {
         string encryptedCharacterString = encryptedCharacterStringArray[0] + " " +
             encryptedCharacterStringArray[1] + " " +
             encryptedCharacterStringArray[2] + " " +
@@ -84,8 +88,10 @@ public class EncryptedCharacter {
     }
 
 
-    private string GetCalculationString(CalculationData.Calculation calculation) {
-        switch (calculation) {
+    private string GetCalculationString(CalculationData.Calculation calculation)
+    {
+        switch (calculation)
+        {
             default:
                 return string.Empty;
             case CalculationData.Calculation.Add:

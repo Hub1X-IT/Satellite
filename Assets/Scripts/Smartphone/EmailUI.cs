@@ -2,31 +2,34 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EmailUI : MonoBehaviour {
-
-
+public class EmailUI : MonoBehaviour
+{
     [SerializeField] private Button emailExitButton;
 
 
-    private Action onCloseEmailOverviewAction;
+    private Action closingEmailOverview;
 
 
-    private void Awake() {
-        emailExitButton.onClick.AddListener(() => {
+    private void Awake()
+    {
+        emailExitButton.onClick.AddListener(() =>
+        {
             Hide();
-            onCloseEmailOverviewAction();
+            closingEmailOverview();
         });
     }
 
 
-    public void Show(Action onCloseEmailOverviewAction) {
-        this.onCloseEmailOverviewAction = onCloseEmailOverviewAction;
+    public void Show(Action closingEmailOverview)
+    {
+        this.closingEmailOverview = closingEmailOverview;
 
         gameObject.SetActive(true);
     }
 
 
-    public void Hide() {
+    private void Hide()
+    {
         gameObject.SetActive(false);
     }
 }
