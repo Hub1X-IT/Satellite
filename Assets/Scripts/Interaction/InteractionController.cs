@@ -28,7 +28,7 @@ public class InteractionController : MonoBehaviour {
 
 
     private void Start() {
-        GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
+        GameInput.OnInteractAction += GameInput_OnInteractAction;
     }
 
 

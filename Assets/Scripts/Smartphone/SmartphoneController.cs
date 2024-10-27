@@ -20,12 +20,12 @@ public class SmartphoneController : MonoBehaviour {
     }
 
     private void Start() {
-        GameInput.Instance.OnSmartphoneToggleAction += () => { TurnOn(!smartphoneOn); };
+        GameInput.OnSmartphoneToggleAction += () => { TurnOn(!smartphoneOn); };
     }
 
     private void TurnOn(bool targetState) {
         smartphoneOn = targetState;
-        GameManager.Instance.PauseGame(targetState);
+        GameManager.PauseGame(targetState);
 
         if (targetState) smartphoneAnimator.SetTrigger(PHONE_ON_TRIGGER);
         else smartphoneAnimator.SetTrigger(PHONE_OFF_TRIGGER);

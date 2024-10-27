@@ -2,20 +2,16 @@ using UnityEngine;
 
 public class InteractionVisualController : MonoBehaviour {
 
-    // should be put in the HUD object
-
     private InteractionUI interactionUI;
 
-
     private InteractionVisual previousInteractVisual;
-
 
     // To make sure the methods don't run every frame
     private IInteractable previousInteractableObject;    
     private bool interactVisualEnabled;
 
     private void Awake() {
-        interactionUI = GetComponentInChildren<InteractionUI>();
+        interactionUI = GetComponent<InteractionUI>();
     }
 
     private void Update() {

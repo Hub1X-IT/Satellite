@@ -10,11 +10,10 @@ public class Desk : MonoBehaviour {
 
     public event Action<bool> OnDeskViewEnterExit;
 
-    private PlayerScriptsController playerScriptsController;
-
 
     private CameraRotationController deskCameraRotationController;
     private Vector3 deskCameraDefaultRotation = new Vector3(0f, 180f, 0f);
+
 
     [SerializeField] private CinemachineCamera cinemachineDeskCamera;
 
@@ -27,8 +26,6 @@ public class Desk : MonoBehaviour {
 
     private void Awake() {
         deskTrigger = GetComponentInChildren<DeskTrigger>();
-
-        playerScriptsController = FindAnyObjectByType<PlayerScriptsController>();
 
         deskCameraRotationController = GetComponent<CameraRotationController>();
         deskCameraRotationController.enabled = false;
@@ -45,9 +42,9 @@ public class Desk : MonoBehaviour {
         deskTrigger.OnDeskTrigger += DeskTrigger_OnDeskTrigger;
         deskTrigger.SetInteractionVisual(interactionVisual);
 
-        GameInput.Instance.OnExitDeskViewAction += GameInput_OnExitDeskViewAction;
+        GameInput.OnExitDeskViewAction += GameInput_OnExitDeskViewAction;
 
-        playerInputActions = GameInput.Instance.GetInputActions();
+        playerInputActions = GameInput.GetInputActions();
     }
 
 
@@ -71,9 +68,9 @@ public class Desk : MonoBehaviour {
 
         playerInputActions.PlayerWalking.Disable();
 
-        playerScriptsController.EnablePlayerMovement(false);
+        PlayerScriptsController.EnablePlayerMovement(false);
 
-        CameraController.Instance.ChangeCinemachineCamera(cinemachineDeskCamera);
+        CameraController.ChangeCinemachineCamera(cinemachineDeskCamera);
 
         deskCameraRotationController.enabled = true;
         // Reset camera rotation
@@ -86,15 +83,13 @@ public class Desk : MonoBehaviour {
 
 
     private void ExitDeskView() {
-        Debug.Log("Desk: ExitDeskView()");
-
         playerInputActions.Desk.Disable();
 
         deskCameraRotationController.enabled = false;
 
         CameraController.Instance.ChangeToCinemachineMainCamera();
 
-        playerScriptsController.EnablePlayerMovement(true);
+        PlayerScriptsController.EnablePlayerMovement(true);
 
         playerInputActions.PlayerWalking.Enable();
 

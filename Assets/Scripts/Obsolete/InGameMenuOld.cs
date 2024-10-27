@@ -16,7 +16,7 @@ public class InGameMenuOld : MonoBehaviour {
 
 
     private void Start() {
-        GameManager.Instance.OnGamePauseUnpause += PauseUnpause;
+        GameManager.OnGamePauseUnpause += PauseUnpause;
     }
 
 

@@ -2,11 +2,18 @@ using UnityEngine;
 
 public class PlayerHUDController : MonoBehaviour {
 
-    private PlayerUIController playerUIController;
+    private bool canShowPlayerHUD;
 
     private void Awake() {
-        playerUIController = GetComponentInParent<PlayerUIController>();
+        GameManager.OnGamePauseUnpause += PauseUnpause;
+    }
 
-        playerUIController.OnPauseUnpause += (bool targetState) => { gameObject.SetActive(!targetState); };
+    private void PauseUnpause(bool paused) {
+        gameObject.SetActive(!paused && canShowPlayerHUD);
+    }
+
+    public void CanShowPlayerHUD(bool targetState) {
+        canShowPlayerHUD = targetState;
+        PauseUnpause(GameManager.GamePaused);
     }
 }

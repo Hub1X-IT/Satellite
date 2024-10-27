@@ -37,9 +37,9 @@ public class Monitor : MonoBehaviour {
 
         desk.OnDeskViewEnterExit += (bool state) => { EnableMonitorTrigger(state); };
 
-        playerInputActions = GameInput.Instance.GetInputActions();
+        playerInputActions = GameInput.GetInputActions();
 
-        GameInput.Instance.OnLaptopAndMonitorExitAction += () => { if (CanExitMonitorView) ExitMonitorView(); };
+        GameInput.OnLaptopAndMonitorExitAction += () => { if (CanExitMonitorView) ExitMonitorView(); };
     }
 
 
@@ -49,13 +49,15 @@ public class Monitor : MonoBehaviour {
 
 
     private void EnterMonitorView() {
+        PlayerScriptsController.CanShowPlayerHUD(false);
+
         isInMonitorView = true;
 
         desk.CanExitDeskView = false;
         desk.EnableDeskCameraRotationController(false);
 
-        CameraController.Instance.ChangeCamera(monitorUICamera);
-        GameManager.Instance.ShowCursor(true);
+        CameraController.ChangeCamera(monitorUICamera);
+        GameManager.ShowCursor(true);
 
         playerInputActions.LaptopAndMonitor.Enable();
     }
@@ -64,12 +66,14 @@ public class Monitor : MonoBehaviour {
     private void ExitMonitorView() {
         playerInputActions.LaptopAndMonitor.Disable();        
         
-        GameManager.Instance.ShowCursor(false);
+        GameManager.ShowCursor(false);
         CameraController.Instance.ChangeToMainCamera();
 
         desk.EnableDeskCameraRotationController(true);
         desk.CanExitDeskView = true;
 
         isInMonitorView = false;
+
+        PlayerScriptsController.CanShowPlayerHUD(true);
     }
 }

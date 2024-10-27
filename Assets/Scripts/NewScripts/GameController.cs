@@ -1,40 +1,24 @@
 using System;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
-
-    public static GameManager Instance { get; private set; }
-
-    public float interactRange;
-
-    [Tooltip("Only one should be selected!")] public LayerMask defaultInteractableLayerMask;
-    [Tooltip("Select also the layers that interaction should not pass through")] public LayerMask interactableLayerMasks;
+public class GameController {
+    // Game manager
 
     public static event Action<bool> OnGamePauseUnpause;
 
     public static bool GamePaused { get; private set; }
 
 
-    private void Awake() {
-        Instance = this;
-        GameInput.InitializeInput();
-
-        GameSettingsManager.LoadSettings();
-
+    public static void InitializeOnAwake() {
         ShowCursor(false);
 
         GamePaused = false;
     }
 
-
-    private void Start() {
+    public static void InitializeOnStart() {
         GameInput.OnPauseAction += () => { PauseGameToMenu(!GamePaused); };
 
         PauseGameToMenu(false);
-    }
-
-    private void OnDestroy() {
-        GameInput.RemoveInput();
     }
 
     public static void PauseGame(bool targetState) {

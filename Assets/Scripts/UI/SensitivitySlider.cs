@@ -19,12 +19,12 @@ public class SensitivitySlider : MonoBehaviour {
     private void Start() {
         sensitivitySlider.maxValue = maxSliderValue;
         sensitivitySlider.minValue = minSliderValue;
-        sensitivitySlider.value = GameSettings.MouseSensitivity;
+        sensitivitySlider.value = GameSettingsManager.MouseSensitivity;
         SetTextField();
     }
 
     private void ChangeSensitivity(float sensitivityValue) {
-        GameSettings.SetMouseSensitivity(sensitivityValue);
+        GameSettingsManager.SetMouseSensitivity(sensitivityValue);
         SetTextField();
     }
 

@@ -2,33 +2,29 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class GameInput : MonoBehaviour {
+public class GameInput {
 
-    public static GameInput Instance { get; private set; }
-
-    private PlayerInputActions playerInputActions;
+    private static PlayerInputActions playerInputActions;
 
 
-    public event Action OnPauseAction;
+    public static event Action OnPauseAction;
 
-    public event Action OnInteractAction;
+    public static event Action OnInteractAction;
 
-    public event Action OnSmartphoneToggleAction;
+    public static event Action OnSmartphoneToggleAction;
 
-    public event Action OnExitDeskViewAction;
+    public static event Action OnExitDeskViewAction;
 
-    public event Action OnLaptopAndMonitorExitAction;
+    public static event Action OnLaptopAndMonitorExitAction;
 
-    public event Action OnMonitorExitAction;
+    public static event Action OnMonitorExitAction;
 
-    public event Action<char> OnKeyboardInputAction;
+    public static event Action<char> OnKeyboardInputAction;
 
-    public event Action OnSubmitAction;
+    public static event Action OnSubmitAction;
 
 
-    private void Awake() {
-        Instance = this;
-
+    public static void InitializeInput() {
         playerInputActions = new PlayerInputActions();
         playerInputActions.All.Enable();
         playerInputActions.PlayerWalkingAndDesk.Enable();
@@ -54,7 +50,7 @@ public class GameInput : MonoBehaviour {
     }
     
 
-    private void OnDestroy() {        
+    public static void RemoveInput() {        
         playerInputActions.All.Pause.performed -= Pause_performed;
 
         playerInputActions.PlayerWalking.Interact.performed -= Interact_performed;
@@ -76,26 +72,26 @@ public class GameInput : MonoBehaviour {
     }
 
 
-    public Vector2 GetMovementVectorNormalized() { return playerInputActions.PlayerWalking.Move.ReadValue<Vector2>().normalized; }
+    public static Vector2 GetMovementVectorNormalized() { return playerInputActions.PlayerWalking.Move.ReadValue<Vector2>().normalized; }
 
-    public Vector2 GetRotationVector() { return playerInputActions.PlayerWalkingAndDesk.Rotate.ReadValue<Vector2>(); }
+    public static Vector2 GetRotationVector() { return playerInputActions.PlayerWalkingAndDesk.Rotate.ReadValue<Vector2>(); }
 
-    private void Keyboard_onTextInput(char c) { if (playerInputActions.Monitor.enabled) OnKeyboardInputAction?.Invoke(c); }
+    private static void Keyboard_onTextInput(char c) { if (playerInputActions.Monitor.enabled) OnKeyboardInputAction?.Invoke(c); }
 
-    private void Pause_performed(InputAction.CallbackContext _) { OnPauseAction?.Invoke(); }
+    private static void Pause_performed(InputAction.CallbackContext _) { OnPauseAction?.Invoke(); }
 
-    private void Interact_performed(InputAction.CallbackContext _) { OnInteractAction?.Invoke(); }
+    private static void Interact_performed(InputAction.CallbackContext _) { OnInteractAction?.Invoke(); }
 
-    private void SmartphoneToggle_performed(InputAction.CallbackContext _) { OnSmartphoneToggleAction?.Invoke(); }
+    private static void SmartphoneToggle_performed(InputAction.CallbackContext _) { OnSmartphoneToggleAction?.Invoke(); }
 
-    private void ExitDeskView_performed(InputAction.CallbackContext _) { OnExitDeskViewAction?.Invoke(); }
+    private static void ExitDeskView_performed(InputAction.CallbackContext _) { OnExitDeskViewAction?.Invoke(); }
 
-    private void LaptopAndMonitorExit_performed(InputAction.CallbackContext _) { OnLaptopAndMonitorExitAction?.Invoke(); }
+    private static void LaptopAndMonitorExit_performed(InputAction.CallbackContext _) { OnLaptopAndMonitorExitAction?.Invoke(); }
 
-    private void MonitorExit_performed(InputAction.CallbackContext _) { OnMonitorExitAction?.Invoke(); }
+    private static void MonitorExit_performed(InputAction.CallbackContext _) { OnMonitorExitAction?.Invoke(); }
 
-    private void MonitorSubmit_performed(InputAction.CallbackContext _) { OnSubmitAction?.Invoke(); }
+    private static void MonitorSubmit_performed(InputAction.CallbackContext _) { OnSubmitAction?.Invoke(); }
 
 
-    public PlayerInputActions GetInputActions() { return playerInputActions; }
+    public static PlayerInputActions GetInputActions() { return playerInputActions; }
 }

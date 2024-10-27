@@ -31,9 +31,9 @@ public class CommandPromptManager : MonoBehaviour {
 
 
     private void Start() {
-        GameInput.Instance.OnKeyboardInputAction += GameInput_OnKeyboardInputAction;
+        GameInput.OnKeyboardInputAction += GameInput_OnKeyboardInputAction;
 
-        GameInput.Instance.OnSubmitAction += GameInput_OnSubmitAction;
+        GameInput.OnSubmitAction += GameInput_OnSubmitAction;
     }
 
 

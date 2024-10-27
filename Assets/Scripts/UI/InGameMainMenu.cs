@@ -15,7 +15,7 @@ public class InGameMainMenu : MonoBehaviour {
 
         inGameMenu.OnOptionsOpenClose += (bool targetState) => { gameObject.SetActive(!targetState); };
 
-        resumeButton.onClick.AddListener(() => { GameManager.Instance.PauseGameToMenu(false); Debug.Log("PauseGame"); });
+        resumeButton.onClick.AddListener(() => { GameManager.PauseGameToMenu(false); Debug.Log("PauseGame"); });
         optionsButton.onClick.AddListener(() => { inGameMenu.OpenOptions(true); });
         // mainMenuButton.onClick.AddListener(() => { SceneLoader.LoadScene(SceneLoader.Scenes.MainMenu); });
     }

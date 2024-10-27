@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public static class SceneLoader {
+public class SceneLoader {
 
     public enum Scenes {
         MainMenu,

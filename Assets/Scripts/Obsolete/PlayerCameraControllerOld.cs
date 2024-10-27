@@ -14,11 +14,11 @@ public class PlayerCameraControllerOld : MonoBehaviour {
 
 
     private void HandleRotation() {
-        rotationInput = GameInput.Instance.GetRotationVector();
+        rotationInput = GameInput.GetRotationVector();
 
         // Handle Y axis rotation - rotating the player
         Vector3 playerRotation = new Vector3(0f, rotationInput.x, 0f);
-        transform.Rotate(playerRotation * GameSettings.MouseSensitivity * Time.deltaTime);
+        transform.Rotate(playerRotation * GameSettingsManager.MouseSensitivity * Time.deltaTime);
 
         // Handle X axis rotation - rotating only the camera
         Vector3 cameraRotation = cameraFollowObject.rotation.eulerAngles;
@@ -30,7 +30,7 @@ public class PlayerCameraControllerOld : MonoBehaviour {
         For example: when rotation equals -20, you get 340 which is greater than 90 so it would be clamped to 90 degrees, although it should have been left as it is
         */
 
-        cameraRotation.x += -rotationInput.y * GameSettings.MouseSensitivity * Time.deltaTime;
+        cameraRotation.x += -rotationInput.y * GameSettingsManager.MouseSensitivity * Time.deltaTime;
 
         // Clamp camera X rotation
         float minXRotation = -90f;
