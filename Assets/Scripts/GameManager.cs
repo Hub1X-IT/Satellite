@@ -21,10 +21,10 @@ public static class GameManager
         set
         {
             // Pause or unpause game.
+            isGamePaused = value;
+
             IsTimeStarted = !value;
             IsCursorShown = value;
-
-            isGamePaused = value;
         }
     }
 
@@ -34,11 +34,11 @@ public static class GameManager
         set
         {
             // Show or hide cursor.
+            isCursorShown = value;
+
             if (value) Cursor.lockState = CursorLockMode.None;
             else Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = value;
-
-            isCursorShown = value;
         }
     }
 
@@ -48,10 +48,10 @@ public static class GameManager
         set
         {
             // Start or stop time.
+            isTimeStarted = value;
+            
             if (value) TimeScale = 1f;
             else TimeScale = 0f;
-
-            isTimeStarted = value;
         }
     }
 
@@ -61,16 +61,19 @@ public static class GameManager
         set
         {
             // Set time scale
-            Time.timeScale = value;
-
             timeScale = value;
+
+            Time.timeScale = value;
         }
+    }
+
+    public static void InitializeOnAwake()
+    {
+        GameInput.OnPauseAction += () => PauseGameToMenu(!IsGamePaused);
     }
 
     public static void InitializeOnStart()
     {
-        GameInput.OnPauseAction += () => { PauseGameToMenu(!IsGamePaused); };
-
         IsCursorShown = false;
         PauseGameToMenu(false);
     }

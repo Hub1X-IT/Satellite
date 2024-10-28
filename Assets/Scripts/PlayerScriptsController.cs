@@ -8,18 +8,32 @@ public class PlayerScriptsController : MonoBehaviour
     private static PlayerHUDController playerHUDController;
 
     private static bool isPlayerMovementEnabled;
+
+    private static bool canShowPlayerHUD;
+
+
     public static bool IsPlayerMovementEnabled
     {
         get => isPlayerMovementEnabled;
         set
         {
             // Enable/disable player movement.
+            isPlayerMovementEnabled = value;
             playerMovementController.enabled = value;
             playerCameraRotationController.enabled = value;
-
-            isPlayerMovementEnabled = value;
         }
     }
+
+    public static bool CanShowPlayerHUD
+    {
+        get => canShowPlayerHUD;
+        set
+        {
+            canShowPlayerHUD = value;
+            playerHUDController.CanShowPlayerHUD = value;
+        }
+    }
+
 
     private void Awake()
     {
@@ -28,12 +42,7 @@ public class PlayerScriptsController : MonoBehaviour
 
         playerHUDController = GetComponentInChildren<PlayerHUDController>();
 
-        CanShowPlayerHUD(true);
         IsPlayerMovementEnabled = true;
-    }
-
-    public static void CanShowPlayerHUD(bool state)
-    {
-        playerHUDController.CanShowPlayerHUD = state;
+        CanShowPlayerHUD = true;
     }
 }

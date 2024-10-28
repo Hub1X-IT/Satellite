@@ -11,7 +11,8 @@ using UnityEngine;
 [Serializable]
 public class SerializableDictionary<TKey, TValue>
 {
-    [SerializeField] private DictionaryItem[] items;
+    [SerializeField]
+    private DictionaryItem[] items;
 
     public Dictionary<TKey, TValue> Dictionary
     {

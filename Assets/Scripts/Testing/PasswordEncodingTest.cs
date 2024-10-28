@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class PasswordEncodingTest : MonoBehaviour
 {
-    [SerializeField] private string password;
+    [SerializeField]
+    private string password;
 
 
     private void Update()
@@ -17,16 +18,16 @@ public class PasswordEncodingTest : MonoBehaviour
     public void TestEncoding()
     {
         EncodedPassword encodedPassword = new EncodedPassword(this.password);
-        string password = encodedPassword.GetPassword();
-        int[] asciiCodes = encodedPassword.GetAsciiCodes();
-        EncryptedCharacter[] encryptedCharacters = encodedPassword.GetEncryptedCharacters();
+        string password = encodedPassword.Password;
+        int[] asciiCodes = encodedPassword.AsciiCodes;
+        EncryptedCharacter[] encryptedCharacters = encodedPassword.EncryptedCharacters;
 
         string asciiCodesDebugString = "";
         foreach (int asciiCode in asciiCodes) { asciiCodesDebugString += asciiCode.ToString() + "\n"; };
         string encryptedCharactersDebugString = "";
         foreach (EncryptedCharacter encryptedCharacter in encryptedCharacters)
         {
-            encryptedCharactersDebugString += encryptedCharacter.GetEncryptedCharacterString() + "\n";
+            encryptedCharactersDebugString += encryptedCharacter.EncryptedCharacterString + "\n";
         }
 
         Debug.Log(password);

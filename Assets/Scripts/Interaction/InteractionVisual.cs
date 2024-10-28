@@ -2,31 +2,39 @@ using UnityEngine;
 
 public class InteractionVisual : MonoBehaviour
 {
-    [SerializeField] private Outline outline;
+    [SerializeField]
+    private Outline outline;
 
-
-    [SerializeField] private string interactMessage;
-    public string InteractMessage => interactMessage;
-
+    [SerializeField]
+    private string interactMessage;
 
     private bool isEnabled;
+
+    public string InteractMessage => interactMessage;
+
     public bool IsEnabled
     {
         get => isEnabled;
         set
         {
-            if (outline != null)
-            {
-                outline.enabled = value;
-            }
+            // Enable/disable interaction visual.
             isEnabled = value;
+            EnableDisableInteractionVisual(value);
         }
     }
 
 
-    void Start()
+    private void Start()
     {
-        // outline = GetComponent<Outline>();
         IsEnabled = false;
+    }
+
+
+    private void EnableDisableInteractionVisual(bool enabled)
+    {
+        if (outline != null)
+        {
+            outline.enabled = enabled;
+        }
     }
 }

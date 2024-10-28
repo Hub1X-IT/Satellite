@@ -28,7 +28,7 @@ public class PlayerMovementController : MonoBehaviour {
 
     private void HandleMovement() {        
         Vector2 inputVector = GameInput.MovementVectorNormalized;
-        Vector3 movementInput = new Vector3(inputVector.x, 0f, inputVector.y);
+        Vector3 movementInput = new(inputVector.x, 0f, inputVector.y);
         
         moveDirection = transform.right * movementInput.x + transform.forward * movementInput.z;
         moveDirection.y = verticalVelocity;

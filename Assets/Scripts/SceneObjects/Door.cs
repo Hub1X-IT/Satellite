@@ -1,9 +1,8 @@
 using UnityEngine;
 
-public class DoorNew : MonoBehaviour
+public class Door : MonoBehaviour
 {
     private DoorTrigger doorTrigger;
-
 
     [SerializeField]
     private Animator doorAnimator;
@@ -12,20 +11,7 @@ public class DoorNew : MonoBehaviour
     [SerializeField]
     private bool isInverted = false;
 
-
     private bool isOpen;
-    private bool IsOpen
-    {
-        get => isOpen;
-        set
-        {
-            // Open/close door.
-            doorAnimator.SetBool(IS_INVERTED_BOOL, isInverted);
-            doorAnimator.SetBool(DOOR_OPEN_BOOL, value);
-            isOpen = value;
-        }
-    }
-
 
     [SerializeField][Tooltip("True: door open\nFalse: door closed")]
     private bool defaultState = false;
@@ -33,6 +19,18 @@ public class DoorNew : MonoBehaviour
 
     private const string IS_INVERTED_BOOL = "IsInverted";
     private const string DOOR_OPEN_BOOL = "DoorOpen";
+
+
+    private bool IsOpen
+    {
+        get => isOpen;
+        set
+        {
+            // Open/close door.            
+            isOpen = value;
+            OpenCloseDoor(value);
+        }
+    }
 
 
     private void Awake()
@@ -46,12 +44,19 @@ public class DoorNew : MonoBehaviour
 
     private void Start()
     {
-        doorTrigger.OnDoorInteract += () => IsOpen = !IsOpen;
+        doorTrigger.DoorTriggered += () => IsOpen = !IsOpen;
     }
 
 
     private void OnEnable()
     {
         IsOpen = defaultState;
+    }
+
+
+    private void OpenCloseDoor(bool state)
+    {
+        doorAnimator.SetBool(IS_INVERTED_BOOL, isInverted);
+        doorAnimator.SetBool(DOOR_OPEN_BOOL, state);
     }
 }

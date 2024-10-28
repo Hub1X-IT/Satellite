@@ -6,25 +6,33 @@ public class InteractionUI : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI interactionTextField;
 
+
     private string interactionText;
+
+
+    private bool isInteractionTextEnabled;
+
+
     public string InteractionText
     {
         get => interactionText;
         set
         {
-            interactionTextField.text = value;
+            // Set interaction text.
             interactionText = value;
+            interactionTextField.text = value;
         }
     }
 
-    private bool isInteractionTextEnabled;
+
     public bool IsInteractionTextEnabled
     {
         get => isInteractionTextEnabled;
         set
         {
-            interactionTextField.gameObject.SetActive(value);
+            // Enable/disable interaction text field
             isInteractionTextEnabled = value;
+            interactionTextField.gameObject.SetActive(value);
         }
     }
 

@@ -14,6 +14,7 @@ public class ScriptsInitializer : MonoBehaviour
         GameInput.InitializeInput();
 
         CameraController.InitializeOnAwake(cameraControllerData);
+        GameManager.InitializeOnAwake();
         InteractionController.InitializeOnAwake(interactionControllerData);
         VolumeController.InitializeOnAwake(volumeControllerData);
 
@@ -24,7 +25,6 @@ public class ScriptsInitializer : MonoBehaviour
     {
         CommandPromptManager.InitializeOnStart();
         GameManager.InitializeOnStart();
-        InteractionController.InitializeOnStart();
         VolumeController.InitializeOnStart();
     }
 

@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class DoorTrigger : MonoBehaviour, IInteractable
 {
-    public event Action OnDoorInteract;
+    public event Action DoorTriggered;
 
     public InteractionVisual InteractVisual { get; set; }
 
-    public Transform Transform { get; set; }
+    public Transform Transform { get; private set; }
 
     private void Awake()
     {
@@ -16,6 +16,6 @@ public class DoorTrigger : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        OnDoorInteract?.Invoke();
+        DoorTriggered?.Invoke();
     }
 }

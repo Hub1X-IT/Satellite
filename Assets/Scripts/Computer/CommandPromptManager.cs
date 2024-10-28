@@ -14,9 +14,6 @@ public static class CommandPromptManager
     private static readonly char backspaceCode = '\u0008';
 
 
-    // public static CommandPromptManager Instance { get; private set; }
-
-
     public static event Action OnSubmitCommand;
 
 

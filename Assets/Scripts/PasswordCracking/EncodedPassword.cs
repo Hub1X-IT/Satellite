@@ -1,43 +1,37 @@
 public class EncodedPassword
 {
-    private string password;
+    public string Password { get; private set; }
 
-    private int[] asciiCodes;
-    private EncryptedCharacter[] encryptedCharacters;
+    public int[] AsciiCodes { get; private set; }
+
+    public EncryptedCharacter[] EncryptedCharacters { get; private set; }
 
 
     public EncodedPassword(string password)
     {
-        this.password = password;
-        asciiCodes = EncodeToAscii();
-        encryptedCharacters = EncryptCharacters();
+        Password = password;
+        AsciiCodes = EncodeToAscii();
+        EncryptedCharacters = EncryptCharacters();
     }
 
 
     private EncryptedCharacter[] EncryptCharacters()
     {
-        EncryptedCharacter[] encryptedCharacters = new EncryptedCharacter[asciiCodes.Length];
-        for (int i = 0; i < asciiCodes.Length; i++)
+        EncryptedCharacter[] encryptedCharacters = new EncryptedCharacter[AsciiCodes.Length];
+        for (int i = 0; i < AsciiCodes.Length; i++)
         {
-            encryptedCharacters[i] = CalculationsGeneration.GetEncryptedCharacter(asciiCodes[i]);
+            encryptedCharacters[i] = CalculationsGeneration.GetEncryptedCharacter(AsciiCodes[i]);
         }
         return encryptedCharacters;
     }
 
     private int[] EncodeToAscii()
     {
-        int[] asciiCodes = new int[password.Length];
-        for (int i = 0; i < password.Length; i++) { asciiCodes[i] = password[i]; }
-        /*
-        List<int> intList = new List<int>();
-        foreach (int i in password) { intList.Add(i); }
-        return intList.ToArray();
-        */
+        int[] asciiCodes = new int[Password.Length];
+        for (int i = 0; i < Password.Length; i++)
+        {
+            asciiCodes[i] = Password[i];
+        }
         return asciiCodes;
     }
-
-
-    public string GetPassword() { return password; }
-    public int[] GetAsciiCodes() { return asciiCodes; }
-    public EncryptedCharacter[] GetEncryptedCharacters() { return encryptedCharacters; }
 }

@@ -35,7 +35,8 @@ public class GameInput
 
     public static void InitializeInput()
     {
-        PlayerInputActions = new PlayerInputActions();
+        PlayerInputActions = new();
+
         PlayerInputActions.All.Enable();
         PlayerInputActions.PlayerWalkingAndDesk.Enable();
         PlayerInputActions.PlayerWalking.Enable();
@@ -78,23 +79,28 @@ public class GameInput
         PlayerInputActions.Monitor.Exit.performed -= MonitorExit_performed;
         PlayerInputActions.Monitor.Submit.performed -= MonitorSubmit_performed;
 
-
         PlayerInputActions.Dispose();
     }
 
-    private static void Keyboard_onTextInput(char c) { if (PlayerInputActions.Monitor.enabled) OnKeyboardInputAction?.Invoke(c); }
+    private static void Keyboard_onTextInput(char c)
+    {
+        if (PlayerInputActions.Monitor.enabled)
+        {
+            OnKeyboardInputAction?.Invoke(c);
+        }
+    }
 
-    private static void Pause_performed(InputAction.CallbackContext _) { OnPauseAction?.Invoke(); }
+    private static void Pause_performed(InputAction.CallbackContext _) => OnPauseAction?.Invoke();
 
-    private static void Interact_performed(InputAction.CallbackContext _) { OnInteractAction?.Invoke(); }
+    private static void Interact_performed(InputAction.CallbackContext _) => OnInteractAction?.Invoke();
 
-    private static void SmartphoneToggle_performed(InputAction.CallbackContext _) { OnSmartphoneToggleAction?.Invoke(); }
+    private static void SmartphoneToggle_performed(InputAction.CallbackContext _) => OnSmartphoneToggleAction?.Invoke();
 
-    private static void ExitDeskView_performed(InputAction.CallbackContext _) { OnExitDeskViewAction?.Invoke(); }
+    private static void ExitDeskView_performed(InputAction.CallbackContext _) => OnExitDeskViewAction?.Invoke();
 
-    private static void LaptopAndMonitorExit_performed(InputAction.CallbackContext _) { OnLaptopAndMonitorExitAction?.Invoke(); }
+    private static void LaptopAndMonitorExit_performed(InputAction.CallbackContext _) => OnLaptopAndMonitorExitAction?.Invoke();
 
-    private static void MonitorExit_performed(InputAction.CallbackContext _) { OnMonitorExitAction?.Invoke(); }
+    private static void MonitorExit_performed(InputAction.CallbackContext _) => OnMonitorExitAction?.Invoke();
 
-    private static void MonitorSubmit_performed(InputAction.CallbackContext _) { OnSubmitAction?.Invoke(); }
+    private static void MonitorSubmit_performed(InputAction.CallbackContext _) => OnSubmitAction?.Invoke();
 }

@@ -2,25 +2,24 @@ using UnityEngine;
 
 public class DoorOld : MonoBehaviour, IInteractable
 {
-    [SerializeField] private Animator doorAnimator;
-
+    [SerializeField]
+    private Animator doorAnimator;
 
     private const string DOOR_OPEN_TRIGGER = "DoorOpen";
     private const string DOOR_CLOSE_TRIGGER = "DoorClose";
 
+    private bool isDoorOpen;
 
-    private bool doorOpened;
+    public InteractionVisual InteractVisual { get; }
 
-    public InteractionVisual InteractVisual { get; set; }
+    public Transform Transform { get; private set; }
 
-    public Transform Transform { get; set; }
-
-    public void Awake()
+    private void Awake()
     {
         Transform = transform;
 
         doorAnimator = GetComponent<Animator>();
-        doorOpened = false;
+        isDoorOpen = false;
     }
 
 
@@ -32,16 +31,14 @@ public class DoorOld : MonoBehaviour, IInteractable
 
     private void OpenClose()
     {
-        if (!doorOpened)
-        { // open door
+        if (!isDoorOpen)
+        {
             doorAnimator.SetTrigger(DOOR_OPEN_TRIGGER);
         }
-
         else
-        { // close door
+        {
             doorAnimator.SetTrigger(DOOR_CLOSE_TRIGGER);
         }
-        doorOpened = !doorOpened;
-
+        isDoorOpen = !isDoorOpen;
     }
 }

@@ -29,10 +29,7 @@ public static class InteractionController
         interactRange = data.interactRange;
         defaultInteractableLayerMask = data.defaultInteractableLayerMask;
         interactableLayerMasks = data.interactableLayerMasks;
-    }
 
-    public static void InitializeOnStart()
-    {
         GameInput.OnInteractAction += GameInput_OnInteractAction;
     }
 

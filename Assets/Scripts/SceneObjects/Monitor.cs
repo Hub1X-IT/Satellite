@@ -4,80 +4,50 @@ public class Monitor : MonoBehaviour
 {
     private MonitorTrigger monitorTrigger;
 
-
     private Desk desk;
-
 
     [SerializeField]
     private Camera monitorUICamera;
 
 
     private bool isInMonitorView;
+
+    private bool isMonitorTriggerEnabled;
+
+
+    public bool CanExitMonitorView { get; set; }
+
+
     private bool IsInMonitorView
     {
         get => isInMonitorView;
         set
         {
             // Enter/exit monitor view
-            GameManager.IsCursorShown = value;
-
-            PlayerScriptsController.CanShowPlayerHUD(!value);
-
-            desk.CanExitDeskView = !value;
-            desk.IsDeskCameraRotationEnabled = !value;
-
-            if (value)
-            {
-                GameInput.PlayerInputActions.LaptopAndMonitor.Enable();
-                CameraController.CurrentCamera = monitorUICamera;
-            }
-            else
-            {
-                GameInput.PlayerInputActions.LaptopAndMonitor.Disable();
-                CameraController.ChangeToMainCamera();
-            }
-
             isInMonitorView = value;
+            EnterExitMonitorView(value);
         }
     }
 
 
-    private bool isMonitorTriggerEnabled;
     public bool IsMonitorTriggerEnabled
     {
         get => isMonitorTriggerEnabled;
         set
         {
-            monitorTrigger.gameObject.SetActive(value);
+            // Enable/disable monitor trigger object
             isMonitorTriggerEnabled = value;
+            monitorTrigger.gameObject.SetActive(value);
         }
     }
-
-
-    public bool CanExitMonitorView { get; set; }
-
 
     private void Awake()
     {
         monitorTrigger = GetComponentInChildren<MonitorTrigger>();
-
         desk = GetComponentInParent<Desk>();
-
         monitorTrigger.InteractVisual = GetComponent<InteractionVisual>();
 
-        IsMonitorTriggerEnabled = false;
-
-        isInMonitorView = false;
-        monitorUICamera.gameObject.SetActive(false);
-
-        CanExitMonitorView = true;
-    }
-
-
-    private void Start()
-    {
-        monitorTrigger.OnMonitorInteract += () => IsInMonitorView = true;
-
+        monitorTrigger.MonitorTriggered += () => IsInMonitorView = true;
         desk.DeskViewEnterExit += (bool state) => IsMonitorTriggerEnabled = state;
 
         GameInput.OnLaptopAndMonitorExitAction += () =>
@@ -87,5 +57,34 @@ public class Monitor : MonoBehaviour
                 IsInMonitorView = false;
             }
         };
+
+        isInMonitorView = false;
+        monitorUICamera.gameObject.SetActive(false);
+
+        IsMonitorTriggerEnabled = false;
+
+        CanExitMonitorView = true;
+    }
+
+
+    private void EnterExitMonitorView(bool state)
+    {
+        GameManager.IsCursorShown = state;
+
+        PlayerScriptsController.CanShowPlayerHUD = !state;
+
+        desk.CanExitDeskView = !state;
+        desk.IsDeskCameraRotationEnabled = !state;
+
+        if (state)
+        {
+            GameInput.PlayerInputActions.LaptopAndMonitor.Enable();
+            CameraController.ActiveCamera = monitorUICamera;
+        }
+        else
+        {
+            GameInput.PlayerInputActions.LaptopAndMonitor.Disable();
+            CameraController.ChangeToMainCamera();
+        }
     }
 }

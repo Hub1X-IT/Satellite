@@ -2,50 +2,38 @@ using UnityEngine;
 
 public class Lamp : MonoBehaviour, IInteractable
 {
-    public InteractionVisual InteractVisual { get; set; }
+    public InteractionVisual InteractVisual { get; }
 
-    public Transform Transform { get; set; }
+    public Transform Transform { get; private set; }
 
-    private bool isTurnedOn;
-    private bool IsTurnedOn
+
+    private bool isEnabled;
+
+
+    [SerializeField]
+    private Light lampLight;
+
+
+    private bool IsEnabled
     {
-        get => isTurnedOn;
+        get => isEnabled;
         set
         {
-            Debug.Log("Lamp: TurnOnOff(), TargetState: " + value);
-                        
-
-            foreach (GameObject obj in turnedOnObjects)
-            {
-                obj.SetActive(value);
-            }
-            foreach (GameObject obj in turnedOffObjects)
-            {
-                obj.SetActive(!value);
-            }
-
-            // if (!targetState) onOffCycles++;
-
-            isTurnedOn = value;
+            // Enable/disable lamp.
+            isEnabled = value;
+            lampLight.gameObject.SetActive(value);
         }
     }
 
-    [SerializeField]
-    private GameObject[] turnedOnObjects;
-
-    [SerializeField]
-    private GameObject[] turnedOffObjects;
-
-    // private int onOffCycles;
-    // private int maxOnOffCycles = 5;
 
     private void Awake()
     {
         Transform = transform;
     }
 
+
     public void Interact()
     {
-        IsTurnedOn = !IsTurnedOn;
+        IsEnabled = !IsEnabled;
     }
 }

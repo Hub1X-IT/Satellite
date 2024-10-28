@@ -19,10 +19,10 @@ public class InGameMainMenu : MonoBehaviour
     {
         inGameMenu = GetComponentInParent<InGameMenu>();
 
-        inGameMenu.OnOptionsOpenClose += (bool targetState) => gameObject.SetActive(!targetState);
+        inGameMenu.OptionsOpenedClosed += (bool targetState) => gameObject.SetActive(!targetState);
 
         resumeButton.onClick.AddListener(() => GameManager.PauseGameToMenu(false));
-        optionsButton.onClick.AddListener(() => inGameMenu.OpenCloseOptions(true));
+        optionsButton.onClick.AddListener(() => inGameMenu.AreOptionsOpen = true);
         // mainMenuButton.onClick.AddListener(() => SceneLoader.LoadScene(SceneLoader.Scenes.MainMenu));
     }
 }

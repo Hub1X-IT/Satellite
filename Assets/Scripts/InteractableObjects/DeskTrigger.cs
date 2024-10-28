@@ -3,12 +3,11 @@ using UnityEngine;
 
 public class DeskTrigger : MonoBehaviour, IInteractable
 {
-
-    public event Action OnDeskTrigger;
+    public event Action DeskTriggered;
 
     public InteractionVisual InteractVisual { get; set; }
 
-    public Transform Transform { get; set; }
+    public Transform Transform { get; private set; }
 
     private void Awake()
     {
@@ -17,6 +16,6 @@ public class DeskTrigger : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        OnDeskTrigger?.Invoke();
+        DeskTriggered?.Invoke();
     }
 }

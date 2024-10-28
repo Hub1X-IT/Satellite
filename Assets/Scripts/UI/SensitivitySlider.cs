@@ -17,12 +17,13 @@ public class SensitivitySlider : MonoBehaviour
     private void Awake()
     {
         sensitivitySlider.onValueChanged.AddListener(ChangeSensitivity);
+
+        sensitivitySlider.minValue = minSliderValue;
+        sensitivitySlider.maxValue = maxSliderValue;
     }
 
     private void Start()
     {
-        sensitivitySlider.minValue = minSliderValue;
-        sensitivitySlider.maxValue = maxSliderValue;
         ChangeSensitivity(GameSettingsManager.MouseSensitivity);
     }
 

@@ -11,35 +11,35 @@ public static class CameraController
         public CinemachineCamera cinemachineMainCamera;
     }
 
-    private static Camera currentCamera;
+    private static Camera activeCamera;
 
-    private static CinemachineCamera currentCinemachineCamera;
+    private static CinemachineCamera activeCinemachineCamera;
 
     private static Camera mainCamera;
 
     private static CinemachineCamera cinemachineMainCamera;
 
-    public static Camera CurrentCamera
+    public static Camera ActiveCamera
     {
-        get { return currentCamera; }
+        get { return activeCamera; }
         set
         {
             // Change active camera
-            currentCamera.gameObject.SetActive(false);
+            activeCamera.gameObject.SetActive(false);
             value.gameObject.SetActive(true);
-            currentCamera = value;
+            activeCamera = value;
         }
     }
 
-    public static CinemachineCamera CurrentCinemachineCamera
+    public static CinemachineCamera ActiveCinemachineCamera
     {
-        get { return currentCinemachineCamera; }
+        get { return activeCinemachineCamera; }
         set
         {
             // Change active Cinemachine camera
-            currentCinemachineCamera.gameObject.SetActive(false);
+            activeCinemachineCamera.gameObject.SetActive(false);
             value.gameObject.SetActive(true);
-            currentCinemachineCamera = value;
+            activeCinemachineCamera = value;
         }
     }
 
@@ -56,20 +56,20 @@ public static class CameraController
 
     public static void ChangeToMainCamera()
     {
-        CurrentCamera = mainCamera;
+        ActiveCamera = mainCamera;
     }
 
     public static void ChangeToCinemachineMainCamera()
     {
-        CurrentCinemachineCamera = cinemachineMainCamera;
+        ActiveCinemachineCamera = cinemachineMainCamera;
     }
 
     private static void InitializeMainCamera()
     {
-        currentCamera = MainCamera;
-        currentCamera.gameObject.SetActive(true);
+        activeCamera = MainCamera;
+        activeCamera.gameObject.SetActive(true);
 
-        currentCinemachineCamera = CinemachineMainCamera;
-        currentCinemachineCamera.gameObject.SetActive(true);
+        activeCinemachineCamera = CinemachineMainCamera;
+        activeCinemachineCamera.gameObject.SetActive(true);
     }
 }

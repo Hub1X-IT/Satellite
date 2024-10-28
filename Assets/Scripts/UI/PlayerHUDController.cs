@@ -18,6 +18,7 @@ public class PlayerHUDController : MonoBehaviour
         }
     }
 
+
     private bool IsEnabled
     {
         get => isEnabled;

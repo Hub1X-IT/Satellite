@@ -3,20 +3,23 @@ using UnityEngine;
 
 public class MonitorTrigger : MonoBehaviour, IInteractable
 {
+    public event Action MonitorTriggered;
 
-    public event Action OnMonitorInteract;
 
     public InteractionVisual InteractVisual { get; set; }
 
-    public Transform Transform { get; set; }
+
+    public Transform Transform { get; private set; }
+
 
     private void Awake()
     {
         Transform = transform;
     }
 
+
     public void Interact()
     {
-        OnMonitorInteract?.Invoke();
+        MonitorTriggered?.Invoke();
     }
 }

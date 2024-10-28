@@ -9,7 +9,6 @@ public class InGameOptions : MonoBehaviour
     [SerializeField]
     private Button backButton;
 
-
     [SerializeField]
     private TMP_Dropdown resolutionDropdown;
 
@@ -21,8 +20,8 @@ public class InGameOptions : MonoBehaviour
     {
         inGameMenu = GetComponentInParent<InGameMenu>();
 
-        inGameMenu.OnOptionsOpenClose += (state) => gameObject.SetActive(state);
+        inGameMenu.OptionsOpenedClosed += (state) => gameObject.SetActive(state);
 
-        backButton.onClick.AddListener(() => inGameMenu.OpenCloseOptions(false));
+        backButton.onClick.AddListener(() => inGameMenu.AreOptionsOpen = false);
     }
 }

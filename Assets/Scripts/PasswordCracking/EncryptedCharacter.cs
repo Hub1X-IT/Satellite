@@ -1,34 +1,40 @@
 public class EncryptedCharacter
 {
-    private int result;
+    public int Result { get; private set; }
 
-    private int number1;
-    private int number2;
-    private int number3;
-    private int number4;
-
-    private CalculationData.Calculation calculation1; // Between numbers 1 & 2
-    private CalculationData.Calculation calculation2; // Between numbers 2 & 3
-    private CalculationData.Calculation calculation3; // Between numbers 3 & 4
+    public int Number1 { get; private set; }
+    public int Number2 { get; private set; }
+    public int Number3 { get; private set; }
+    public int Number4 { get; private set; }
 
 
-    private string[] encryptedCharacterStringArray;
-    private string encryptedCharacterString;
+    // Between numbers 1 & 2
+    public CalculationData.CalculationType Calculation1 { get; private set; }
+
+    // Between numbers 2 & 3
+    public CalculationData.CalculationType Calculation2 { get; private set; }
+
+    // Between numbers 3 & 4
+    public CalculationData.CalculationType Calculation3 { get; private set; }
+
+
+    public string[] EncryptedCharacterStringArray { get; private set; }
+    public string EncryptedCharacterString { get; private set; }
 
 
     public EncryptedCharacter(int result, int number1, int number2, int number3, int number4,
-        CalculationData.Calculation calculation1, CalculationData.Calculation calculation2, CalculationData.Calculation calculation3)
+        CalculationData.CalculationType calculation1, CalculationData.CalculationType calculation2, CalculationData.CalculationType calculation3)
     {
-        this.result = result;
+        Result = result;
 
-        this.number1 = number1;
-        this.number2 = number2;
-        this.number3 = number3;
-        this.number4 = number4;
+        Number1 = number1;
+        Number2 = number2;
+        Number3 = number3;
+        Number4 = number4;
 
-        this.calculation1 = calculation1;
-        this.calculation2 = calculation2;
-        this.calculation3 = calculation3;
+        Calculation1 = calculation1;
+        Calculation2 = calculation2;
+        Calculation3 = calculation3;
 
         CreateEncryptedCharacterStrings();
     }
@@ -36,16 +42,16 @@ public class EncryptedCharacter
 
     public EncryptedCharacter(CalculationData calculationDataMiddle, CalculationData calculationDataFirst, CalculationData calculationDataLast)
     {
-        result = calculationDataMiddle.GetResult();
+        Result = calculationDataMiddle.Result;
 
-        number1 = calculationDataFirst.GetValue1();
-        number2 = calculationDataFirst.GetValue2();
-        number3 = calculationDataLast.GetValue1();
-        number4 = calculationDataLast.GetValue2();
+        Number1 = calculationDataFirst.Value1;
+        Number2 = calculationDataFirst.Value2;
+        Number3 = calculationDataLast.Value1;
+        Number4 = calculationDataLast.Value2;
 
-        calculation1 = calculationDataFirst.GetCalculation();
-        calculation2 = calculationDataMiddle.GetCalculation();
-        calculation3 = calculationDataLast.GetCalculation();
+        Calculation1 = calculationDataFirst.Calculation;
+        Calculation2 = calculationDataMiddle.Calculation;
+        Calculation3 = calculationDataLast.Calculation;
 
         CreateEncryptedCharacterStrings();
     }
@@ -53,8 +59,8 @@ public class EncryptedCharacter
 
     private void CreateEncryptedCharacterStrings()
     {
-        encryptedCharacterStringArray = CreateEncryptedCharacterStringArray();
-        encryptedCharacterString = CreateEncryptedCharacterString();
+        EncryptedCharacterStringArray = CreateEncryptedCharacterStringArray();
+        EncryptedCharacterString = CreateEncryptedCharacterString();
     }
 
 
@@ -62,13 +68,13 @@ public class EncryptedCharacter
     {
         string[] stringArray = new string[7];
 
-        stringArray[0] = number1.ToString();
-        stringArray[1] = GetCalculationString(calculation1);
-        stringArray[2] = number2.ToString();
-        stringArray[3] = GetCalculationString(calculation2);
-        stringArray[4] = number3.ToString();
-        stringArray[5] = GetCalculationString(calculation3);
-        stringArray[6] = number4.ToString();
+        stringArray[0] = Number1.ToString();
+        stringArray[1] = GetCalculationString(Calculation1);
+        stringArray[2] = Number2.ToString();
+        stringArray[3] = GetCalculationString(Calculation2);
+        stringArray[4] = Number3.ToString();
+        stringArray[5] = GetCalculationString(Calculation3);
+        stringArray[6] = Number4.ToString();
 
         return stringArray;
     }
@@ -76,44 +82,32 @@ public class EncryptedCharacter
 
     private string CreateEncryptedCharacterString()
     {
-        string encryptedCharacterString = encryptedCharacterStringArray[0] + " " +
-            encryptedCharacterStringArray[1] + " " +
-            encryptedCharacterStringArray[2] + " " +
-            encryptedCharacterStringArray[3] + " " +
-            encryptedCharacterStringArray[4] + " " +
-            encryptedCharacterStringArray[5] + " " +
-            encryptedCharacterStringArray[6] + " ";
+        string encryptedCharacterString = EncryptedCharacterStringArray[0] + " " +
+            EncryptedCharacterStringArray[1] + " " +
+            EncryptedCharacterStringArray[2] + " " +
+            EncryptedCharacterStringArray[3] + " " +
+            EncryptedCharacterStringArray[4] + " " +
+            EncryptedCharacterStringArray[5] + " " +
+            EncryptedCharacterStringArray[6] + " ";
 
         return encryptedCharacterString;
     }
 
 
-    private string GetCalculationString(CalculationData.Calculation calculation)
+    private string GetCalculationString(CalculationData.CalculationType calculation)
     {
         switch (calculation)
         {
             default:
                 return string.Empty;
-            case CalculationData.Calculation.Add:
+            case CalculationData.CalculationType.Add:
                 return "+";
-            case CalculationData.Calculation.Subtract:
+            case CalculationData.CalculationType.Subtract:
                 return "-";
-            case CalculationData.Calculation.Multiply:
+            case CalculationData.CalculationType.Multiply:
                 return "*";
-            case CalculationData.Calculation.Divide:
+            case CalculationData.CalculationType.Divide:
                 return "/";
         }
     }
-
-
-    public int GetResult() { return result; }
-    public int GetNumber1() { return number1; }
-    public int GetNumber2() { return number2; }
-    public int GetNumber3() { return number3; }
-    public int GetNumber4() { return number4; }
-    public CalculationData.Calculation GetCalculation1() { return calculation1; }
-    public CalculationData.Calculation GetCalculation2() { return calculation2; }
-    public CalculationData.Calculation GetCalculation3() { return calculation3; }
-    public string GetEncryptedCharacterString() { return encryptedCharacterString; }
-    public string[] GetEncryptedCharacterStringArray() { return encryptedCharacterStringArray; }
 }

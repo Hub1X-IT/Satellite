@@ -2,48 +2,44 @@ using UnityEngine;
 
 public class SmartphoneController : MonoBehaviour
 {
-    [SerializeField] private Animator smartphoneAnimator;
-
+    [SerializeField]
+    private Animator smartphoneAnimator;
 
     private RectTransform smartphoneRectTransform;
 
+    [SerializeField]
+    private Vector2 defaultSmartphonePosition = new Vector2(640, -800);
 
-    [SerializeField] private Vector2 defaultSmartphonePosition = new Vector2(640, -800);
-
-
-    private Vector2 offPosition;
+    private Vector2 smartphoneOffPosition;
     
-
-    private bool isSmartphoneOn;
+    private bool isSmartphoneEnabled;
     
-
     private const string PHONE_ON_TRIGGER = "PhoneOn";
     private const string PHONE_OFF_TRIGGER = "PhoneOff";
 
 
-    private Vector2 OffPosition
+    private Vector2 SmartphoneOffPosition
     {
-        get => offPosition;
         set
         {
-            smartphoneRectTransform.localPosition = value;
-            offPosition = value;
+            // Set smartphone off position
+            smartphoneOffPosition = value;
+            if (!IsSmartphoneEnabled)
+            {
+                smartphoneRectTransform.localPosition = value;
+            }
         }
     }
 
 
-    private bool IsSmartphoneOn
+    private bool IsSmartphoneEnabled
     {
-        get => isSmartphoneOn;
+        get => isSmartphoneEnabled;
         set
         {
             // Turn smartphone on/off.
-            GameManager.IsGamePaused = value;
-
-            if (value) smartphoneAnimator.SetTrigger(PHONE_ON_TRIGGER);
-            else smartphoneAnimator.SetTrigger(PHONE_OFF_TRIGGER);
-
-            isSmartphoneOn = value;
+            isSmartphoneEnabled = value;
+            EnableDisableSmartphone(value);
         }
     }
 
@@ -52,13 +48,24 @@ public class SmartphoneController : MonoBehaviour
     {
         smartphoneRectTransform = smartphoneAnimator.GetComponent<RectTransform>();
 
-        OffPosition = defaultSmartphonePosition;
-        isSmartphoneOn = false;
+        GameInput.OnSmartphoneToggleAction += () => IsSmartphoneEnabled = !IsSmartphoneEnabled;
+
+        SmartphoneOffPosition = defaultSmartphonePosition;
+        isSmartphoneEnabled = false;
     }
 
 
-    private void Start()
+    private void EnableDisableSmartphone(bool state)
     {
-        GameInput.OnSmartphoneToggleAction += () => IsSmartphoneOn = !IsSmartphoneOn;
+        GameManager.IsGamePaused = state;
+
+        if (state)
+        {
+            smartphoneAnimator.SetTrigger(PHONE_ON_TRIGGER);
+        }
+        else
+        {
+            smartphoneAnimator.SetTrigger(PHONE_OFF_TRIGGER);
+        }
     }
 }

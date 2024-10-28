@@ -16,16 +16,16 @@ public class CalculationsGenerationTestCopy : MonoBehaviour
 
     private void TestCalculations()
     {
-        CalculationData.Calculation calculation = CalculationData.Calculation.Multiply;
+        CalculationData.CalculationType calculation = CalculationData.CalculationType.Multiply;
         int number = 102;
 
         CalculationData testCalculationData = new CalculationData(number, calculation);
         testCalculationData = GenerateCalculationData(testCalculationData);
 
         Debug.Log("Calculation: " + calculation);
-        Debug.Log("Value1: " + testCalculationData.GetValue1());
-        Debug.Log("Value2: " + testCalculationData.GetValue2());
-        Debug.Log("Result: " + testCalculationData.GetResult());
+        Debug.Log("Value1: " + testCalculationData.Value1);
+        Debug.Log("Value2: " + testCalculationData.Value2);
+        Debug.Log("Result: " + testCalculationData.Result);
     }
 
 
@@ -37,20 +37,20 @@ public class CalculationsGenerationTestCopy : MonoBehaviour
         GenerateCalculationsForNumber(result, out calculationData0, out calculationData1, out calculationData2);
 
         string calculation0 =
-            "Calculation 0\nCalculation: " + calculationData0.GetCalculation()
-            + "\nResult: " + calculationData0.GetResult()
-            + "\nValue1: " + calculationData0.GetValue1()
-            + "\nValue2: " + calculationData0.GetValue2();
+            "Calculation 0\nCalculation: " + calculationData0.Calculation
+            + "\nResult: " + calculationData0.Result
+            + "\nValue1: " + calculationData0.Value1
+            + "\nValue2: " + calculationData0.Value2;
         string calculation1 =
-            "Calculation 1\nCalculation: " + calculationData1.GetCalculation()
-            + "\nResult: " + calculationData1.GetResult()
-            + "\nValue1: " + calculationData1.GetValue1()
-            + "\nValue2: " + calculationData1.GetValue2();
+            "Calculation 1\nCalculation: " + calculationData1.Calculation
+            + "\nResult: " + calculationData1.Result
+            + "\nValue1: " + calculationData1.Value1
+            + "\nValue2: " + calculationData1.Value2;
         string calculation2 =
-            "Calculation 2\nCalculation: " + calculationData2.GetCalculation()
-            + "\nResult: " + calculationData2.GetResult()
-            + "\nValue1: " + calculationData2.GetValue1()
-            + "\nValue2: " + calculationData2.GetValue2();
+            "Calculation 2\nCalculation: " + calculationData2.Calculation
+            + "\nResult: " + calculationData2.Result
+            + "\nValue1: " + calculationData2.Value1
+            + "\nValue2: " + calculationData2.Value2;
 
         Debug.Log(calculation0);
         Debug.Log(calculation1);
@@ -64,7 +64,7 @@ public class CalculationsGenerationTestCopy : MonoBehaviour
 
         EncryptedCharacter encryptedPassword = GetEncryptedCharacter(result);
 
-        string debugString = encryptedPassword.GetEncryptedCharacterString() + " = " + encryptedPassword.GetResult();
+        string debugString = encryptedPassword.EncryptedCharacterString + " = " + encryptedPassword.Result;
         Debug.Log(debugString);
     }
 
@@ -107,21 +107,23 @@ public class CalculationsGenerationTestCopy : MonoBehaviour
         If the middle calculation is subtraction, the second calculation would need brackets (if it's addition or subtraction),
         so to get rid of this problem, if the middle calculation is subtraction, the second has to be multiplication or division.
         */
-        calculationDataFirst = GenerateCalculation(calculationDataMiddle.GetValue1(), true, true, true, true);
-        if (calculationDataMiddle.GetCalculation() == CalculationData.Calculation.Subtract)
-            calculationDataLast = GenerateCalculation(calculationDataMiddle.GetValue2(), false, false, true, true);
+        calculationDataFirst = GenerateCalculation(calculationDataMiddle.Value1, true, true, true, true);
+        if (calculationDataMiddle.Calculation == CalculationData.CalculationType.Subtract)
+            calculationDataLast = GenerateCalculation(calculationDataMiddle.Value2, false, false, true, true);
         else
-            calculationDataLast = GenerateCalculation(calculationDataMiddle.GetValue2(), true, true, true, true);
+            calculationDataLast = GenerateCalculation(calculationDataMiddle.Value2, true, true, true, true);
     }
 
 
     private static CalculationData GenerateCalculation(int result, bool additionAllowed, bool subtractionAllowed, bool multiplicationAllowed, bool divisionAllowed)
     {
-        CalculationData calculationData = new CalculationData();
-        calculationData.SetResult(result);
+        CalculationData calculationData = new()
+        {
+            Result = result
+        };
 
-        multiplicationAllowed = multiplicationAllowed && CanAllowMultiplication(calculationData.GetResult());
-        calculationData.SetCalculation(GetRandomCalculation(additionAllowed, subtractionAllowed, multiplicationAllowed, divisionAllowed));
+        multiplicationAllowed = multiplicationAllowed && CanAllowMultiplication(calculationData.Result);
+        calculationData.Calculation = GetRandomCalculation(additionAllowed, subtractionAllowed, multiplicationAllowed, divisionAllowed);
 
         calculationData = GenerateCalculationData(calculationData);
 
@@ -129,13 +131,13 @@ public class CalculationsGenerationTestCopy : MonoBehaviour
     }
 
 
-    private static CalculationData.Calculation GetRandomCalculation(bool additionAllowed, bool subtractionAllowed, bool multiplicationAllowed, bool divisionAllowed)
+    private static CalculationData.CalculationType GetRandomCalculation(bool additionAllowed, bool subtractionAllowed, bool multiplicationAllowed, bool divisionAllowed)
     {
-        List<CalculationData.Calculation> allowedCalculationsList = new List<CalculationData.Calculation>();
-        if (additionAllowed) allowedCalculationsList.Add(CalculationData.Calculation.Add);
-        if (subtractionAllowed) allowedCalculationsList.Add(CalculationData.Calculation.Subtract);
-        if (multiplicationAllowed) allowedCalculationsList.Add(CalculationData.Calculation.Multiply);
-        if (divisionAllowed) allowedCalculationsList.Add(CalculationData.Calculation.Divide);
+        List<CalculationData.CalculationType> allowedCalculationsList = new List<CalculationData.CalculationType>();
+        if (additionAllowed) allowedCalculationsList.Add(CalculationData.CalculationType.Add);
+        if (subtractionAllowed) allowedCalculationsList.Add(CalculationData.CalculationType.Subtract);
+        if (multiplicationAllowed) allowedCalculationsList.Add(CalculationData.CalculationType.Multiply);
+        if (divisionAllowed) allowedCalculationsList.Add(CalculationData.CalculationType.Divide);
 
         int randomIndex = Random.Range(0, allowedCalculationsList.Count);
         return allowedCalculationsList.ToArray()[randomIndex];
@@ -147,43 +149,43 @@ public class CalculationsGenerationTestCopy : MonoBehaviour
         /// Input calculation data must have the result and calculation variables set; otherwise, the function returns null!
         /// Returns null when trying to multiply and the result is prime!
 
-
-        if (calculationData.GetResult() == 0 || calculationData.GetCalculation() == CalculationData.Calculation.None) return null;
-
-
-        // Add
-        if (calculationData.GetCalculation() == CalculationData.Calculation.Add)
+        if (calculationData.Result == 0 || calculationData.Calculation == CalculationData.CalculationType.None)
         {
-            calculationData.SetValue1(Random.Range(1, calculationData.GetResult()));
-            calculationData.SetValue2(calculationData.GetResult() - calculationData.GetValue1());
+            return null;
         }
 
-        // Subtract
-        if (calculationData.GetCalculation() == CalculationData.Calculation.Subtract)
+        switch (calculationData.Calculation)
         {
-            int rangeMultiplier = 5;
-            calculationData.SetValue1(Random.Range(calculationData.GetResult() + 1, calculationData.GetResult() * rangeMultiplier));
-            calculationData.SetValue2(calculationData.GetValue1() - calculationData.GetResult());
-        }
+            case CalculationData.CalculationType.Add:
+                // Add
+                calculationData.Value1 = Random.Range(1, calculationData.Result);
+                calculationData.Value2 = calculationData.Result - calculationData.Value1;
+                break;
 
-        // Multiply
-        if (calculationData.GetCalculation() == CalculationData.Calculation.Multiply)
-        {
-            List<int> divisorsList = GetDivisors(calculationData.GetResult(), out bool isPrime);
-            if (isPrime) return null;
-            divisorsList.Remove(1);
-            divisorsList.Remove(calculationData.GetResult());
-            // calculationData.SetValue1(divisorsList.ToArray()[Random.Range(0, divisorsList.Count)]);
-            calculationData.SetValue1(GetRandomNumberFromArray(divisorsList.ToArray()));
-            calculationData.SetValue2(calculationData.GetResult() / calculationData.GetValue1());
-        }
+            case CalculationData.CalculationType.Subtract:
+                // Subtract
+                int rangeMultiplier = 5;
+                calculationData.Value1 = Random.Range(calculationData.Result + 1, calculationData.Result * rangeMultiplier);
+                calculationData.Value2 = calculationData.Value1 - calculationData.Result;
+                break;
 
-        // Divide
-        if (calculationData.GetCalculation() == CalculationData.Calculation.Divide)
-        {
-            int range = 10;
-            calculationData.SetValue2(Random.Range(2, range));
-            calculationData.SetValue1(calculationData.GetValue2() * calculationData.GetResult());
+            case CalculationData.CalculationType.Multiply:
+                // Multiply
+                List<int> divisorsList = GetDivisors(calculationData.Result, out bool isPrime);
+                if (isPrime) return null;
+                divisorsList.Remove(1);
+                divisorsList.Remove(calculationData.Result);
+                // calculationData.SetValue1(divisorsList.ToArray()[Random.Range(0, divisorsList.Count)]);
+                calculationData.Value1 = GetRandomNumberFromArray(divisorsList.ToArray());
+                calculationData.Value2 = calculationData.Result / calculationData.Value1;
+                break;
+
+            case CalculationData.CalculationType.Divide:
+                // Divide
+                int range = 10;
+                calculationData.Value2 = Random.Range(2, range);
+                calculationData.Value1 = calculationData.Value2 * calculationData.Result;
+                break;
         }
 
         return calculationData;
@@ -208,6 +210,7 @@ public class CalculationsGenerationTestCopy : MonoBehaviour
         return divisors;
     }
 
+
     private static bool CanAllowMultiplication(int number)
     {
         if (number <= 1) return false;
@@ -216,6 +219,7 @@ public class CalculationsGenerationTestCopy : MonoBehaviour
 
         return false;
     }
+
 
     private static int GetRandomNumberFromArray(int[] numbers)
     {

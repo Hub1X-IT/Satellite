@@ -3,8 +3,12 @@ using UnityEngine;
 
 public class CommandPromptUI : MonoBehaviour
 {
-    [SerializeField] TMP_InputField inputField;
-    [SerializeField] TMP_Text outputTextField;
+    [SerializeField]
+    TMP_InputField inputField;
+
+    [SerializeField]
+    TMP_Text outputTextField;
+
 
     private string inputText;
 
