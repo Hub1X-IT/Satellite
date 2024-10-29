@@ -20,7 +20,7 @@ public class EncodedPassword
         EncryptedCharacter[] encryptedCharacters = new EncryptedCharacter[AsciiCodes.Length];
         for (int i = 0; i < AsciiCodes.Length; i++)
         {
-            encryptedCharacters[i] = CalculationsGeneration.GetEncryptedCharacter(AsciiCodes[i]);
+            encryptedCharacters[i] = CalculationsGeneration.GetEncryptedCharacterForNumber(AsciiCodes[i]);
         }
         return encryptedCharacters;
     }

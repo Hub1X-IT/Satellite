@@ -1,17 +1,16 @@
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterController))]
 public class PlayerMovementController : MonoBehaviour {
 
     private CharacterController characterController;
-
     
     private Vector3 moveDirection;
-    [SerializeField] private float moveSpeed = 5f;
-
+    [SerializeField]
+    private float moveSpeed = 5f;
 
     private const float gravity = -9.81f;
-    [SerializeField] private float gravityMultiplier = 0.8f;
+    [SerializeField]
+    private float gravityMultiplier = 0.8f;
     private float verticalVelocity;
 
 
@@ -19,12 +18,10 @@ public class PlayerMovementController : MonoBehaviour {
         characterController = GetComponent<CharacterController>();
     }
 
-
     private void Update() {
         HandleGravity();
         HandleMovement();
     }
-
 
     private void HandleMovement() {        
         Vector2 inputVector = GameInput.MovementVectorNormalized;
@@ -35,7 +32,6 @@ public class PlayerMovementController : MonoBehaviour {
         characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
     }
     
-    
     private void HandleGravity() {
         if (characterController.isGrounded && verticalVelocity < 0f) {
             verticalVelocity = -0.1f;
@@ -44,6 +40,5 @@ public class PlayerMovementController : MonoBehaviour {
             verticalVelocity += gravity * gravityMultiplier * Time.deltaTime;
         }
         moveDirection.y = verticalVelocity;
-        // Debug.Log(verticalVelocity);
     }
 }

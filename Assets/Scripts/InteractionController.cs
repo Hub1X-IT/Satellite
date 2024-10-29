@@ -7,44 +7,52 @@ public static class InteractionController
     public struct InitializationData
     {
         public float interactRange;
-        [Tooltip("Only one should be selected!")] public LayerMask defaultInteractableLayerMask;
-        [Tooltip("Select also the layers that interaction should not pass through")] public LayerMask interactableLayerMasks;
+        [Tooltip("Only one should be selected!")]
+        public LayerMask defaultInteractableLayerMask;
+        public LayerMask interactableLayerMasks;
+        public LayerMask interactionBlockingLayerMasks;
     }
 
+    public static float InteractRange { get; private set; }
 
-    private static float interactRange;
+    public static LayerMask DefaultInteractableLayerMask { get; private set; }
 
-    private static LayerMask defaultInteractableLayerMask;
+    public static int DefaultInteractableLayerIndex { get; private set; }
 
-    private static LayerMask interactableLayerMasks;
+    public static LayerMask InteractableLayerMasks { get; private set; }
 
-    public static float InteractRange => interactRange;
-
-    public static LayerMask DefaultInteractableLayerMask => defaultInteractableLayerMask;
-
-    public static LayerMask InteractableLayerMasks => interactableLayerMasks;
+    public static LayerMask InteractionBlockingLayerMasks { get; private set; }
 
     public static void InitializeOnAwake(InitializationData data)
     {
-        interactRange = data.interactRange;
-        defaultInteractableLayerMask = data.defaultInteractableLayerMask;
-        interactableLayerMasks = data.interactableLayerMasks;
+        InteractRange = data.interactRange;
+        DefaultInteractableLayerMask = data.defaultInteractableLayerMask;
+        InteractableLayerMasks = data.interactableLayerMasks;
+        InteractionBlockingLayerMasks = data.interactionBlockingLayerMasks;
 
-        GameInput.OnInteractAction += GameInput_OnInteractAction;
-    }
+        DefaultInteractableLayerIndex = GetLayerIndex(DefaultInteractableLayerMask.value);
 
-    private static void GameInput_OnInteractAction()
-    {
-        if (TryGetInteractableObject(out IInteractable interactableObject))
+        GameInput.OnInteractAction += () =>
         {
-            interactableObject.Interact();
-        }
+            if (TryGetInteractableObject(out IInteractable interactableObject))
+            {
+                interactableObject.Interact();
+            }
+        };
     }
 
     public static bool TryGetInteractableObject(out IInteractable interactableObject)
     {
+        interactableObject = null;
+        /*
         if (Physics.Raycast(CameraController.MainCamera.transform.position, CameraController.MainCamera.transform.forward,
-            out RaycastHit hit, InteractRange, InteractableLayerMasks))
+            InteractRange, InteractionBlockingLayerMasks |= ~InteractableLayerMasks))
+        {
+            return false;
+        }
+        */
+        if (Physics.Raycast(CameraController.MainCamera.transform.position, CameraController.MainCamera.transform.forward,
+        out RaycastHit hit, InteractRange, InteractableLayerMasks |= InteractionBlockingLayerMasks))
         {
             interactableObject = hit.transform.GetComponent<IInteractable>();
             if (interactableObject != null)
@@ -52,7 +60,12 @@ public static class InteractionController
                 return true;
             }
         }
-        interactableObject = null;
         return false;
+    }
+
+    public static int GetLayerIndex(LayerMask layerMask)
+    {
+        /// Works properly only when just one layerMask is selected!
+        return (int)Mathf.Log(layerMask.value, 2);
     }
 }

@@ -3,10 +3,9 @@ using UnityEngine;
 
 public static class CalculationsGeneration
 {
-    public static EncryptedCharacter GetEncryptedCharacter(int number)
+    public static EncryptedCharacter GetEncryptedCharacterForNumber(int number)
     {
-        GenerateCalculationsForNumber(number, out CalculationData calculationDataMiddle,
-            out CalculationData calculationDataFirst, out CalculationData calculationDataLast);
+        GenerateCalculationsForNumber(number, out var calculationDataMiddle, out var calculationDataFirst, out var calculationDataLast);
         return new EncryptedCharacter(calculationDataMiddle, calculationDataFirst, calculationDataLast);
     }
 
@@ -95,7 +94,7 @@ public static class CalculationsGeneration
                 divisorsList.Remove(1);
                 divisorsList.Remove(calculationData.Result);
                 // calculationData.SetValue1(divisorsList.ToArray()[Random.Range(0, divisorsList.Count)]);
-                calculationData.Value1 = GetRandomNumberFromArray(divisorsList.ToArray());
+                calculationData.Value1 = GetRandomValueFromArray(divisorsList.ToArray());
                 calculationData.Value2 = calculationData.Result / calculationData.Value1;
                 break;
 
@@ -159,8 +158,8 @@ public static class CalculationsGeneration
         return false;
     }
 
-    private static int GetRandomNumberFromArray(int[] numbers)
+    private static T GetRandomValueFromArray<T>(T[] values)
     {
-        return numbers[Random.Range(0, numbers.Length)];
+        return values[Random.Range(0, values.Length)];
     }
 }

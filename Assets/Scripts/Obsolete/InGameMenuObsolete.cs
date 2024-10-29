@@ -4,7 +4,7 @@ public class InGameMenuObsolete : MonoBehaviour
 {
     [SerializeField] private Canvas playerPauseMenu;
     [SerializeField] private Canvas playerOptions;
-    [SerializeField] private ObjectiveDisplayController objectiveDisplayController;
+    [SerializeField] private ObjectiveDisplayControllerUI objectiveDisplayController;
 
 
     private void Awake()

@@ -5,17 +5,11 @@ public class Screen : MonoBehaviour
     [SerializeField]
     private GameObject screen;
 
+    public bool IsScreenActive { get; private set; }
 
-    private bool isEnabled;
-
-
-    public bool IsEnabled
+    public void SetScreenActive(bool isActive)
     {
-        get => isEnabled;
-        set
-        {
-            isEnabled = value;
-            screen.SetActive(value);
-        }
+        IsScreenActive = isActive;
+        screen.SetActive(isActive);
     }
 }

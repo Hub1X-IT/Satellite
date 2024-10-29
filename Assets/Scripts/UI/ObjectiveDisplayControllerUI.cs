@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class ObjectiveDisplayController : MonoBehaviour
+public class ObjectiveDisplayControllerUI : MonoBehaviour
 {
     [SerializeField]
     private TMP_Text chapter;

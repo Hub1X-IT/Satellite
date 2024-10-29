@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SensitivitySlider : MonoBehaviour
+public class SensitivitySliderUI : MonoBehaviour
 {
     [SerializeField]
     private Slider sensitivitySlider;
@@ -16,7 +16,7 @@ public class SensitivitySlider : MonoBehaviour
 
     private void Awake()
     {
-        sensitivitySlider.onValueChanged.AddListener(ChangeSensitivity);
+        sensitivitySlider.onValueChanged.AddListener(SetSensitivity);
 
         sensitivitySlider.minValue = minSliderValue;
         sensitivitySlider.maxValue = maxSliderValue;
@@ -24,12 +24,12 @@ public class SensitivitySlider : MonoBehaviour
 
     private void Start()
     {
-        ChangeSensitivity(GameSettingsManager.MouseSensitivity);
+        SetSensitivity(GameSettingsManager.MouseSensitivity);
     }
 
-    private void ChangeSensitivity(float value)
+    private void SetSensitivity(float value)
     {
-        GameSettingsManager.MouseSensitivity = value;
+        GameSettingsManager.SetMouseSensitivity(value);
         sliderValueTextField.text = (Mathf.Round(sensitivitySlider.value / sensitivitySlider.maxValue * 100)).ToString() + "%";
     }
 }

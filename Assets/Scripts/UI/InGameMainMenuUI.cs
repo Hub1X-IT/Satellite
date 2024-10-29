@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InGameMainMenu : MonoBehaviour
+public class InGameMainMenuUI : MonoBehaviour
 {
-    private InGameMenu inGameMenu;
+    private InGameMenuUI inGameMenu;
 
     [SerializeField]
     private Button resumeButton;
@@ -17,12 +17,12 @@ public class InGameMainMenu : MonoBehaviour
 
     private void Awake()
     {
-        inGameMenu = GetComponentInParent<InGameMenu>();
+        inGameMenu = GetComponentInParent<InGameMenuUI>();
 
-        inGameMenu.OptionsOpenedClosed += (bool targetState) => gameObject.SetActive(!targetState);
+        inGameMenu.OptionsEnabled += (areOptionsEnabled) => gameObject.SetActive(!areOptionsEnabled);
 
         resumeButton.onClick.AddListener(() => GameManager.PauseGameToMenu(false));
-        optionsButton.onClick.AddListener(() => inGameMenu.AreOptionsOpen = true);
+        optionsButton.onClick.AddListener(() => inGameMenu.SetOptionsEnabled(true));
         // mainMenuButton.onClick.AddListener(() => SceneLoader.LoadScene(SceneLoader.Scenes.MainMenu));
     }
 }

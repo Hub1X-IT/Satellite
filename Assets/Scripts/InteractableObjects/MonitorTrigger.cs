@@ -5,9 +5,7 @@ public class MonitorTrigger : MonoBehaviour, IInteractable
 {
     public event Action MonitorTriggered;
 
-
     public InteractionVisual InteractVisual { get; set; }
-
 
     public Transform Transform { get; private set; }
 
@@ -16,7 +14,6 @@ public class MonitorTrigger : MonoBehaviour, IInteractable
     {
         Transform = transform;
     }
-
 
     public void Interact()
     {

@@ -8,30 +8,19 @@ public class InteractionVisual : MonoBehaviour
     [SerializeField]
     private string interactMessage;
 
-    private bool isEnabled;
+    public bool IsEnabled { get; private set; }
 
     public string InteractMessage => interactMessage;
-
-    public bool IsEnabled
-    {
-        get => isEnabled;
-        set
-        {
-            // Enable/disable interaction visual.
-            isEnabled = value;
-            EnableDisableInteractionVisual(value);
-        }
-    }
 
 
     private void Start()
     {
-        IsEnabled = false;
+        SetInteractionVisualEnabled(false);
     }
 
-
-    private void EnableDisableInteractionVisual(bool enabled)
+    public void SetInteractionVisualEnabled(bool enabled)
     {
+        IsEnabled = enabled;
         if (outline != null)
         {
             outline.enabled = enabled;

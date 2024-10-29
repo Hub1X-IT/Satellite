@@ -2,11 +2,14 @@ using UnityEngine;
 
 public class ScriptsInitializer : MonoBehaviour
 {
-    [SerializeField] private CameraController.InitializationData cameraControllerData;
+    [SerializeField]
+    private CameraController.InitializationData cameraControllerData;
 
-    [SerializeField] private InteractionController.InitializationData interactionControllerData;
+    [SerializeField]
+    private InteractionController.InitializationData interactionControllerData;
 
-    [SerializeField] private VolumeController.InitializationData volumeControllerData;
+    [SerializeField]
+    private VolumeController.InitializationData volumeControllerData;
 
 
     private void Awake()
@@ -30,6 +33,7 @@ public class ScriptsInitializer : MonoBehaviour
 
     private void OnDestroy()
     {
+        GameSettingsManager.SaveSettings();
         GameInput.RemoveInput();
     }
 }

@@ -6,24 +6,11 @@ public class Lamp : MonoBehaviour, IInteractable
 
     public Transform Transform { get; private set; }
 
-
-    private bool isEnabled;
+    public bool IsLampEnabled { get; private set; }
 
 
     [SerializeField]
     private Light lampLight;
-
-
-    private bool IsEnabled
-    {
-        get => isEnabled;
-        set
-        {
-            // Enable/disable lamp.
-            isEnabled = value;
-            lampLight.gameObject.SetActive(value);
-        }
-    }
 
 
     private void Awake()
@@ -34,6 +21,12 @@ public class Lamp : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        IsEnabled = !IsEnabled;
+        SetLampEnabled(!IsLampEnabled);
+    }
+
+    private void SetLampEnabled(bool enabled)
+    {
+        IsLampEnabled = enabled;
+        lampLight.gameObject.SetActive(enabled);
     }
 }

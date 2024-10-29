@@ -4,11 +4,8 @@ public class InteractionVisualController : MonoBehaviour
 {
     private InteractionUI interactionUI;
 
-
     private InteractionVisual previousInteractVisual;
 
-
-    // To make sure the methods don't run every frame
     private IInteractable previousInteractableObject;
 
 
@@ -16,7 +13,6 @@ public class InteractionVisualController : MonoBehaviour
     {
         interactionUI = GetComponent<InteractionUI>();
     }
-
 
     private void Update()
     {
@@ -47,30 +43,29 @@ public class InteractionVisualController : MonoBehaviour
 
     private void ChangeInteractVisual(IInteractable interactableObject)
     {
-        EnableDisableInteractVisual(previousInteractVisual, false);
+        SetInteractVisualEnabled(previousInteractVisual, false);
         previousInteractVisual = null;
 
         if (interactableObject != null && interactableObject.InteractVisual != null)
         {
-            EnableDisableInteractVisual(interactableObject.InteractVisual, true);
+            SetInteractVisualEnabled(interactableObject.InteractVisual, true);
             previousInteractVisual = interactableObject.InteractVisual;
         }
     }
 
-
-    private void EnableDisableInteractVisual(InteractionVisual interactVisual, bool state)
+    private void SetInteractVisualEnabled(InteractionVisual interactVisual, bool enabled)
     {
         if (interactVisual != null)
         {
-            interactVisual.IsEnabled = state;
+            interactVisual.SetInteractionVisualEnabled(enabled);
         }
 
-        if (state)
+        if (enabled)
         {
             string interactMessage = interactVisual.InteractMessage;
-            interactionUI.InteractionText = interactMessage;
+            interactionUI.SetInteractionText(interactMessage);
         }
 
-        interactionUI.IsInteractionTextEnabled = state;
+        interactionUI.SetInteractionTextEnabled(enabled);
     }
 }

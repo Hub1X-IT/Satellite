@@ -119,6 +119,65 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &12178716
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 12178718}
+  - component: {fileID: 12178717}
+  m_Layer: 0
+  m_Name: TestObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &12178717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 12178716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: addebb5df6f04b34ba856c29bf939a6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  disk1:
+    _name: 
+    childFolders:
+    - _name: 
+      childFolders:
+      - _name: 
+        childFolders: []
+      - _name: 
+        childFolders: []
+    - _name: 
+      childFolders:
+      - _name: 
+        childFolders: []
+      - _name: 
+        childFolders: []
+--- !u!4 &12178718
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 12178716}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 710156001}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &17288794
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7534,7 +7593,6 @@ GameObject:
   - component: {fileID: 682657314}
   - component: {fileID: 682657313}
   - component: {fileID: 682657312}
-  - component: {fileID: 682657311}
   - component: {fileID: 682657310}
   m_Layer: 0
   m_Name: PlayerHUD
@@ -7580,20 +7638,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crosshair: {fileID: 45920509}
---- !u!114 &682657311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 682657308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d964d69fffb22ba4ba12226d6221ce58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chapter: {fileID: 1269593751}
-  objectiveDescription: {fileID: 1761700538}
 --- !u!114 &682657312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8185,6 +8229,7 @@ Transform:
   - {fileID: 1582366076}
   - {fileID: 782802656}
   - {fileID: 1945169896}
+  - {fileID: 12178718}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &723556996
@@ -8781,7 +8826,10 @@ MonoBehaviour:
       m_Bits: 8
     interactableLayerMasks:
       serializedVersion: 2
-      m_Bits: 968
+      m_Bits: 8
+    interactionBlockingLayerMasks:
+      serializedVersion: 2
+      m_Bits: 960
   volumeControllerData:
     mainVolumeAudioMixer: {fileID: 24100000, guid: f19853364afa6214a962ddccd71ff23b, type: 2}
     musicVolumeAudioMixer: {fileID: 24100000, guid: 2f95f8f85a6cfa241aea1a63d6428d4d, type: 2}
@@ -20891,7 +20939,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1945169896}
   m_Layer: 0
-  m_Name: TestObjects
+  m_Name: Testing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

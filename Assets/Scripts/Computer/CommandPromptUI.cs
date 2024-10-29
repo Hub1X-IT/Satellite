@@ -17,15 +17,15 @@ public class CommandPromptUI : MonoBehaviour
 
     private void Start()
     {
-        CommandPromptManager.OnSubmitCommand += Submit;
+        CommandPromptManager.CommandSubmitted += CommandPromptManager_CommandSubmitted;
         // CommandPromptManager.OnAddCharacter += (character) => inputField.text += character;
-        CommandPromptManager.OnChangeCommand += (command) => inputField.text = command;
+        CommandPromptManager.CommandChanged += (command) => inputField.text = command;
 
         inputField.onDeselect.AddListener((_) => inputField.ActivateInputField());
     }
 
 
-    private void Submit()
+    private void CommandPromptManager_CommandSubmitted()
     {
         inputText = inputField.text;
         ChangeOutputText();

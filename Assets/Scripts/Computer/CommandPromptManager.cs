@@ -14,10 +14,10 @@ public static class CommandPromptManager
     private static readonly char backspaceCode = '\u0008';
 
 
-    public static event Action OnSubmitCommand;
+    public static event Action CommandSubmitted;
 
 
-    public static event Action<string> OnChangeCommand;
+    public static event Action<string> CommandChanged;
 
 
     private static string command;
@@ -55,7 +55,7 @@ public static class CommandPromptManager
         {
             command += character;
         }
-        CommandChanged();
+        OnCommandChanged();
     }
 
     private static bool CheckIfCanAdd(char character)
@@ -82,12 +82,12 @@ public static class CommandPromptManager
             Debug.Log(command.Length);
             command = command.Remove(command.Length - 1);
         }
-        CommandChanged();
+        OnCommandChanged();
     }
 
-    private static void CommandChanged()
+    private static void OnCommandChanged()
     {
-        OnChangeCommand?.Invoke(command);
+        CommandChanged?.Invoke(command);
 
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! debug log !!!!!!!!!!!!
         // Debug.Log(command);
@@ -95,7 +95,7 @@ public static class CommandPromptManager
 
     private static void SubmitCommand()
     {
-        OnSubmitCommand?.Invoke();
+        CommandSubmitted?.Invoke();
         RunCommand();
     }
 

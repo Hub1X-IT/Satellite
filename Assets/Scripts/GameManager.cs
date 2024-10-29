@@ -6,66 +6,14 @@ public static class GameManager
     public static event Action<bool> GamePausedUnpaused;
 
 
-    private static bool isGamePaused;
+    public static bool IsGamePaused { get; private set; }
 
-    private static bool isCursorShown;
+    public static bool IsCursorShown { get; private set; }
 
-    private static bool isTimeStarted;
+    public static bool IsTimeStarted { get; private set; }
 
-    private static float timeScale;
+    public static float TimeScale { get; private set; }
 
-
-    public static bool IsGamePaused
-    {
-        get => isGamePaused;
-        set
-        {
-            // Pause or unpause game.
-            isGamePaused = value;
-
-            IsTimeStarted = !value;
-            IsCursorShown = value;
-        }
-    }
-
-    public static bool IsCursorShown
-    {
-        get => isCursorShown;
-        set
-        {
-            // Show or hide cursor.
-            isCursorShown = value;
-
-            if (value) Cursor.lockState = CursorLockMode.None;
-            else Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = value;
-        }
-    }
-
-    public static bool IsTimeStarted
-    {
-        get => isTimeStarted;
-        set
-        {
-            // Start or stop time.
-            isTimeStarted = value;
-            
-            if (value) TimeScale = 1f;
-            else TimeScale = 0f;
-        }
-    }
-
-    public static float TimeScale
-    {
-        get => timeScale;
-        set
-        {
-            // Set time scale
-            timeScale = value;
-
-            Time.timeScale = value;
-        }
-    }
 
     public static void InitializeOnAwake()
     {
@@ -74,13 +22,47 @@ public static class GameManager
 
     public static void InitializeOnStart()
     {
-        IsCursorShown = false;
+        SetCursorShown(false);
         PauseGameToMenu(false);
     }
 
-    public static void PauseGameToMenu(bool targetState)
+    public static void SetGamePaused(bool paused)
     {
-        GamePausedUnpaused?.Invoke(targetState);
-        IsGamePaused = targetState;
+        IsGamePaused = paused;
+        SetTimeStarted(!paused);
+        SetCursorShown(paused);
+    }
+
+    public static void PauseGameToMenu(bool paused)
+    {
+        GamePausedUnpaused?.Invoke(paused);
+        SetGamePaused(paused);
+    }
+
+    public static void SetCursorShown(bool shown)
+    {
+        IsCursorShown = shown;
+        if (shown) Cursor.lockState = CursorLockMode.None;
+        else Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = shown;
+    }
+
+    public static void SetTimeStarted(bool started)
+    {
+        IsTimeStarted = started;
+        if (started)
+        {
+            SetTimeScale(1f);
+        }
+        else
+        {
+            SetTimeScale(0f);
+        }
+    }
+
+    public static void SetTimeScale(float timeScale)
+    {
+        TimeScale = timeScale;
+        Time.timeScale = timeScale;
     }
 }

@@ -98,8 +98,8 @@ public class EncryptedCharacter
     {
         switch (calculation)
         {
-            default:
-                return string.Empty;
+            case CalculationData.CalculationType.None:
+                break;
             case CalculationData.CalculationType.Add:
                 return "+";
             case CalculationData.CalculationType.Subtract:
@@ -109,5 +109,6 @@ public class EncryptedCharacter
             case CalculationData.CalculationType.Divide:
                 return "/";
         }
+        return null;
     }
 }

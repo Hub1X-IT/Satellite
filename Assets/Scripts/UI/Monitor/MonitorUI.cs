@@ -18,4 +18,9 @@ public class MonitorUI : MonoBehaviour
             inputField.onDeselect.AddListener((_) => monitor.CanExitMonitorView = true);
         }
     }
+
+    public void OpenFileExplorer()
+    {
+
+    }
 }

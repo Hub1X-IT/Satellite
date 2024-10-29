@@ -3,17 +3,31 @@ using UnityEngine;
 public class CameraRotationController : MonoBehaviour {
 
 
-    [SerializeField] private Transform xAxisRotationObject;
-    [SerializeField] private Transform yAxisRotationObject;
+    [SerializeField]
+    private Transform xAxisRotationObject;
+
+    [SerializeField]
+    private Transform yAxisRotationObject;
 
 
-    [SerializeField] private bool clampXRotation = false;
-    [SerializeField] private float minXRotation;
-    [SerializeField] private float maxXRotation;
+    [SerializeField]
+    private bool clampXRotation = false;
 
-    [SerializeField] private bool clampYRotation = false;
-    [SerializeField] private float minYRotation;
-    [SerializeField] private float maxYRotation;
+    [SerializeField]
+    private float minXRotation;
+
+    [SerializeField]
+    private float maxXRotation;
+
+
+    [SerializeField]
+    private bool clampYRotation = false;
+
+    [SerializeField]
+    private float minYRotation;
+
+    [SerializeField]
+    private float maxYRotation;
 
 
     private void Update() {

@@ -6,15 +6,11 @@ public class GameInput
 {
     public static PlayerInputActions PlayerInputActions { get; private set; }
 
-    public static Vector2 MovementVectorNormalized
-    {
-        get => PlayerInputActions.PlayerWalking.Move.ReadValue<Vector2>().normalized;
-    }
 
-    public static Vector2 RotationVector
-    {
-        get => PlayerInputActions.PlayerWalkingAndDesk.Rotate.ReadValue<Vector2>();
-    }
+    public static Vector2 MovementVectorNormalized => PlayerInputActions.PlayerWalking.Move.ReadValue<Vector2>().normalized;
+
+    public static Vector2 RotationVector => PlayerInputActions.PlayerWalkingAndDesk.Rotate.ReadValue<Vector2>();
+
 
     public static event Action OnPauseAction;
 

@@ -5,34 +5,11 @@ public class PlayerScriptsController : MonoBehaviour
     private static PlayerMovementController playerMovementController;
     private static CameraRotationController playerCameraRotationController;
 
-    private static PlayerHUDController playerHUDController;
+    private static PlayerHUDControllerUI playerHUDController;
 
-    private static bool isPlayerMovementEnabled;
+    public static bool IsPlayerMovementEnabled { get; private set; }
 
-    private static bool canShowPlayerHUD;
-
-
-    public static bool IsPlayerMovementEnabled
-    {
-        get => isPlayerMovementEnabled;
-        set
-        {
-            // Enable/disable player movement.
-            isPlayerMovementEnabled = value;
-            playerMovementController.enabled = value;
-            playerCameraRotationController.enabled = value;
-        }
-    }
-
-    public static bool CanShowPlayerHUD
-    {
-        get => canShowPlayerHUD;
-        set
-        {
-            canShowPlayerHUD = value;
-            playerHUDController.CanShowPlayerHUD = value;
-        }
-    }
+    public static bool CanShowPlayerHUD { get; private set; }
 
 
     private void Awake()
@@ -40,9 +17,22 @@ public class PlayerScriptsController : MonoBehaviour
         playerMovementController = GetComponent<PlayerMovementController>();
         playerCameraRotationController = GetComponent<CameraRotationController>();
 
-        playerHUDController = GetComponentInChildren<PlayerHUDController>();
+        playerHUDController = GetComponentInChildren<PlayerHUDControllerUI>();
 
-        IsPlayerMovementEnabled = true;
-        CanShowPlayerHUD = true;
+        SetPlayerMovementEnabled(true);
+        SetCanShowPlayerHUD(true);
+    }
+
+    public static void SetPlayerMovementEnabled(bool enabled)
+    {
+        IsPlayerMovementEnabled = enabled;
+        playerMovementController.enabled = enabled;
+        playerCameraRotationController.enabled = enabled;
+    }
+
+    public static void SetCanShowPlayerHUD(bool canShow)
+    {
+        CanShowPlayerHUD = canShow;
+        playerHUDController.SetCanShowPlayerHUD(canShow);
     }
 }

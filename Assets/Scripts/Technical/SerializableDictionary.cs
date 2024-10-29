@@ -14,16 +14,22 @@ public class SerializableDictionary<TKey, TValue>
     [SerializeField]
     private DictionaryItem[] items;
 
+    private Dictionary<TKey, TValue> dictionary;
+
     public Dictionary<TKey, TValue> Dictionary
     {
         get
         {
-            Dictionary<TKey, TValue> tempDictionary = new();
-            foreach (DictionaryItem item in items)
+            if (dictionary == null)
             {
-                tempDictionary.Add(item.key, item.value);
+                Dictionary<TKey, TValue> dictionary = new();
+                foreach (DictionaryItem item in items)
+                {
+                    dictionary.Add(item.key, item.value);
+                }
+                this.dictionary = dictionary;
             }
-            return tempDictionary;
+            return dictionary;
         }
     }
 
