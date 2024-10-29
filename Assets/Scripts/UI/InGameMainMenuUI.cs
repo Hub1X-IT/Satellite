@@ -23,6 +23,6 @@ public class InGameMainMenuUI : MonoBehaviour
 
         resumeButton.onClick.AddListener(() => GameManager.PauseGameToMenu(false));
         optionsButton.onClick.AddListener(() => inGameMenu.SetOptionsEnabled(true));
-        // mainMenuButton.onClick.AddListener(() => SceneLoader.LoadScene(SceneLoader.Scenes.MainMenu));
+        mainMenuButton.onClick.AddListener(() => SceneLoader.LoadScene(SceneLoader.Scene.MainMenu));
     }
 }
