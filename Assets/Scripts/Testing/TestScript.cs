@@ -5,11 +5,10 @@ public class TestScript : MonoBehaviour
 {
     // Script for testing whatever is needed
 
-    public Disk disk1;
+    public DiskNew disk1;
 
     private void Awake()
     {
-        disk1.Initialize();
 
         Debug.Log(disk1.Name);
         Debug.Log(disk1.ChildDataContainersDictionary.Count);

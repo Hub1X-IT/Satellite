@@ -1,9 +1,9 @@
 using System;
 
 [Serializable]
-public class File<T> : DataContainer
+public class FileNew<T> : DataContainerNew
 {
-    public File(string name) : base(name) { }
+    public FileNew(string name) : base(name) { }
 
     public T Content { get; private set; }
 
