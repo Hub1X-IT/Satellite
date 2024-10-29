@@ -3192,9 +3192,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 896523148022293088}
   m_Direction: 0
   m_MinValue: 0.1
-  m_MaxValue: 25
+  m_MaxValue: 50
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 25
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5410,6 +5410,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensitivitySlider: {fileID: 5585356472826234072}
   sliderValueTextField: {fileID: 6684213369813071692}
+  minSliderValue: 0.1
+  maxSliderValue: 50
 --- !u!114 &2765078576872309164
 MonoBehaviour:
   m_ObjectHideFlags: 0

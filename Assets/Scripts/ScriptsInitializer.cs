@@ -33,7 +33,7 @@ public class ScriptsInitializer : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameSettingsManager.SaveSettings();
+        // GameSettingsManager.SaveSettings();
         GameInput.RemoveInput();
     }
 }

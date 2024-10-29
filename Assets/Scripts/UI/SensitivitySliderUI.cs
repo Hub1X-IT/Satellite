@@ -10,8 +10,10 @@ public class SensitivitySliderUI : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI sliderValueTextField;
 
-    private const float minSliderValue = 0f;
-    private const float maxSliderValue = 50f;
+    [SerializeField]
+    private float minSliderValue = 0.1f;
+    [SerializeField]
+    private float maxSliderValue = 50f;
 
 
     private void Awake()
@@ -25,6 +27,7 @@ public class SensitivitySliderUI : MonoBehaviour
     private void Start()
     {
         SetSensitivity(GameSettingsManager.MouseSensitivity);
+        sensitivitySlider.value = GameSettingsManager.MouseSensitivity;
     }
 
     private void SetSensitivity(float value)

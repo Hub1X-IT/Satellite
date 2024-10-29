@@ -30,18 +30,17 @@ public static class GameSettingsManager
         SoundVolume = PlayerPrefs.GetFloat(PLAYER_PREFS_SOUND_VOLUME, defaultVolume);
     }
 
+    /*
     public static void SaveSettings()
     {
-        PlayerPrefs.SetFloat(PLAYER_PREFS_MOUSE_SENSITIVITY, MouseSensitivity);
-        PlayerPrefs.SetFloat(PLAYER_PREFS_MAIN_VOLUME, MainVolume);
-        PlayerPrefs.SetFloat(PLAYER_PREFS_MUSIC_VOLUME, MusicVolume);
-        PlayerPrefs.SetFloat(PLAYER_PREFS_SOUND_VOLUME, SoundVolume);
+        // All the PlayerPrefs.SetX method calls maybe should be put here
     }
+    */
 
     public static void SetMouseSensitivity(float value)
     {
         MouseSensitivity = value;
-        
+        PlayerPrefs.SetFloat(PLAYER_PREFS_MOUSE_SENSITIVITY, MouseSensitivity);
     }
 
     public static void SetVolume(VolumeController.VolumeType volumeType, float value)
@@ -50,12 +49,15 @@ public static class GameSettingsManager
         {
             case VolumeController.VolumeType.MainVolume:
                 MainVolume = value;
+                PlayerPrefs.SetFloat(PLAYER_PREFS_MAIN_VOLUME, MainVolume);
                 break;
             case VolumeController.VolumeType.MusicVolume:
                 MusicVolume = value;
+                PlayerPrefs.SetFloat(PLAYER_PREFS_MUSIC_VOLUME, MusicVolume);
                 break;
             case VolumeController.VolumeType.SoundVolume:
                 SoundVolume = value;
+                PlayerPrefs.SetFloat(PLAYER_PREFS_SOUND_VOLUME, SoundVolume);
                 break;
         }
     }
