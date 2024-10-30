@@ -23,5 +23,18 @@ public class InGameOptionsUI : MonoBehaviour
         inGameMenu.OptionsEnabled += (state) => gameObject.SetActive(state);
 
         backButton.onClick.AddListener(() => inGameMenu.SetOptionsEnabled(false));
+
+
+        graphicsDropdown.onValueChanged.AddListener(SetGraphics);
+    }
+
+    private void Start()
+    {
+        SetGraphics(GameSettingsManager.GraphicsIndex);
+        graphicsDropdown.RefreshShownValue();
+    }
+    private void SetGraphics(int index)
+    {
+        GameSettingsManager.SetGraphics(index);
     }
 }

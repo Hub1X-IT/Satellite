@@ -11,6 +11,7 @@ public static class GameSettingsManager
     [Range(0.0001f, 1f)]
     private const float DEFAULT_VOLUME = 0.5f;
 
+    private const int defaultGraphicsIndex = 1;
 
     private const string PLAYER_PREFS_MOUSE_SENSITIVITY = "mouseSensitivity";
 
@@ -18,12 +19,15 @@ public static class GameSettingsManager
     private const string PLAYER_PREFS_MUSIC_VOLUME = "MusicVolume";
     private const string PLAYER_PREFS_SOUND_VOLUME = "SoundVolume";
 
+    private const string PLAYER_PREFS_GRAPHICS_INDEX = "GraphicsIndex";
+
     public static float MouseSensitivity { get; private set; }
 
     public static float MainVolume { get; private set; }
     public static float MusicVolume { get; private set; }
     public static float SoundVolume { get; private set; }
 
+    public static int GraphicsIndex { get; private set; }
 
     public static void LoadSettings()
     {
@@ -32,6 +36,8 @@ public static class GameSettingsManager
         MainVolume = PlayerPrefs.GetFloat(PLAYER_PREFS_MAIN_VOLUME, DEFAULT_VOLUME);
         MusicVolume = PlayerPrefs.GetFloat(PLAYER_PREFS_MUSIC_VOLUME, DEFAULT_VOLUME);
         SoundVolume = PlayerPrefs.GetFloat(PLAYER_PREFS_SOUND_VOLUME, DEFAULT_VOLUME);
+
+        GraphicsIndex = PlayerPrefs.GetInt(PLAYER_PREFS_GRAPHICS_INDEX, defaultGraphicsIndex);
     }
 
     /*
@@ -64,5 +70,12 @@ public static class GameSettingsManager
                 PlayerPrefs.SetFloat(PLAYER_PREFS_SOUND_VOLUME, SoundVolume);
                 break;
         }
+    }
+
+    public static void SetGraphics(int index)
+    {
+        GraphicsIndex = index;
+        PlayerPrefs.SetInt(PLAYER_PREFS_GRAPHICS_INDEX, GraphicsIndex);
+        QualitySettings.SetQualityLevel(GraphicsIndex);
     }
 }
