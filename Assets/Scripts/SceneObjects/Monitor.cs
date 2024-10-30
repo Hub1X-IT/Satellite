@@ -16,6 +16,8 @@ public class Monitor : MonoBehaviour
 
     public bool CanExitMonitorView { get; set; }
 
+    [SerializeField]
+    private RenderTexture monitorScreenRenderTexture;
 
     private void Awake()
     {
@@ -38,11 +40,22 @@ public class Monitor : MonoBehaviour
         /*
         monitorUICamera.gameObject.SetActive(false);
         */
-        monitorUICamera.enabled = false;
+
+        // monitorUICamera.enabled = false;
 
         SetMonitorTriggerEnabled(false);
 
         CanExitMonitorView = true;
+    }
+
+    private void Update()
+    {
+        /*
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            monitorUICamera.forceIntoRenderTexture = !monitorUICamera.forceIntoRenderTexture;
+        }
+        */
     }
 
 
@@ -60,12 +73,14 @@ public class Monitor : MonoBehaviour
         if (active)
         {
             GameInput.PlayerInputActions.LaptopAndMonitor.Enable();
-            CameraController.SetActiveCamera(monitorUICamera);
+            // CameraController.SetActiveCamera(monitorUICamera);
+            CameraController.SetCameraRenderTexture(monitorUICamera, null);
         }
         else
         {
             GameInput.PlayerInputActions.LaptopAndMonitor.Disable();
-            CameraController.SetActiveCamera(CameraController.MainCamera);
+            // CameraController.SetActiveCamera(CameraController.MainCamera);
+            CameraController.SetCameraRenderTexture(monitorUICamera, monitorScreenRenderTexture);
         }
     }
 

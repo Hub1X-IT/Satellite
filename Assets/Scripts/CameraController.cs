@@ -62,4 +62,9 @@ public static class CameraController
         ActiveCinemachineCamera = cinemachineCamera;
         ActiveCinemachineCamera.enabled = true;
     }
+
+    public static void SetCameraRenderTexture(Camera camera, RenderTexture renderTexture)
+    {
+        camera.targetTexture = renderTexture;
+    }
 }
