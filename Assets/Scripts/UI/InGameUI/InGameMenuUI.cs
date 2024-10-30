@@ -18,6 +18,11 @@ public class InGameMenuUI : MonoBehaviour
         SetOptionsEnabled(false);
     }
 
+    private void OnDestroy()
+    {
+        // OptionsEnabled = null;
+    }
+
 
     public void SetOptionsEnabled(bool enabled)
     {

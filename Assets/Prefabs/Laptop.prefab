@@ -58,10 +58,13 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c2dbcd04778e4514491f4fff525734f8, type: 2}
+  - {fileID: 2100000, guid: 01dcc56cf35a45f48861fde5546fe065, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -93,7 +96,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3215209989895745054}
   - component: {fileID: 2416275476960955235}
-  - component: {fileID: 8089633882680006158}
   m_Layer: 0
   m_Name: Laptop
   m_TagString: Untagged
@@ -139,19 +141,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.53, y: 0.34, z: 0.4}
   m_Center: {x: 0, y: 0.16, z: -0.008}
---- !u!114 &8089633882680006158
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1907770380397001964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 116292eaedfd2e843a40d5a84f4f0c7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  screen: {fileID: 869516929621409876}
 --- !u!1001 &4192896849515972238
 PrefabInstance:
   m_ObjectHideFlags: 0

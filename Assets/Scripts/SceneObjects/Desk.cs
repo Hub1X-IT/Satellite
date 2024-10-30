@@ -7,7 +7,7 @@ public class Desk : MonoBehaviour
     public event Action<bool> DeskViewEnabled;
 
     [SerializeField]
-    private CinemachineCamera cinemachineDeskCamera;
+    private CinemachineCamera deskCinemachineCamera;
 
     private DeskTrigger deskTrigger;
 
@@ -22,6 +22,8 @@ public class Desk : MonoBehaviour
 
     public bool CanExitDeskView { get; set; }
 
+    public CinemachineCamera DeskCinemachineCamera => deskCinemachineCamera;
+
 
     private void Awake()
     {
@@ -34,7 +36,7 @@ public class Desk : MonoBehaviour
         /*
         cinemachineDeskCamera.gameObject.SetActive(false);
         */
-        cinemachineDeskCamera.enabled = false;
+        deskCinemachineCamera.enabled = false;
 
         SetDeskCameraRotationEnabled(false);
         CanExitDeskView = true;
@@ -74,7 +76,7 @@ public class Desk : MonoBehaviour
         if (active)
         {
             GameInput.PlayerInputActions.PlayerWalking.Disable();
-            CameraController.SetActiveCinemachineCamera(cinemachineDeskCamera);
+            CameraController.SetActiveCinemachineCamera(deskCinemachineCamera);
             // To reset camera rotation when entering desk view, uncomment the following line:
             // deskCameraRotationController.SetLocalRotation(deskCameraDefaultRotation.x, deskCameraDefaultRotation.y);
             GameInput.PlayerInputActions.Desk.Enable();

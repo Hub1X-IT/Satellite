@@ -4,7 +4,7 @@ public class Lamp : MonoBehaviour, IInteractable
 {
     public InteractionVisual InteractVisual { get; }
 
-    public Transform Transform { get; private set; }
+    public Transform SelfTransform { get; private set; }
 
     public bool IsLampEnabled { get; private set; }
 
@@ -15,7 +15,7 @@ public class Lamp : MonoBehaviour, IInteractable
 
     private void Awake()
     {
-        Transform = transform;
+        SelfTransform = transform;
     }
 
 

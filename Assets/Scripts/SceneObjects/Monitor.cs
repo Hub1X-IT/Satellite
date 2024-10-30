@@ -1,28 +1,34 @@
+using System;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class Monitor : MonoBehaviour
 {
+    public event Action<bool> MonitorViewSetActive;
+
     private MonitorTrigger monitorTrigger;
 
     private Desk desk;
 
     [SerializeField]
-    private Camera monitorUICamera;
+    private CinemachineCamera monitorCinemachineCamera;
 
+    // Probably a temporary solution
+    private Outline outline;
 
-    public bool IsMonitorViewActive { get; private set; }
+    // public bool IsMonitorViewActive { get; private set; }
 
-    public bool IsMonitorTriggerEnabled { get; private set; }
+    // public bool IsMonitorTriggerEnabled { get; private set; }
 
     public bool CanExitMonitorView { get; set; }
-
-    [SerializeField]
-    private RenderTexture monitorScreenRenderTexture;
+    
 
     private void Awake()
     {
-        monitorTrigger = GetComponentInChildren<MonitorTrigger>();
         desk = GetComponentInParent<Desk>();
+        monitorTrigger = GetComponentInChildren<MonitorTrigger>();
+        outline = GetComponent<Outline>();
+
         monitorTrigger.InteractVisual = GetComponent<InteractionVisual>();
 
         monitorTrigger.MonitorTriggered += () => SetMonitorViewActive(true);
@@ -36,57 +42,46 @@ public class Monitor : MonoBehaviour
             }
         };
 
-        IsMonitorViewActive = false;
-        /*
-        monitorUICamera.gameObject.SetActive(false);
-        */
+        // IsMonitorViewActive = false;
 
-        // monitorUICamera.enabled = false;
+        monitorCinemachineCamera.enabled = false;
 
         SetMonitorTriggerEnabled(false);
 
         CanExitMonitorView = true;
     }
 
-    private void Update()
-    {
-        /*
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            monitorUICamera.forceIntoRenderTexture = !monitorUICamera.forceIntoRenderTexture;
-        }
-        */
-    }
-
-
     private void SetMonitorViewActive(bool active)
     {
-        IsMonitorViewActive = active;
-
-        GameManager.SetCursorShown(active);
+        // IsMonitorViewActive = active;
 
         PlayerScriptsController.SetCanShowPlayerHUD(!active);
 
         desk.CanExitDeskView = !active;
         desk.SetDeskCameraRotationEnabled(!active);
 
+        SetMonitorTriggerEnabled(!active);
+
+        // Probably a temporary solution
+        outline.enabled = !active;
+
         if (active)
         {
             GameInput.PlayerInputActions.LaptopAndMonitor.Enable();
-            // CameraController.SetActiveCamera(monitorUICamera);
-            CameraController.SetCameraRenderTexture(monitorUICamera, null);
+            CameraController.SetActiveCinemachineCamera(monitorCinemachineCamera);
         }
         else
         {
             GameInput.PlayerInputActions.LaptopAndMonitor.Disable();
-            // CameraController.SetActiveCamera(CameraController.MainCamera);
-            CameraController.SetCameraRenderTexture(monitorUICamera, monitorScreenRenderTexture);
+            CameraController.SetActiveCinemachineCamera(desk.DeskCinemachineCamera);
         }
+
+        MonitorViewSetActive?.Invoke(active);
     }
 
     private void SetMonitorTriggerEnabled(bool enabled)
     {
-        IsMonitorTriggerEnabled = enabled;
+        // IsMonitorTriggerEnabled = enabled;
         monitorTrigger.gameObject.SetActive(enabled);
     }
 }

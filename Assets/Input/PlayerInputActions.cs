@@ -244,6 +244,33 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ""id"": ""e78e4f17-246c-4115-8ccc-6fb6703ab68a"",
             ""actions"": [
                 {
+                    ""name"": ""MoveCursor"",
+                    ""type"": ""Value"",
+                    ""id"": ""4533af42-c839-4eef-a919-721848a9fce3"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""LeftMouseButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""22347917-847f-4e4e-ad54-78f9a5bb8c73"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RightMouseButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""0cd5bac0-e783-4e9b-a9bf-c17afe0ee6d6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Exit"",
                     ""type"": ""Button"",
                     ""id"": ""0ae32724-6d25-45e3-93bf-86c4d5056b46"",
@@ -262,6 +289,39 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fb86a0ed-784b-449c-922d-c460630a64ab"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCursor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2100a7b9-c373-4b0a-8735-a4afea9542e6"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftMouseButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c9fcbe5c-7357-4b4a-a5d7-170c26cf51c3"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightMouseButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -386,6 +446,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Desk_ExitDeskView = m_Desk.FindAction("ExitDeskView", throwIfNotFound: true);
         // LaptopAndMonitor
         m_LaptopAndMonitor = asset.FindActionMap("LaptopAndMonitor", throwIfNotFound: true);
+        m_LaptopAndMonitor_MoveCursor = m_LaptopAndMonitor.FindAction("MoveCursor", throwIfNotFound: true);
+        m_LaptopAndMonitor_LeftMouseButton = m_LaptopAndMonitor.FindAction("LeftMouseButton", throwIfNotFound: true);
+        m_LaptopAndMonitor_RightMouseButton = m_LaptopAndMonitor.FindAction("RightMouseButton", throwIfNotFound: true);
         m_LaptopAndMonitor_Exit = m_LaptopAndMonitor.FindAction("Exit", throwIfNotFound: true);
         // Monitor
         m_Monitor = asset.FindActionMap("Monitor", throwIfNotFound: true);
@@ -672,11 +735,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     // LaptopAndMonitor
     private readonly InputActionMap m_LaptopAndMonitor;
     private List<ILaptopAndMonitorActions> m_LaptopAndMonitorActionsCallbackInterfaces = new List<ILaptopAndMonitorActions>();
+    private readonly InputAction m_LaptopAndMonitor_MoveCursor;
+    private readonly InputAction m_LaptopAndMonitor_LeftMouseButton;
+    private readonly InputAction m_LaptopAndMonitor_RightMouseButton;
     private readonly InputAction m_LaptopAndMonitor_Exit;
     public struct LaptopAndMonitorActions
     {
         private @PlayerInputActions m_Wrapper;
         public LaptopAndMonitorActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MoveCursor => m_Wrapper.m_LaptopAndMonitor_MoveCursor;
+        public InputAction @LeftMouseButton => m_Wrapper.m_LaptopAndMonitor_LeftMouseButton;
+        public InputAction @RightMouseButton => m_Wrapper.m_LaptopAndMonitor_RightMouseButton;
         public InputAction @Exit => m_Wrapper.m_LaptopAndMonitor_Exit;
         public InputActionMap Get() { return m_Wrapper.m_LaptopAndMonitor; }
         public void Enable() { Get().Enable(); }
@@ -687,6 +756,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_LaptopAndMonitorActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_LaptopAndMonitorActionsCallbackInterfaces.Add(instance);
+            @MoveCursor.started += instance.OnMoveCursor;
+            @MoveCursor.performed += instance.OnMoveCursor;
+            @MoveCursor.canceled += instance.OnMoveCursor;
+            @LeftMouseButton.started += instance.OnLeftMouseButton;
+            @LeftMouseButton.performed += instance.OnLeftMouseButton;
+            @LeftMouseButton.canceled += instance.OnLeftMouseButton;
+            @RightMouseButton.started += instance.OnRightMouseButton;
+            @RightMouseButton.performed += instance.OnRightMouseButton;
+            @RightMouseButton.canceled += instance.OnRightMouseButton;
             @Exit.started += instance.OnExit;
             @Exit.performed += instance.OnExit;
             @Exit.canceled += instance.OnExit;
@@ -694,6 +772,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
 
         private void UnregisterCallbacks(ILaptopAndMonitorActions instance)
         {
+            @MoveCursor.started -= instance.OnMoveCursor;
+            @MoveCursor.performed -= instance.OnMoveCursor;
+            @MoveCursor.canceled -= instance.OnMoveCursor;
+            @LeftMouseButton.started -= instance.OnLeftMouseButton;
+            @LeftMouseButton.performed -= instance.OnLeftMouseButton;
+            @LeftMouseButton.canceled -= instance.OnLeftMouseButton;
+            @RightMouseButton.started -= instance.OnRightMouseButton;
+            @RightMouseButton.performed -= instance.OnRightMouseButton;
+            @RightMouseButton.canceled -= instance.OnRightMouseButton;
             @Exit.started -= instance.OnExit;
             @Exit.performed -= instance.OnExit;
             @Exit.canceled -= instance.OnExit;
@@ -805,6 +892,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     }
     public interface ILaptopAndMonitorActions
     {
+        void OnMoveCursor(InputAction.CallbackContext context);
+        void OnLeftMouseButton(InputAction.CallbackContext context);
+        void OnRightMouseButton(InputAction.CallbackContext context);
         void OnExit(InputAction.CallbackContext context);
     }
     public interface IMonitorActions

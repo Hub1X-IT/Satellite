@@ -11,6 +11,8 @@ public class GameInput
 
     public static Vector2 RotationVector => PlayerInputActions.PlayerWalkingAndDesk.Rotate.ReadValue<Vector2>();
 
+    public static Vector2 MouseMovementVector => PlayerInputActions.LaptopAndMonitor.MoveCursor.ReadValue<Vector2>();
+
 
     public static event Action OnPauseAction;
 
@@ -19,6 +21,10 @@ public class GameInput
     public static event Action OnSmartphoneToggleAction;
 
     public static event Action OnExitDeskViewAction;
+
+    public static event Action OnLeftMouseButtonAction;
+
+    public static event Action OnRightMouseButtonAction;
 
     public static event Action OnLaptopAndMonitorExitAction;
 
@@ -48,6 +54,8 @@ public class GameInput
         PlayerInputActions.Desk.Interact.performed += Interact_performed; // Interact in Desk does the same thing as Interact in PlayerWalking
         PlayerInputActions.Desk.ExitDeskView.performed += ExitDeskView_performed;
 
+        PlayerInputActions.LaptopAndMonitor.LeftMouseButton.performed += LeftMouseButton_performed;
+        PlayerInputActions.LaptopAndMonitor.RightMouseButton.performed += RightMouseButton_performed;
         PlayerInputActions.LaptopAndMonitor.Exit.performed += LaptopAndMonitorExit_performed;
 
         Keyboard.current.onTextInput += Keyboard_onTextInput;
@@ -56,6 +64,7 @@ public class GameInput
         PlayerInputActions.Monitor.Submit.performed += MonitorSubmit_performed;
     }
 
+    
 
     public static void RemoveInput()
     {
@@ -93,6 +102,10 @@ public class GameInput
     private static void SmartphoneToggle_performed(InputAction.CallbackContext _) => OnSmartphoneToggleAction?.Invoke();
 
     private static void ExitDeskView_performed(InputAction.CallbackContext _) => OnExitDeskViewAction?.Invoke();
+
+    private static void LeftMouseButton_performed(InputAction.CallbackContext _) => OnLeftMouseButtonAction?.Invoke();
+
+    private static void RightMouseButton_performed(InputAction.CallbackContext _) => OnRightMouseButtonAction?.Invoke();
 
     private static void LaptopAndMonitorExit_performed(InputAction.CallbackContext _) => OnLaptopAndMonitorExitAction?.Invoke();
 

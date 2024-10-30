@@ -2,10 +2,14 @@ using UnityEngine;
 
 public static class GameSettingsManager
 {
-    private const float defaultMouseSensitivity = 25f;
+    [Range(MIN_MOUSE_SENSITIVITY, MAX_MOUSE_SENSITIVITY)]
+    private const float DEFAULT_MOUSE_SENSITIVITY = 0.15f;
+
+    public const float MIN_MOUSE_SENSITIVITY = 0.01f;
+    public const float MAX_MOUSE_SENSITIVITY = 0.3f;
 
     [Range(0.0001f, 1f)]
-    private const float defaultVolume = 0.5f;
+    private const float DEFAULT_VOLUME = 0.5f;
 
 
     private const string PLAYER_PREFS_MOUSE_SENSITIVITY = "mouseSensitivity";
@@ -23,17 +27,17 @@ public static class GameSettingsManager
 
     public static void LoadSettings()
     {
-        MouseSensitivity = PlayerPrefs.GetFloat(PLAYER_PREFS_MOUSE_SENSITIVITY, defaultMouseSensitivity);
+        MouseSensitivity = PlayerPrefs.GetFloat(PLAYER_PREFS_MOUSE_SENSITIVITY, DEFAULT_MOUSE_SENSITIVITY);
 
-        MainVolume = PlayerPrefs.GetFloat(PLAYER_PREFS_MAIN_VOLUME, defaultVolume);
-        MusicVolume = PlayerPrefs.GetFloat(PLAYER_PREFS_MUSIC_VOLUME, defaultVolume);
-        SoundVolume = PlayerPrefs.GetFloat(PLAYER_PREFS_SOUND_VOLUME, defaultVolume);
+        MainVolume = PlayerPrefs.GetFloat(PLAYER_PREFS_MAIN_VOLUME, DEFAULT_VOLUME);
+        MusicVolume = PlayerPrefs.GetFloat(PLAYER_PREFS_MUSIC_VOLUME, DEFAULT_VOLUME);
+        SoundVolume = PlayerPrefs.GetFloat(PLAYER_PREFS_SOUND_VOLUME, DEFAULT_VOLUME);
     }
 
     /*
     public static void SaveSettings()
     {
-        // All the PlayerPrefs.SetX method calls maybe should be put here
+        // All the PlayerPrefs.SetX method calls should later be put here
     }
     */
 

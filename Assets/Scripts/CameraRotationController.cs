@@ -42,7 +42,7 @@ public class CameraRotationController : MonoBehaviour {
         Vector3 xAxisRotationObjectRotation = xAxisRotationObject.rotation.eulerAngles;
 
         if (xAxisRotationObjectRotation.x > 180f) xAxisRotationObjectRotation.x -= 360f;
-        xAxisRotationObjectRotation.x += -rotationInput.y * GameSettingsManager.MouseSensitivity * Time.deltaTime;
+        xAxisRotationObjectRotation.x += -rotationInput.y * GameSettingsManager.MouseSensitivity;
         if (clampXRotation) xAxisRotationObjectRotation.x = Mathf.Clamp(xAxisRotationObjectRotation.x, minXRotation, maxXRotation);
 
         xAxisRotationObject.rotation = Quaternion.Euler(xAxisRotationObjectRotation);
@@ -51,7 +51,7 @@ public class CameraRotationController : MonoBehaviour {
         Vector3 yAxisRotationObjectRotation = yAxisRotationObject.rotation.eulerAngles;
 
         if (yAxisRotationObjectRotation.y > 180f) yAxisRotationObjectRotation.y -= 360f;
-        yAxisRotationObjectRotation.y += rotationInput.x * GameSettingsManager.MouseSensitivity * Time.deltaTime;
+        yAxisRotationObjectRotation.y += rotationInput.x * GameSettingsManager.MouseSensitivity;
         if (clampYRotation) yAxisRotationObjectRotation.y = Mathf.Clamp(yAxisRotationObjectRotation.y, minYRotation, maxYRotation);
 
         yAxisRotationObject.rotation = Quaternion.Euler(yAxisRotationObjectRotation);

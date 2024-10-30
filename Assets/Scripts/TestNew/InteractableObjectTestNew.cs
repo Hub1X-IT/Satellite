@@ -4,11 +4,11 @@ public class InteractableObjectTestNew : MonoBehaviour, IInteractable
 {
     public InteractionVisual InteractVisual { get; set; }
 
-    public Transform Transform { get; private set; }
+    public Transform SelfTransform { get; private set; }
 
     private void Awake()
     {
-        Transform = transform;
+        SelfTransform = transform;
     }
 
     private void Start()

@@ -7,12 +7,12 @@ public class MonitorTrigger : MonoBehaviour, IInteractable
 
     public InteractionVisual InteractVisual { get; set; }
 
-    public Transform Transform { get; private set; }
+    public Transform SelfTransform { get; private set; }
 
 
     private void Awake()
     {
-        Transform = transform;
+        SelfTransform = transform;
     }
 
     public void Interact()

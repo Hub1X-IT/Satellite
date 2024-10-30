@@ -1,9 +1,10 @@
 using UnityEngine;
 
-public class PlayerMovementController : MonoBehaviour {
+public class PlayerMovementController : MonoBehaviour
+{
 
     private CharacterController characterController;
-    
+
     private Vector3 moveDirection;
     [SerializeField]
     private float moveSpeed = 5f;
@@ -14,29 +15,35 @@ public class PlayerMovementController : MonoBehaviour {
     private float verticalVelocity;
 
 
-    private void Awake() {
+    private void Awake()
+    {
         characterController = GetComponent<CharacterController>();
     }
 
-    private void Update() {
+    private void Update()
+    {
         HandleGravity();
         HandleMovement();
     }
 
-    private void HandleMovement() {        
+    private void HandleMovement()
+    {
         Vector2 inputVector = GameInput.MovementVectorNormalized;
         Vector3 movementInput = new(inputVector.x, 0f, inputVector.y);
-        
+
         moveDirection = transform.right * movementInput.x + transform.forward * movementInput.z;
         moveDirection.y = verticalVelocity;
         characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
     }
-    
-    private void HandleGravity() {
-        if (characterController.isGrounded && verticalVelocity < 0f) {
+
+    private void HandleGravity()
+    {
+        if (characterController.isGrounded && verticalVelocity < 0f)
+        {
             verticalVelocity = -0.1f;
         }
-        else {
+        else
+        {
             verticalVelocity += gravity * gravityMultiplier * Time.deltaTime;
         }
         moveDirection.y = verticalVelocity;
