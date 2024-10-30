@@ -1,5 +1,7 @@
+using System.ComponentModel.Design;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Device;
 using UnityEngine.UI;
 
 public class InGameOptionsUI : MonoBehaviour
@@ -14,6 +16,8 @@ public class InGameOptionsUI : MonoBehaviour
 
     [SerializeField]
     private TMP_Dropdown graphicsDropdown;
+
+    Resolution[] resolutions;
 
 
     private void Awake()
@@ -32,6 +36,8 @@ public class InGameOptionsUI : MonoBehaviour
     {
         SetGraphics(GameSettingsManager.GraphicsIndex);
         graphicsDropdown.RefreshShownValue();
+
+        //resolutions = Screen.resolutions;
     }
     private void SetGraphics(int index)
     {
