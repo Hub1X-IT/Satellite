@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using TMPro;
 using UnityEngine;
@@ -30,6 +32,7 @@ public class InGameOptionsUI : MonoBehaviour
 
 
         graphicsDropdown.onValueChanged.AddListener(SetGraphics);
+        //resolutionDropdown.onValueChanged.AddListener(SetResolution);
     }
 
     private void Start()
@@ -37,10 +40,39 @@ public class InGameOptionsUI : MonoBehaviour
         SetGraphics(GameSettingsManager.GraphicsIndex);
         graphicsDropdown.RefreshShownValue();
 
-        //resolutions = Screen.resolutions;
+        /*SetResolution(GameSettingsManager.ResolutionIndex);
+        resolutionDropdown.RefreshShownValue();*/
+
+        resolutions = UnityEngine.Device.Screen.resolutions;
+
+        resolutionDropdown.ClearOptions();
+
+        List<string> options = new List<string>();
+
+        int currentResolutionIndex = 0;
+        for(int i= 0; i < resolutions.Length; i++)
+        {
+            string option = resolutions[i].width + " x " + resolutions[i].height;
+            options.Add(option);
+
+            if (resolutions[i].width == UnityEngine.Device.Screen.currentResolution.width 
+                && resolutions[i].height == UnityEngine.Device.Screen.currentResolution.height)
+            {
+                currentResolutionIndex = i;
+            }
+        }
+
+        resolutionDropdown.AddOptions(options);
+        resolutionDropdown.value = currentResolutionIndex;
+        resolutionDropdown.RefreshShownValue();
     }
     private void SetGraphics(int index)
     {
         GameSettingsManager.SetGraphics(index);
     }
+    
+    /*private void SetResolution(int index)
+    {
+        GameSettingsManager.SetResolution(index);
+    }*/
 }
