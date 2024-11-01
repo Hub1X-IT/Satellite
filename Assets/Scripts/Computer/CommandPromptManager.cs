@@ -30,6 +30,12 @@ public static class CommandPromptManager
         GameInput.OnSubmitAction += GameInput_OnSubmitAction;
     }
 
+    public static void ResetEvents()
+    {
+        CommandSubmitted = null;
+        CommandChanged = null;
+    }
+
 
     private static void GameInput_OnKeyboardInputAction(char character)
     {

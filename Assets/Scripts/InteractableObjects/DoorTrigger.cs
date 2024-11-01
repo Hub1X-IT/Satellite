@@ -14,6 +14,11 @@ public class DoorTrigger : MonoBehaviour, IInteractable
         SelfTransform = transform;
     }
 
+    private void OnDestroy()
+    {
+        DoorTriggered = null;
+    }
+
     public void Interact()
     {
         DoorTriggered?.Invoke();

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ScreenUICursorController : MonoBehaviour
@@ -14,9 +15,11 @@ public class ScreenUICursorController : MonoBehaviour
 
     private readonly float sensitivityMultiplier = 5f;
 
-    private IScreenUIInteractable currentUIInteractable;
+    private IScreenUIInteractable currentInteractable;
 
-    private bool shouldSelectUIInteractable;
+    /*
+    private List<IScreenUIInteractable> previousInteractablesList = new();
+    */
 
     private readonly float minXPosition = 0f;
     private readonly float maxXPosition = 1920f;
@@ -31,57 +34,87 @@ public class ScreenUICursorController : MonoBehaviour
         currentPosition = defaultPosition;
         rectTransform.anchoredPosition = currentPosition * positionMultiplier;
 
-        shouldSelectUIInteractable = false;
-
         GameInput.OnLeftMouseButtonAction += GameInput_OnLeftMouseButtonAction;
         GameInput.OnRightMouseButtonAction += GameInput_OnRightMouseButtonAction;
     }
 
     private void Update()
     {
-        if (shouldSelectUIInteractable)
-        {
-            currentUIInteractable?.Select();
-            shouldSelectUIInteractable = false;
-        }
         HandleMovement();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        currentUIInteractable = collision.GetComponent<IScreenUIInteractable>();
-        currentUIInteractable?.Select();
-        
-        Debug.Log(currentUIInteractable);
+        currentInteractable = collision.GetComponent<IScreenUIInteractable>();
+        currentInteractable?.SetHighlighted(true);
+
+        if (currentInteractable.GetType() == typeof(ScreenUIInputField))
+        {
+            // change the cursor appearance
+        }
+
+        Debug.Log(currentInteractable);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        currentUIInteractable?.Deselect();
-        currentUIInteractable = null;
-        shouldSelectUIInteractable = false;
+        if (currentInteractable != null)
+        {
+            currentInteractable.SetHighlighted(false);
+            /*
+            previousInteractablesList.Add(currentInteractable);
+            */
+        }
+
+        // change the cursor appearance (from text cursor)
+        currentInteractable = null;
     }
 
     private void HandleMovement()
     {
-        currentPosition += GameSettingsManager.MouseSensitivity * sensitivityMultiplier * 
+        currentPosition += GameSettingsManager.MouseSensitivity * sensitivityMultiplier *
             GameInput.MouseMovementVector * positionMultiplier;
 
         currentPosition.x = Mathf.Clamp(currentPosition.x, minXPosition, maxXPosition);
         currentPosition.y = Mathf.Clamp(currentPosition.y, minYPosition, maxYPosition);
 
         rectTransform.anchoredPosition = currentPosition * positionMultiplier;
+
+        
     }
-    
+
     private void GameInput_OnLeftMouseButtonAction()
     {
-        currentUIInteractable?.LeftClick();
-        shouldSelectUIInteractable = true;
+        if (currentInteractable != null)
+        {
+            currentInteractable.LeftClick();
+        }
+        /*
+        DeselectPreviousInteractables();
+        */
     }
 
     private void GameInput_OnRightMouseButtonAction()
     {
-        currentUIInteractable?.RightClick();
-        shouldSelectUIInteractable = true;
+        if (currentInteractable != null)
+        {
+            currentInteractable?.RightClick();
+        }
+        /*
+        DeselectPreviousInteractables();
+        */
     }
+
+    /*
+    private void DeselectPreviousInteractables()
+    {
+        foreach (var interactable in previousInteractablesList)
+        {
+            interactable.Deselect();
+        }
+        previousInteractablesList.Clear();
+    }
+    */
+
+    
 }

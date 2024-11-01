@@ -15,6 +15,11 @@ public class MonitorTrigger : MonoBehaviour, IInteractable
         SelfTransform = transform;
     }
 
+    private void OnDestroy()
+    {
+        MonitorTriggered = null;
+    }
+
     public void Interact()
     {
         MonitorTriggered?.Invoke();

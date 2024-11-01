@@ -22,6 +22,8 @@ public class ScriptsInitializer : MonoBehaviour
         VolumeController.InitializeOnAwake(volumeControllerData);
 
         GameSettingsManager.LoadSettings();
+
+        Debug.Log($"{name}: {nameof(Awake)}");
     }
 
     private void Start()
@@ -29,11 +31,17 @@ public class ScriptsInitializer : MonoBehaviour
         CommandPromptManager.InitializeOnStart();
         GameManager.InitializeOnStart();
         VolumeController.InitializeOnStart();
+
+        Debug.Log($"{name}: Start");
     }
 
     private void OnDestroy()
     {
-        // GameSettingsManager.SaveSettings();
+        CommandPromptManager.ResetEvents();
+        GameManager.ResetEvents();
+
         GameInput.RemoveInput();
+
+        // GameSettingsManager.SaveSettings();
     }
 }

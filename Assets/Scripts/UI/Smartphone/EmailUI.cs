@@ -19,6 +19,10 @@ public class EmailUI : MonoBehaviour
         });
     }
 
+    private void OnDestroy()
+    {
+        closingEmailOverview = null;
+    }
 
     public void Show(Action closingEmailOverview)
     {

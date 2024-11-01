@@ -51,6 +51,11 @@ public class Monitor : MonoBehaviour
         CanExitMonitorView = true;
     }
 
+    private void OnDestroy()
+    {
+        MonitorViewSetActive = null;
+    }
+
     private void SetMonitorViewActive(bool active)
     {
         // IsMonitorViewActive = active;

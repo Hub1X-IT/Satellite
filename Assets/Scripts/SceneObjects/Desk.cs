@@ -31,6 +31,14 @@ public class Desk : MonoBehaviour
         deskTrigger.InteractVisual = GetComponent<InteractionVisual>();
         deskCameraRotationController = GetComponent<CameraRotationController>();
 
+        GameInput.OnExitDeskViewAction += () =>
+        {
+            if (CanExitDeskView)
+            {
+                SetDeskViewActive(false);
+            }
+        };
+
         deskTrigger.DeskTriggered += () => SetDeskViewActive(true);
 
         /*
@@ -42,18 +50,10 @@ public class Desk : MonoBehaviour
         CanExitDeskView = true;
     }
 
-
-    private void Start()
+    private void OnDestroy()
     {
-        GameInput.OnExitDeskViewAction += () =>
-        {
-            if (CanExitDeskView)
-            {
-                SetDeskViewActive(false);
-            }
-        };
+        DeskViewEnabled = null;
     }
-
 
     private void SetDeskViewActive(bool active)
     {

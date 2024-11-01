@@ -26,6 +26,11 @@ public static class GameManager
         PauseGameToMenu(false);
     }
 
+    public static void ResetEvents()
+    {
+        GamePausedUnpaused = null;
+    }
+
     public static void SetGamePaused(bool paused)
     {
         IsGamePaused = paused;

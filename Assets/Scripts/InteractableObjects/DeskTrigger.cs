@@ -14,6 +14,11 @@ public class DeskTrigger : MonoBehaviour, IInteractable
         SelfTransform = transform;
     }
 
+    private void OnDestroy()
+    {
+        DeskTriggered = null;
+    }
+
     public void Interact()
     {
         DeskTriggered?.Invoke();

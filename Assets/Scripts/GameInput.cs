@@ -64,8 +64,6 @@ public class GameInput
         PlayerInputActions.Monitor.Submit.performed += MonitorSubmit_performed;
     }
 
-    
-
     public static void RemoveInput()
     {
         PlayerInputActions.All.Pause.performed -= Pause_performed;
@@ -85,6 +83,17 @@ public class GameInput
         PlayerInputActions.Monitor.Submit.performed -= MonitorSubmit_performed;
 
         PlayerInputActions.Dispose();
+
+        OnPauseAction = null;
+        OnInteractAction = null;
+        OnSmartphoneToggleAction = null;
+        OnExitDeskViewAction = null;
+        OnLeftMouseButtonAction = null;
+        OnRightMouseButtonAction = null;
+        OnLaptopAndMonitorExitAction = null;
+        OnMonitorExitAction = null;
+        OnKeyboardInputAction = null;
+        OnSubmitAction = null;
     }
 
     private static void Keyboard_onTextInput(char c)
