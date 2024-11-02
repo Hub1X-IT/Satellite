@@ -14,12 +14,7 @@ public class Monitor : MonoBehaviour
     [SerializeField]
     private CinemachineCamera monitorCinemachineCamera;
 
-    // Probably a temporary solution
     private Outline outline;
-
-    // public bool IsMonitorViewActive { get; private set; }
-
-    // public bool IsMonitorTriggerEnabled { get; private set; }
 
     public bool CanExitMonitorView { get; set; }
     
@@ -32,6 +27,7 @@ public class Monitor : MonoBehaviour
         monitorTrigger.InteractVisual = GetComponent<InteractionVisual>();
 
         monitorTrigger.InteractionTriggered += () => SetMonitorViewActive(true);
+
         desk.DeskViewEnabled += SetMonitorTriggerEnabled;
 
         GameInput.OnLaptopAndMonitorExitAction += () =>
@@ -41,8 +37,6 @@ public class Monitor : MonoBehaviour
                 SetMonitorViewActive(false);
             }
         };
-
-        // IsMonitorViewActive = false;
 
         monitorCinemachineCamera.enabled = false;
 
@@ -58,8 +52,6 @@ public class Monitor : MonoBehaviour
 
     private void SetMonitorViewActive(bool active)
     {
-        // IsMonitorViewActive = active;
-
         PlayerScriptsController.SetCanShowPlayerHUD(!active);
 
         desk.CanExitDeskView = !active;
@@ -74,11 +66,13 @@ public class Monitor : MonoBehaviour
         {
             GameInput.PlayerInputActions.LaptopAndMonitor.Enable();
             CameraController.SetActiveCinemachineCamera(monitorCinemachineCamera);
+            Cursor.lockState = CursorLockMode.Confined;
         }
         else
         {
             GameInput.PlayerInputActions.LaptopAndMonitor.Disable();
             CameraController.SetActiveCinemachineCamera(desk.DeskCinemachineCamera);
+            GameManager.SetCursorShown(false);
         }
 
         MonitorViewSetActive?.Invoke(active);
@@ -86,7 +80,6 @@ public class Monitor : MonoBehaviour
 
     private void SetMonitorTriggerEnabled(bool enabled)
     {
-        // IsMonitorTriggerEnabled = enabled;
         monitorTrigger.gameObject.SetActive(enabled);
     }
 }

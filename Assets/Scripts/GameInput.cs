@@ -11,7 +11,7 @@ public class GameInput
 
     public static Vector2 RotationVector => PlayerInputActions.PlayerWalkingAndDesk.Rotate.ReadValue<Vector2>();
 
-    public static Vector2 MouseMovementVector => PlayerInputActions.LaptopAndMonitor.MoveCursor.ReadValue<Vector2>();
+    public static Vector2 MousePosition => PlayerInputActions.LaptopAndMonitor.CursorPosition.ReadValue<Vector2>();
 
 
     public static event Action OnPauseAction;
@@ -121,4 +121,12 @@ public class GameInput
     private static void MonitorExit_performed(InputAction.CallbackContext _) => OnMonitorExitAction?.Invoke();
 
     private static void MonitorSubmit_performed(InputAction.CallbackContext _) => OnSubmitAction?.Invoke();
+
+
+    public static void SetMousePosition(Vector2 position)
+    {
+        Mouse.current.WarpCursorPosition(position);
+        Debug.Log(position);
+        Debug.Log(MousePosition);
+    }
 }

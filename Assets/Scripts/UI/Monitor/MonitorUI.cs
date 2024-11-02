@@ -17,7 +17,7 @@ public class MonitorUI : MonoBehaviour
 
     private void Awake()
     {
-        // Should be only one object with the script Monitor in the scene!
+        // There should be only one object with the script Monitor in the scene!
         monitor = FindAnyObjectByType<Monitor>();
 
         inputFields = GetComponentsInChildren<TMP_InputField>(true);
@@ -27,7 +27,10 @@ public class MonitorUI : MonoBehaviour
             inputField.onDeselect.AddListener((_) => monitor.CanExitMonitorView = true);
         }
 
-        monitor.MonitorViewSetActive += (enabled) => monitorCursor.enabled = enabled;
+        monitor.MonitorViewSetActive += (enabled) =>
+        {
+            monitorCursor.SetEnabled(enabled);
+        };
 
         testButton.onClick.AddListener(() => Debug.Log($"{testButton.name}: {nameof(testButton.onClick)}"));
 

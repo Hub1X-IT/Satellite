@@ -5,15 +5,7 @@ public static class GameManager
 {
     public static event Action<bool> GamePausedUnpaused;
 
-
     public static bool IsGamePaused { get; private set; }
-
-    public static bool IsCursorShown { get; private set; }
-
-    public static bool IsTimeStarted { get; private set; }
-
-    public static float TimeScale { get; private set; }
-
 
     public static void InitializeOnAwake()
     {
@@ -22,7 +14,6 @@ public static class GameManager
 
     public static void InitializeOnStart()
     {
-        SetCursorShown(false);
         PauseGameToMenu(false);
     }
 
@@ -46,7 +37,6 @@ public static class GameManager
 
     public static void SetCursorShown(bool shown)
     {
-        IsCursorShown = shown;
         if (shown) Cursor.lockState = CursorLockMode.None;
         else Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = shown;
@@ -54,7 +44,6 @@ public static class GameManager
 
     public static void SetTimeStarted(bool started)
     {
-        IsTimeStarted = started;
         if (started)
         {
             SetTimeScale(1f);
@@ -67,7 +56,6 @@ public static class GameManager
 
     public static void SetTimeScale(float timeScale)
     {
-        TimeScale = timeScale;
         Time.timeScale = timeScale;
     }
 }
