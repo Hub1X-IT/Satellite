@@ -9,22 +9,14 @@ public class MonitorUI : MonoBehaviour
 
     private TMP_InputField[] inputFields;
 
-    private ScreenUICursorController monitorCursorController;
-
-    private MonitorUIStartMenu startMenu;
+    [SerializeField]
+    private ScreenUICursorController monitorCursor;
 
     [SerializeField]
     private Button testButton;
 
-    [SerializeField]
-    private Button startMenuButton;
-
     private void Awake()
     {
-        monitorCursorController = GetComponentInChildren<ScreenUICursorController>();
-
-        startMenu = GetComponentInChildren<MonitorUIStartMenu>(true);
-
         // Should be only one object with the script Monitor in the scene!
         monitor = FindAnyObjectByType<Monitor>();
 
@@ -35,10 +27,10 @@ public class MonitorUI : MonoBehaviour
             inputField.onDeselect.AddListener((_) => monitor.CanExitMonitorView = true);
         }
 
-        monitor.MonitorViewSetActive += (enabled) => monitorCursorController.enabled = enabled;
+        monitor.MonitorViewSetActive += (enabled) => monitorCursor.enabled = enabled;
 
         testButton.onClick.AddListener(() => Debug.Log($"{testButton.name}: {nameof(testButton.onClick)}"));
 
-        monitorCursorController.enabled = false;
+        monitorCursor.enabled = false;
     }
 }
