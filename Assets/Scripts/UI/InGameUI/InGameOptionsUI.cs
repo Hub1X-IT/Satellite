@@ -1,9 +1,6 @@
-using NUnit.Framework;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Device;
 using UnityEngine.UI;
 
 public class InGameOptionsUI : MonoBehaviour
@@ -29,7 +26,6 @@ public class InGameOptionsUI : MonoBehaviour
         inGameMenu.OptionsEnabled += (state) => gameObject.SetActive(state);
 
         backButton.onClick.AddListener(() => inGameMenu.SetOptionsEnabled(false));
-
 
         graphicsDropdown.onValueChanged.AddListener(SetGraphics);
         //resolutionDropdown.onValueChanged.AddListener(SetResolution);
@@ -66,6 +62,7 @@ public class InGameOptionsUI : MonoBehaviour
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
     }
+
     private void SetGraphics(int index)
     {
         GameSettingsManager.SetGraphics(index);

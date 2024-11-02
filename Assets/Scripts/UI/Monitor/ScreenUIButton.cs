@@ -9,13 +9,13 @@ public class ScreenUIButton : MonoBehaviour, IScreenUIInteractable
     private Button button;
 
     [SerializeField]
-    private Color normalColor = new(255, 255, 255, 255);
+    private Color normalColor = new(1f, 1f, 1f);
 
     [SerializeField]
-    private Color highlightedColor = new(200, 200, 200, 255);
+    private Color highlightedColor = new(0.8f, 0.8f, 0.8f);
 
     [SerializeField]
-    private Color pressedColor = new(150, 150, 150, 255);
+    private Color pressedColor = new(0.6f, 0.6f, 0.6f);
 
     private bool isHighlighted;
 
@@ -23,7 +23,7 @@ public class ScreenUIButton : MonoBehaviour, IScreenUIInteractable
 
     private float pressedTime;
 
-    private const float PRESSED_TIME = 0.2f;
+    private const float PRESSED_TIME = 0.1f;
 
     /*
     public event Action OnLeftClick;

@@ -4,11 +4,6 @@ using UnityEngine.UI;
 
 public class MonitorUI : MonoBehaviour
 {
-    /*
-        Attaching this script to MonitorUI object might be a temporary solution -
-        - it is better to move it to MonitorCanvas
-    */
-
     // [SerializeField]
     private Monitor monitor;
 
@@ -16,17 +11,24 @@ public class MonitorUI : MonoBehaviour
 
     private ScreenUICursorController monitorCursorController;
 
+    private MonitorUIStartMenu startMenu;
+
     [SerializeField]
     private Button testButton;
+
+    [SerializeField]
+    private Button startMenuButton;
 
     private void Awake()
     {
         monitorCursorController = GetComponentInChildren<ScreenUICursorController>();
 
+        startMenu = GetComponentInChildren<MonitorUIStartMenu>(true);
+
         // Should be only one object with the script Monitor in the scene!
         monitor = FindAnyObjectByType<Monitor>();
 
-        inputFields = GetComponentsInChildren<TMP_InputField>();
+        inputFields = GetComponentsInChildren<TMP_InputField>(includeInactive: true);
         foreach (var inputField in inputFields)
         {
             inputField.onSelect.AddListener((_) => monitor.CanExitMonitorView = false);
@@ -35,7 +37,7 @@ public class MonitorUI : MonoBehaviour
 
         monitor.MonitorViewSetActive += (enabled) => monitorCursorController.enabled = enabled;
 
-        testButton.onClick.AddListener(() => Debug.Log("TestButton: onClick"));
+        testButton.onClick.AddListener(() => Debug.Log($"{testButton.name}: {nameof(testButton.onClick)}"));
 
         monitorCursorController.enabled = false;
     }

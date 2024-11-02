@@ -7,6 +7,7 @@ public class ScreenUIInputField : MonoBehaviour, IScreenUIInteractable
 {
     private TMP_InputField inputField;
 
+    /*
     private ScreenUICursorController cursorController;
 
     private List<GameObject> characterColliders;
@@ -14,6 +15,7 @@ public class ScreenUIInputField : MonoBehaviour, IScreenUIInteractable
     private Vector2 lastCharacterPosition;
 
     private float previousTextLength;
+    */
 
     public Transform SelfTransform { get; private set; }
 
@@ -27,10 +29,12 @@ public class ScreenUIInputField : MonoBehaviour, IScreenUIInteractable
     {
         inputField = GetComponent<TMP_InputField>();
 
+        /*
         cursorController = GetComponentInParent<MonitorUI>().GetComponentInChildren<ScreenUICursorController>();
 
         characterColliders = new();
         lastCharacterPosition = Vector2.zero;
+        */
 
         SelfTransform = transform;
 

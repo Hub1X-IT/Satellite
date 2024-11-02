@@ -6,14 +6,6 @@ public interface IScreenUIInteractable
 
     public void SetHighlighted(bool highlighted);
 
-    /*
-    public void Select();
-    */
-
-    /*
-    public void Deselect();
-    */
-
     public void LeftClick();
 
     public void RightClick();
