@@ -3,7 +3,8 @@ using UnityEngine.UI;
 
 public class InGameMainMenuUI : MonoBehaviour
 {
-    private InGameMenuUI inGameMenu;
+    [SerializeField]
+    private InGameOptionsUI inGameOptions;
 
     [SerializeField]
     private Button resumeButton;
@@ -17,12 +18,25 @@ public class InGameMainMenuUI : MonoBehaviour
 
     private void Awake()
     {
-        inGameMenu = GetComponentInParent<InGameMenuUI>();
-
-        inGameMenu.OptionsEnabled += (areOptionsEnabled) => gameObject.SetActive(!areOptionsEnabled);
+        GameManager.GamePausedUnpaused += (paused) =>
+        {
+            SetEnabled(paused);
+            inGameOptions.Disable();
+        };
 
         resumeButton.onClick.AddListener(() => GameManager.PauseGameToMenu(false));
-        optionsButton.onClick.AddListener(() => inGameMenu.SetOptionsEnabled(true));
+
+        optionsButton.onClick.AddListener(() =>
+        {
+            SetEnabled(false);
+            inGameOptions.Enable(onCloseAction: () => SetEnabled(true));
+        });
+
         mainMenuButton.onClick.AddListener(() => SceneLoader.LoadScene(SceneLoader.Scene.MainMenu));
+    }
+
+    private void SetEnabled(bool enabled)
+    {
+        gameObject.SetActive(enabled);
     }
 }

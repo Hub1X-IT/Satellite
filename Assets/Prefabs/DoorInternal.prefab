@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8caad074959a1054682940313de9cdd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorTrigger: {fileID: 2556976521749219393}
   doorAnimator: {fileID: 7123476716468756282}
   isInverted: 0
   defaultState: 0
@@ -170,7 +171,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7578340222284322059}
   - component: {fileID: 498464334688108978}
-  - component: {fileID: 6211730696955097192}
+  - component: {fileID: 2556976521749219393}
   m_Layer: 3
   m_Name: DoorTrigger
   m_TagString: Untagged
@@ -214,7 +215,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.91, y: 2, z: 0.26}
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &6211730696955097192
+--- !u!114 &2556976521749219393
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -223,7 +224,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7954484941315031076}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6b1e38ffdee1c148a18bfb3f69384b4, type: 3}
+  m_Script: {fileID: 11500000, guid: a1b8064c4a1e24648b1943277474990c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &3262933869153792761

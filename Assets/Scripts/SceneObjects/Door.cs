@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    private DoorTrigger doorTrigger;
+    [SerializeField]
+    private InteractionTrigger doorTrigger;
 
     [SerializeField]
     private Animator doorAnimator;
@@ -13,17 +14,14 @@ public class Door : MonoBehaviour
     [SerializeField][Tooltip("True: door open\nFalse: door closed")]
     private bool defaultState = false;
 
-
     private const string IS_INVERTED_BOOL = "IsInverted";
     private const string DOOR_OPEN_BOOL = "DoorOpen";
 
-
-    public bool IsDoorOpen { get; private set; }
+    private bool isDoorOpen;
 
 
     private void Awake()
     {
-        doorTrigger = GetComponentInChildren<DoorTrigger>();
         doorAnimator.SetBool(IS_INVERTED_BOOL, isInverted);
 
         doorTrigger.InteractVisual = GetComponent<InteractionVisual>();
@@ -31,7 +29,7 @@ public class Door : MonoBehaviour
 
     private void Start()
     {
-        doorTrigger.DoorTriggered += () => SetDoorOpen(!IsDoorOpen);
+        doorTrigger.InteractionTriggered += () => SetDoorOpen(!isDoorOpen);
     }
 
     private void OnEnable()
@@ -41,8 +39,8 @@ public class Door : MonoBehaviour
 
     private void SetDoorOpen(bool open)
     {
-        IsDoorOpen = open;
+        isDoorOpen = open;
         doorAnimator.SetBool(IS_INVERTED_BOOL, isInverted);
-        doorAnimator.SetBool(DOOR_OPEN_BOOL, open);
+        doorAnimator.SetBool(DOOR_OPEN_BOOL, isDoorOpen);
     }
 }

@@ -6,27 +6,24 @@ public class Lamp : MonoBehaviour, IInteractable
 
     public Transform SelfTransform { get; private set; }
 
-    public bool IsLampEnabled { get; private set; }
-
+    private bool isLampEnabled;
 
     [SerializeField]
     private Light lampLight;
-
 
     private void Awake()
     {
         SelfTransform = transform;
     }
 
-
     public void Interact()
     {
-        SetLampEnabled(!IsLampEnabled);
+        SetLampEnabled(!isLampEnabled);
     }
 
     private void SetLampEnabled(bool enabled)
     {
-        IsLampEnabled = enabled;
+        isLampEnabled = enabled;
         lampLight.gameObject.SetActive(enabled);
     }
 }

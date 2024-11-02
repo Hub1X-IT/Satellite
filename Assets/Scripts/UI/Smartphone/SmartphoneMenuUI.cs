@@ -9,21 +9,18 @@ public class SmartphoneMenuUI : MonoBehaviour
     [SerializeField]
     private Button emailButton;
 
-    public bool IsSmartphoneMenuEnabled { get; private set; }
-
 
     private void Awake()
     {
         emailButton.onClick.AddListener(() =>
         {
-            emailUI.Show(() => SetSmartphoneMenuEnabled(true));
-            SetSmartphoneMenuEnabled(false);
+            SetEnabled(false);
+            emailUI.Enable(() => SetEnabled(true));
         });
     }
 
-    private void SetSmartphoneMenuEnabled(bool enabled)
+    private void SetEnabled(bool enabled)
     {
-        IsSmartphoneMenuEnabled = enabled;
         gameObject.SetActive(enabled);
     }
 }

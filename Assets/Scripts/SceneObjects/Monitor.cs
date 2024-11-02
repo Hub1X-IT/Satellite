@@ -6,7 +6,8 @@ public class Monitor : MonoBehaviour
 {
     public event Action<bool> MonitorViewSetActive;
 
-    private MonitorTrigger monitorTrigger;
+    [SerializeField]
+    private InteractionTrigger monitorTrigger;
 
     private Desk desk;
 
@@ -26,12 +27,11 @@ public class Monitor : MonoBehaviour
     private void Awake()
     {
         desk = GetComponentInParent<Desk>();
-        monitorTrigger = GetComponentInChildren<MonitorTrigger>();
         outline = GetComponent<Outline>();
 
         monitorTrigger.InteractVisual = GetComponent<InteractionVisual>();
 
-        monitorTrigger.MonitorTriggered += () => SetMonitorViewActive(true);
+        monitorTrigger.InteractionTriggered += () => SetMonitorViewActive(true);
         desk.DeskViewEnabled += SetMonitorTriggerEnabled;
 
         GameInput.OnLaptopAndMonitorExitAction += () =>

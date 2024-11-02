@@ -6,33 +6,26 @@ public class EmailUI : MonoBehaviour
 {
     [SerializeField] private Button emailExitButton;
 
-
-    private Action closingEmailOverview;
+    private Action emailOverviewClosed;
 
 
     private void Awake()
     {
         emailExitButton.onClick.AddListener(() =>
         {
-            Hide();
-            closingEmailOverview();
+            emailOverviewClosed();
+            Disable();
         });
     }
 
-    private void OnDestroy()
+    public void Enable(Action onCloseAction)
     {
-        closingEmailOverview = null;
-    }
-
-    public void Show(Action closingEmailOverview)
-    {
-        this.closingEmailOverview = closingEmailOverview;
+        emailOverviewClosed = onCloseAction;
 
         gameObject.SetActive(true);
     }
 
-
-    private void Hide()
+    private void Disable()
     {
         gameObject.SetActive(false);
     }

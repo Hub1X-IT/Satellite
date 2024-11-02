@@ -171,7 +171,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1546223426133319509}
   - component: {fileID: 3411659643341359600}
-  - component: {fileID: 1188857242982397168}
+  - component: {fileID: 4671478203664470216}
   m_Layer: 3
   m_Name: MonitorTrigger
   m_TagString: Untagged
@@ -215,7 +215,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6, y: 0.4, z: 0.15}
   m_Center: {x: 0, y: 0.2, z: -0.009999998}
---- !u!114 &1188857242982397168
+--- !u!114 &4671478203664470216
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -224,7 +224,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4198451942210525058}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 857bf20b4719c3b4ab3b0c7bc573cf16, type: 3}
+  m_Script: {fileID: 11500000, guid: a1b8064c4a1e24648b1943277474990c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7369432932998519805
@@ -299,6 +299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622c284bb59b25c46848b793ee2ef800, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monitorTrigger: {fileID: 4671478203664470216}
   monitorCinemachineCamera: {fileID: 3378752344501694125}
 --- !u!114 &6817648722821540677
 MonoBehaviour:

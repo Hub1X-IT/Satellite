@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerHUDControllerUI : MonoBehaviour
 {
-    public bool CanShowPlayerHUD { get; private set; }
+    private bool canShowPlayerHUD;
 
     public bool IsEnabled { get; private set; }
 
@@ -14,8 +14,8 @@ public class PlayerHUDControllerUI : MonoBehaviour
 
     private void SetPlayerHUDEnabled(bool enabled)
     {
-        // Enable/disable player HUD only if it is allowed
-        enabled = enabled && CanShowPlayerHUD;
+        // Enable/disable player HUD only if it is permitted
+        enabled = enabled && canShowPlayerHUD;
 
         IsEnabled = enabled;
         gameObject.SetActive(enabled);
@@ -23,7 +23,7 @@ public class PlayerHUDControllerUI : MonoBehaviour
 
     public void SetCanShowPlayerHUD(bool canShow)
     {
-        CanShowPlayerHUD = canShow;
+        canShowPlayerHUD = canShow;
         SetPlayerHUDEnabled(!GameManager.IsGamePaused);
     }
 }

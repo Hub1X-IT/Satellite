@@ -8,30 +8,27 @@ public class SmartphoneControllerUI : MonoBehaviour
     private RectTransform smartphoneRectTransform;
 
     [SerializeField]
-    private Vector2 defaultSmartphonePosition = new(640, -800);
+    private Vector2 defaultSmartphonePosition = new(640f, -800f);
     
+    private bool isSmartphoneEnabled;
+
     private const string PHONE_ON_TRIGGER = "PhoneOn";
     private const string PHONE_OFF_TRIGGER = "PhoneOff";
-
-
-    public bool IsSmartphoneEnabled { get; private set; }
-
 
     private void Awake()
     {
         smartphoneRectTransform = smartphoneAnimator.GetComponent<RectTransform>();
 
-        GameInput.OnSmartphoneToggleAction += () => SetSmartphoneEnabled(!IsSmartphoneEnabled);
+        GameInput.OnSmartphoneToggleAction += () => SetSmartphoneEnabled(!isSmartphoneEnabled);
 
         smartphoneRectTransform.localPosition = defaultSmartphonePosition;
 
-        IsSmartphoneEnabled = false;
+        isSmartphoneEnabled = false;
     }
-
 
     private void SetSmartphoneEnabled(bool enabled)
     {
-        IsSmartphoneEnabled = enabled;
+        isSmartphoneEnabled = enabled;
 
         GameManager.SetGamePaused(enabled);
 

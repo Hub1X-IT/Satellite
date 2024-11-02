@@ -28,7 +28,7 @@ public class MonitorUI : MonoBehaviour
         // Should be only one object with the script Monitor in the scene!
         monitor = FindAnyObjectByType<Monitor>();
 
-        inputFields = GetComponentsInChildren<TMP_InputField>(includeInactive: true);
+        inputFields = GetComponentsInChildren<TMP_InputField>(true);
         foreach (var inputField in inputFields)
         {
             inputField.onSelect.AddListener((_) => monitor.CanExitMonitorView = false);

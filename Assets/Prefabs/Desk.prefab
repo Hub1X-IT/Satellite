@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 148704667275612027}
   - component: {fileID: 8006607559174214309}
-  - component: {fileID: 7979755530245201006}
+  - component: {fileID: 1943011029638094583}
   m_Layer: 3
-  m_Name: DeskTriggerbox
+  m_Name: DeskTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54,7 +54,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.06, y: 0.8, z: 1.1}
   m_Center: {x: 0, y: -0.5, z: 0}
---- !u!114 &7979755530245201006
+--- !u!114 &1943011029638094583
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -63,7 +63,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1554863840544114582}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95d3f16157349f4458f248c74e05b537, type: 3}
+  m_Script: {fileID: 11500000, guid: a1b8064c4a1e24648b1943277474990c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5895523851997491013
@@ -118,6 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bda3f2edda6bcd42ac4368ad0848f45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deskTrigger: {fileID: 1943011029638094583}
   deskCinemachineCamera: {fileID: 1120540285308263918}
 --- !u!114 &8723946184278597100
 MonoBehaviour:

@@ -23,7 +23,7 @@ public class ScriptsInitializer : MonoBehaviour
 
         GameSettingsManager.LoadSettings();
 
-        Debug.Log($"{name}: {nameof(Awake)}");
+        // Debug.Log($"{name}: {nameof(Awake)}");
     }
 
     private void Start()
@@ -32,7 +32,7 @@ public class ScriptsInitializer : MonoBehaviour
         GameManager.InitializeOnStart();
         VolumeController.InitializeOnStart();
 
-        Debug.Log($"{name}: Start");
+        // Debug.Log($"{name}: Start");
     }
 
     private void OnDestroy()
