@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class Smartphone : MonoBehaviour, IInteractable
 {
-    public InteractionVisual InteractVisual { get; }
+    [SerializeField]
+    private InteractionVisual interactionVisual;
+
+    public InteractionVisual InteractVisual => interactionVisual;
 
     public Transform SelfTransform { get; private set; }
 

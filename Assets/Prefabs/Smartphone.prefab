@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7092364002541042754}
-  - component: {fileID: 5899991649109771999}
-  - component: {fileID: 2243465711891912054}
-  - component: {fileID: 8477297318290213025}
   - component: {fileID: 6642535908381065731}
+  - component: {fileID: 8477297318290213025}
+  - component: {fileID: 2243465711891912054}
+  - component: {fileID: 5899991649109771999}
   m_Layer: 3
   m_Name: Smartphone
   m_TagString: Interactable
@@ -36,50 +36,6 @@ Transform:
   - {fileID: 8419454473694864672}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5899991649109771999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7027097216350311808}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 0.9999033, g: 1, b: 0, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
---- !u!114 &2243465711891912054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7027097216350311808}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 274a9761aec9c4248b09ded75a53ea14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outline: {fileID: 5899991649109771999}
-  interactMessage: 'Smartphone - interact [E]'
---- !u!114 &8477297318290213025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7027097216350311808}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 715b804c9593f9441bef254101272874, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &6642535908381065731
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -101,6 +57,51 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.2, y: 0.2, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8477297318290213025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7027097216350311808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 715b804c9593f9441bef254101272874, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionVisual: {fileID: 2243465711891912054}
+--- !u!114 &2243465711891912054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7027097216350311808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 274a9761aec9c4248b09ded75a53ea14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outline: {fileID: 5899991649109771999}
+  interactMessage: 'Smartphone - interact [E]'
+--- !u!114 &5899991649109771999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7027097216350311808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.9999033, g: 1, b: 0, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1001 &8312888728064000715
 PrefabInstance:
   m_ObjectHideFlags: 0
