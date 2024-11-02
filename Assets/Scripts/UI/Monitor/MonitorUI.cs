@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +8,7 @@ public class MonitorUI : MonoBehaviour
     // [SerializeField]
     private Monitor monitor;
 
-    private TMP_InputField[] inputFields;
+    private List<TMP_InputField> inputFieldList;
 
     [SerializeField]
     private ScreenUICursorController monitorCursor;
@@ -20,11 +21,12 @@ public class MonitorUI : MonoBehaviour
         // There should be only one object with the script Monitor in the scene!
         monitor = FindAnyObjectByType<Monitor>();
 
-        inputFields = GetComponentsInChildren<TMP_InputField>(true);
+        inputFieldList = new();
+
+        TMP_InputField[] inputFields = GetComponentsInChildren<TMP_InputField>(true);
         foreach (var inputField in inputFields)
         {
-            inputField.onSelect.AddListener((_) => monitor.CanExitMonitorView = false);
-            inputField.onDeselect.AddListener((_) => monitor.CanExitMonitorView = true);
+            AddInputField(inputField);
         }
 
         monitor.MonitorViewSetActive += (enabled) =>
@@ -36,4 +38,22 @@ public class MonitorUI : MonoBehaviour
 
         monitorCursor.enabled = false;
     }
+
+    public void AddInputField(TMP_InputField inputField)
+    {
+        inputField.onSelect.AddListener(SetCanExitMonitorViewTrue);
+        inputField.onDeselect.AddListener(SetCanExitMonitorViewFalse);
+        inputFieldList.Add(inputField);
+    }
+
+    public void RemoveInputField(TMP_InputField inputField)
+    {
+        inputField.onSelect.RemoveListener(SetCanExitMonitorViewTrue);
+        inputField.onDeselect.RemoveListener(SetCanExitMonitorViewFalse);
+        inputFieldList.Remove(inputField);
+    }
+
+    private void SetCanExitMonitorViewTrue(string _) => monitor.CanExitMonitorView = true;
+
+    private void SetCanExitMonitorViewFalse(string _) => monitor.CanExitMonitorView = false;
 }

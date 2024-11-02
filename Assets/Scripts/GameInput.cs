@@ -28,8 +28,6 @@ public class GameInput
 
     public static event Action OnLaptopAndMonitorExitAction;
 
-    public static event Action OnMonitorExitAction;
-
     public static event Action<char> OnKeyboardInputAction;
 
     public static event Action OnSubmitAction;
@@ -43,7 +41,7 @@ public class GameInput
         PlayerInputActions.PlayerWalkingAndDesk.Enable();
         PlayerInputActions.PlayerWalking.Enable();
         PlayerInputActions.LaptopAndMonitor.Disable();
-        PlayerInputActions.Monitor.Disable(); // should be enabled when testing monitor command prompt
+        PlayerInputActions.CommandPrompt.Disable(); // should be enabled when testing monitor command prompt
 
         PlayerInputActions.All.Pause.performed += Pause_performed;
 
@@ -60,8 +58,7 @@ public class GameInput
 
         Keyboard.current.onTextInput += Keyboard_onTextInput;
 
-        PlayerInputActions.Monitor.Exit.performed += MonitorExit_performed;
-        PlayerInputActions.Monitor.Submit.performed += MonitorSubmit_performed;
+        PlayerInputActions.CommandPrompt.Submit.performed += MonitorSubmit_performed;
     }
 
     public static void RemoveInput()
@@ -79,8 +76,7 @@ public class GameInput
 
         Keyboard.current.onTextInput -= Keyboard_onTextInput;
 
-        PlayerInputActions.Monitor.Exit.performed -= MonitorExit_performed;
-        PlayerInputActions.Monitor.Submit.performed -= MonitorSubmit_performed;
+        PlayerInputActions.CommandPrompt.Submit.performed -= MonitorSubmit_performed;
 
         PlayerInputActions.Dispose();
 
@@ -91,14 +87,13 @@ public class GameInput
         OnLeftMouseButtonAction = null;
         OnRightMouseButtonAction = null;
         OnLaptopAndMonitorExitAction = null;
-        OnMonitorExitAction = null;
         OnKeyboardInputAction = null;
         OnSubmitAction = null;
     }
 
     private static void Keyboard_onTextInput(char c)
     {
-        if (PlayerInputActions.Monitor.enabled)
+        if (PlayerInputActions.CommandPrompt.enabled)
         {
             OnKeyboardInputAction?.Invoke(c);
         }
@@ -118,15 +113,11 @@ public class GameInput
 
     private static void LaptopAndMonitorExit_performed(InputAction.CallbackContext _) => OnLaptopAndMonitorExitAction?.Invoke();
 
-    private static void MonitorExit_performed(InputAction.CallbackContext _) => OnMonitorExitAction?.Invoke();
-
     private static void MonitorSubmit_performed(InputAction.CallbackContext _) => OnSubmitAction?.Invoke();
 
 
     public static void SetMousePosition(Vector2 position)
     {
         Mouse.current.WarpCursorPosition(position);
-        Debug.Log(position);
-        Debug.Log(MousePosition);
     }
 }

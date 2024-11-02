@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 public static class CommandPromptManager
 {
@@ -71,8 +70,6 @@ public static class CommandPromptManager
             if (character == c)
             {
                 int i = c;
-                // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! debug log !!!!!!!!!!!!
-                // Debug.Log("False, " + i);
                 return false;
             }
         }
@@ -81,11 +78,8 @@ public static class CommandPromptManager
 
     private static void RemoveCharacter()
     {
-        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! debug log !!!!!!!!!!!!
-        // Debug.Log("CommandPromptManager: RemoveCharacter()");
         if (command.Length > 0)
         {
-            Debug.Log(command.Length);
             command = command.Remove(command.Length - 1);
         }
         OnCommandChanged();
@@ -94,9 +88,6 @@ public static class CommandPromptManager
     private static void OnCommandChanged()
     {
         CommandChanged?.Invoke(command);
-
-        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! debug log !!!!!!!!!!!!
-        // Debug.Log(command);
     }
 
     private static void SubmitCommand()

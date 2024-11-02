@@ -306,7 +306,7 @@
             ]
         },
         {
-            "name": "Monitor",
+            "name": "CommandPrompt",
             "id": "e92ca324-be7b-435a-b7b1-d850e85f4422",
             "actions": [
                 {
@@ -322,7 +322,7 @@
                     "name": "Keyboard",
                     "type": "Button",
                     "id": "2651e297-53fd-426d-bda9-3bf0d473953a",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -331,16 +331,7 @@
                     "name": "Remove",
                     "type": "Button",
                     "id": "2127ceda-c8ea-4e4f-8709-81fae5dee2a0",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Exit",
-                    "type": "Button",
-                    "id": "19962de8-e56b-4786-ab33-54700e35800e",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -388,17 +379,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Remove",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1de083ec-0b8d-4de4-bd80-155fb6301931",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Exit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

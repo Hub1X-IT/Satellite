@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class ScreenUICursorController : MonoBehaviour
@@ -8,8 +9,6 @@ public class ScreenUICursorController : MonoBehaviour
 
     // Temporary solution - should be dynamic, dependent on current resolution.
     private readonly Vector2 positionAddition = new(0f, -1080f);
-
-    private bool shouldSetMousePosition;
 
     private bool shouldUpdatePosition;
 
@@ -28,16 +27,6 @@ public class ScreenUICursorController : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
-    {
-        if (shouldSetMousePosition)
-        {
-            GameInput.SetMousePosition(rectTransform.anchoredPosition - positionAddition);
-            shouldSetMousePosition = false;
-            shouldUpdatePosition = true;
-        }
-    }
-
     private void UpdatePosition()
     {
         rectTransform.anchoredPosition = GameInput.MousePosition + positionAddition;
@@ -46,7 +35,17 @@ public class ScreenUICursorController : MonoBehaviour
     public void SetEnabled(bool enabled)
     {
         this.enabled = enabled;
-        shouldSetMousePosition = enabled;
+        if (enabled)
+        {
+            StartCoroutine(SetMousePositionOnNextFrame(rectTransform.anchoredPosition - positionAddition));
+        }
+    }
+
+    private IEnumerator SetMousePositionOnNextFrame(Vector2 position)
+    {
         shouldUpdatePosition = false;
+        yield return null;
+        shouldUpdatePosition = true;
+        GameInput.SetMousePosition(position);
     }
 }

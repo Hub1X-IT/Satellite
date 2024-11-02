@@ -18,21 +18,18 @@ public class CommandPromptUI : MonoBehaviour
     private void Start()
     {
         CommandPromptManager.CommandSubmitted += CommandPromptManager_CommandSubmitted;
-        // CommandPromptManager.OnAddCharacter += (character) => inputField.text += character;
         CommandPromptManager.CommandChanged += (command) => inputField.text = command;
 
         inputField.onDeselect.AddListener((_) => inputField.ActivateInputField());
     }
 
-
     private void CommandPromptManager_CommandSubmitted()
     {
         inputText = inputField.text;
         ChangeOutputText();
-        inputField.text = null;
-        inputField.ActivateInputField();
+        inputField.text = string.Empty;
+        // inputField.ActivateInputField();
     }
-
 
     private void ChangeOutputText()
     {
@@ -42,7 +39,6 @@ public class CommandPromptUI : MonoBehaviour
             outputTextField.text = outputText;
         }
     }
-
 
     private void AddOutputText(string text)
     {

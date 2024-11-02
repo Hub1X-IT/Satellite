@@ -328,7 +328,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""Monitor"",
+            ""name"": ""CommandPrompt"",
             ""id"": ""e92ca324-be7b-435a-b7b1-d850e85f4422"",
             ""actions"": [
                 {
@@ -344,7 +344,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""Keyboard"",
                     ""type"": ""Button"",
                     ""id"": ""2651e297-53fd-426d-bda9-3bf0d473953a"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -353,16 +353,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""Remove"",
                     ""type"": ""Button"",
                     ""id"": ""2127ceda-c8ea-4e4f-8709-81fae5dee2a0"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Exit"",
-                    ""type"": ""Button"",
-                    ""id"": ""19962de8-e56b-4786-ab33-54700e35800e"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -412,17 +403,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Remove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""1de083ec-0b8d-4de4-bd80-155fb6301931"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Exit"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -450,12 +430,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_LaptopAndMonitor_LeftMouseButton = m_LaptopAndMonitor.FindAction("LeftMouseButton", throwIfNotFound: true);
         m_LaptopAndMonitor_RightMouseButton = m_LaptopAndMonitor.FindAction("RightMouseButton", throwIfNotFound: true);
         m_LaptopAndMonitor_Exit = m_LaptopAndMonitor.FindAction("Exit", throwIfNotFound: true);
-        // Monitor
-        m_Monitor = asset.FindActionMap("Monitor", throwIfNotFound: true);
-        m_Monitor_Submit = m_Monitor.FindAction("Submit", throwIfNotFound: true);
-        m_Monitor_Keyboard = m_Monitor.FindAction("Keyboard", throwIfNotFound: true);
-        m_Monitor_Remove = m_Monitor.FindAction("Remove", throwIfNotFound: true);
-        m_Monitor_Exit = m_Monitor.FindAction("Exit", throwIfNotFound: true);
+        // CommandPrompt
+        m_CommandPrompt = asset.FindActionMap("CommandPrompt", throwIfNotFound: true);
+        m_CommandPrompt_Submit = m_CommandPrompt.FindAction("Submit", throwIfNotFound: true);
+        m_CommandPrompt_Keyboard = m_CommandPrompt.FindAction("Keyboard", throwIfNotFound: true);
+        m_CommandPrompt_Remove = m_CommandPrompt.FindAction("Remove", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -465,7 +444,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         UnityEngine.Debug.Assert(!m_PlayerWalking.enabled, "This will cause a leak and performance issues, PlayerInputActions.PlayerWalking.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Desk.enabled, "This will cause a leak and performance issues, PlayerInputActions.Desk.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_LaptopAndMonitor.enabled, "This will cause a leak and performance issues, PlayerInputActions.LaptopAndMonitor.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_Monitor.enabled, "This will cause a leak and performance issues, PlayerInputActions.Monitor.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_CommandPrompt.enabled, "This will cause a leak and performance issues, PlayerInputActions.CommandPrompt.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -802,30 +781,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     }
     public LaptopAndMonitorActions @LaptopAndMonitor => new LaptopAndMonitorActions(this);
 
-    // Monitor
-    private readonly InputActionMap m_Monitor;
-    private List<IMonitorActions> m_MonitorActionsCallbackInterfaces = new List<IMonitorActions>();
-    private readonly InputAction m_Monitor_Submit;
-    private readonly InputAction m_Monitor_Keyboard;
-    private readonly InputAction m_Monitor_Remove;
-    private readonly InputAction m_Monitor_Exit;
-    public struct MonitorActions
+    // CommandPrompt
+    private readonly InputActionMap m_CommandPrompt;
+    private List<ICommandPromptActions> m_CommandPromptActionsCallbackInterfaces = new List<ICommandPromptActions>();
+    private readonly InputAction m_CommandPrompt_Submit;
+    private readonly InputAction m_CommandPrompt_Keyboard;
+    private readonly InputAction m_CommandPrompt_Remove;
+    public struct CommandPromptActions
     {
         private @PlayerInputActions m_Wrapper;
-        public MonitorActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Submit => m_Wrapper.m_Monitor_Submit;
-        public InputAction @Keyboard => m_Wrapper.m_Monitor_Keyboard;
-        public InputAction @Remove => m_Wrapper.m_Monitor_Remove;
-        public InputAction @Exit => m_Wrapper.m_Monitor_Exit;
-        public InputActionMap Get() { return m_Wrapper.m_Monitor; }
+        public CommandPromptActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Submit => m_Wrapper.m_CommandPrompt_Submit;
+        public InputAction @Keyboard => m_Wrapper.m_CommandPrompt_Keyboard;
+        public InputAction @Remove => m_Wrapper.m_CommandPrompt_Remove;
+        public InputActionMap Get() { return m_Wrapper.m_CommandPrompt; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(MonitorActions set) { return set.Get(); }
-        public void AddCallbacks(IMonitorActions instance)
+        public static implicit operator InputActionMap(CommandPromptActions set) { return set.Get(); }
+        public void AddCallbacks(ICommandPromptActions instance)
         {
-            if (instance == null || m_Wrapper.m_MonitorActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_MonitorActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_CommandPromptActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_CommandPromptActionsCallbackInterfaces.Add(instance);
             @Submit.started += instance.OnSubmit;
             @Submit.performed += instance.OnSubmit;
             @Submit.canceled += instance.OnSubmit;
@@ -835,12 +812,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Remove.started += instance.OnRemove;
             @Remove.performed += instance.OnRemove;
             @Remove.canceled += instance.OnRemove;
-            @Exit.started += instance.OnExit;
-            @Exit.performed += instance.OnExit;
-            @Exit.canceled += instance.OnExit;
         }
 
-        private void UnregisterCallbacks(IMonitorActions instance)
+        private void UnregisterCallbacks(ICommandPromptActions instance)
         {
             @Submit.started -= instance.OnSubmit;
             @Submit.performed -= instance.OnSubmit;
@@ -851,26 +825,23 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Remove.started -= instance.OnRemove;
             @Remove.performed -= instance.OnRemove;
             @Remove.canceled -= instance.OnRemove;
-            @Exit.started -= instance.OnExit;
-            @Exit.performed -= instance.OnExit;
-            @Exit.canceled -= instance.OnExit;
         }
 
-        public void RemoveCallbacks(IMonitorActions instance)
+        public void RemoveCallbacks(ICommandPromptActions instance)
         {
-            if (m_Wrapper.m_MonitorActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_CommandPromptActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IMonitorActions instance)
+        public void SetCallbacks(ICommandPromptActions instance)
         {
-            foreach (var item in m_Wrapper.m_MonitorActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_CommandPromptActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_MonitorActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_CommandPromptActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public MonitorActions @Monitor => new MonitorActions(this);
+    public CommandPromptActions @CommandPrompt => new CommandPromptActions(this);
     public interface IAllActions
     {
         void OnPause(InputAction.CallbackContext context);
@@ -897,11 +868,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnRightMouseButton(InputAction.CallbackContext context);
         void OnExit(InputAction.CallbackContext context);
     }
-    public interface IMonitorActions
+    public interface ICommandPromptActions
     {
         void OnSubmit(InputAction.CallbackContext context);
         void OnKeyboard(InputAction.CallbackContext context);
         void OnRemove(InputAction.CallbackContext context);
-        void OnExit(InputAction.CallbackContext context);
     }
 }
