@@ -7,8 +7,7 @@ public class CommandPromptUI : MonoBehaviour
     TMP_InputField inputField;
 
     [SerializeField]
-    TMP_Text outputTextField;
-
+    TMP_InputField outputField;
 
     private string inputText;
 
@@ -21,6 +20,10 @@ public class CommandPromptUI : MonoBehaviour
         CommandPromptManager.CommandChanged += (command) => inputField.text = command;
 
         inputField.onDeselect.AddListener((_) => inputField.ActivateInputField());
+
+        inputText = string.Empty;
+        outputText = string.Empty;
+        outputField.text = string.Empty;
     }
 
     private void CommandPromptManager_CommandSubmitted()
@@ -36,13 +39,13 @@ public class CommandPromptUI : MonoBehaviour
         if (inputText.Length > 0)
         {
             outputText += "\n>>> " + inputText;
-            outputTextField.text = outputText;
+            outputField.text = outputText;
         }
     }
 
     private void AddOutputText(string text)
     {
         outputText += text;
-        outputTextField.text = outputText;
+        outputField.text = outputText;
     }
 }

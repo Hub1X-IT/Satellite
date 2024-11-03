@@ -16,6 +16,8 @@ public class Laptop : MonoBehaviour
 
     private Outline outline;
 
+    private bool isInLaptopView;
+
     public bool CanExitLaptopView { get; set; }
 
 
@@ -32,7 +34,7 @@ public class Laptop : MonoBehaviour
 
         GameInput.OnLaptopAndMonitorExitAction += () =>
         {
-            if (CanExitLaptopView)
+            if (isInLaptopView && CanExitLaptopView)
             {
                 SetLaptopViewActive(false);
             }
@@ -41,6 +43,8 @@ public class Laptop : MonoBehaviour
         laptopCinemachineCamera.enabled = false;
 
         SetLaptopTriggerEnabled(false);
+
+        isInLaptopView = false;
 
         CanExitLaptopView = true;
     }
@@ -52,6 +56,8 @@ public class Laptop : MonoBehaviour
 
     private void SetLaptopViewActive(bool active)
     {
+        isInLaptopView = active;
+
         PlayerScriptsController.SetCanShowPlayerHUD(!active);
 
         desk.CanExitDeskView = !active;

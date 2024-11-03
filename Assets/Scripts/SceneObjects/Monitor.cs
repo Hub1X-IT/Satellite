@@ -16,6 +16,8 @@ public class Monitor : MonoBehaviour
 
     private Outline outline;
 
+    private bool isInMonitorView;
+
     public bool CanExitMonitorView { get; set; }
     
 
@@ -32,7 +34,7 @@ public class Monitor : MonoBehaviour
 
         GameInput.OnLaptopAndMonitorExitAction += () =>
         {
-            if (CanExitMonitorView)
+            if (isInMonitorView && CanExitMonitorView)
             {
                 SetMonitorViewActive(false);
             }
@@ -41,6 +43,8 @@ public class Monitor : MonoBehaviour
         monitorCinemachineCamera.enabled = false;
 
         SetMonitorTriggerEnabled(false);
+
+        isInMonitorView = false;
 
         CanExitMonitorView = true;
     }
@@ -52,6 +56,8 @@ public class Monitor : MonoBehaviour
 
     private void SetMonitorViewActive(bool active)
     {
+        isInMonitorView = active;
+
         PlayerScriptsController.SetCanShowPlayerHUD(!active);
 
         desk.CanExitDeskView = !active;

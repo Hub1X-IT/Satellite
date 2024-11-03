@@ -14,10 +14,6 @@ public class Desk : MonoBehaviour
 
     private CameraRotationController deskCameraRotationController;
 
-    /*
-    private readonly Vector3 deskCameraDefaultRotation = new(0f, 180f, 0f);
-    */
-
     public bool CanExitDeskView { get; set; }
 
     public CinemachineCamera DeskCinemachineCamera => deskCinemachineCamera;
@@ -69,10 +65,6 @@ public class Desk : MonoBehaviour
         {
             GameInput.PlayerInputActions.PlayerWalking.Disable();
             CameraController.SetActiveCinemachineCamera(DeskCinemachineCamera);
-            /*
-            // Reset camera rotation when entering desk view.
-            deskCameraRotationController.SetLocalRotation(deskCameraDefaultRotation.x, deskCameraDefaultRotation.y);
-            */
             GameInput.PlayerInputActions.Desk.Enable();
         }
         else

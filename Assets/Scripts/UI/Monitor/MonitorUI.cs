@@ -41,19 +41,19 @@ public class MonitorUI : MonoBehaviour
 
     public void AddInputField(TMP_InputField inputField)
     {
-        inputField.onSelect.AddListener(SetCanExitMonitorViewTrue);
-        inputField.onDeselect.AddListener(SetCanExitMonitorViewFalse);
+        inputField.onSelect.AddListener(SetCanExitMonitorViewFalse);
+        inputField.onDeselect.AddListener(SetCanExitMonitorViewTrue);
         inputFieldList.Add(inputField);
     }
 
     public void RemoveInputField(TMP_InputField inputField)
     {
-        inputField.onSelect.RemoveListener(SetCanExitMonitorViewTrue);
-        inputField.onDeselect.RemoveListener(SetCanExitMonitorViewFalse);
+        inputField.onSelect.RemoveListener(SetCanExitMonitorViewFalse);
+        inputField.onDeselect.RemoveListener(SetCanExitMonitorViewTrue);
         inputFieldList.Remove(inputField);
     }
 
-    private void SetCanExitMonitorViewTrue(string _) => monitor.CanExitMonitorView = true;
-
     private void SetCanExitMonitorViewFalse(string _) => monitor.CanExitMonitorView = false;
+
+    private void SetCanExitMonitorViewTrue(string _) => monitor.CanExitMonitorView = true;
 }

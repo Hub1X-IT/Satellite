@@ -13,41 +13,8 @@ MonoBehaviour:
   m_Name: CinemachineBlenderSettings
   m_EditorClassIdentifier: 
   CustomBlends:
-  - From: CinemachineMainCamera
-    To: DeskCinemachineCamera
-    Blend:
-      Style: 1
-      Time: 0.7
-      CustomCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - From: DeskCinemachineCamera
-    To: CinemachineMainCamera
-    Blend:
-      Style: 1
-      Time: 0.7
-      CustomCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - From: DeskCinemachineCamera
-    To: MonitorCinemachineCamera
-    Blend:
-      Style: 1
-      Time: 0.7
-      CustomCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - From: MonitorCinemachineCamera
-    To: DeskCinemachineCamera
+  - From: '**ANY CAMERA**'
+    To: '**ANY CAMERA**'
     Blend:
       Style: 1
       Time: 0.7
