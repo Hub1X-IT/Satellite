@@ -7,10 +7,6 @@ public class PlayerScriptsController : MonoBehaviour
 
     private static PlayerHUDControllerUI playerHUDController;
 
-    public static bool IsPlayerMovementEnabled { get; private set; }
-
-    public static bool CanShowPlayerHUD { get; private set; }
-
 
     private void Awake()
     {
@@ -25,14 +21,12 @@ public class PlayerScriptsController : MonoBehaviour
 
     public static void SetPlayerMovementEnabled(bool enabled)
     {
-        IsPlayerMovementEnabled = enabled;
         playerMovementController.enabled = enabled;
         playerCameraRotationController.enabled = enabled;
     }
 
     public static void SetCanShowPlayerHUD(bool canShow)
     {
-        CanShowPlayerHUD = canShow;
         playerHUDController.SetCanShowPlayerHUD(canShow);
     }
 }

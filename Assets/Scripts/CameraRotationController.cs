@@ -31,9 +31,11 @@ public class CameraRotationController : MonoBehaviour {
 
 
     private void Update() {
-        HandleRotation();
+        if (!GameManager.IsGamePaused)
+        {
+            HandleRotation();
+        }
     }
-
 
     private void HandleRotation() {
         Vector2 rotationInput = GameInput.RotationVector;

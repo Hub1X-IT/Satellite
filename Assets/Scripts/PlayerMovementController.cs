@@ -2,16 +2,18 @@ using UnityEngine;
 
 public class PlayerMovementController : MonoBehaviour
 {
-
     private CharacterController characterController;
 
     private Vector3 moveDirection;
+
     [SerializeField]
     private float moveSpeed = 5f;
 
-    private const float gravity = -9.81f;
+    private const float GRAVITY = -9.81f;
+
     [SerializeField]
     private float gravityMultiplier = 0.8f;
+
     private float verticalVelocity;
 
 
@@ -22,8 +24,11 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Update()
     {
-        HandleGravity();
-        HandleMovement();
+        if (!GameManager.IsGamePaused)
+        {
+            HandleGravity();
+            HandleMovement();
+        }
     }
 
     private void HandleMovement()
@@ -44,7 +49,7 @@ public class PlayerMovementController : MonoBehaviour
         }
         else
         {
-            verticalVelocity += gravity * gravityMultiplier * Time.deltaTime;
+            verticalVelocity += GRAVITY * gravityMultiplier * Time.deltaTime;
         }
         moveDirection.y = verticalVelocity;
     }

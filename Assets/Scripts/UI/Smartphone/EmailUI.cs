@@ -4,18 +4,23 @@ using UnityEngine.UI;
 
 public class EmailUI : MonoBehaviour
 {
-    [SerializeField] private Button emailExitButton;
+    /*
+    [SerializeField]
+    private Button emailExitButton;
+    */
 
     private Action emailOverviewClosed;
 
 
     private void Awake()
     {
+        /*
         emailExitButton.onClick.AddListener(() =>
         {
             emailOverviewClosed();
             Disable();
         });
+        */
     }
 
     public void Enable(Action onCloseAction)
@@ -25,7 +30,7 @@ public class EmailUI : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    private void Disable()
+    public void Disable()
     {
         gameObject.SetActive(false);
     }

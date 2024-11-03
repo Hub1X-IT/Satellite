@@ -18,6 +18,13 @@ public class SmartphoneMenuUI : MonoBehaviour
             emailUI.Enable(() => SetEnabled(true));
         });
     }
+    public void GoToMainMenu()
+    {
+        // Disable all objects except main menu
+        emailUI.Disable();
+
+        SetEnabled(true);
+    }
 
     private void SetEnabled(bool enabled)
     {

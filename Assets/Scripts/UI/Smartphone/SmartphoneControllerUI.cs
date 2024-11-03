@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SmartphoneControllerUI : MonoBehaviour
 {
@@ -15,11 +16,19 @@ public class SmartphoneControllerUI : MonoBehaviour
     private const string PHONE_ON_TRIGGER = "PhoneOn";
     private const string PHONE_OFF_TRIGGER = "PhoneOff";
 
+    [SerializeField]
+    private SmartphoneMenuUI mainMenu;
+
+    [SerializeField]
+    private Button mainMenuButton;
+
     private void Awake()
     {
         smartphoneRectTransform = smartphoneAnimator.GetComponent<RectTransform>();
 
         GameInput.OnSmartphoneToggleAction += () => SetSmartphoneEnabled(!isSmartphoneEnabled);
+
+        mainMenuButton.onClick.AddListener(() => mainMenu.GoToMainMenu());
 
         smartphoneRectTransform.localPosition = defaultSmartphonePosition;
 
