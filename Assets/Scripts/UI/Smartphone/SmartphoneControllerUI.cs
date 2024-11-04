@@ -26,13 +26,26 @@ public class SmartphoneControllerUI : MonoBehaviour
     {
         smartphoneRectTransform = smartphoneAnimator.GetComponent<RectTransform>();
 
-        GameInput.OnSmartphoneToggleAction += () => SetSmartphoneEnabled(!isSmartphoneEnabled);
-
         mainMenuButton.onClick.AddListener(() => mainMenu.GoToMainMenu());
 
         smartphoneRectTransform.localPosition = defaultSmartphonePosition;
 
         isSmartphoneEnabled = false;
+    }
+
+    private void OnEnable()
+    {
+        GameInput.OnSmartphoneToggleAction += EnableDisableSmartphone;
+    }
+
+    private void OnDisable()
+    {
+        GameInput.OnSmartphoneToggleAction -= EnableDisableSmartphone;
+    }
+
+    private void EnableDisableSmartphone()
+    {
+        SetSmartphoneEnabled(!isSmartphoneEnabled);
     }
 
     private void SetSmartphoneEnabled(bool enabled)
@@ -49,5 +62,11 @@ public class SmartphoneControllerUI : MonoBehaviour
         {
             smartphoneAnimator.SetTrigger(PHONE_OFF_TRIGGER);
         }
+    }
+
+    public void SetCanShowSmartphone(bool canShow)
+    {
+        // May be a temporary solution.
+        gameObject.SetActive(canShow);
     }
 }

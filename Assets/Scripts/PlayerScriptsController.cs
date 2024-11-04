@@ -7,6 +7,8 @@ public class PlayerScriptsController : MonoBehaviour
 
     private static PlayerHUDControllerUI playerHUDController;
 
+    private static SmartphoneControllerUI smartphoneController;
+
 
     private void Awake()
     {
@@ -15,8 +17,11 @@ public class PlayerScriptsController : MonoBehaviour
 
         playerHUDController = GetComponentInChildren<PlayerHUDControllerUI>();
 
+        smartphoneController = GetComponentInChildren<SmartphoneControllerUI>(true);
+
         SetPlayerMovementEnabled(true);
         SetCanShowPlayerHUD(true);
+        SetCanShowSmartphoneUI(false);
     }
 
     public static void SetPlayerMovementEnabled(bool enabled)
@@ -28,5 +33,10 @@ public class PlayerScriptsController : MonoBehaviour
     public static void SetCanShowPlayerHUD(bool canShow)
     {
         playerHUDController.SetCanShowPlayerHUD(canShow);
+    }
+
+    public static void SetCanShowSmartphoneUI(bool canShow)
+    {
+        smartphoneController.SetCanShowSmartphone(canShow);
     }
 }
