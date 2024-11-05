@@ -25,7 +25,7 @@ public class Lever : MonoBehaviour
     
     private void SetLeverOn()
     {
-        if (isLeverOn)
+        if (!isLeverOn)
         {
             leverAnimator.SetTrigger(SET_LEVER_ON);
             isLeverOn = true;
