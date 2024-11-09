@@ -15,8 +15,8 @@ public class SensitivitySliderUI : MonoBehaviour
     {
         sensitivitySlider.onValueChanged.AddListener(SetSensitivity);
 
-        sensitivitySlider.minValue = GameSettingsManager.MIN_MOUSE_SENSITIVITY;
-        sensitivitySlider.maxValue = GameSettingsManager.MAX_MOUSE_SENSITIVITY;
+        sensitivitySlider.minValue = GameSettingsManager.MinMouseSensitivity;
+        sensitivitySlider.maxValue = GameSettingsManager.MaxMouseSensitivity;
     }
 
     private void Start()

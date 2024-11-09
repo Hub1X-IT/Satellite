@@ -11,34 +11,31 @@ public class ScriptsInitializer : MonoBehaviour
     [SerializeField]
     private VolumeController.InitializationData volumeControllerData;
 
-
     private void Awake()
     {
         GameInput.InitializeInput();
 
-        CameraController.InitializeOnAwake(cameraControllerData);
-        GameManager.InitializeOnAwake();
-        InteractionController.InitializeOnAwake(interactionControllerData);
-        VolumeController.InitializeOnAwake(volumeControllerData);
+        CameraController.OnAwake(cameraControllerData);
+        GameManager.OnAwake();
+        GraphicsSettingsManager.OnAwake();
+        InteractionController.OnAwake(interactionControllerData);
+        VolumeController.OnAwake(volumeControllerData);
 
         GameSettingsManager.LoadSettings();
-
-        // Debug.Log($"{name}: {nameof(Awake)}");
     }
 
     private void Start()
     {
-        CommandPromptManager.InitializeOnStart();
-        GameManager.InitializeOnStart();
-        VolumeController.InitializeOnStart();
-
-        // Debug.Log($"{name}: Start");
+        CommandPromptManager.OnStart();
+        GameManager.OnStart();
+        GraphicsSettingsManager.OnStart();
+        VolumeController.OnStart();
     }
 
     private void OnDestroy()
     {
-        CommandPromptManager.ResetEvents();
-        GameManager.ResetEvents();
+        CommandPromptManager.OnSceneExit();
+        GameManager.OnSceneExit();
 
         GameInput.RemoveInput();
 

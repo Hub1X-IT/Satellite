@@ -22,14 +22,14 @@ public static class CommandPromptManager
     private static string command;
 
 
-    public static void InitializeOnStart()
+    public static void OnStart()
     {
         GameInput.OnKeyboardInputAction += GameInput_OnKeyboardInputAction;
 
         GameInput.OnSubmitAction += GameInput_OnSubmitAction;
     }
 
-    public static void ResetEvents()
+    public static void OnSceneExit()
     {
         CommandSubmitted = null;
         CommandChanged = null;

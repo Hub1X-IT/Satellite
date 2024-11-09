@@ -7,17 +7,17 @@ public static class GameManager
 
     public static bool IsGamePaused { get; private set; }
 
-    public static void InitializeOnAwake()
+    public static void OnAwake()
     {
         GameInput.OnPauseAction += () => PauseGameToMenu(!IsGamePaused);
     }
 
-    public static void InitializeOnStart()
+    public static void OnStart()
     {
         PauseGameToMenu(false);
     }
 
-    public static void ResetEvents()
+    public static void OnSceneExit()
     {
         GamePausedUnpaused = null;
     }

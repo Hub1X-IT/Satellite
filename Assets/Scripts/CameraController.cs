@@ -21,7 +21,7 @@ public static class CameraController
     public static CinemachineCamera CinemachineMainCamera { get; private set; }
 
 
-    public static void InitializeOnAwake(InitializationData data)
+    public static void OnAwake(InitializationData data)
     {
         MainCamera = data.mainCamera;
         CinemachineMainCamera = data.cinemachineMainCamera;

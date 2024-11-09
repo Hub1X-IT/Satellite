@@ -2,26 +2,26 @@ using UnityEngine;
 
 public static class GameSettingsManager
 {
-    [Range(MIN_MOUSE_SENSITIVITY, MAX_MOUSE_SENSITIVITY)]
-    private const float DEFAULT_MOUSE_SENSITIVITY = 0.15f;
+    [Range(MinMouseSensitivity, MaxMouseSensitivity)]
+    private const float DefaultMouseSensitivity = 0.15f;
 
-    public const float MIN_MOUSE_SENSITIVITY = 0.01f;
-    public const float MAX_MOUSE_SENSITIVITY = 0.3f;
+    public const float MinMouseSensitivity = 0.01f;
+    public const float MaxMouseSensitivity = 0.3f;
 
     [Range(0.0001f, 1f)]
-    private const float DEFAULT_VOLUME = 0.5f;
+    private const float DefaultVolume = 0.5f;
 
-    private const int defaultGraphicsIndex = 0;
-    //private const int defaultResolutionIndex = 0;
+    private const int DefaultGraphicsIndex = 0;
+    private const int DefaultResolutionIndex = 0;
 
-    private const string PLAYER_PREFS_MOUSE_SENSITIVITY = "mouseSensitivity";
+    private const string PlayerPrefs_MouseSensitivity = "MouseSensitivity";
 
-    private const string PLAYER_PREFS_MAIN_VOLUME = "MainVolume";
-    private const string PLAYER_PREFS_MUSIC_VOLUME = "MusicVolume";
-    private const string PLAYER_PREFS_SOUND_VOLUME = "SoundVolume";
+    private const string PlayerPrefs_MainVolume = VolumeController.MasterVolume;
+    private const string PlayerPrefs_MusicVolume = VolumeController.MusicVolume;
+    private const string PlayerPrefs_SoundFXVolume = VolumeController.SoundFXVolume;
 
-    private const string PLAYER_PREFS_GRAPHICS_INDEX = "GraphicsIndex";
-    //private const string PLAYER_PREFS_RESOLUTION_INDEX = "ResolutionIndex";
+    private const string PlayerPrefs_GraphicsIndex = "GraphicsIndex";
+    private const string PlayerPrefs_ResolutionIndex = "ResolutionIndex";
 
     public static float MouseSensitivity { get; private set; }
 
@@ -30,62 +30,61 @@ public static class GameSettingsManager
     public static float SoundVolume { get; private set; }
 
     public static int GraphicsIndex { get; private set; }
-    //public static int ResolutionIndex { get; private set; }
+    public static int ResolutionIndex { get; private set; }
 
     public static void LoadSettings()
     {
-        MouseSensitivity = PlayerPrefs.GetFloat(PLAYER_PREFS_MOUSE_SENSITIVITY, DEFAULT_MOUSE_SENSITIVITY);
+        MouseSensitivity = PlayerPrefs.GetFloat(PlayerPrefs_MouseSensitivity, DefaultMouseSensitivity);
 
-        MainVolume = PlayerPrefs.GetFloat(PLAYER_PREFS_MAIN_VOLUME, DEFAULT_VOLUME);
-        MusicVolume = PlayerPrefs.GetFloat(PLAYER_PREFS_MUSIC_VOLUME, DEFAULT_VOLUME);
-        SoundVolume = PlayerPrefs.GetFloat(PLAYER_PREFS_SOUND_VOLUME, DEFAULT_VOLUME);
+        MainVolume = PlayerPrefs.GetFloat(PlayerPrefs_MainVolume, DefaultVolume);
+        MusicVolume = PlayerPrefs.GetFloat(PlayerPrefs_MusicVolume, DefaultVolume);
+        SoundVolume = PlayerPrefs.GetFloat(PlayerPrefs_SoundFXVolume, DefaultVolume);
 
-        GraphicsIndex = PlayerPrefs.GetInt(PLAYER_PREFS_GRAPHICS_INDEX, defaultGraphicsIndex);
-        //ResolutionIndex = PlayerPrefs.GetInt(PLAYER_PREFS_RESOLUTION_INDEX, defaultResolutionIndex);
+        GraphicsIndex = PlayerPrefs.GetInt(PlayerPrefs_GraphicsIndex, DefaultGraphicsIndex);
+        ResolutionIndex = PlayerPrefs.GetInt(PlayerPrefs_ResolutionIndex, DefaultResolutionIndex);
     }
 
-    /*
+    
     public static void SaveSettings()
     {
         // All the PlayerPrefs.SetX method calls should later be put here
     }
-    */
+    
 
     public static void SetMouseSensitivity(float value)
     {
         MouseSensitivity = value;
-        PlayerPrefs.SetFloat(PLAYER_PREFS_MOUSE_SENSITIVITY, MouseSensitivity);
+        PlayerPrefs.SetFloat(PlayerPrefs_MouseSensitivity, MouseSensitivity);
     }
 
-    public static void SetVolume(VolumeController.VolumeType volumeType, float value)
+    public static void SetVolume(VolumeController.Volume volumeType, float value)
     {
         switch (volumeType)
         {
-            case VolumeController.VolumeType.MainVolume:
+            case VolumeController.Volume.MasterVolume:
                 MainVolume = value;
-                PlayerPrefs.SetFloat(PLAYER_PREFS_MAIN_VOLUME, MainVolume);
+                PlayerPrefs.SetFloat(PlayerPrefs_MainVolume, MainVolume);
                 break;
-            case VolumeController.VolumeType.MusicVolume:
+            case VolumeController.Volume.MusicVolume:
                 MusicVolume = value;
-                PlayerPrefs.SetFloat(PLAYER_PREFS_MUSIC_VOLUME, MusicVolume);
+                PlayerPrefs.SetFloat(PlayerPrefs_MusicVolume, MusicVolume);
                 break;
-            case VolumeController.VolumeType.SoundVolume:
+            case VolumeController.Volume.SoundVolume:
                 SoundVolume = value;
-                PlayerPrefs.SetFloat(PLAYER_PREFS_SOUND_VOLUME, SoundVolume);
+                PlayerPrefs.SetFloat(PlayerPrefs_SoundFXVolume, SoundVolume);
                 break;
         }
     }
 
-    public static void SetGraphics(int index)
+    public static void SetGraphicsIndex(int index)
     {
         GraphicsIndex = index;
-        PlayerPrefs.SetInt(PLAYER_PREFS_GRAPHICS_INDEX, GraphicsIndex);
-        QualitySettings.SetQualityLevel(GraphicsIndex);
+        PlayerPrefs.SetInt(PlayerPrefs_GraphicsIndex, GraphicsIndex);
     }
 
-    /*public static void SetResolution(int index)
+    public static void SetResolutionIndex(int index)
     {
         ResolutionIndex = index;
-        PlayerPrefs.SetInt(PLAYER_PREFS_RESOLUTION_INDEX, ResolutionIndex);
-    }*/
+        PlayerPrefs.SetInt(PlayerPrefs_ResolutionIndex, ResolutionIndex);
+    }
 }

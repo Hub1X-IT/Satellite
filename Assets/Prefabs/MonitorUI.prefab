@@ -512,8 +512,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e06031a780615874091b3b78266e460a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textbox: {fileID: 7468249877801634476}
-  doorbutton: {fileID: 5405025357306929995}
+  textField: {fileID: 7468249877801634476}
+  doorButton: {fileID: 5405025357306929995}
 --- !u!1 &1239645846165538913
 GameObject:
   m_ObjectHideFlags: 0
@@ -705,7 +705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f74f2a3449671f44bad24b07f3ab8b95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textbox: {fileID: 2169182988963215338}
+  textField: {fileID: 2169182988963215338}
 --- !u!1 &2069297504557918594
 GameObject:
   m_ObjectHideFlags: 0
@@ -872,7 +872,7 @@ GameObject:
   - component: {fileID: 9030449729463654362}
   - component: {fileID: 8367424334791686196}
   m_Layer: 5
-  m_Name: TestButton 2
+  m_Name: FolderButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2029,6 +2029,7 @@ GameObject:
   - component: {fileID: 2235709797316692239}
   - component: {fileID: 4333605933029200476}
   - component: {fileID: 1379751109140159304}
+  - component: {fileID: 7898810951107775419}
   - component: {fileID: 4516028935569568493}
   m_Layer: 5
   m_Name: MonitorUICanvas
@@ -2125,6 +2126,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &7898810951107775419
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8704038278049990864}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &4516028935569568493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2138,12 +2151,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monitorCursor: {fileID: 6868171409185429950}
-  testButton: {fileID: 7236955066746819387}
-  testButton2: {fileID: 8367424334791686196}
-  testButton3: {fileID: 5994134597984066725}
+  notepadButton: {fileID: 7236955066746819387}
+  folderButton: {fileID: 8367424334791686196}
+  doorAppButton: {fileID: 5994134597984066725}
   notepadCanvas: {fileID: 5675948138683085866}
   folderCanvas: {fileID: 5826390807371860500}
-  doorappCanvas: {fileID: 2289837838126187656}
+  doorAppCanvas: {fileID: 2289837838126187656}
 --- !u!1 &8826879670396455816
 GameObject:
   m_ObjectHideFlags: 0
@@ -2240,7 +2253,7 @@ GameObject:
   - component: {fileID: 2072129172489572729}
   - component: {fileID: 7236955066746819387}
   m_Layer: 5
-  m_Name: TestButton
+  m_Name: NotepadButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2361,7 +2374,7 @@ GameObject:
   - component: {fileID: 6720808252883559752}
   - component: {fileID: 5994134597984066725}
   m_Layer: 5
-  m_Name: TestButton 3
+  m_Name: DoorAppButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

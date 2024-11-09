@@ -26,9 +26,9 @@ public class VolumeSlidersUI : MonoBehaviour
         musicVolumeSlider.maxValue = maxSliderValue;
         soundVolumeSlider.maxValue = maxSliderValue;
 
-        mainVolumeSlider.onValueChanged.AddListener((value) => SetVolume(VolumeController.VolumeType.MainVolume, value));
-        musicVolumeSlider.onValueChanged.AddListener((value) => SetVolume(VolumeController.VolumeType.MusicVolume, value));
-        soundVolumeSlider.onValueChanged.AddListener((value) => SetVolume(VolumeController.VolumeType.SoundVolume, value));
+        mainVolumeSlider.onValueChanged.AddListener((value) => SetVolume(VolumeController.Volume.MasterVolume, value));
+        musicVolumeSlider.onValueChanged.AddListener((value) => SetVolume(VolumeController.Volume.MusicVolume, value));
+        soundVolumeSlider.onValueChanged.AddListener((value) => SetVolume(VolumeController.Volume.SoundVolume, value));
     }
 
     private void Start()
@@ -38,7 +38,7 @@ public class VolumeSlidersUI : MonoBehaviour
         soundVolumeSlider.value = GameSettingsManager.SoundVolume;
     }
 
-    private void SetVolume(VolumeController.VolumeType volumeType, float value)
+    private void SetVolume(VolumeController.Volume volumeType, float value)
     {
         GameSettingsManager.SetVolume(volumeType, value);
         VolumeController.UpdateVolume();

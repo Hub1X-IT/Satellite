@@ -23,7 +23,7 @@ public static class InteractionController
 
     public static LayerMask InteractionBlockingLayerMasks { get; private set; }
 
-    public static void InitializeOnAwake(InitializationData data)
+    public static void OnAwake(InitializationData data)
     {
         InteractRange = data.interactRange;
         DefaultInteractableLayerMask = data.defaultInteractableLayerMask;

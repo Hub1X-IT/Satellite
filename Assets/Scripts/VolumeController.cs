@@ -1,4 +1,5 @@
 using System;
+using NUnit.Framework.Constraints;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -7,53 +8,42 @@ public static class VolumeController
     [Serializable]
     public struct InitializationData
     {
-        public AudioMixer mainVolumeAudioMixer;
-        public AudioMixer musicVolumeAudioMixer;
-        public AudioMixer soundVolumeAudioMixer;
+        public AudioMixer mainAudioMixer;
     }
 
-
-    public enum VolumeType
+    public enum Volume
     {
-        MainVolume,
+        MasterVolume,
         MusicVolume,
         SoundVolume,
     }
 
+    private static AudioMixer mainAudioMixer;
 
-    private static AudioMixer mainVolumeAudioMixer;
-    private static AudioMixer musicVolumeAudioMixer;
-    private static AudioMixer soundVolumeAudioMixer;
+    public const string MasterVolume = "MasterVolume";
+    public const string MusicVolume = "MusicVolume";
+    public const string SoundFXVolume = "SoundFXVolume";
 
-
-    private const string VOLUME_PARAMETER_NAME = "MasterVolume";
-
-
-    public static void InitializeOnAwake(InitializationData data)
+    public static void OnAwake(InitializationData data)
     {
-        mainVolumeAudioMixer = data.mainVolumeAudioMixer;
-        musicVolumeAudioMixer = data.musicVolumeAudioMixer;
-        soundVolumeAudioMixer = data.soundVolumeAudioMixer;
+        mainAudioMixer = data.mainAudioMixer;
     }
 
-
-    public static void InitializeOnStart()
+    public static void OnStart()
     {
         UpdateVolume();
     }
 
-
     public static void UpdateVolume()
     {
-        mainVolumeAudioMixer.SetFloat(VOLUME_PARAMETER_NAME, GameSettingsManager.MainVolume);
-        musicVolumeAudioMixer.SetFloat(VOLUME_PARAMETER_NAME, GameSettingsManager.MusicVolume);
-        soundVolumeAudioMixer.SetFloat(VOLUME_PARAMETER_NAME, GameSettingsManager.SoundVolume);
+        mainAudioMixer.SetFloat(MasterVolume, ValueToVolume(GameSettingsManager.MainVolume));
+        mainAudioMixer.SetFloat(MusicVolume, ValueToVolume(GameSettingsManager.MusicVolume));
+        mainAudioMixer.SetFloat(SoundFXVolume, ValueToVolume(GameSettingsManager.SoundVolume));
     }
 
-
-    public static float ValueToVolume(float value)
+    private static float ValueToVolume(float value)
     {
-        /// Value has to be between 0.0001 and 1 to work properly.
+        // Value has to be between 0.0001 and 1 to work properly.
         return Mathf.Log10(value) * 20;
     }
 }
