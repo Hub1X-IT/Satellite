@@ -9,6 +9,9 @@ public class Door : MonoBehaviour
     private Animator doorAnimator;
 
     [SerializeField]
+    private AudioSource doorSound;
+
+    [SerializeField]
     private bool isInverted = false;
 
     [SerializeField][Tooltip("True: door open\nFalse: door closed")]
@@ -18,6 +21,7 @@ public class Door : MonoBehaviour
     private const string DOOR_OPEN_BOOL = "DoorOpen";
 
     private bool isDoorOpen;
+    private bool sceneLoad = true;
 
 
     private void Awake()
@@ -42,5 +46,13 @@ public class Door : MonoBehaviour
         isDoorOpen = open;
         doorAnimator.SetBool(IS_INVERTED_BOOL, isInverted);
         doorAnimator.SetBool(DOOR_OPEN_BOOL, isDoorOpen);
+        if(sceneLoad)
+        {
+            sceneLoad = false;
+        }
+        else
+        {
+            doorSound.Play();
+        }
     }
 }
