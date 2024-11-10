@@ -8,6 +8,9 @@ public class Lever : MonoBehaviour
     [SerializeField]
     private Animator leverAnimator;
 
+    [SerializeField]
+    private AudioSource leverSound;
+
     private const string SET_LEVER_ON = "LeverOn";
     private const string SET_LEVER_OFF = "LeverOff";
 
@@ -35,5 +38,6 @@ public class Lever : MonoBehaviour
             leverAnimator.SetTrigger(SET_LEVER_OFF);
             isLeverOn = false;
         }
+        leverSound.Play();
     }
 }
