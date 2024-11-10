@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-public class ASyncLoad : MonoBehaviour
+public class AsyncLoad : MonoBehaviour
 {
     [SerializeField]
     private GameObject loadingScreen;

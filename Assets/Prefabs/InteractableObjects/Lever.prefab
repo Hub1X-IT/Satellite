@@ -1,72 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2072334106103370271
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7105647711354347277}
-  - component: {fileID: 6791213688045663639}
-  - component: {fileID: 1477789975203468154}
-  m_Layer: 0
-  m_Name: LeverTrigger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7105647711354347277
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2072334106103370271}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3656934827274007450}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6791213688045663639
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2072334106103370271}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.19333881, y: 0.3930087, z: 0.29723668}
-  m_Center: {x: 0.0002118051, y: 1.3797095, z: 0.0018025637}
---- !u!114 &1477789975203468154
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2072334106103370271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1b8064c4a1e24648b1943277474990c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  autoSetLayerOnStart: 1
 --- !u!1 &6648783462173753134
 GameObject:
   m_ObjectHideFlags: 0
@@ -76,10 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3656934827274007450}
+  - component: {fileID: 8671125746123900435}
   - component: {fileID: 1807913899046113619}
   - component: {fileID: 103788655273030497}
-  - component: {fileID: 8097276308825774054}
-  m_Layer: 0
+  - component: {fileID: 1371094660038069446}
+  m_Layer: 3
   m_Name: Lever
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,14 +29,35 @@ Transform:
   m_GameObject: {fileID: 6648783462173753134}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.0380232, y: -1.0460078, z: 0.8401995}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6972887712617471888}
-  - {fileID: 7105647711354347277}
+  - {fileID: 181654138096459384}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8671125746123900435
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6648783462173753134}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.2, y: 0.4, z: 0.3}
+  m_Center: {x: 0, y: 0.2, z: 0}
 --- !u!114 &1807913899046113619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,8 +70,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa40499c529e694485431dae1859f55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leverTrigger: {fileID: 1477789975203468154}
   leverAnimator: {fileID: 2041758971039499008}
+  leverAudioSource: {fileID: 6104491556179827315}
 --- !u!114 &103788655273030497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,15 +84,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 274a9761aec9c4248b09ded75a53ea14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outline: {fileID: 1816410500210290838}
+  outline: {fileID: 1371094660038069446}
   interactMessage: 'Lever - Turn On/Off [E]'
---- !u!82 &8097276308825774054
-AudioSource:
+--- !u!114 &1371094660038069446
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6648783462173753134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 0, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!1 &8216930612326853922
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 181654138096459384}
+  - component: {fileID: 6104491556179827315}
+  m_Layer: 0
+  m_Name: LeverAudioSource
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &181654138096459384
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8216930612326853922}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3656934827274007450}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &6104491556179827315
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8216930612326853922}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -723764132433654463, guid: f19853364afa6214a962ddccd71ff23b, type: 2}
@@ -242,7 +247,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1.1780212
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
       propertyPath: m_LocalPosition.z
@@ -275,6 +280,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8391222552659086748, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -5477749408508380018, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
       propertyPath: m_LocalRotation.w
@@ -320,9 +329,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: -516098083770646512, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
       propertyPath: m_Name
       value: Lever
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4083501151425157549, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
       propertyPath: m_LocalRotation.w
@@ -340,13 +357,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 8513859187771203891, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1816410500210290838}
     - targetCorrespondingSourceObject: {fileID: 8513859187771203891, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2041758971039499008}
@@ -383,26 +401,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
   m_PrefabInstance: {fileID: 7443910406512146555}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7750550660083369258 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
-  m_PrefabInstance: {fileID: 7443910406512146555}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1816410500210290838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7750550660083369258}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 0, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []

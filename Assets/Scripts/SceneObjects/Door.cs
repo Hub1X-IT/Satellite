@@ -9,7 +9,7 @@ public class Door : MonoBehaviour
     private Animator doorAnimator;
 
     [SerializeField]
-    private AudioSource doorSound;
+    private AudioSource doorAudioSource;
 
     [SerializeField]
     private bool isInverted = false;
@@ -21,7 +21,6 @@ public class Door : MonoBehaviour
     private const string DOOR_OPEN_BOOL = "DoorOpen";
 
     private bool isDoorOpen;
-    private bool sceneLoad = true;
 
 
     private void Awake()
@@ -29,10 +28,7 @@ public class Door : MonoBehaviour
         doorAnimator.SetBool(IS_INVERTED_BOOL, isInverted);
 
         doorTrigger.InteractVisual = GetComponent<InteractionVisual>();
-    }
 
-    private void Start()
-    {
         doorTrigger.InteractionTriggered += () => SetDoorOpen(!isDoorOpen);
     }
 
@@ -46,13 +42,6 @@ public class Door : MonoBehaviour
         isDoorOpen = open;
         doorAnimator.SetBool(IS_INVERTED_BOOL, isInverted);
         doorAnimator.SetBool(DOOR_OPEN_BOOL, isDoorOpen);
-        if(sceneLoad)
-        {
-            sceneLoad = false;
-        }
-        else
-        {
-            doorSound.Play();
-        }
+        doorAudioSource.Play();
     }
 }

@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoSetLayerOnStart: 1
---- !u!1 &5895523851997491013
+--- !u!1 &5484529816188938588
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,118 +126,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6502663537231278702}
-  - component: {fileID: 5041710438983262048}
-  - component: {fileID: 2943672292617445798}
-  - component: {fileID: 5928836399225862532}
-  - component: {fileID: 7529500277441552196}
-  - component: {fileID: 8462823721717907176}
+  - component: {fileID: 1525445090712733150}
+  - component: {fileID: 6838336268637695153}
   m_Layer: 0
-  m_Name: Desk
+  m_Name: DeskSitAudioSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6502663537231278702
+--- !u!4 &1525445090712733150
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5895523851997491013}
+  m_GameObject: {fileID: 5484529816188938588}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1776069600630670159}
-  - {fileID: 148704667275612027}
-  - {fileID: 6521072713667491948}
-  - {fileID: 4203882949880567831}
-  - {fileID: 2402649601742379564}
-  - {fileID: 6094714786091157933}
-  - {fileID: 5818916299395813918}
-  m_Father: {fileID: 0}
+  m_Children: []
+  m_Father: {fileID: 6502663537231278702}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &5041710438983262048
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5895523851997491013}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2, y: 0.8, z: 1.04}
-  m_Center: {x: 0, y: 0.4, z: 0.02}
---- !u!114 &2943672292617445798
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5895523851997491013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bda3f2edda6bcd42ac4368ad0848f45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  deskTrigger: {fileID: 1943011029638094583}
-  deskCinemachineCamera: {fileID: 1120540285308263918}
-  deskSitSound: {fileID: 8462823721717907176}
---- !u!114 &5928836399225862532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5895523851997491013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56873f3c6461bbf478f2ef19edfe4478, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  xAxisRotationObject: {fileID: 4203882949880567831}
-  yAxisRotationObject: {fileID: 4203882949880567831}
-  clampXRotation: 1
-  minXRotation: -90
-  maxXRotation: 90
-  clampYRotation: 0
-  minYRotation: 0
-  maxYRotation: 0
---- !u!114 &7529500277441552196
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5895523851997491013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 274a9761aec9c4248b09ded75a53ea14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outline: {fileID: 1601361067224491673}
-  interactMessage: 'Desk - Interact [E]'
---- !u!82 &8462823721717907176
+--- !u!82 &6838336268637695153
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5895523851997491013}
+  m_GameObject: {fileID: 5484529816188938588}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -723764132433654463, guid: f19853364afa6214a962ddccd71ff23b, type: 2}
@@ -328,6 +247,119 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &5895523851997491013
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6502663537231278702}
+  - component: {fileID: 5041710438983262048}
+  - component: {fileID: 2943672292617445798}
+  - component: {fileID: 5928836399225862532}
+  - component: {fileID: 7529500277441552196}
+  m_Layer: 0
+  m_Name: Desk
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6502663537231278702
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5895523851997491013}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1776069600630670159}
+  - {fileID: 148704667275612027}
+  - {fileID: 6521072713667491948}
+  - {fileID: 4203882949880567831}
+  - {fileID: 1525445090712733150}
+  - {fileID: 2402649601742379564}
+  - {fileID: 6094714786091157933}
+  - {fileID: 5818916299395813918}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5041710438983262048
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5895523851997491013}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 0.8, z: 1.04}
+  m_Center: {x: 0, y: 0.4, z: 0.02}
+--- !u!114 &2943672292617445798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5895523851997491013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bda3f2edda6bcd42ac4368ad0848f45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deskTrigger: {fileID: 1943011029638094583}
+  deskCinemachineCamera: {fileID: 1120540285308263918}
+  deskSitAudioSource: {fileID: 6838336268637695153}
+--- !u!114 &5928836399225862532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5895523851997491013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56873f3c6461bbf478f2ef19edfe4478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xAxisRotationObject: {fileID: 4203882949880567831}
+  yAxisRotationObject: {fileID: 4203882949880567831}
+  clampXRotation: 1
+  minXRotation: -90
+  maxXRotation: 90
+  clampYRotation: 0
+  minYRotation: 0
+  maxYRotation: 0
+--- !u!114 &7529500277441552196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5895523851997491013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 274a9761aec9c4248b09ded75a53ea14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outline: {fileID: 1601361067224491673}
+  interactMessage: 'Desk - Interact [E]'
 --- !u!1 &7114843106205404417
 GameObject:
   m_ObjectHideFlags: 0

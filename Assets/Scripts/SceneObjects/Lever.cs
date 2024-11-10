@@ -1,43 +1,43 @@
 using UnityEngine;
 
-public class Lever : MonoBehaviour
+public class Lever : MonoBehaviour, IInteractable
 {
-    [SerializeField]
-    private InteractionTrigger leverTrigger;
+    public InteractionVisual InteractVisual { get; private set; }
+
+    public Transform SelfTransform { get; private set; }
 
     [SerializeField]
     private Animator leverAnimator;
 
     [SerializeField]
-    private AudioSource leverSound;
+    private AudioSource leverToggleAudioSource;
 
-    private const string SET_LEVER_ON = "LeverOn";
-    private const string SET_LEVER_OFF = "LeverOff";
+    private const string LeverOnTrigger = "LeverOn";
+    private const string LeverOffTrigger = "LeverOff";
 
-    private bool isLeverOn = false;
+    private bool isLeverEnabled = false;
 
     private void Awake()
     {
-        leverTrigger.InteractVisual = GetComponent<InteractionVisual>();
+        InteractVisual = GetComponent<InteractionVisual>();
     }
 
-    private void Start()
+    public void Interact()
     {
-        leverTrigger.InteractionTriggered += () => SetLeverOn();
+        SetLeverEnabled(!isLeverEnabled);
     }
-    
-    private void SetLeverOn()
+
+    private void SetLeverEnabled(bool enabled)
     {
-        if (!isLeverOn)
+        isLeverEnabled = enabled;
+        if (enabled)
         {
-            leverAnimator.SetTrigger(SET_LEVER_ON);
-            isLeverOn = true;
+            leverAnimator.SetTrigger(LeverOnTrigger);
         }
         else
         {
-            leverAnimator.SetTrigger(SET_LEVER_OFF);
-            isLeverOn = false;
+            leverAnimator.SetTrigger(LeverOffTrigger);
         }
-        leverSound.Play();
+        leverToggleAudioSource.Play();
     }
 }

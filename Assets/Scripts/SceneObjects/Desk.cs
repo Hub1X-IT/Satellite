@@ -13,7 +13,7 @@ public class Desk : MonoBehaviour
     private CinemachineCamera deskCinemachineCamera;
 
     [SerializeField]
-    private AudioSource deskSitSound;
+    private AudioSource deskSitAudioSource;
 
     private CameraRotationController deskCameraRotationController;
 
@@ -77,7 +77,7 @@ public class Desk : MonoBehaviour
             GameInput.PlayerInputActions.PlayerWalking.Enable();
         }
         
-        deskSitSound.Play();
+        deskSitAudioSource.Play();
     }
 
     public void SetDeskCameraRotationEnabled(bool enabled)
