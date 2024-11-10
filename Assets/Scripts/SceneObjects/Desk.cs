@@ -10,7 +10,10 @@ public class Desk : MonoBehaviour
     private InteractionTrigger deskTrigger;
 
     [SerializeField]
-    private CinemachineCamera deskCinemachineCamera;    
+    private CinemachineCamera deskCinemachineCamera;
+
+    [SerializeField]
+    private AudioSource deskSitSound;
 
     private CameraRotationController deskCameraRotationController;
 
@@ -72,7 +75,9 @@ public class Desk : MonoBehaviour
             GameInput.PlayerInputActions.Desk.Disable();
             CameraController.SetActiveCinemachineCamera(CameraController.CinemachineMainCamera);
             GameInput.PlayerInputActions.PlayerWalking.Enable();
-        }        
+        }
+        
+        deskSitSound.Play();
     }
 
     public void SetDeskCameraRotationEnabled(bool enabled)
