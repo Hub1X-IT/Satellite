@@ -18,3 +18,6 @@ public class NewGameEventSO<T> : ScriptableObject
 
 [CreateAssetMenu(menuName = "GameEvents/GameEvent<bool>", order = 1)]
 public class NewGameEventBoolSO : NewGameEventSO<bool> { }
+
+[CreateAssetMenu(menuName = "GameEvents/GameEvent<Computer>", order = 1)]
+public class NewGameEventComputerSO : NewGameEventSO<Computer> { }
