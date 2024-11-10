@@ -15,9 +15,3 @@ public class NewGameEventSO<T> : ScriptableObject
 
     public void RaiseEvent(T data) => EventRaised?.Invoke(data);
 }
-
-[CreateAssetMenu(menuName = "GameEvents/GameEvent<bool>", order = 1)]
-public class NewGameEventBoolSO : NewGameEventSO<bool> { }
-
-[CreateAssetMenu(menuName = "GameEvents/GameEvent<Computer>", order = 1)]
-public class NewGameEventComputerSO : NewGameEventSO<Computer> { }

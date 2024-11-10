@@ -1,27 +1,50 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class ComputerUI : MonoBehaviour
 {
-    // This script doesn't work yet!
+    public event Action<bool> ComputerViewEnabled;
 
-    private Monitor monitor; // temporary solution
+    private Computer computer;
 
     [SerializeField]
-    private NewGameEventSO<Computer> computerViewEnabledGameEvent;
+    private NewGameEventComputerSO computerViewEnabledGameEvent;
+
+    [SerializeField]
+    private NewGameEventSO computerViewDisabledGameEvent;
+
+    /*
+    [SerializeField]
+    private ComputerUICursorController computerCursor;
+    */
 
     private CanvasGroup canvasGroup;
 
     private List<TMP_InputField> inputFieldList;
 
-    [SerializeField]
-    private ScreenUICursorController computerCursor;
-
-
     private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
+
+        // computerCursor = GetComponentInChildren<ComputerUICursorController>();
+
+        computerViewEnabledGameEvent.EventRaised += (callerComputer) =>
+        {
+            // Enter computer view.
+            computer = callerComputer;
+            SetComputerViewEnalbed(true);
+            ComputerViewEnabled?.Invoke(true);
+        };
+
+        computerViewDisabledGameEvent.EventRaised += () =>
+        {
+            // Exit computer view.
+            computer = null;
+            SetComputerViewEnalbed(false);
+            ComputerViewEnabled?.Invoke(false);
+        };
 
         inputFieldList = new();
 
@@ -31,9 +54,14 @@ public class ComputerUI : MonoBehaviour
             AddInputField(inputField);
         }
 
-        computerCursor.enabled = false;
+        SetComputerViewEnalbed(false);
     }
 
+    private void SetComputerViewEnalbed(bool enalbed)
+    {
+        canvasGroup.blocksRaycasts = enalbed;
+        // computerCursor.SetEnabled(enalbed);
+    }
 
     private void AddInputField(TMP_InputField inputField)
     {
@@ -49,8 +77,19 @@ public class ComputerUI : MonoBehaviour
         inputFieldList.Remove(inputField);
     }
 
+    private void SetCanExitComputerViewFalse(string _)
+    {
+        if (computer != null)
+        {
+            computer.CanExitComputerView = false;
+        }
+    }
 
-    private void SetCanExitComputerViewFalse(string _) => monitor.CanExitMonitorView = false;
-
-    private void SetCanExitComputerViewTrue(string _) => monitor.CanExitMonitorView = true;
+    private void SetCanExitComputerViewTrue(string _)
+    {
+        if (computer != null)
+        {
+            computer.CanExitComputerView = true;
+        }
+    }
 }

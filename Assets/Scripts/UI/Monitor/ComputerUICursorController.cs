@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class ScreenUICursorController : MonoBehaviour
+public class ComputerUICursorController : MonoBehaviour
 {
     private RectTransform rectTransform;
 
@@ -29,7 +29,7 @@ public class ScreenUICursorController : MonoBehaviour
 
     private void UpdatePosition()
     {
-        rectTransform.anchoredPosition = GameInput.MousePosition + positionAddition;
+        rectTransform.anchoredPosition = GameInput.CursorPosition + positionAddition;
     }
 
     public void SetEnabled(bool enabled)
@@ -45,7 +45,7 @@ public class ScreenUICursorController : MonoBehaviour
     {
         shouldUpdatePosition = false;
         yield return null;
-        shouldUpdatePosition = true;
         GameInput.SetMousePosition(position);
+        shouldUpdatePosition = true;
     }
 }

@@ -39,6 +39,6 @@ public class ScriptsInitializer : MonoBehaviour
 
         GameInput.RemoveInput();
 
-        // GameSettingsManager.SaveSettings();
+        GameSettingsManager.SaveSettings();
     }
 }

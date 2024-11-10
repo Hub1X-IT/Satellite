@@ -2,18 +2,16 @@ using UnityEngine;
 
 public class LaptopUI : MonoBehaviour
 {
-    // [SerializeField]
-    private Laptop laptop;
+    private ComputerUI computerUI;
 
     [SerializeField]
     private CommandPromptUI commandPromptUI;
 
     private void Awake()
     {
-        // There should be only one object with the script Laptop in the scene!
-        laptop = FindAnyObjectByType<Laptop>();
+        computerUI = GetComponent<ComputerUI>();
 
-        laptop.LaptopViewSetActive += (enabled) =>
+        computerUI.ComputerViewEnabled += (enabled) =>
         {
             commandPromptUI.enabled = enabled;
         };

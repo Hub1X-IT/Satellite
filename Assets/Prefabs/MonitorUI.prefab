@@ -2030,6 +2030,7 @@ GameObject:
   - component: {fileID: 4333605933029200476}
   - component: {fileID: 1379751109140159304}
   - component: {fileID: 7898810951107775419}
+  - component: {fileID: 153526657779754425}
   - component: {fileID: 4516028935569568493}
   m_Layer: 5
   m_Name: MonitorUICanvas
@@ -2052,10 +2053,10 @@ RectTransform:
   m_Children:
   - {fileID: 2855378493411704358}
   - {fileID: 8730655105274460442}
-  - {fileID: 4813095359479333885}
   - {fileID: 8263198170537366247}
   - {fileID: 7118028144562407239}
   - {fileID: 6106809344226879174}
+  - {fileID: 4813095359479333885}
   m_Father: {fileID: 2120693372210763740}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2138,6 +2139,20 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &153526657779754425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8704038278049990864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8675e4c67d6a2d64881d3975a0a35820, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  computerViewEnabledGameEvent: {fileID: 11400000, guid: ce793c91c3ff2434dbd95c558a0878a0, type: 2}
+  computerViewDisabledGameEvent: {fileID: 11400000, guid: af253edeca4497444b4bcf7931247593, type: 2}
 --- !u!114 &4516028935569568493
 MonoBehaviour:
   m_ObjectHideFlags: 0

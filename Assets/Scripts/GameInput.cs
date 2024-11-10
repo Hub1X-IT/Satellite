@@ -11,7 +11,7 @@ public class GameInput
 
     public static Vector2 RotationVector => PlayerInputActions.PlayerWalkingAndDesk.Rotate.ReadValue<Vector2>();
 
-    public static Vector2 MousePosition => PlayerInputActions.LaptopAndMonitor.CursorPosition.ReadValue<Vector2>();
+    public static Vector2 CursorPosition => PlayerInputActions.All.CursorPosition.ReadValue<Vector2>();
 
 
     public static event Action OnPauseAction;
@@ -22,11 +22,7 @@ public class GameInput
 
     public static event Action OnExitDeskViewAction;
 
-    public static event Action OnLeftMouseButtonAction;
-
-    public static event Action OnRightMouseButtonAction;
-
-    public static event Action OnLaptopAndMonitorExitAction;
+    public static event Action OnComputerExitAction;
 
     public static event Action<char> OnKeyboardInputAction;
 
@@ -40,7 +36,7 @@ public class GameInput
         PlayerInputActions.All.Enable();
         PlayerInputActions.PlayerWalkingAndDesk.Enable();
         PlayerInputActions.PlayerWalking.Enable();
-        PlayerInputActions.LaptopAndMonitor.Disable();
+        PlayerInputActions.Computer.Disable();
         PlayerInputActions.CommandPrompt.Disable(); // should be enabled when testing monitor command prompt
 
         PlayerInputActions.All.Pause.performed += Pause_performed;
@@ -51,10 +47,7 @@ public class GameInput
 
         PlayerInputActions.Desk.Interact.performed += Interact_performed; // Interact in Desk does the same thing as Interact in PlayerWalking
         PlayerInputActions.Desk.ExitDeskView.performed += ExitDeskView_performed;
-
-        PlayerInputActions.LaptopAndMonitor.LeftMouseButton.performed += LeftMouseButton_performed;
-        PlayerInputActions.LaptopAndMonitor.RightMouseButton.performed += RightMouseButton_performed;
-        PlayerInputActions.LaptopAndMonitor.Exit.performed += LaptopAndMonitorExit_performed;
+        PlayerInputActions.Computer.Exit.performed += ComputerExit_performed;
 
         Keyboard.current.onTextInput += Keyboard_onTextInput;
 
@@ -72,7 +65,7 @@ public class GameInput
         PlayerInputActions.Desk.Interact.performed -= Interact_performed;
         PlayerInputActions.Desk.ExitDeskView.performed -= ExitDeskView_performed;
 
-        PlayerInputActions.LaptopAndMonitor.Exit.performed -= LaptopAndMonitorExit_performed;
+        PlayerInputActions.Computer.Exit.performed -= ComputerExit_performed;
 
         Keyboard.current.onTextInput -= Keyboard_onTextInput;
 
@@ -84,9 +77,7 @@ public class GameInput
         OnInteractAction = null;
         OnSmartphoneToggleAction = null;
         OnExitDeskViewAction = null;
-        OnLeftMouseButtonAction = null;
-        OnRightMouseButtonAction = null;
-        OnLaptopAndMonitorExitAction = null;
+        OnComputerExitAction = null;
         OnKeyboardInputAction = null;
         OnSubmitAction = null;
     }
@@ -107,11 +98,7 @@ public class GameInput
 
     private static void ExitDeskView_performed(InputAction.CallbackContext _) => OnExitDeskViewAction?.Invoke();
 
-    private static void LeftMouseButton_performed(InputAction.CallbackContext _) => OnLeftMouseButtonAction?.Invoke();
-
-    private static void RightMouseButton_performed(InputAction.CallbackContext _) => OnRightMouseButtonAction?.Invoke();
-
-    private static void LaptopAndMonitorExit_performed(InputAction.CallbackContext _) => OnLaptopAndMonitorExitAction?.Invoke();
+    private static void ComputerExit_performed(InputAction.CallbackContext _) => OnComputerExitAction?.Invoke();
 
     private static void MonitorSubmit_performed(InputAction.CallbackContext _) => OnSubmitAction?.Invoke();
 

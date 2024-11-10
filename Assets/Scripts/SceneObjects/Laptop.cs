@@ -1,91 +1,23 @@
-using System;
-using Unity.Cinemachine;
 using UnityEngine;
 
 public class Laptop : MonoBehaviour
 {
-    public event Action<bool> LaptopViewSetActive;
-
-    [SerializeField]
-    private InteractionTrigger laptopTrigger;
-
-    private Desk desk;
-
-    [SerializeField]
-    private CinemachineCamera laptopCinemachineCamera;
-
-    private Outline outline;
-
-    private bool isInLaptopView;
-
-    public bool CanExitLaptopView { get; set; }
-
+    private Computer computer;
 
     private void Awake()
     {
-        desk = GetComponentInParent<Desk>();
-        outline = GetComponent<Outline>();
+        computer = GetComponent<Computer>();
 
-        laptopTrigger.InteractVisual = GetComponent<InteractionVisual>();
-
-        laptopTrigger.InteractionTriggered += () => SetLaptopViewActive(true);
-
-        desk.DeskViewEnabled += SetLaptopTriggerEnabled;
-
-        GameInput.OnLaptopAndMonitorExitAction += () =>
+        computer.ComputerViewEnabled += (enabled) =>
         {
-            if (isInLaptopView && CanExitLaptopView)
+            if (enabled)
             {
-                SetLaptopViewActive(false);
+                GameInput.PlayerInputActions.CommandPrompt.Enable();
+            }
+            else
+            {
+                GameInput.PlayerInputActions.CommandPrompt.Disable();
             }
         };
-
-        laptopCinemachineCamera.enabled = false;
-
-        SetLaptopTriggerEnabled(false);
-
-        isInLaptopView = false;
-
-        CanExitLaptopView = true;
-    }
-
-    private void OnDestroy()
-    {
-        LaptopViewSetActive = null;
-    }
-
-    private void SetLaptopViewActive(bool active)
-    {
-        isInLaptopView = active;
-
-        PlayerScriptsController.SetCanShowPlayerHUD(!active);
-
-        desk.CanExitDeskView = !active;
-        desk.SetDeskCameraRotationEnabled(!active);
-
-        SetLaptopTriggerEnabled(!active);
-
-        // Probably a temporary solution
-        outline.enabled = !active;
-
-        if (active)
-        {
-            GameInput.PlayerInputActions.LaptopAndMonitor.Enable();
-            GameInput.PlayerInputActions.CommandPrompt.Enable();
-            CameraController.SetActiveCinemachineCamera(laptopCinemachineCamera);
-        }
-        else
-        {
-            GameInput.PlayerInputActions.LaptopAndMonitor.Disable();
-            GameInput.PlayerInputActions.CommandPrompt.Disable();
-            CameraController.SetActiveCinemachineCamera(desk.DeskCinemachineCamera);
-        }
-
-        LaptopViewSetActive?.Invoke(active);
-    }
-
-    private void SetLaptopTriggerEnabled(bool enabled)
-    {
-        laptopTrigger.gameObject.SetActive(enabled);
     }
 }

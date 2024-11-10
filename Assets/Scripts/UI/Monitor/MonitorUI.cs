@@ -1,19 +1,12 @@
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MonitorUI : MonoBehaviour
 {
-    // [SerializeField]
-    private Monitor monitor;
+    private ComputerUI computerUI;
 
-    private CanvasGroup monitorCanvasGroup;
-
-    private List<TMP_InputField> inputFieldList;
-    
     [SerializeField]
-    private ScreenUICursorController monitorCursor;
+    private ComputerUICursorController monitorCursor;
 
     [SerializeField]
     private Button notepadButton;
@@ -36,23 +29,11 @@ public class MonitorUI : MonoBehaviour
 
     private void Awake()
     {
-        // There should be only one object with the script Monitor in the scene!
-        monitor = FindAnyObjectByType<Monitor>();
+        computerUI = GetComponent<ComputerUI>();
 
-        monitorCanvasGroup = GetComponent<CanvasGroup>();
-
-        inputFieldList = new();
-
-        TMP_InputField[] inputFields = GetComponentsInChildren<TMP_InputField>(true);
-        foreach (var inputField in inputFields)
-        {
-            AddInputField(inputField);
-        }
-
-        monitor.MonitorViewSetActive += (enabled) =>
+        computerUI.ComputerViewEnabled += (enabled) =>
         {
             monitorCursor.SetEnabled(enabled);
-            monitorCanvasGroup.blocksRaycasts = enabled;
         };
 
         notepadButton.onClick.AddListener(NotepadEnable);
@@ -73,22 +54,7 @@ public class MonitorUI : MonoBehaviour
         folderCanvas.enabled = false;
         doorAppCanvas.enabled = false;
 
-        monitorCursor.enabled = false;
-    }
-
-
-    private void AddInputField(TMP_InputField inputField)
-    {
-        inputField.onSelect.AddListener(SetCanExitMonitorViewFalse);
-        inputField.onDeselect.AddListener(SetCanExitMonitorViewTrue);
-        inputFieldList.Add(inputField);
-    }
-
-    private void RemoveInputField(TMP_InputField inputField)
-    {
-        inputField.onSelect.RemoveListener(SetCanExitMonitorViewFalse);
-        inputField.onDeselect.RemoveListener(SetCanExitMonitorViewTrue);
-        inputFieldList.Remove(inputField);
+        monitorCursor.SetEnabled(false);
     }
 
 
@@ -165,9 +131,4 @@ public class MonitorUI : MonoBehaviour
         doorAppCanvas.enabled = enabled;
         doorAppEnabled = enabled;
     }
-
-
-    private void SetCanExitMonitorViewFalse(string _) => monitor.CanExitMonitorView = false;
-
-    private void SetCanExitMonitorViewTrue(string _) => monitor.CanExitMonitorView = true;
 }

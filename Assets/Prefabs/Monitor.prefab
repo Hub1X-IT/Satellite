@@ -238,6 +238,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2067589296309902828}
   - component: {fileID: 2437931007739309163}
+  - component: {fileID: 5294780655847464022}
   - component: {fileID: 4025386359394978491}
   - component: {fileID: 6817648722821540677}
   - component: {fileID: 608658516035650837}
@@ -288,6 +289,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.66, y: 0.44, z: 0.19}
   m_Center: {x: 0, y: 0.2, z: -0.009999998}
+--- !u!114 &5294780655847464022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7369432932998519805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8f5122109f67b2499c275c9deaec13e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  computerViewEnabledGameEvent: {fileID: 11400000, guid: ce793c91c3ff2434dbd95c558a0878a0, type: 2}
+  computerViewDisabledGameEvent: {fileID: 11400000, guid: af253edeca4497444b4bcf7931247593, type: 2}
+  computerTrigger: {fileID: 4671478203664470216}
+  computerCinemachineCamera: {fileID: 3378752344501694125}
 --- !u!114 &4025386359394978491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,8 +317,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622c284bb59b25c46848b793ee2ef800, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monitorTrigger: {fileID: 4671478203664470216}
-  monitorCinemachineCamera: {fileID: 3378752344501694125}
 --- !u!114 &6817648722821540677
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,6 +13,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "CursorPosition",
+                    "type": "Value",
+                    "id": "46c15789-a451-4eb8-a235-d33beb742cf5",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -24,6 +33,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "739f7f76-baf9-44a7-932c-91a259d56f6f",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CursorPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -218,36 +238,9 @@
             ]
         },
         {
-            "name": "LaptopAndMonitor",
+            "name": "Computer",
             "id": "e78e4f17-246c-4115-8ccc-6fb6703ab68a",
             "actions": [
-                {
-                    "name": "CursorPosition",
-                    "type": "Value",
-                    "id": "88a4ca9e-f090-4ecb-bf6e-a3fab4a07844",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "LeftMouseButton",
-                    "type": "Button",
-                    "id": "22347917-847f-4e4e-ad54-78f9a5bb8c73",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "RightMouseButton",
-                    "type": "Button",
-                    "id": "0cd5bac0-e783-4e9b-a9bf-c17afe0ee6d6",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
                 {
                     "name": "Exit",
                     "type": "Button",
@@ -267,39 +260,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Exit",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "2100a7b9-c373-4b0a-8735-a4afea9542e6",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "LeftMouseButton",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c9fcbe5c-7357-4b4a-a5d7-170c26cf51c3",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "RightMouseButton",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "51259e7b-8a66-42fb-a51b-4b0dbe92d123",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CursorPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
