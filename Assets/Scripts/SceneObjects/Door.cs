@@ -29,19 +29,22 @@ public class Door : MonoBehaviour
 
         doorTrigger.InteractVisual = GetComponent<InteractionVisual>();
 
-        doorTrigger.InteractionTriggered += () => SetDoorOpen(!isDoorOpen);
+        doorTrigger.InteractionTriggered += () => SetDoorOpen(!isDoorOpen, true);
     }
 
     private void OnEnable()
     {
-        SetDoorOpen(defaultState);
+        SetDoorOpen(defaultState, false);
     }
 
-    private void SetDoorOpen(bool open)
+    private void SetDoorOpen(bool open, bool shouldPlaySound)
     {
         isDoorOpen = open;
         doorAnimator.SetBool(IS_INVERTED_BOOL, isInverted);
         doorAnimator.SetBool(DOOR_OPEN_BOOL, isDoorOpen);
-        doorAudioSource.Play();
+        if (shouldPlaySound)
+        {
+            doorAudioSource.Play();
+        }
     }
 }

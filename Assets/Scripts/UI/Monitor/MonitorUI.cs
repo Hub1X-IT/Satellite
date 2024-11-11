@@ -36,9 +36,11 @@ public class MonitorUI : MonoBehaviour
             monitorCursor.SetEnabled(enabled);
         };
 
+        /*
         notepadButton.onClick.AddListener(NotepadEnable);
         folderButton.onClick.AddListener(FolderEnable);
         doorAppButton.onClick.AddListener(DoorAppEnable);
+        */
 
         /*
         notepadButton.onClick.AddListener(() => SetNotepadEnabled(!notepadEnabled));
