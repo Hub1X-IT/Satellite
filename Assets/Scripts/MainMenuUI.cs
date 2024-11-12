@@ -1,16 +1,16 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainMenuController : MonoBehaviour
+public class MainMenuUI : MonoBehaviour
 {
     [SerializeField]
-    private RectTransform menuScreen;
+    private RectTransform mainMenu;
 
     [SerializeField]
-    private RectTransform settingsScreen;
+    private EnterableUIObject settingsMenu;
 
     [SerializeField]
-    private RectTransform creditsScreen;
+    private EnterableUIObject creditsMenu;
 
     [SerializeField]
     private RectTransform loadingScreen;
@@ -33,20 +33,30 @@ public class MainMenuController : MonoBehaviour
     private void Awake()
     {
         playButton.onClick.AddListener(() => { 
-            menuScreen.gameObject.SetActive(false);
+            DisableMainMenu();
             loadingScreen.gameObject.SetActive(true);
             StartCoroutine(SceneLoader.LoadSceneAsync(SceneLoader.Scene.PlayerHouse, loadingSlider)); 
         });
         settingsButton.onClick.AddListener(() =>
         {
-            menuScreen.gameObject.SetActive(false);
-            settingsScreen.gameObject.SetActive(true);
+            DisableMainMenu();
+            settingsMenu.Enable(EnableMainMenu);
         });
         creditsButton.onClick.AddListener(() =>
         {
-            menuScreen.gameObject.SetActive(false);
-            creditsScreen.gameObject.SetActive(true);
+            DisableMainMenu();
+            creditsMenu.Enable(EnableMainMenu);
         });
-        quitButton.onClick.AddListener(() => Application.Quit());
+        quitButton.onClick.AddListener(Application.Quit);
+    }
+
+    private void EnableMainMenu()
+    {
+        mainMenu.gameObject.SetActive(true);
+    }
+
+    private void DisableMainMenu()
+    {
+        mainMenu.gameObject.SetActive(false);
     }
 }

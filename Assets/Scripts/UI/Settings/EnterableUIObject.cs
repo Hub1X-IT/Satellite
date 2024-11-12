@@ -2,25 +2,25 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InGameOptionsUI : MonoBehaviour
+public class EnterableUIObject : MonoBehaviour
 {
     [SerializeField]
     private Button backButton;
 
-    private Action inGameOptionsClosed;
+    private Action closeAction;
 
     private void Awake()
     {
         backButton.onClick.AddListener(() =>
         {
             Disable();
-            inGameOptionsClosed();
+            closeAction();
         });
     }
 
     public void Enable(Action onCloseAction)
     {
-        inGameOptionsClosed = onCloseAction;
+        closeAction = onCloseAction;
 
         gameObject.SetActive(true);
     }

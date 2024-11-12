@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class InGameMainMenuUI : MonoBehaviour
 {
     [SerializeField]
-    private InGameOptionsUI inGameOptions;
+    private EnterableUIObject inGameOptions;
 
     [SerializeField]
     private Button resumeButton;
