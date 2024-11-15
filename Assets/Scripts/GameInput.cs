@@ -26,7 +26,7 @@ public class GameInput
 
     public static event Action<char> OnKeyboardInputAction;
 
-    public static event Action OnSubmitAction;
+    public static event Action OnCommandSubmitAction;
 
 
     public static void InitializeInput()
@@ -51,7 +51,7 @@ public class GameInput
 
         Keyboard.current.onTextInput += Keyboard_onTextInput;
 
-        PlayerInputActions.CommandPrompt.Submit.performed += MonitorSubmit_performed;
+        PlayerInputActions.CommandPrompt.CommandSubmit.performed += CommandSubmit_performed;
     }
 
     public static void RemoveInput()
@@ -69,7 +69,7 @@ public class GameInput
 
         Keyboard.current.onTextInput -= Keyboard_onTextInput;
 
-        PlayerInputActions.CommandPrompt.Submit.performed -= MonitorSubmit_performed;
+        PlayerInputActions.CommandPrompt.CommandSubmit.performed -= CommandSubmit_performed;
 
         PlayerInputActions.Dispose();
 
@@ -79,7 +79,7 @@ public class GameInput
         OnExitDeskViewAction = null;
         OnComputerExitAction = null;
         OnKeyboardInputAction = null;
-        OnSubmitAction = null;
+        OnCommandSubmitAction = null;
     }
 
     private static void Keyboard_onTextInput(char c)
@@ -100,7 +100,7 @@ public class GameInput
 
     private static void ComputerExit_performed(InputAction.CallbackContext _) => OnComputerExitAction?.Invoke();
 
-    private static void MonitorSubmit_performed(InputAction.CallbackContext _) => OnSubmitAction?.Invoke();
+    private static void CommandSubmit_performed(InputAction.CallbackContext _) => OnCommandSubmitAction?.Invoke();
 
 
     public static void SetMousePosition(Vector2 position)

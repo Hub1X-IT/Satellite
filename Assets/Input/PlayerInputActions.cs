@@ -292,27 +292,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ""id"": ""e92ca324-be7b-435a-b7b1-d850e85f4422"",
             ""actions"": [
                 {
-                    ""name"": ""Submit"",
+                    ""name"": ""CommandSubmit"",
                     ""type"": ""Button"",
                     ""id"": ""7b6be9f5-8fed-4963-bc53-368e7f01d91f"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Keyboard"",
-                    ""type"": ""Button"",
-                    ""id"": ""2651e297-53fd-426d-bda9-3bf0d473953a"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Remove"",
-                    ""type"": ""Button"",
-                    ""id"": ""2127ceda-c8ea-4e4f-8709-81fae5dee2a0"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -327,7 +309,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Submit"",
+                    ""action"": ""CommandSubmit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -338,29 +320,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Submit"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""dbc3b9f9-7490-4c9b-908c-b04047b47463"",
-                    ""path"": ""<Keyboard>/anyKey"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Keyboard"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""157f9962-13f1-48e9-896c-410fcd61ad42"",
-                    ""path"": ""<Keyboard>/backspace"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Remove"",
+                    ""action"": ""CommandSubmit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -390,9 +350,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Computer_Exit = m_Computer.FindAction("Exit", throwIfNotFound: true);
         // CommandPrompt
         m_CommandPrompt = asset.FindActionMap("CommandPrompt", throwIfNotFound: true);
-        m_CommandPrompt_Submit = m_CommandPrompt.FindAction("Submit", throwIfNotFound: true);
-        m_CommandPrompt_Keyboard = m_CommandPrompt.FindAction("Keyboard", throwIfNotFound: true);
-        m_CommandPrompt_Remove = m_CommandPrompt.FindAction("Remove", throwIfNotFound: true);
+        m_CommandPrompt_CommandSubmit = m_CommandPrompt.FindAction("CommandSubmit", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -726,16 +684,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     // CommandPrompt
     private readonly InputActionMap m_CommandPrompt;
     private List<ICommandPromptActions> m_CommandPromptActionsCallbackInterfaces = new List<ICommandPromptActions>();
-    private readonly InputAction m_CommandPrompt_Submit;
-    private readonly InputAction m_CommandPrompt_Keyboard;
-    private readonly InputAction m_CommandPrompt_Remove;
+    private readonly InputAction m_CommandPrompt_CommandSubmit;
     public struct CommandPromptActions
     {
         private @PlayerInputActions m_Wrapper;
         public CommandPromptActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Submit => m_Wrapper.m_CommandPrompt_Submit;
-        public InputAction @Keyboard => m_Wrapper.m_CommandPrompt_Keyboard;
-        public InputAction @Remove => m_Wrapper.m_CommandPrompt_Remove;
+        public InputAction @CommandSubmit => m_Wrapper.m_CommandPrompt_CommandSubmit;
         public InputActionMap Get() { return m_Wrapper.m_CommandPrompt; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -745,28 +699,16 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_CommandPromptActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_CommandPromptActionsCallbackInterfaces.Add(instance);
-            @Submit.started += instance.OnSubmit;
-            @Submit.performed += instance.OnSubmit;
-            @Submit.canceled += instance.OnSubmit;
-            @Keyboard.started += instance.OnKeyboard;
-            @Keyboard.performed += instance.OnKeyboard;
-            @Keyboard.canceled += instance.OnKeyboard;
-            @Remove.started += instance.OnRemove;
-            @Remove.performed += instance.OnRemove;
-            @Remove.canceled += instance.OnRemove;
+            @CommandSubmit.started += instance.OnCommandSubmit;
+            @CommandSubmit.performed += instance.OnCommandSubmit;
+            @CommandSubmit.canceled += instance.OnCommandSubmit;
         }
 
         private void UnregisterCallbacks(ICommandPromptActions instance)
         {
-            @Submit.started -= instance.OnSubmit;
-            @Submit.performed -= instance.OnSubmit;
-            @Submit.canceled -= instance.OnSubmit;
-            @Keyboard.started -= instance.OnKeyboard;
-            @Keyboard.performed -= instance.OnKeyboard;
-            @Keyboard.canceled -= instance.OnKeyboard;
-            @Remove.started -= instance.OnRemove;
-            @Remove.performed -= instance.OnRemove;
-            @Remove.canceled -= instance.OnRemove;
+            @CommandSubmit.started -= instance.OnCommandSubmit;
+            @CommandSubmit.performed -= instance.OnCommandSubmit;
+            @CommandSubmit.canceled -= instance.OnCommandSubmit;
         }
 
         public void RemoveCallbacks(ICommandPromptActions instance)
@@ -810,8 +752,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     }
     public interface ICommandPromptActions
     {
-        void OnSubmit(InputAction.CallbackContext context);
-        void OnKeyboard(InputAction.CallbackContext context);
-        void OnRemove(InputAction.CallbackContext context);
+        void OnCommandSubmit(InputAction.CallbackContext context);
     }
 }

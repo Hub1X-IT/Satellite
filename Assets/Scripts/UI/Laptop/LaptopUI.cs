@@ -13,7 +13,7 @@ public class LaptopUI : MonoBehaviour
 
         computerUI.ComputerViewEnabled += (enabled) =>
         {
-            commandPromptUI.enabled = enabled;
+            // commandPromptUI.enabled = enabled;
         };
     }
 }

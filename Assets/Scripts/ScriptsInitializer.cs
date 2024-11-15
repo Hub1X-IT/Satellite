@@ -26,7 +26,7 @@ public class ScriptsInitializer : MonoBehaviour
 
     private void Start()
     {
-        CommandPromptManager.OnStart();
+        // OldCommandPromptManager.OnStart();
         GameManager.OnStart();
         GraphicsSettingsManager.OnStart();
         VolumeController.OnStart();
@@ -34,7 +34,7 @@ public class ScriptsInitializer : MonoBehaviour
 
     private void OnDestroy()
     {
-        CommandPromptManager.OnSceneExit();
+        // OldCommandPromptManager.OnSceneExit();
         GameManager.OnSceneExit();
 
         GameInput.RemoveInput();

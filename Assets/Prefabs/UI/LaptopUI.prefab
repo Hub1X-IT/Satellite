@@ -235,7 +235,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Enter text...
+  m_text: Enter command...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -571,7 +571,7 @@ MonoBehaviour:
   m_RichText: 0
   m_GlobalFontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_OnFocusSelectAll: 0
-  m_ResetOnDeActivation: 0
+  m_ResetOnDeActivation: 1
   m_KeepTextSelectionVisible: 1
   m_RestoreOriginalTextOnEscape: 1
   m_isRichTextEditingAllowed: 0
@@ -639,7 +639,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4333230753768073033}
-  - component: {fileID: 4874803219121462571}
+  - component: {fileID: 8562382874323461113}
   m_Layer: 5
   m_Name: CommandPrompt
   m_TagString: Untagged
@@ -668,7 +668,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4874803219121462571
+--- !u!114 &8562382874323461113
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -677,7 +677,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7057654450271175537}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 243afed9631929e45bfa17b51f4e61db, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ab38680950973745ad3a859cf8012aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   inputField: {fileID: 7379873850896294036}
@@ -1058,7 +1058,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0598ab2b81bb3d4e960e30f4972206b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  commandPromptUI: {fileID: 4874803219121462571}
+  commandPromptUI: {fileID: 8562382874323461113}
 --- !u!1 &8826879670396455816
 GameObject:
   m_ObjectHideFlags: 0

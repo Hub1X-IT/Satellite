@@ -270,27 +270,9 @@
             "id": "e92ca324-be7b-435a-b7b1-d850e85f4422",
             "actions": [
                 {
-                    "name": "Submit",
+                    "name": "CommandSubmit",
                     "type": "Button",
                     "id": "7b6be9f5-8fed-4963-bc53-368e7f01d91f",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Keyboard",
-                    "type": "Button",
-                    "id": "2651e297-53fd-426d-bda9-3bf0d473953a",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Remove",
-                    "type": "Button",
-                    "id": "2127ceda-c8ea-4e4f-8709-81fae5dee2a0",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -305,7 +287,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Submit",
+                    "action": "CommandSubmit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -316,29 +298,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Submit",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "dbc3b9f9-7490-4c9b-908c-b04047b47463",
-                    "path": "<Keyboard>/anyKey",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Keyboard",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "157f9962-13f1-48e9-896c-410fcd61ad42",
-                    "path": "<Keyboard>/backspace",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Remove",
+                    "action": "CommandSubmit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

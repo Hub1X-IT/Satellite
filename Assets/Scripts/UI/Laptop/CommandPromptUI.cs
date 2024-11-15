@@ -9,43 +9,40 @@ public class CommandPromptUI : MonoBehaviour
     [SerializeField]
     TMP_InputField outputField;
 
-    private string inputText;
-
     private string outputText;
+    // public string OutputText { get; private set; }
 
+    private const string CommandPromptStartText = ">>> ";
+    private const string CommandPromptEndText = "\n";
 
-    private void Start()
+    private void Awake()
     {
-        CommandPromptManager.CommandSubmitted += CommandPromptManager_CommandSubmitted;
-        CommandPromptManager.CommandChanged += (command) => inputField.text = command;
-
-        inputField.onDeselect.AddListener((_) => inputField.ActivateInputField());
-
-        inputText = string.Empty;
         outputText = string.Empty;
         outputField.text = string.Empty;
-    }
+        inputField.text = CommandPromptStartText;
 
-    private void CommandPromptManager_CommandSubmitted()
-    {
-        inputText = inputField.text;
-        ChangeOutputText();
-        inputField.text = string.Empty;
-        // inputField.ActivateInputField();
-    }
-
-    private void ChangeOutputText()
-    {
-        if (inputText.Length > 0)
+        GameInput.OnCommandSubmitAction += () =>
         {
-            outputText += "\n>>> " + inputText;
-            outputField.text = outputText;
-        }
+            string command = inputField.text.Remove(0, CommandPromptStartText.Length);
+            SubmitCommand(command);
+            CommandPromptManager.SubmitCommand(command);
+        };
+
+        inputField.onValueChanged.AddListener((text) =>
+        {
+            if (text.Length < CommandPromptStartText.Length)
+            {
+                inputField.text = CommandPromptStartText;
+                inputField.caretPosition = inputField.text.Length;
+            }
+        });
     }
 
-    private void AddOutputText(string text)
+    private void SubmitCommand(string command)
     {
-        outputText += text;
+        inputField.text = CommandPromptStartText;
+        inputField.ActivateInputField();
+        outputText += CommandPromptStartText + command + CommandPromptEndText;
         outputField.text = outputText;
     }
 }
