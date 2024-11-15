@@ -15,10 +15,8 @@ public class ComputerUI : MonoBehaviour
     [SerializeField]
     private NewGameEventSO computerViewDisabledGameEvent;
 
-    /*
     [SerializeField]
     private ComputerUICursorController computerCursor;
-    */
 
     private CanvasGroup canvasGroup;
 
@@ -27,8 +25,6 @@ public class ComputerUI : MonoBehaviour
     private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
-
-        // computerCursor = GetComponentInChildren<ComputerUICursorController>();
 
         computerViewEnabledGameEvent.EventRaised += (callerComputer) =>
         {
@@ -55,12 +51,13 @@ public class ComputerUI : MonoBehaviour
         }
 
         SetComputerViewEnalbed(false);
+        computerCursor.SetEnabled(false);
     }
 
-    private void SetComputerViewEnalbed(bool enalbed)
+    private void SetComputerViewEnalbed(bool enabled)
     {
-        canvasGroup.blocksRaycasts = enalbed;
-        // computerCursor.SetEnabled(enalbed);
+        canvasGroup.blocksRaycasts = enabled;
+        computerCursor.SetEnabled(enabled);
     }
 
     private void AddInputField(TMP_InputField inputField)

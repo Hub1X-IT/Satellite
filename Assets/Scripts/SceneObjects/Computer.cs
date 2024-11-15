@@ -80,12 +80,14 @@ public class Computer : MonoBehaviour
         {
             GameInput.PlayerInputActions.Computer.Enable();
             CameraController.SetActiveCinemachineCamera(computerCinemachineCamera);
+            Cursor.lockState = CursorLockMode.Confined;
             computerViewEnabledGameEvent.RaiseEvent(this);
         }
         else
         {
             GameInput.PlayerInputActions.Computer.Disable();
             CameraController.SetActiveCinemachineCamera(desk.DeskCinemachineCamera);
+            GameManager.SetCursorShown(false);
             computerViewDisabledGameEvent.RaiseEvent();
         }
     }

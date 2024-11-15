@@ -2875,6 +2875,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   computerViewEnabledGameEvent: {fileID: 11400000, guid: ce793c91c3ff2434dbd95c558a0878a0, type: 2}
   computerViewDisabledGameEvent: {fileID: 11400000, guid: af253edeca4497444b4bcf7931247593, type: 2}
+  computerCursor: {fileID: 6868171409185429950}
 --- !u!114 &4516028935569568493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2887,9 +2888,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d204022a59e2014ba4a6d647f002159, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monitorCursor: {fileID: 6868171409185429950}
-  notepadButton: {fileID: 0}
-  folderButton: {fileID: 0}
+  notepadButton: {fileID: 7236955066746819387}
+  folderButton: {fileID: 8367424334791686196}
   doorAppButton: {fileID: 0}
   notepadCanvas: {fileID: 5675948138683085866}
   folderCanvas: {fileID: 5826390807371860500}
@@ -3351,10 +3351,6 @@ PrefabInstance:
     - target: {fileID: 8674391799326923288, guid: e042a8b5ab4487e42ade57563cc65783, type: 3}
       propertyPath: m_Name
       value: MonitorUICursor
-      objectReference: {fileID: 0}
-    - target: {fileID: 8674391799326923288, guid: e042a8b5ab4487e42ade57563cc65783, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9063254938657054006, guid: e042a8b5ab4487e42ade57563cc65783, type: 3}
       propertyPath: m_Pivot.x

@@ -3,11 +3,6 @@ using UnityEngine.UI;
 
 public class MonitorUI : MonoBehaviour
 {
-    private ComputerUI computerUI;
-
-    [SerializeField]
-    private ComputerUICursorController monitorCursor;
-
     [SerializeField]
     private Button notepadButton;
     [SerializeField]
@@ -29,13 +24,6 @@ public class MonitorUI : MonoBehaviour
 
     private void Awake()
     {
-        computerUI = GetComponent<ComputerUI>();
-
-        computerUI.ComputerViewEnabled += (enabled) =>
-        {
-            monitorCursor.SetEnabled(enabled);
-        };
-
         /*
         notepadButton.onClick.AddListener(NotepadEnable);
         folderButton.onClick.AddListener(FolderEnable);
@@ -55,8 +43,6 @@ public class MonitorUI : MonoBehaviour
         notepadCanvas.enabled = false;
         folderCanvas.enabled = false;
         doorAppCanvas.enabled = false;
-
-        monitorCursor.SetEnabled(false);
     }
 
 

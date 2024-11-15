@@ -10,14 +10,7 @@ public class Monitor : MonoBehaviour
 
         computer.ComputerViewEnabled += (enabled) =>
         {
-            if (enabled)
-            {
-                Cursor.lockState = CursorLockMode.Confined;
-            }
-            else
-            {
-                GameManager.SetCursorShown(false);
-            }
+            
         };
     }
 }
