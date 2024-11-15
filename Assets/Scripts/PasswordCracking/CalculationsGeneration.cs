@@ -3,12 +3,19 @@ using UnityEngine;
 
 public static class CalculationsGeneration
 {
+    private const int SubtractRangeMultiplier = 2;
+    private const int DivideRange = 10;
+
+    // Not implemented yet!
+    private const int MaxNumberDivided = 100;
+
+    // Division temporarily can't be used because it generates too large numbers.
+
     public static EncryptedCharacter GetEncryptedCharacterForNumber(int number)
     {
         GenerateCalculationsForNumber(number, out var calculationDataMiddle, out var calculationDataFirst, out var calculationDataLast);
         return new EncryptedCharacter(calculationDataMiddle, calculationDataFirst, calculationDataLast);
     }
-
 
     private static void GenerateCalculationsForNumber(int number, out CalculationData calculationDataMiddle, out CalculationData calculationDataFirst, out CalculationData calculationDataLast)
     {
@@ -25,9 +32,13 @@ public static class CalculationsGeneration
         */
         calculationDataFirst = GenerateCalculation(calculationDataMiddle.Value1, true, true, true, true);
         if (calculationDataMiddle.Calculation == CalculationData.CalculationType.Subtract)
+        {
             calculationDataLast = GenerateCalculation(calculationDataMiddle.Value2, false, false, true, true);
+        }
         else
+        {
             calculationDataLast = GenerateCalculation(calculationDataMiddle.Value2, true, true, true, true);
+        }
     }
 
 
@@ -40,6 +51,9 @@ public static class CalculationsGeneration
         };
 
         multiplicationAllowed = multiplicationAllowed && CanAllowMultiplication(calculationData.Result);
+
+        divisionAllowed = divisionAllowed && result <= MaxNumberDivided;
+
         calculationData.Calculation = GetRandomCalculation(additionAllowed, subtractionAllowed, multiplicationAllowed, divisionAllowed);
 
         calculationData = GenerateCalculationData(calculationData);
@@ -55,9 +69,13 @@ public static class CalculationsGeneration
         if (additionAllowed) allowedCalculationsList.Add(CalculationData.CalculationType.Add);
         if (subtractionAllowed) allowedCalculationsList.Add(CalculationData.CalculationType.Subtract);
         if (multiplicationAllowed) allowedCalculationsList.Add(CalculationData.CalculationType.Multiply);
+        
+        /*
         if (divisionAllowed) allowedCalculationsList.Add(CalculationData.CalculationType.Divide);
+        */
 
-        int randomIndex = Random.Range(0, allowedCalculationsList.Count);
+        int randomIndex = Random.Range(0, allowedCalculationsList.Count - 1);
+
         return allowedCalculationsList.ToArray()[randomIndex];
     }
 
@@ -82,7 +100,7 @@ public static class CalculationsGeneration
 
             case CalculationData.CalculationType.Subtract:
                 // Subtract
-                int rangeMultiplier = 5;
+                int rangeMultiplier = SubtractRangeMultiplier;
                 calculationData.Value1 = Random.Range(calculationData.Result + 1, calculationData.Result * rangeMultiplier);
                 calculationData.Value2 = calculationData.Value1 - calculationData.Result;
                 break;
@@ -100,7 +118,7 @@ public static class CalculationsGeneration
 
             case CalculationData.CalculationType.Divide:
                 // Divide
-                int range = 10;
+                int range = DivideRange;
                 calculationData.Value2 = Random.Range(2, range);
                 calculationData.Value1 = calculationData.Value2 * calculationData.Result;
                 break;
@@ -160,6 +178,6 @@ public static class CalculationsGeneration
 
     private static T GetRandomValueFromArray<T>(T[] values)
     {
-        return values[Random.Range(0, values.Length)];
+        return values[Random.Range(0, values.Length - 1)];
     }
 }
