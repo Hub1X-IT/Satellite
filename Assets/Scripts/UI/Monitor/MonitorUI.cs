@@ -3,120 +3,120 @@ using UnityEngine.UI;
 
 public class MonitorUI : MonoBehaviour
 {
-    [SerializeField]
-    private Button notepadButton;
-    [SerializeField]
-    private Button folderButton;
-    [SerializeField]
-    private Button doorAppButton;
+    private ComputerUI computerUI;
 
     [SerializeField]
-    private Canvas notepadCanvas;
-    [SerializeField]
-    private Canvas folderCanvas;
-    [SerializeField]
-    private Canvas doorAppCanvas;
+    private ComputerUICursorController monitorCursor;
 
-    private bool notepadEnabled;
-    private bool folderEnabled;
-    private bool doorAppEnabled;
+    
+    [SerializeField]
+    private Button appsButton;
+
+    [SerializeField]
+    private Button filesButton;
+
+
+    [SerializeField]
+    private Canvas appsCanvas;
+
+    [SerializeField]
+    private Canvas filesCanvas;
+
+
+    private bool appsEnabled;
+
+    private bool filesEnabled;
+
 
 
     private void Awake()
     {
-        /*
-        notepadButton.onClick.AddListener(NotepadEnable);
-        folderButton.onClick.AddListener(FolderEnable);
-        doorAppButton.onClick.AddListener(DoorAppEnable);
-        */
+        computerUI = GetComponent<ComputerUI>();
 
-        /*
-        notepadButton.onClick.AddListener(() => SetNotepadEnabled(!notepadEnabled));
-        folderButton.onClick.AddListener(() => SetFolderEnabled(!folderEnabled));
-        doorAppButton.onClick.AddListener(() => SetDoorAppEnabled(!doorAppEnabled));
+        computerUI.ComputerViewEnabled += (enabled) =>
+        {
+            monitorCursor.SetEnabled(enabled);
+        };
 
-        SetNotepadEnabled(false);
-        SetFolderEnabled(false);
-        SetDoorAppEnabled(false);
-        */
+        
+        
+        appsButton.onClick.AddListener(AppsEnable);
+        filesButton.onClick.AddListener(FilesEnable);
 
-        notepadCanvas.enabled = false;
-        folderCanvas.enabled = false;
-        doorAppCanvas.enabled = false;
+
+
+        //appsButton.onClick.AddListener(() => SetAppsEnabled(!appsEnabled));
+        //filesButton.onClick.AddListener(() => SetFilesEnabled(!filesEnabled));
+
+
+        
+        //SetAppsEnabled(false);
+        //SetFilesEnabled(false);
+
+
+
+
+        appsCanvas.enabled = false;
+        filesCanvas.enabled = false;
+
+
+        monitorCursor.SetEnabled(false);
     }
 
 
     private void CloseAll()
     {
-        folderCanvas.enabled = false;
-        notepadCanvas.enabled = false;
-        doorAppCanvas.enabled = false;
+        appsCanvas.enabled = false;
+        filesCanvas.enabled = false;
     }
 
 
-    private void NotepadEnable()
-    {
-        Debug.Log("bazinga");
-        if (notepadCanvas.enabled == false)
-        {
-            CloseAll();
-            notepadCanvas.enabled = true;
-        }
-        else
-        {
-            notepadCanvas.enabled = false;
-        }
-    }
-
-    private void FolderEnable()
+    private void AppsEnable()
     {
         Debug.Log("bazinga2");
 
-        if (folderCanvas.enabled == false)
+        if (appsCanvas.enabled == false)
         {
             CloseAll();
-            folderCanvas.enabled = true;
+            appsCanvas.enabled = true;
         }
         else
         {
-            folderCanvas.enabled = false;
+            appsCanvas.enabled = false;
         }
     }
 
-    private void DoorAppEnable()
+    private void FilesEnable()
     {
         Debug.Log("bazinga3");
 
-        if (doorAppCanvas.enabled == false)
+        if (filesCanvas.enabled == false)
         {
             CloseAll();
-            doorAppCanvas.enabled = true;
+            filesCanvas.enabled = true;
         }
         else
         {
-            doorAppCanvas.enabled = false;
+            filesCanvas.enabled = false;
         }
     }
 
 
-    private void SetNotepadEnabled(bool enabled)
+
+    /*
+    private void SetAppsEnabled(bool enabled)
     {
         CloseAll();
-        notepadCanvas.enabled = enabled;
-        notepadEnabled = enabled;
+        appsCanvas.enabled = enabled;
+        appsEnabled = enabled;
     }
 
-    private void SetFolderEnabled(bool enabled)
+    private void SetFilesEnabled(bool enabled)
     {
         CloseAll();
-        folderCanvas.enabled = enabled;
-        folderEnabled = enabled;
+        filesCanvas.enabled = enabled;
+        filesEnabled = enabled;
     }
+    */
 
-    private void SetDoorAppEnabled(bool enabled)
-    {
-        CloseAll();
-        doorAppCanvas.enabled = enabled;
-        doorAppEnabled = enabled;
-    }
 }
