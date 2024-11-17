@@ -6,7 +6,7 @@ public class Smartphone : MonoBehaviour, IInteractable
     private InteractionVisual interactionVisual;
 
     [SerializeField]
-    private GameEvent phonePickup;
+    private GameEventSO phonePickupGameEvent;
 
     public InteractionVisual InteractVisual => interactionVisual;
 
@@ -20,7 +20,7 @@ public class Smartphone : MonoBehaviour, IInteractable
     public void Interact()
     {
         gameObject.SetActive(false);
-        phonePickup.Raise();
+        phonePickupGameEvent.RaiseEvent();
         PlayerScriptsController.SetCanShowSmartphoneUI(true);
     }
 }

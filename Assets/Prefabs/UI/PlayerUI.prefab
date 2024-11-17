@@ -1645,7 +1645,6 @@ GameObject:
   - component: {fileID: 8030892185887222892}
   - component: {fileID: 4015131839552245323}
   - component: {fileID: 2485885394367708148}
-  - component: {fileID: 6975318299025901741}
   m_Layer: 5
   m_Name: Objective
   m_TagString: Untagged
@@ -1771,34 +1770,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &6975318299025901741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5200759104637293374}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 469fe58406346314ea3603e5d4525708, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 5ba6531333a3d33469c99836913a23f2, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2485885394367708148}
-        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
-        m_MethodName: set_text
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 'Open phone and check Email [Tab]'
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &5458142747120562624
 GameObject:
   m_ObjectHideFlags: 0
@@ -1893,8 +1864,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e1e7d4972065b9469e132885616bd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chapter: {fileID: 1760827418940695936}
-  objectiveDescription: {fileID: 2485885394367708148}
+  chapterTextField: {fileID: 1760827418940695936}
+  objectiveTextField: {fileID: 2485885394367708148}
 --- !u!114 &2586897248224566890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1907,10 +1878,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f132f3f12d8db1e4b9fe50d15ffde684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvents: []
+  gameEvents:
+  - {fileID: 11400000, guid: 5ba6531333a3d33469c99836913a23f2, type: 2}
   OnGameEventRaised:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2485885394367708148}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 'Open phone and check Email [Tab]'
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5720926543037628362
 GameObject:
   m_ObjectHideFlags: 0

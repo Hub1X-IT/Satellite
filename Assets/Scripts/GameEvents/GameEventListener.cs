@@ -3,22 +3,48 @@ using UnityEngine.Events;
 
 public class GameEventListener : MonoBehaviour
 {
-    public GameEvent gameEvent;
+    [SerializeField]
+    private GameEventSO[] gameEvents;
 
-    public UnityEvent response;
+    public UnityEvent OnGameEventRaised;
 
+    private void Awake()
+    {
+        foreach (var gameEvent in gameEvents)
+        {
+            gameEvent.EventRaised += InvokeUnityEvent;
+        }
+    }
+
+    /*
     private void OnEnable()
     {
-        gameEvent.RegisterListener(this);
+        foreach (var gameEvent in gameEvents)
+        {
+            gameEvent.EventRaised += InvokeUnityEvent;
+        }
     }
 
     private void OnDisable()
     {
-        gameEvent.UnregisterListener(this);
+        foreach (var gameEvent in gameEvents)
+        {
+            gameEvent.EventRaised -= InvokeUnityEvent;
+        }
     }
-
-    public void OnEventRaised()
+    */
+    /*
+    private void OnDestroy()
     {
-        response.Invoke();
+        foreach (var gameEvent in gameEvents)
+        {
+            gameEvent.EventRaised -= InvokeUnityEvent;
+        }
+    }
+    */
+
+    private void InvokeUnityEvent()
+    {
+        OnGameEventRaised?.Invoke();
     }
 }

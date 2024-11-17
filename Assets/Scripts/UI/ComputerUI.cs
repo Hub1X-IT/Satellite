@@ -10,10 +10,10 @@ public class ComputerUI : MonoBehaviour
     private Computer computer;
 
     [SerializeField]
-    private NewGameEventComputerSO computerViewEnabledGameEvent;
+    private GameEventComputerSO computerViewEnabledGameEvent;
 
     [SerializeField]
-    private NewGameEventSO computerViewDisabledGameEvent;
+    private GameEventSO computerViewDisabledGameEvent;
 
     [SerializeField]
     private ComputerUICursorController computerCursor;

@@ -9,10 +9,10 @@ public class Computer : MonoBehaviour
     private Desk desk;
 
     [SerializeField]
-    private NewGameEventComputerSO computerViewEnabledGameEvent;
+    private GameEventComputerSO computerViewEnabledGameEvent;
 
     [SerializeField]
-    private NewGameEventSO computerViewDisabledGameEvent;
+    private GameEventSO computerViewDisabledGameEvent;
 
     [SerializeField]
     private InteractionTrigger computerTrigger;

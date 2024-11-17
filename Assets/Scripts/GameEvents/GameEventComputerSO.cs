@@ -1,4 +1,4 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameEvents/GameEvent<Computer>", order = 1)]
-public class NewGameEventComputerSO : NewGameEventSO<Computer> { }
+public class GameEventComputerSO : GameEventSO<Computer> { }
