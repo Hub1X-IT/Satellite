@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerHUDControllerUI : MonoBehaviour
+public class PlayerHudUI : MonoBehaviour
 {
     private bool canShowPlayerHUD;
 

@@ -7,7 +7,7 @@ public class NotepadAppUI : MonoBehaviour
     private TMP_Text textField;
 
     [SerializeField]
-    NotepadTextScript textinput;
+    NotepadTextSO textinput;
 
     private void Awake()
     {

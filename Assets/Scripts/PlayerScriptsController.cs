@@ -5,7 +5,7 @@ public class PlayerScriptsController : MonoBehaviour
     private static PlayerMovementController playerMovementController;
     private static CameraRotationController playerCameraRotationController;
 
-    private static PlayerHUDControllerUI playerHUDController;
+    private static PlayerHudUI playerHudUI;
 
     private static SmartphoneControllerUI smartphoneController;
 
@@ -15,7 +15,7 @@ public class PlayerScriptsController : MonoBehaviour
         playerMovementController = GetComponent<PlayerMovementController>();
         playerCameraRotationController = GetComponent<CameraRotationController>();
 
-        playerHUDController = GetComponentInChildren<PlayerHUDControllerUI>();
+        playerHudUI = GetComponentInChildren<PlayerHudUI>();
 
         smartphoneController = GetComponentInChildren<SmartphoneControllerUI>(true);
 
@@ -32,7 +32,7 @@ public class PlayerScriptsController : MonoBehaviour
 
     public static void SetCanShowPlayerHUD(bool canShow)
     {
-        playerHUDController.SetCanShowPlayerHUD(canShow);
+        playerHudUI.SetCanShowPlayerHUD(canShow);
     }
 
     public static void SetCanShowSmartphoneUI(bool canShow)
