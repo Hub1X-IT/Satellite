@@ -47,7 +47,10 @@ public class ComputerUI : MonoBehaviour
         TMP_InputField[] inputFields = GetComponentsInChildren<TMP_InputField>(true);
         foreach (var inputField in inputFields)
         {
-            AddInputField(inputField);
+            if (!inputField.readOnly)
+            {
+                AddInputField(inputField);
+            }
         }
 
         SetComputerViewEnalbed(false);
