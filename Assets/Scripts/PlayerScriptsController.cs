@@ -2,22 +2,28 @@ using UnityEngine;
 
 public class PlayerScriptsController : MonoBehaviour
 {
-    private static PlayerMovementController playerMovementController;
-    private static CameraRotationController playerCameraRotationController;
+    [SerializeField]
+    private PlayerMovementController playerMovementController;    
+    [SerializeField]
+    private CameraRotationController playerCameraRotationController;
+    [SerializeField]
+    private PlayerHudUI playerHudUI;
+    [SerializeField]
+    private SmartphoneUI smartphoneController;
 
-    private static PlayerHudUI playerHudUI;
+    private static PlayerMovementController playerMovementControllerStatic;
+    private static CameraRotationController playerCameraRotationControllerStatic;
 
-    private static SmartphoneControllerUI smartphoneController;
+    private static PlayerHudUI playerHudUIStatic;
 
+    private static SmartphoneUI smartphoneControllerStatic;
 
     private void Awake()
     {
-        playerMovementController = GetComponent<PlayerMovementController>();
-        playerCameraRotationController = GetComponent<CameraRotationController>();
-
-        playerHudUI = GetComponentInChildren<PlayerHudUI>();
-
-        smartphoneController = GetComponentInChildren<SmartphoneControllerUI>(true);
+        playerMovementControllerStatic = playerMovementController;
+        playerCameraRotationControllerStatic = playerCameraRotationController;
+        playerHudUIStatic = playerHudUI;
+        smartphoneControllerStatic = smartphoneController;
 
         SetPlayerMovementEnabled(true);
         SetCanShowPlayerHUD(true);
@@ -26,17 +32,17 @@ public class PlayerScriptsController : MonoBehaviour
 
     public static void SetPlayerMovementEnabled(bool enabled)
     {
-        playerMovementController.enabled = enabled;
-        playerCameraRotationController.enabled = enabled;
+        playerMovementControllerStatic.enabled = enabled;
+        playerCameraRotationControllerStatic.enabled = enabled;
     }
 
     public static void SetCanShowPlayerHUD(bool canShow)
     {
-        playerHudUI.SetCanShowPlayerHUD(canShow);
+        playerHudUIStatic.SetCanShowPlayerHUD(canShow);
     }
 
     public static void SetCanShowSmartphoneUI(bool canShow)
     {
-        smartphoneController.SetCanShowSmartphone(canShow);
+        smartphoneControllerStatic.SetCanShowSmartphone(canShow);
     }
 }
