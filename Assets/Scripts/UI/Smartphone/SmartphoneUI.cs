@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SmartphoneControllerUI : MonoBehaviour
+public class SmartphoneUI : MonoBehaviour
 {
     [SerializeField]
     private Animator smartphoneAnimator;
