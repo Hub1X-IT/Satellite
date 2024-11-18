@@ -4,16 +4,15 @@ using UnityEngine;
 public class CommandPromptUI : MonoBehaviour
 {
     [SerializeField]
-    TMP_InputField inputField;
+    TMP_InputField inputTextField;
 
     [SerializeField]
-    TMP_InputField outputField;
+    TMP_InputField outputTextField;
 
     [SerializeField]
     TextAsset cmdStartText;
 
     private string outputText;
-    // public string OutputText { get; private set; }
 
     private const string CommandPromptStartText = ">>> ";
     private const string CommandPromptEndText = "\n";
@@ -21,40 +20,39 @@ public class CommandPromptUI : MonoBehaviour
     private void Awake()
     {
         outputText = string.Empty;
-        outputField.text = string.Empty;
-        inputField.text = CommandPromptStartText;
-
-        SubmitCommand(cmdStartText.text, true);
+        outputTextField.text = string.Empty;
+        inputTextField.text = CommandPromptStartText;
 
         GameInput.OnCommandSubmitAction += () =>
         {
-            string command = inputField.text.Remove(0, CommandPromptStartText.Length);
-            SubmitCommand(command, false);
+            string command = inputTextField.text.Remove(0, CommandPromptStartText.Length);
+            SubmitCommand(command);
             CommandPromptManager.SubmitCommand(command);
         };
 
-        inputField.onValueChanged.AddListener((text) =>
+        inputTextField.onValueChanged.AddListener((text) =>
         {
             if (text.Length < CommandPromptStartText.Length)
             {
-                inputField.text = CommandPromptStartText;
-                inputField.caretPosition = inputField.text.Length;
+                inputTextField.text = CommandPromptStartText;
+                inputTextField.caretPosition = inputTextField.text.Length;
             }
         });
+
+        SetStartupText(cmdStartText.text + "\n");
     }
 
-    private void SubmitCommand(string command, bool startingTXT)
+    private void SubmitCommand(string command)
     {
-        inputField.text = CommandPromptStartText;
-        inputField.ActivateInputField();
-        if (!startingTXT)
-        {
-            outputText += CommandPromptStartText + command + CommandPromptEndText;
-        }
-        else
-        {
-            outputText += command;
-        }
-        outputField.text = outputText;
+        inputTextField.text = CommandPromptStartText;
+        inputTextField.ActivateInputField();
+        outputText += CommandPromptStartText + command + CommandPromptEndText;
+        outputTextField.text = outputText;
+    }
+
+    private void SetStartupText(string text)
+    {
+        outputText = text;
+        outputTextField.text = outputText;
     }
 }
