@@ -83,9 +83,11 @@ public class PasswordEncodingTest : MonoBehaviour
             encryptedCharactersDebugString += encryptedCharacter.EncryptedCharacterString + "\n";
         }
 
+        /*
         Debug.Log(password);
         Debug.Log(asciiCodesDebugString);
         Debug.Log(encryptedCharactersDebugString);
+        */
 
         outputField0.text = encryptedCharacters[0].EncryptedCharacterString;
         outputField1.text = encryptedCharacters[1].EncryptedCharacterString;
