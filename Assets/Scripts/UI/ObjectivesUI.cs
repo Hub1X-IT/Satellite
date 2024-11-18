@@ -9,10 +9,16 @@ public class ObjectivesUI : MonoBehaviour
     [SerializeField]
     private TMP_Text objectiveTextField;
 
+    [SerializeField]
+    private string defaultChapter;
+
+    [SerializeField]
+    private string defaultObjective;
+
     private void Awake()
     {
-        SetChapter("Day 1");
-        SetObjective("Take the phone from the night table");
+        SetChapter(defaultChapter);
+        SetObjective(defaultObjective);
     }
 
     public void SetChapter(string chapter)

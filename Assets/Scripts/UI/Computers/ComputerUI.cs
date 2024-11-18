@@ -20,7 +20,7 @@ public class ComputerUI : MonoBehaviour
 
     private CanvasGroup canvasGroup;
 
-    private List<TMP_InputField> inputFieldList;
+    HashSet<TMP_InputField> inputFieldSet;
 
     private void Awake()
     {
@@ -42,7 +42,7 @@ public class ComputerUI : MonoBehaviour
             ComputerViewEnabled?.Invoke(false);
         };
 
-        inputFieldList = new();
+        inputFieldSet = new();
 
         TMP_InputField[] inputFields = GetComponentsInChildren<TMP_InputField>(true);
         foreach (var inputField in inputFields)
@@ -67,14 +67,14 @@ public class ComputerUI : MonoBehaviour
     {
         inputField.onSelect.AddListener(SetCanExitComputerViewFalse);
         inputField.onDeselect.AddListener(SetCanExitComputerViewTrue);
-        inputFieldList.Add(inputField);
+        inputFieldSet.Add(inputField);
     }
 
     private void RemoveInputField(TMP_InputField inputField)
     {
         inputField.onSelect.RemoveListener(SetCanExitComputerViewFalse);
         inputField.onDeselect.RemoveListener(SetCanExitComputerViewTrue);
-        inputFieldList.Remove(inputField);
+        inputFieldSet.Remove(inputField);
     }
 
     private void SetCanExitComputerViewFalse(string _)
