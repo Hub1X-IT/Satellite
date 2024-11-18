@@ -9,6 +9,9 @@ public class CommandPromptUI : MonoBehaviour
     [SerializeField]
     TMP_InputField outputField;
 
+    [SerializeField]
+    TextAsset cmdStartText;
+
     private string outputText;
     // public string OutputText { get; private set; }
 
@@ -21,10 +24,12 @@ public class CommandPromptUI : MonoBehaviour
         outputField.text = string.Empty;
         inputField.text = CommandPromptStartText;
 
+        SubmitCommand(cmdStartText.text, true);
+
         GameInput.OnCommandSubmitAction += () =>
         {
             string command = inputField.text.Remove(0, CommandPromptStartText.Length);
-            SubmitCommand(command);
+            SubmitCommand(command, false);
             CommandPromptManager.SubmitCommand(command);
         };
 
@@ -38,11 +43,18 @@ public class CommandPromptUI : MonoBehaviour
         });
     }
 
-    private void SubmitCommand(string command)
+    private void SubmitCommand(string command, bool startingTXT)
     {
         inputField.text = CommandPromptStartText;
         inputField.ActivateInputField();
-        outputText += CommandPromptStartText + command + CommandPromptEndText;
+        if (!startingTXT)
+        {
+            outputText += CommandPromptStartText + command + CommandPromptEndText;
+        }
+        else
+        {
+            outputText += command;
+        }
         outputField.text = outputText;
     }
 }
