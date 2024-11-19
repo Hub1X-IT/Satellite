@@ -71,6 +71,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leverAnimator: {fileID: 2041758971039499008}
+  cubeObject: {fileID: 6363118461353995956}
+  leverOffMaterial: {fileID: 2100000, guid: bc8f9d61f526c4c49ae688303cf9ea71, type: 2}
+  leverOnMaterial: {fileID: 2100000, guid: fa6a16f24a031f74cb9421e3fbad3ac8, type: 2}
   leverToggleAudioSource: {fileID: 6104491556179827315}
 --- !u!114 &103788655273030497
 MonoBehaviour:
@@ -396,6 +399,11 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!23 &6363118461353995956 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -4683669308469848369, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
+  m_PrefabInstance: {fileID: 7443910406512146555}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6972887712617471888 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
