@@ -7,9 +7,13 @@ public static class GameManager
 
     public static bool IsGamePaused { get; private set; }
 
+    public static CursorLockMode HiddenCursorLockMode { get; set; }
+    private static CursorLockMode ShownCursorLockMode { get; set; } = CursorLockMode.None;
+
     public static void OnAwake()
     {
         GameInput.OnPauseAction += () => PauseGameToMenu(!IsGamePaused);
+        HiddenCursorLockMode = CursorLockMode.Locked;
     }
 
     public static void OnStart()
@@ -37,8 +41,8 @@ public static class GameManager
 
     public static void SetCursorShown(bool shown)
     {
-        if (shown) Cursor.lockState = CursorLockMode.None;
-        else Cursor.lockState = CursorLockMode.Locked;
+        if (shown) Cursor.lockState = ShownCursorLockMode;
+        else Cursor.lockState = HiddenCursorLockMode;
         Cursor.visible = shown;
     }
 

@@ -62,7 +62,7 @@ public class PasswordEncodingTest : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        if (GameManager.HiddenCursorLockMode == CursorLockMode.Locked && Input.GetKeyDown(KeyCode.T))
         {
             TestEncoding();
         }
