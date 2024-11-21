@@ -17,6 +17,12 @@ public class Desk : MonoBehaviour
 
     private CameraRotationController deskCameraRotationController;
 
+    private const float PlayerMovementEnableTimeOffset = 0.6f;
+
+    private bool shouldEnablePlayerMovement;
+
+    private float playerMovementEnableTimer;
+
     public bool CanExitDeskView { get; set; }
 
     public CinemachineCamera DeskCinemachineCamera => deskCinemachineCamera;
@@ -41,6 +47,21 @@ public class Desk : MonoBehaviour
 
         SetDeskCameraRotationEnabled(false);
         CanExitDeskView = true;
+        shouldEnablePlayerMovement = false;
+    }
+
+    private void Update()
+    {
+        // Player movement enable timer
+        if (shouldEnablePlayerMovement)
+        {
+            if (playerMovementEnableTimer >= PlayerMovementEnableTimeOffset)
+            {
+                shouldEnablePlayerMovement = false;
+                EnablePlayerMovement();
+            }
+            playerMovementEnableTimer += Time.deltaTime;
+        }
     }
 
     private void OnDestroy()
@@ -74,10 +95,17 @@ public class Desk : MonoBehaviour
         {
             GameInput.PlayerInputActions.Desk.Disable();
             CameraController.SetActiveCinemachineCamera(CameraController.CinemachineMainCamera);
-            GameInput.PlayerInputActions.PlayerWalking.Enable();
+            // Set timer to enable player movement
+            playerMovementEnableTimer = 0f;
+            shouldEnablePlayerMovement = true;
         }
         
         deskSitAudioSource.Play();
+    }
+
+    private void EnablePlayerMovement()
+    {
+        GameInput.PlayerInputActions.PlayerWalking.Enable();
     }
 
     public void SetDeskCameraRotationEnabled(bool enabled)
