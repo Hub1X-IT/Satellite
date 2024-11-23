@@ -7,7 +7,6 @@ public class MonitorMainMenuUI : MonoBehaviour
     private Button applicationsButton;
     [SerializeField]
     private Button filesButton;
-
     [SerializeField]
     private ApplicationsMenuUI applicationsMenu;
     [SerializeField]

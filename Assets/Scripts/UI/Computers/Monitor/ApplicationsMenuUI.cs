@@ -9,11 +9,18 @@ public class ApplicationsMenuUI : MonoBehaviour
     [SerializeField]
     private DoorAppUI doorApp;
 
+    [SerializeField]
+    private ApplicationsMenuUI applicationsMenu;
+
+    [SerializeField]
+    Button closebutton;
+
     private bool isDoorAppEnabled;
 
     private void Awake()
     {
         doorAppButton.onClick.AddListener(() => SetDoorAppEnabled(!isDoorAppEnabled));
+        closebutton.onClick.AddListener(() => applicationsMenu.gameObject.SetActive(false));
 
         SetDoorAppEnabled(false);
     }
