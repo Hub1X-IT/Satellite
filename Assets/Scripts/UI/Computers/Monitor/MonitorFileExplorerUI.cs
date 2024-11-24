@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MonitorFileExplorerUI : MonoBehaviour
@@ -13,41 +14,46 @@ public class MonitorFileExplorerUI : MonoBehaviour
 
     [SerializeField]
     private MonitorUIFolder mainParentFolderUI;
-    
 
-    private void Awake()
+
+    private void Start()
     {
         RefreshFolders();
     }
 
     private void RefreshFolders()
     {
-        mainParentFolderUI.SetFolderName(mainParentFolder.SelfName);
-        Transform currentParentObject = mainParentFolderUI.transform;
-        AddChildDataContainters(mainParentFolder, currentParentObject);
+        mainParentFolderUI.SetUIName(mainParentFolder.SelfName);
+        AddChildDataContainters(mainParentFolder, mainParentFolderUI);
+        mainParentFolderUI.RefreshFolderUISize();
     }
 
-    private void AddChildDataContainters(FolderSO folder, Transform currentParentObject)
+    private void AddChildDataContainters(FolderSO folderSO, MonitorUIFolder currentParentUIFolder)
     {
-        foreach (var dataContainer in folder.ChildDataContainers)
+        HashSet<MonitorUIDataContainer> dataContainerUISet = new();
+
+        foreach (var dataContainer in folderSO.ChildDataContainers)
         {
-            /*
-            Debug.Log(dataContainer.name);
-            Debug.Log(dataContainer.GetType().ToString());
-            */
             if (dataContainer.GetType() == typeof(FolderSO))
             {
-                Transform newParentObject = Instantiate(folderUIPrefab.gameObject, currentParentObject).transform;
-                FolderSO folderSO = (FolderSO)dataContainer;
-                newParentObject.GetComponent<MonitorUIFolder>().SetFolderName(folderSO.SelfName);
-                AddChildDataContainters(folderSO, newParentObject);
+                FolderSO newFolderSO = (FolderSO)dataContainer;
+                MonitorUIFolder newParentUIFolder = Instantiate(folderUIPrefab.gameObject, currentParentUIFolder.transform).GetComponent<MonitorUIFolder>();
+                newParentUIFolder.SetUIName(newFolderSO.SelfName);
+
+                // newParentUIFolder.gameObject.name = newParentUIFolder.name = newFolderSO.SelfName;
+
+                AddChildDataContainters(newFolderSO, newParentUIFolder);
+
+                dataContainerUISet.Add(newParentUIFolder);
             }
-            else if (dataContainer.GetType() == typeof(FileSO))
+            else if (dataContainer.GetType() == typeof(FileStringSO))
             {
-                MonitorUIFile fileUI = Instantiate(fileUIPrefab.gameObject, currentParentObject).GetComponent<MonitorUIFile>();
-                FileSO fileSO = (FileSO)dataContainer;
-                fileUI.SetFileName(fileSO.SelfName);
-                fileUI.SetFileContent(fileSO.Content);
+                FileStringSO fileSO = (FileStringSO)dataContainer;
+                MonitorUIFile fileUI = Instantiate(fileUIPrefab.gameObject, currentParentUIFolder.transform).GetComponent<MonitorUIFile>();
+                fileUI.SetUIName(fileSO.SelfName);
+                fileUI.SetFileContent(fileSO.FileContent.Content);
+
+                dataContainerUISet.Add(fileUI);
             }
         }
     }

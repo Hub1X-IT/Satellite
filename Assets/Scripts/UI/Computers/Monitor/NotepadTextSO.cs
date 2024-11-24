@@ -4,5 +4,5 @@ using UnityEngine;
 public class NotepadTextSO : ScriptableObject
 {
     [Tooltip("Text for the notepad")]
-    public string textboxtext;
+    public string textboxText;
 }

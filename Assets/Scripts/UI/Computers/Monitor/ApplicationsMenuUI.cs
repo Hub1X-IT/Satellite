@@ -13,7 +13,7 @@ public class ApplicationsMenuUI : MonoBehaviour
     private ApplicationsMenuUI applicationsMenu;
 
     [SerializeField]
-    Button closebutton;
+    private Button closebutton;
 
     private bool isDoorAppEnabled;
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Objectives/ChapterSO")]
 public class ChapterSO : ScriptableObject
 {
     [SerializeField]

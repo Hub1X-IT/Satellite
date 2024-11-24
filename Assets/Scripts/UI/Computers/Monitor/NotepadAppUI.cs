@@ -5,20 +5,20 @@ using UnityEngine.UI;
 public class NotepadAppUI : MonoBehaviour
 {
     [SerializeField]
-    private TMP_Text textField;
-
-    [SerializeField]
     private FilesMenuUI filesMenu;
 
     [SerializeField]
-    NotepadTextSO textinput;
+    private Button closeButton;
 
     [SerializeField]
-    Button closebutton;
+    private NotepadTextSO textInput;
+
+    [SerializeField]
+    private TMP_Text textField;
 
     private void Awake()
     {
-        textField.text = textinput.textboxtext;
-        closebutton.onClick.AddListener(() => filesMenu.gameObject.SetActive(false));
+        textField.text = textInput.textboxText;
+        closeButton.onClick.AddListener(() => filesMenu.gameObject.SetActive(false));
     }
 }

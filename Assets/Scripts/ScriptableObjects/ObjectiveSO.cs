@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Objectives/ObjectiveSO")]
 public class ObjectiveSO : ScriptableObject
 {
     [SerializeField]

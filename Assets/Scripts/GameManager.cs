@@ -41,21 +41,13 @@ public static class GameManager
 
     public static void SetCursorShown(bool shown)
     {
-        if (shown) Cursor.lockState = ShownCursorLockMode;
-        else Cursor.lockState = HiddenCursorLockMode;
+        Cursor.lockState = shown ? ShownCursorLockMode : HiddenCursorLockMode;
         Cursor.visible = shown;
     }
 
     public static void SetTimeStarted(bool started)
     {
-        if (started)
-        {
-            SetTimeScale(1f);
-        }
-        else
-        {
-            SetTimeScale(0f);
-        }
+        SetTimeScale(started ? 1f : 0f);
     }
 
     public static void SetTimeScale(float timeScale)
