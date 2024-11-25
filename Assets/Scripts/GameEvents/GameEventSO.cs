@@ -14,7 +14,7 @@ public class GameEventSO<T> : ScriptableObject
     // This class should not be referenced in other scripts, instead you should reference the child classes.
 
     // If the GameEvent is raised without arguments, overridenData will become the data for the EventRaised event.
-    // This should mostly be used for constant data and not for references to objects within the scene.
+    // This should mostly be used for constant data.
 
     public event Action<T> EventRaised;
     

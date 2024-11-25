@@ -16,6 +16,42 @@ PrefabInstance:
       propertyPath: defaultObjective
       value: Take the phone from the night table
       objectReference: {fileID: 0}
+    - target: {fileID: 1073227884434988056, guid: 9291a41787d04ed499cca9a0b9699565, type: 3}
+      propertyPath: objectivesData.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1073227884434988056, guid: 9291a41787d04ed499cca9a0b9699565, type: 3}
+      propertyPath: objectivesData.Array.data[0].Objective
+      value: 'Open phone and check Email [Tab]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1073227884434988056, guid: 9291a41787d04ed499cca9a0b9699565, type: 3}
+      propertyPath: objectivesData.Array.data[1].Objective
+      value: Start computer and connect through CMD to bank manager system
+      objectReference: {fileID: 0}
+    - target: {fileID: 1073227884434988056, guid: 9291a41787d04ed499cca9a0b9699565, type: 3}
+      propertyPath: gameEventsSerializableDictionary.items.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1073227884434988056, guid: 9291a41787d04ed499cca9a0b9699565, type: 3}
+      propertyPath: objectivesData.Array.data[0].GameEvents.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1073227884434988056, guid: 9291a41787d04ed499cca9a0b9699565, type: 3}
+      propertyPath: objectivesData.Array.data[1].GameEvents.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1073227884434988056, guid: 9291a41787d04ed499cca9a0b9699565, type: 3}
+      propertyPath: 'objectivesData.Array.data[0].GameEvents.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 5ba6531333a3d33469c99836913a23f2, type: 2}
+    - target: {fileID: 1073227884434988056, guid: 9291a41787d04ed499cca9a0b9699565, type: 3}
+      propertyPath: 'objectivesData.Array.data[1].GameEvents.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: aaa77a2a19e0f1c4c95acb8c133b72ad, type: 2}
+    - target: {fileID: 1073227884434988056, guid: 9291a41787d04ed499cca9a0b9699565, type: 3}
+      propertyPath: gameEventsSerializableDictionary.items.Array.data[0].key.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1383219822268406804, guid: 9291a41787d04ed499cca9a0b9699565, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -100,47 +136,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: ObjectivesUILevel1
       objectReference: {fileID: 0}
-    - target: {fileID: 7081238780652637901, guid: 9291a41787d04ed499cca9a0b9699565, type: 3}
-      propertyPath: 'gameEvents.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 5ba6531333a3d33469c99836913a23f2, type: 2}
-    - target: {fileID: 7081238780652637901, guid: 9291a41787d04ed499cca9a0b9699565, type: 3}
-      propertyPath: OnGameEventRaised.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7081238780652637901, guid: 9291a41787d04ed499cca9a0b9699565, type: 3}
-      propertyPath: OnGameEventRaised.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 4572436931401427469}
-    - target: {fileID: 7081238780652637901, guid: 9291a41787d04ed499cca9a0b9699565, type: 3}
-      propertyPath: OnGameEventRaised.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7081238780652637901, guid: 9291a41787d04ed499cca9a0b9699565, type: 3}
-      propertyPath: OnGameEventRaised.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: set_text
-      objectReference: {fileID: 0}
-    - target: {fileID: 7081238780652637901, guid: 9291a41787d04ed499cca9a0b9699565, type: 3}
-      propertyPath: OnGameEventRaised.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: TMPro.TMP_Text, Unity.TextMeshPro
-      objectReference: {fileID: 0}
-    - target: {fileID: 7081238780652637901, guid: 9291a41787d04ed499cca9a0b9699565, type: 3}
-      propertyPath: OnGameEventRaised.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9291a41787d04ed499cca9a0b9699565, type: 3}
---- !u!114 &4572436931401427469 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8679154629264492829, guid: 9291a41787d04ed499cca9a0b9699565, type: 3}
-  m_PrefabInstance: {fileID: 5117780292113818384}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

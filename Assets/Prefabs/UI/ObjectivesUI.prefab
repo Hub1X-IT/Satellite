@@ -146,7 +146,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1383219822268406804}
   - component: {fileID: 1073227884434988056}
-  - component: {fileID: 7081238780652637901}
   m_Layer: 5
   m_Name: ObjectivesUI
   m_TagString: Untagged
@@ -192,49 +191,6 @@ MonoBehaviour:
   objectiveTextField: {fileID: 8679154629264492829}
   defaultChapter: 
   defaultObjective: 
---- !u!114 &7081238780652637901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1563033513904359510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f132f3f12d8db1e4b9fe50d15ffde684, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvents:
-  - {fileID: 0}
-  - {fileID: 11400000, guid: aaa77a2a19e0f1c4c95acb8c133b72ad, type: 2}
-  OnGameEventRaised:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 'Open phone and check Email [Tab]'
-          m_BoolArgument: 0
-        m_CallState: 0
-      - m_Target: {fileID: 8679154629264492829}
-        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
-        m_MethodName: set_text
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Start computer and connect through CMD to bank manager
-            system
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &4226964029937273622
 GameObject:
   m_ObjectHideFlags: 0
