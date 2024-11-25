@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,10 +15,19 @@ public class MonitorUIFolder : MonitorUIDataContainer
     protected override void Awake()
     {
         base.Awake();
-        verticalLayoutGroup = GetComponent<VerticalLayoutGroup>();
+        verticalLayoutGroup = GetComponent<VerticalLayoutGroup>();        
     }
 
-    public void RefreshFolderUISize()
+    public IEnumerator RefreshFolderUIOnNextFrame()
+    {
+        yield return null;
+        RefreshFolderUISize();
+        // May be a temporary solution
+        verticalLayoutGroup.enabled = !verticalLayoutGroup.enabled;
+        verticalLayoutGroup.enabled = !verticalLayoutGroup.enabled;
+    }
+
+    private void RefreshFolderUISize()
     {
         currentSize = baseFolderSize;
         verticalChildOffset = verticalLayoutGroup.spacing;
@@ -26,13 +36,12 @@ public class MonitorUIFolder : MonitorUIDataContainer
 
         foreach (var childDataContainer in childDataContainersUI)
         {
-            // Only include folders that are direct children of this folder.
-            if (childDataContainer.transform.parent == transform)
+            // Only include active folders that are direct children of this folder.
+            if (childDataContainer.gameObject.activeSelf && childDataContainer.transform.parent == transform)
             {
                 if (childDataContainer.GetType() == typeof(MonitorUIFolder))
                 {
-                    MonitorUIFolder monitorUIFolder = (MonitorUIFolder)childDataContainer;
-                    monitorUIFolder.RefreshFolderUISize();
+                    ((MonitorUIFolder)childDataContainer).RefreshFolderUISize();
                 }
                 AddChildDataContainerUI(childDataContainer);
             }
