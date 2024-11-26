@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class Lever : MonoBehaviour, IInteractable
 {
@@ -9,15 +8,6 @@ public class Lever : MonoBehaviour, IInteractable
 
     [SerializeField]
     private Animator leverAnimator;
-
-    [SerializeField]
-    private MeshRenderer cubeObject;
-
-    [SerializeField]
-    private Material leverOffMaterial;
-
-    [SerializeField]
-    private Material leverOnMaterial;
 
     [SerializeField]
     private AudioSource leverToggleAudioSource;
@@ -40,16 +30,7 @@ public class Lever : MonoBehaviour, IInteractable
     private void SetLeverEnabled(bool enabled)
     {
         isLeverEnabled = enabled;
-        if (enabled)
-        {
-            leverAnimator.SetTrigger(LeverOnTrigger);
-            cubeObject.material = leverOnMaterial;
-        }
-        else
-        {
-            leverAnimator.SetTrigger(LeverOffTrigger);
-            cubeObject.material = leverOffMaterial;
-        }
+        leverAnimator.SetTrigger(enabled ? LeverOnTrigger : LeverOffTrigger);
         leverToggleAudioSource.Play();
     }
 }
