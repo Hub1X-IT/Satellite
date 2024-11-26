@@ -4,6 +4,12 @@ using UnityEngine.UI;
 
 public class MonitorUIFolder : MonitorUIDataContainer
 {
+    [SerializeField]
+    private Button folderContentButton;
+
+    [SerializeField]
+    private Button childFoldersButton;
+
     private VerticalLayoutGroup verticalLayoutGroup;
 
     private readonly Vector2 baseFolderSize = new(600f, 80f);
@@ -15,7 +21,10 @@ public class MonitorUIFolder : MonitorUIDataContainer
     protected override void Awake()
     {
         base.Awake();
-        verticalLayoutGroup = GetComponent<VerticalLayoutGroup>();        
+        verticalLayoutGroup = GetComponent<VerticalLayoutGroup>();
+
+        folderContentButton.onClick.AddListener(OpenFolderContent);
+        childFoldersButton.onClick.AddListener(ShowChildFolders);
     }
 
     public IEnumerator RefreshFolderUIOnNextFrame()
@@ -54,5 +63,15 @@ public class MonitorUIFolder : MonitorUIDataContainer
     {
         currentSize.x = Mathf.Max(currentSize.x, dataContainerUI.SelfRectTransform.sizeDelta.x);
         currentSize.y += dataContainerUI.SelfRectTransform.sizeDelta.y + verticalChildOffset;
+    }
+
+    private void OpenFolderContent()
+    {
+        Debug.Log(name + ": OpenFolderContent");
+    }
+
+    private void ShowChildFolders()
+    {
+        Debug.Log(name + "; ShowChildFolders");
     }
 }

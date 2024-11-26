@@ -60,7 +60,7 @@ public class MonitorFileExplorerUI : MonoBehaviour
 
                 AddChildDataContainters(newFolderSO, newParentUIFolder);
 
-                newParentUIFolder.gameObject.SetActive(newFolderSO.IsOpen);
+                // newParentUIFolder.gameObject.SetActive(newFolderSO.IsOpen);
 
                 newMonitorUIDataContainer = newParentUIFolder;
                 newDataContainerSO = newFolderSO;
@@ -70,11 +70,16 @@ public class MonitorFileExplorerUI : MonoBehaviour
                 FileStringSO newFileSO = (FileStringSO)dataContainer;
                 MonitorUIFile newFileUI = Instantiate(fileUIPrefab.gameObject, currentParentUIFolder.transform).GetComponent<MonitorUIFile>();
 
+                // Temporary
+                newFileUI.gameObject.SetActive(false);
+
                 newFileUI.SetFileContent(newFileSO.FileContent.Content);
 
                 newMonitorUIDataContainer = newFileUI;
                 newDataContainerSO = newFileSO;
             }
+
+            newMonitorUIDataContainer.gameObject.SetActive(currentFolderSO.IsOpen);
 
             newMonitorUIDataContainer.SetUIName(newMonitorUIDataContainer.gameObject.name = newMonitorUIDataContainer.name = newDataContainerSO.SelfName);
         }
