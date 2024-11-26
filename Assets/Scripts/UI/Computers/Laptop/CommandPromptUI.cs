@@ -1,16 +1,23 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CommandPromptUI : MonoBehaviour
 {
     [SerializeField]
-    TMP_InputField inputTextField;
+    private TMP_InputField inputTextField;
 
     [SerializeField]
-    TMP_InputField outputTextField;
+    private TMP_Text outputTextField;
+    // private 
 
     [SerializeField]
-    TextAsset cmdStartText;
+    private TextAsset cmdStartText;
+
+    /*
+    [SerializeField]
+    private ScrollRect outputFieldScrollRect;
+    */
 
     private string outputText;
 
@@ -37,6 +44,15 @@ public class CommandPromptUI : MonoBehaviour
                 inputTextField.text = CommandPromptStartText;
                 inputTextField.caretPosition = inputTextField.text.Length;
             }
+            /*
+            for (int i = 0; i < CommandPromptStartText.Length; i++)
+            {
+                if (text[i] != CommandPromptStartText[i])
+                {
+                    
+                }
+            }
+            */
         });
 
         SetStartupText(cmdStartText.text + "\n");
@@ -46,8 +62,13 @@ public class CommandPromptUI : MonoBehaviour
     {
         inputTextField.text = CommandPromptStartText;
         inputTextField.ActivateInputField();
+
         outputText += CommandPromptStartText + command + CommandPromptEndText;
         outputTextField.text = outputText;
+
+        // outputFieldScrollRect.verticalNormalizedPosition = 0;
+
+        // outputTextField.caretPosition = outputTextField.text.Length;
     }
 
     private void SetStartupText(string text)
