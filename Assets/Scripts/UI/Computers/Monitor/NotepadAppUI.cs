@@ -8,9 +8,6 @@ public class NotepadAppUI : MonoBehaviour
     private FilesMenuUI filesMenu;
 
     [SerializeField]
-    private Button closeButton;
-
-    [SerializeField]
     private NotepadTextSO textInput;
 
     [SerializeField]
@@ -19,6 +16,5 @@ public class NotepadAppUI : MonoBehaviour
     private void Awake()
     {
         textField.text = textInput.textboxText;
-        closeButton.onClick.AddListener(() => filesMenu.gameObject.SetActive(false));
     }
 }

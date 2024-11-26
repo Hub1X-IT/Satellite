@@ -7,6 +7,9 @@ public class FilesMenuUI : MonoBehaviour
     private Button notepadAppButton;
 
     [SerializeField]
+    private Button closeButton;
+
+    [SerializeField]
     private NotepadAppUI notepadApp;
 
     private bool isNotepadAppEnabled;
@@ -14,12 +17,14 @@ public class FilesMenuUI : MonoBehaviour
     private void Awake()
     {
         notepadAppButton.onClick.AddListener(() => SetNotepadEnabled(!isNotepadAppEnabled));
+        closeButton.onClick.AddListener(() => CloseAll());
         SetNotepadEnabled(false);
     }
 
     private void CloseAll()
     {
         notepadApp.gameObject.SetActive(false);
+        isNotepadAppEnabled = false;
     }
 
     private void SetNotepadEnabled(bool enabled)

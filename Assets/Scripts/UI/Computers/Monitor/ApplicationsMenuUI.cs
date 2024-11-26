@@ -20,8 +20,8 @@ public class ApplicationsMenuUI : MonoBehaviour
     private void Awake()
     {
         doorAppButton.onClick.AddListener(() => SetDoorAppEnabled(!isDoorAppEnabled));
-        closebutton.onClick.AddListener(() => applicationsMenu.gameObject.SetActive(false));
-
+        closebutton.onClick.AddListener(() => doorApp.gameObject.SetActive(false));
+        closebutton.onClick.AddListener(() => isDoorAppEnabled = false);
         SetDoorAppEnabled(false);
     }
 
