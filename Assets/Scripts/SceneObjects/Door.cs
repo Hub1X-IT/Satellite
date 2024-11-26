@@ -19,6 +19,7 @@ public class Door : MonoBehaviour
 
     private const string IS_INVERTED_BOOL = "IsInverted";
     private const string DOOR_OPEN_BOOL = "DoorOpen";
+    private string DOOR_ANIM_STATE;
 
     private bool isDoorOpen;
 
@@ -42,9 +43,13 @@ public class Door : MonoBehaviour
         isDoorOpen = open;
         doorAnimator.SetBool(IS_INVERTED_BOOL, isInverted);
         doorAnimator.SetBool(DOOR_OPEN_BOOL, isDoorOpen); 
-        if (shouldPlaySound)
+        if (open && shouldPlaySound)
         {
             doorAudioSource.Play();
+        }
+        else if (!open && shouldPlaySound)
+        {
+            
         }
     }
 }
