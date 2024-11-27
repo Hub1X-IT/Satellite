@@ -43,13 +43,9 @@ public class Door : MonoBehaviour
         isDoorOpen = open;
         doorAnimator.SetBool(IS_INVERTED_BOOL, isInverted);
         doorAnimator.SetBool(DOOR_OPEN_BOOL, isDoorOpen); 
-        if (open && shouldPlaySound)
+        if (shouldPlaySound)
         {
             doorAudioSource.Play();
-        }
-        else if (!open && shouldPlaySound)
-        {
-            
         }
     }
 }

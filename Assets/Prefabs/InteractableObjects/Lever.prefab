@@ -71,9 +71,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leverAnimator: {fileID: 2579021649398340370}
-  cubeObject: {fileID: 6363118461353995956}
-  leverOffMaterial: {fileID: 2100000, guid: bc8f9d61f526c4c49ae688303cf9ea71, type: 2}
-  leverOnMaterial: {fileID: 2100000, guid: fa6a16f24a031f74cb9421e3fbad3ac8, type: 2}
   leverToggleAudioSource: {fileID: 6104491556179827315}
 --- !u!114 &103788655273030497
 MonoBehaviour:
@@ -288,6 +285,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -8391222552659086748, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 123
+      objectReference: {fileID: 0}
     - target: {fileID: -5477749408508380018, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7071068
@@ -336,6 +337,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -516098083770646512, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 123
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
       propertyPath: m_Name
       value: Lever
@@ -343,6 +348,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 123
       objectReference: {fileID: 0}
     - target: {fileID: 4083501151425157549, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
       propertyPath: m_LocalRotation.w
@@ -364,6 +373,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8513859187771203891, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 123
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -372,11 +385,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2579021649398340370}
   m_SourcePrefab: {fileID: 100100000, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
---- !u!23 &6363118461353995956 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -4683669308469848369, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
-  m_PrefabInstance: {fileID: 7443910406512146555}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6972887712617471888 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9bcdf955f86425a4ea01119596e50a87, type: 3}
