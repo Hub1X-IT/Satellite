@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MonitorFileExplorerUI : MonoBehaviour
@@ -9,15 +10,22 @@ public class MonitorFileExplorerUI : MonoBehaviour
     private FolderContentUI folderContentUIPrefab;
 
     [SerializeField]
-    private Transform folderContentHolder;
-
-    [SerializeField]
     private FolderSO rootFolderSO;
 
     [SerializeField]
     private SideMonitorUIFolder rootSideFolderUI;
 
+    [SerializeField]
+    private Transform folderContentHolder;
+
+    private FolderContentUI currentFolderContentUI;
+
     public SideMonitorUIFolder SideFolderUIPrefab => sideFolderUIPrefab;
+
+    private void Awake()
+    {
+        rootFolderSO.RefreshChildDataContainers();
+    }
 
     private void Start()
     {
@@ -38,8 +46,10 @@ public class MonitorFileExplorerUI : MonoBehaviour
         rootSideFolderUI.RefreshChildFolders();
     }
 
-    private void OpenFolderContent(FolderSO folderSO)
+    public void OpenFolderContent(FolderSO folderSO, List<FolderSO> previousFolderSOList)
     {
-        FolderContentUI folderContentUI = Instantiate(folderContentUIPrefab.gameObject, folderContentHolder).GetComponent<FolderContentUI>();
+        Destroy(currentFolderContentUI.gameObject);
+        currentFolderContentUI = Instantiate(folderContentUIPrefab.gameObject, folderContentHolder).GetComponent<FolderContentUI>();
+        currentFolderContentUI.InitializeFolderContent(folderSO, this, previousFolderSOList);
     }
 }

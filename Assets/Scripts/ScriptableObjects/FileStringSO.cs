@@ -1,7 +1,10 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Monitor file system/FileStringSO", order = 5)]
-public class FileStringSO : DataContainerSO
+public class FileStringSO : FileSO
 {
-    public FileContent<string> FileContent;
+    [SerializeField]
+    private string fileContent;
+
+    public string FileContent => fileContent;
 }

@@ -21,4 +21,16 @@ public class FolderSO : DataContainerSO
         }
         return false;
     }
+
+    public void RefreshChildDataContainers()
+    {
+        foreach (var childDataContainerSO in ChildDataContainers)
+        {
+            childDataContainerSO.ParentFolderSO = this;
+            if (childDataContainerSO is FolderSO childFolderSO)
+            {
+                childFolderSO.RefreshChildDataContainers();
+            }
+        }
+    }
 }

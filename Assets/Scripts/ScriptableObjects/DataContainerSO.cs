@@ -6,4 +6,6 @@ public class DataContainerSO : ScriptableObject
     private string selfName;
 
     public string SelfName => selfName;
+
+    public FolderSO ParentFolderSO { get; set; }
 }
