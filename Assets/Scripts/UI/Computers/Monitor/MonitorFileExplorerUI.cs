@@ -3,16 +3,13 @@ using UnityEngine;
 public class MonitorFileExplorerUI : MonoBehaviour
 {
     [SerializeField]
-    private MonitorUIFolder folderUIPrefab;
+    private SideMonitorUIFolder sideFolderUIPrefab;
 
     [SerializeField]
-    private MonitorUIFile fileUIPrefab;
+    private FolderSO rootFolderSO;
 
     [SerializeField]
-    private FolderSO mainParentFolder;
-
-    [SerializeField]
-    private MonitorUIFolder mainParentFolderUI;
+    private SideMonitorUIFolder rootSideFolderUI;
 
     private void Start()
     {
@@ -27,61 +24,39 @@ public class MonitorFileExplorerUI : MonoBehaviour
         }
     }
 
-    private void RefreshFolders()
+    public void RefreshFolders()
     {
-        MonitorUIDataContainer[] childDataContainersUI = mainParentFolderUI.GetComponentsInChildren<MonitorUIDataContainer>(true);
+        MonitorUIDataContainer[] childDataContainersUI = rootSideFolderUI.GetComponentsInChildren<MonitorUIDataContainer>(true);
 
         foreach (var childDataContainer in childDataContainersUI)
         {
-            if (childDataContainer.transform.parent == mainParentFolderUI.transform)
+            if (childDataContainer.transform.parent == rootSideFolderUI.transform)
             {
-                Destroy(childDataContainer.gameObject);
+                childDataContainer.DestroySelf();
             }
         }
 
-        AddChildDataContainters(mainParentFolder, mainParentFolderUI);
+        AddChildFolders(rootFolderSO, rootSideFolderUI);
 
-        mainParentFolderUI.SetUIName(mainParentFolder.SelfName);
+        rootSideFolderUI.InitializeFolderUI(rootFolderSO, this);
 
-        StartCoroutine(mainParentFolderUI.RefreshFolderUIOnNextFrame());
+        rootSideFolderUI.RefreshFolderUI();
     }
 
-    private void AddChildDataContainters(FolderSO currentFolderSO, MonitorUIFolder currentParentUIFolder)
+    private void AddChildFolders(FolderSO currentFolderSO, SideMonitorUIFolder currentUIFolder)
     {
-        foreach (var dataContainer in currentFolderSO.ChildDataContainers)
+        foreach (var dataContainerSO in currentFolderSO.ChildDataContainers)
         {
-            MonitorUIDataContainer newMonitorUIDataContainer = null;
-            DataContainerSO newDataContainerSO = null;
-
-            if (dataContainer.GetType() == typeof(FolderSO))
+            if (dataContainerSO is FolderSO newFolderSO)
             {
-                FolderSO newFolderSO = (FolderSO)dataContainer;
-                MonitorUIFolder newParentUIFolder = Instantiate(folderUIPrefab.gameObject, currentParentUIFolder.transform).GetComponent<MonitorUIFolder>();
+                SideMonitorUIFolder newUIFolder = Instantiate(sideFolderUIPrefab.gameObject, currentUIFolder.transform).GetComponent<SideMonitorUIFolder>();
 
-                AddChildDataContainters(newFolderSO, newParentUIFolder);
+                newUIFolder.InitializeFolderUI(newFolderSO, this);
 
-                // newParentUIFolder.gameObject.SetActive(newFolderSO.IsOpen);
+                AddChildFolders(newFolderSO, newUIFolder);
 
-                newMonitorUIDataContainer = newParentUIFolder;
-                newDataContainerSO = newFolderSO;
+                newUIFolder.gameObject.SetActive(currentFolderSO.AreChildFoldersShown);
             }
-            else if (dataContainer.GetType() == typeof(FileStringSO))
-            {
-                FileStringSO newFileSO = (FileStringSO)dataContainer;
-                MonitorUIFile newFileUI = Instantiate(fileUIPrefab.gameObject, currentParentUIFolder.transform).GetComponent<MonitorUIFile>();
-
-                // Temporary
-                newFileUI.gameObject.SetActive(false);
-
-                newFileUI.SetFileContent(newFileSO.FileContent.Content);
-
-                newMonitorUIDataContainer = newFileUI;
-                newDataContainerSO = newFileSO;
-            }
-
-            newMonitorUIDataContainer.gameObject.SetActive(currentFolderSO.IsOpen);
-
-            newMonitorUIDataContainer.SetUIName(newMonitorUIDataContainer.gameObject.name = newMonitorUIDataContainer.name = newDataContainerSO.SelfName);
         }
     }
 }

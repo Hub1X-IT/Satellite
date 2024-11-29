@@ -4,7 +4,7 @@ using UnityEngine;
 public abstract class MonitorUIDataContainer : MonoBehaviour
 {
     [SerializeField]
-    private TMP_Text nameTextField;
+    protected TMP_Text nameTextField;
 
     public RectTransform SelfRectTransform { get; private set; }
 
@@ -13,8 +13,15 @@ public abstract class MonitorUIDataContainer : MonoBehaviour
         SelfRectTransform = GetComponent<RectTransform>();
     }
 
-    public void SetUIName(string name)
+    public void SetName(string newName)
     {
-        nameTextField.text = name;
+        gameObject.name = name = nameTextField.text = newName;
+    }
+
+    public void DestroySelf()
+    {
+        SetName(name + "_Destroyed");
+        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }
