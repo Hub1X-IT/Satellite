@@ -6,57 +6,40 @@ public class MonitorFileExplorerUI : MonoBehaviour
     private SideMonitorUIFolder sideFolderUIPrefab;
 
     [SerializeField]
+    private FolderContentUI folderContentUIPrefab;
+
+    [SerializeField]
+    private Transform folderContentHolder;
+
+    [SerializeField]
     private FolderSO rootFolderSO;
 
     [SerializeField]
     private SideMonitorUIFolder rootSideFolderUI;
 
+    public SideMonitorUIFolder SideFolderUIPrefab => sideFolderUIPrefab;
+
     private void Start()
     {
-        RefreshFolders();
+        RefreshSideFolders();
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.V))
         {
-            RefreshFolders();
+            RefreshSideFolders();
         }
     }
 
-    public void RefreshFolders()
+    public void RefreshSideFolders()
     {
-        MonitorUIDataContainer[] childDataContainersUI = rootSideFolderUI.GetComponentsInChildren<MonitorUIDataContainer>(true);
-
-        foreach (var childDataContainer in childDataContainersUI)
-        {
-            if (childDataContainer.transform.parent == rootSideFolderUI.transform)
-            {
-                childDataContainer.DestroySelf();
-            }
-        }
-
-        AddChildFolders(rootFolderSO, rootSideFolderUI);
-
         rootSideFolderUI.InitializeFolderUI(rootFolderSO, this);
-
-        rootSideFolderUI.RefreshFolderUI();
+        rootSideFolderUI.RefreshChildFolders();
     }
 
-    private void AddChildFolders(FolderSO currentFolderSO, SideMonitorUIFolder currentUIFolder)
+    private void OpenFolderContent(FolderSO folderSO)
     {
-        foreach (var dataContainerSO in currentFolderSO.ChildDataContainers)
-        {
-            if (dataContainerSO is FolderSO newFolderSO)
-            {
-                SideMonitorUIFolder newUIFolder = Instantiate(sideFolderUIPrefab.gameObject, currentUIFolder.transform).GetComponent<SideMonitorUIFolder>();
-
-                newUIFolder.InitializeFolderUI(newFolderSO, this);
-
-                AddChildFolders(newFolderSO, newUIFolder);
-
-                newUIFolder.gameObject.SetActive(currentFolderSO.AreChildFoldersShown);
-            }
-        }
+        FolderContentUI folderContentUI = Instantiate(folderContentUIPrefab.gameObject, folderContentHolder).GetComponent<FolderContentUI>();
     }
 }

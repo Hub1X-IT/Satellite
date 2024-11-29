@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3036495353419708561}
   - component: {fileID: 1249592678469084000}
+  - component: {fileID: 3367088393523270413}
   m_Layer: 5
   m_Name: FolderContentUI
   m_TagString: Untagged
@@ -49,14 +50,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
+    m_Left: 20
     m_Right: 0
-    m_Top: 0
+    m_Top: 20
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: 0, y: 0}
+  m_Spacing: {x: 20, y: 20}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &3367088393523270413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906375901802954774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1221d0d81052c0743bb3b54fa7234537, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

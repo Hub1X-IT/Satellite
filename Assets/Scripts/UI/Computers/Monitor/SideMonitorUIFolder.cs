@@ -40,7 +40,9 @@ public class SideMonitorUIFolder : MonitorUIDataContainer
     {
         selfFolderSO = folderSO;
         currentMonitorFileExplorerUI = monitorFileExplorer;
+
         SetName(selfFolderSO.SelfName);
+
         childFoldersButton.gameObject.SetActive(gameObject.activeSelf && selfFolderSO.HasChildFolders());
         childFoldersButton.image.sprite = selfFolderSO.AreChildFoldersShown ? childFoldersShownSprite : childFoldersHiddenSprite;
     }
@@ -48,7 +50,7 @@ public class SideMonitorUIFolder : MonitorUIDataContainer
     private void ToggleChildFolders()
     {
         selfFolderSO.AreChildFoldersShown = !selfFolderSO.AreChildFoldersShown;
-        currentMonitorFileExplorerUI.RefreshFolders();
+        currentMonitorFileExplorerUI.RefreshSideFolders();
     }
 
     private void ToggleFolderContent()
@@ -56,10 +58,38 @@ public class SideMonitorUIFolder : MonitorUIDataContainer
         Debug.Log(name + ": ToggleFolderContent");
     }
 
-    public void RefreshFolderUI()
+    public void RefreshChildFolders()
     {
         // Should only be called on the root folder.
+
+        MonitorUIDataContainer[] childDataContainersUI = GetComponentsInChildren<MonitorUIDataContainer>(true);
+        foreach (var childDataContainer in childDataContainersUI)
+        {
+            if (childDataContainer.transform.parent == transform)
+            {
+                childDataContainer.DestroySelf();
+            }
+        }
+
+        AddChildFolders(selfFolderSO);
+
         RefreshFolderUISize();
+    }
+
+    public void AddChildFolders(FolderSO currentFolderSO)
+    {
+        foreach (var dataContainerSO in currentFolderSO.ChildDataContainers)
+        {
+            if (dataContainerSO is FolderSO newFolderSO)
+            {
+                SideMonitorUIFolder newUIFolder = Instantiate(currentMonitorFileExplorerUI.SideFolderUIPrefab.gameObject,
+                    transform).GetComponent<SideMonitorUIFolder>();
+
+                newUIFolder.InitializeFolderUI(newFolderSO, currentMonitorFileExplorerUI);
+                newUIFolder.AddChildFolders(newFolderSO);
+                newUIFolder.gameObject.SetActive(currentFolderSO.AreChildFoldersShown);
+            }
+        }
     }
 
     private void RefreshFolderUISize()
@@ -69,16 +99,16 @@ public class SideMonitorUIFolder : MonitorUIDataContainer
 
         MonitorUIDataContainer[] childDataContainersUI = GetComponentsInChildren<MonitorUIDataContainer>(true);
 
-        foreach (var dataContainerUI in childDataContainersUI)
+        foreach (var childDataContainerUI in childDataContainersUI)
         {
             // Only include active folders that are direct children of this folder.
-            if (dataContainerUI.gameObject.activeSelf && dataContainerUI.transform.parent == transform)
+            if (childDataContainerUI.gameObject.activeSelf && childDataContainerUI.transform.parent == transform)
             {
-                if (dataContainerUI is SideMonitorUIFolder folderUI)
+                if (childDataContainerUI is SideMonitorUIFolder childFolderUI)
                 {
-                    folderUI.RefreshFolderUISize();
+                    childFolderUI.RefreshFolderUISize();
                 }
-                AddChildDataContainerUI(dataContainerUI);
+                AddChildDataContainerUI(childDataContainerUI);
             }
         }
 
