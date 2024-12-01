@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class ComputerUIInputField : MonoBehaviour
+public class ComputerUIDynamicInputField : MonoBehaviour
 {
     private ComputerUI computerUI;
 

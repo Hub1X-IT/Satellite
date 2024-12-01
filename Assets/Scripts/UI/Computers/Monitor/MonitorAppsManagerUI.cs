@@ -24,11 +24,6 @@ public class MonitorAppsManagerUI : MonoBehaviour
 
     public MonitorFileSystemManager MonitorFileSystemManager { get; set; }
 
-    private void Start()
-    {
-        // Temporary, only for testing.
-        OpenFileExplorer();
-    }
 
     public MonitorAppUI OpenApplication(ApplicationType application)
     {

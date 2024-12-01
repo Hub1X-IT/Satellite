@@ -6,9 +6,6 @@ public class FolderContentUIFile : MonitorUIDataContainer
     [SerializeField]
     private Button openButton;
 
-    [SerializeField]
-    private NewNotepadAppUI notepadAppUIPrefab;
-
     private FileSO selfFileSO;
 
     private FolderContentUI parentFolderContentUI;

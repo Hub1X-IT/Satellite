@@ -1,6 +1,16 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MonitorUI : MonoBehaviour
 {
-    // Left for future use.
+    [SerializeField]
+    private MonitorUIStartMenu startMenu;
+
+    [SerializeField]
+    private Button startMenuButton;
+
+    private void Awake()
+    {
+        startMenuButton.onClick.AddListener(startMenu.ToggleStartMenu);
+    }
 }
