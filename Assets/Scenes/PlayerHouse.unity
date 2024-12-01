@@ -7841,7 +7841,7 @@ GameObject:
   m_Component:
   - component: {fileID: 936714759}
   m_Layer: 0
-  m_Name: PasswordCrackingTest2
+  m_Name: OldPasswordCrackingTest2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16161,7 +16161,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1826156612}
-  - component: {fileID: 1826156611}
+  - component: {fileID: 1826156613}
   m_Layer: 0
   m_Name: PasswordEncodingTest
   m_TagString: Untagged
@@ -16169,28 +16169,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1826156611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1826156610}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13b9e95af0b51de40b39d7f4d2bac4aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  password: dupa
-  testCanvas: {fileID: 1090054265}
-  outputField0: {fileID: 1098083298}
-  outputField1: {fileID: 2022621361}
-  outputField2: {fileID: 508609067}
-  outputField3: {fileID: 1781652219}
-  inputField0: {fileID: 1288627713}
-  inputField1: {fileID: 1807460308}
-  inputField2: {fileID: 131379700}
-  inputField3: {fileID: 1971090494}
 --- !u!4 &1826156612
 Transform:
   m_ObjectHideFlags: 0
@@ -16206,6 +16184,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1945169896}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1826156613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1826156610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 534e81013075474489fd7ebc72b5a8ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  password: dupa
+  testCanvas: {fileID: 1090054265}
+  outputField0: {fileID: 1098083298}
+  outputField1: {fileID: 2022621361}
+  outputField2: {fileID: 508609067}
+  outputField3: {fileID: 1781652219}
+  inputField0: {fileID: 1288627713}
+  inputField1: {fileID: 1807460308}
+  inputField2: {fileID: 131379700}
+  inputField3: {fileID: 1971090494}
 --- !u!4 &1826723455 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8068127811275879608, guid: c21683d62c6fbec48b80464695057995, type: 3}
@@ -17590,7 +17590,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1945169896}
   m_Layer: 0
-  m_Name: PasswordCrackingTesting
+  m_Name: OldPasswordCrackingTesting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17655,7 +17655,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1949920836}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2209aa7692a4cb34ea18472869850e0f, type: 3}
+  m_Script: {fileID: 11500000, guid: 07eab30cabb9a164abb98f901ff40ebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1951268118 stripped

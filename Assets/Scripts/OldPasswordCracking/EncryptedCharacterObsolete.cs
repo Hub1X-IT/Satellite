@@ -1,4 +1,4 @@
-public class EncryptedCharacter
+public class EncryptedCharacterObsolete
 {
     public int Result { get; private set; }
 
@@ -9,21 +9,21 @@ public class EncryptedCharacter
 
 
     // Between numbers 1 & 2
-    public CalculationData.CalculationType Calculation1 { get; private set; }
+    public CalculationDataObsolete.CalculationType Calculation1 { get; private set; }
 
     // Between numbers 2 & 3
-    public CalculationData.CalculationType Calculation2 { get; private set; }
+    public CalculationDataObsolete.CalculationType Calculation2 { get; private set; }
 
     // Between numbers 3 & 4
-    public CalculationData.CalculationType Calculation3 { get; private set; }
+    public CalculationDataObsolete.CalculationType Calculation3 { get; private set; }
 
 
     public string[] EncryptedCharacterStringArray { get; private set; }
     public string EncryptedCharacterString { get; private set; }
 
 
-    public EncryptedCharacter(int result, int number1, int number2, int number3, int number4,
-        CalculationData.CalculationType calculation1, CalculationData.CalculationType calculation2, CalculationData.CalculationType calculation3)
+    public EncryptedCharacterObsolete(int result, int number1, int number2, int number3, int number4,
+        CalculationDataObsolete.CalculationType calculation1, CalculationDataObsolete.CalculationType calculation2, CalculationDataObsolete.CalculationType calculation3)
     {
         Result = result;
 
@@ -40,7 +40,7 @@ public class EncryptedCharacter
     }
 
 
-    public EncryptedCharacter(CalculationData calculationDataMiddle, CalculationData calculationDataFirst, CalculationData calculationDataLast)
+    public EncryptedCharacterObsolete(CalculationDataObsolete calculationDataMiddle, CalculationDataObsolete calculationDataFirst, CalculationDataObsolete calculationDataLast)
     {
         Result = calculationDataMiddle.Result;
 
@@ -94,19 +94,19 @@ public class EncryptedCharacter
     }
 
 
-    private string GetCalculationString(CalculationData.CalculationType calculation)
+    private string GetCalculationString(CalculationDataObsolete.CalculationType calculation)
     {
         switch (calculation)
         {
-            case CalculationData.CalculationType.None:
+            case CalculationDataObsolete.CalculationType.None:
                 break;
-            case CalculationData.CalculationType.Add:
+            case CalculationDataObsolete.CalculationType.Add:
                 return "+";
-            case CalculationData.CalculationType.Subtract:
+            case CalculationDataObsolete.CalculationType.Subtract:
                 return "-";
-            case CalculationData.CalculationType.Multiply:
+            case CalculationDataObsolete.CalculationType.Multiply:
                 return "*";
-            case CalculationData.CalculationType.Divide:
+            case CalculationDataObsolete.CalculationType.Divide:
                 return "/";
         }
         return null;

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class CalculationsGeneration
+public static class CalculationsGenerationObsolete
 {
     private const int SubtractRangeMultiplier = 2;
     private const int DivideRange = 10;
@@ -11,13 +11,13 @@ public static class CalculationsGeneration
 
     // Division temporarily can't be used because it generates too large numbers.
 
-    public static EncryptedCharacter GetEncryptedCharacterForNumber(int number)
+    public static EncryptedCharacterObsolete GetEncryptedCharacterForNumber(int number)
     {
         GenerateCalculationsForNumber(number, out var calculationDataMiddle, out var calculationDataFirst, out var calculationDataLast);
-        return new EncryptedCharacter(calculationDataMiddle, calculationDataFirst, calculationDataLast);
+        return new EncryptedCharacterObsolete(calculationDataMiddle, calculationDataFirst, calculationDataLast);
     }
 
-    private static void GenerateCalculationsForNumber(int number, out CalculationData calculationDataMiddle, out CalculationData calculationDataFirst, out CalculationData calculationDataLast)
+    private static void GenerateCalculationsForNumber(int number, out CalculationDataObsolete calculationDataMiddle, out CalculationDataObsolete calculationDataFirst, out CalculationDataObsolete calculationDataLast)
     {
         // Calculation 0 (middle calculation)
         /*
@@ -31,7 +31,7 @@ public static class CalculationsGeneration
             so to get rid of this problem, if the middle calculation is subtraction, the second has to be multiplication or division.
         */
         calculationDataFirst = GenerateCalculation(calculationDataMiddle.Value1, true, true, true, true);
-        if (calculationDataMiddle.Calculation == CalculationData.CalculationType.Subtract)
+        if (calculationDataMiddle.Calculation == CalculationDataObsolete.CalculationType.Subtract)
         {
             calculationDataLast = GenerateCalculation(calculationDataMiddle.Value2, false, false, true, true);
         }
@@ -42,10 +42,10 @@ public static class CalculationsGeneration
     }
 
 
-    private static CalculationData GenerateCalculation(int result, bool additionAllowed, 
+    private static CalculationDataObsolete GenerateCalculation(int result, bool additionAllowed, 
         bool subtractionAllowed, bool multiplicationAllowed, bool divisionAllowed)
     {
-        CalculationData calculationData = new()
+        CalculationDataObsolete calculationData = new()
         {
             Result = result
         };
@@ -62,13 +62,13 @@ public static class CalculationsGeneration
     }
 
 
-    private static CalculationData.CalculationType GetRandomCalculation(bool additionAllowed, 
+    private static CalculationDataObsolete.CalculationType GetRandomCalculation(bool additionAllowed, 
         bool subtractionAllowed, bool multiplicationAllowed, bool divisionAllowed)
     {
-        List<CalculationData.CalculationType> allowedCalculationsList = new();
-        if (additionAllowed) allowedCalculationsList.Add(CalculationData.CalculationType.Add);
-        if (subtractionAllowed) allowedCalculationsList.Add(CalculationData.CalculationType.Subtract);
-        if (multiplicationAllowed) allowedCalculationsList.Add(CalculationData.CalculationType.Multiply);
+        List<CalculationDataObsolete.CalculationType> allowedCalculationsList = new();
+        if (additionAllowed) allowedCalculationsList.Add(CalculationDataObsolete.CalculationType.Add);
+        if (subtractionAllowed) allowedCalculationsList.Add(CalculationDataObsolete.CalculationType.Subtract);
+        if (multiplicationAllowed) allowedCalculationsList.Add(CalculationDataObsolete.CalculationType.Multiply);
         
         /*
         if (divisionAllowed) allowedCalculationsList.Add(CalculationData.CalculationType.Divide);
@@ -80,32 +80,32 @@ public static class CalculationsGeneration
     }
 
 
-    private static CalculationData GenerateCalculationData(CalculationData calculationData)
+    private static CalculationDataObsolete GenerateCalculationData(CalculationDataObsolete calculationData)
     {
         /// Input calculation data must have the result and calculation variables set; otherwise, the function returns null!
         /// Returns null when trying to multiply and the result is prime!
 
-        if (calculationData.Result == 0 || calculationData.Calculation == CalculationData.CalculationType.None)
+        if (calculationData.Result == 0 || calculationData.Calculation == CalculationDataObsolete.CalculationType.None)
         {
             return null;
         }
 
         switch (calculationData.Calculation)
         {
-            case CalculationData.CalculationType.Add:
+            case CalculationDataObsolete.CalculationType.Add:
                 // Add
                 calculationData.Value1 = Random.Range(1, calculationData.Result);
                 calculationData.Value2 = calculationData.Result - calculationData.Value1;
                 break;
 
-            case CalculationData.CalculationType.Subtract:
+            case CalculationDataObsolete.CalculationType.Subtract:
                 // Subtract
                 int rangeMultiplier = SubtractRangeMultiplier;
                 calculationData.Value1 = Random.Range(calculationData.Result + 1, calculationData.Result * rangeMultiplier);
                 calculationData.Value2 = calculationData.Value1 - calculationData.Result;
                 break;
 
-            case CalculationData.CalculationType.Multiply:
+            case CalculationDataObsolete.CalculationType.Multiply:
                 // Multiply
                 List<int> divisorsList = GetDivisors(calculationData.Result, out bool isPrime);
                 if (isPrime) return null;
@@ -116,7 +116,7 @@ public static class CalculationsGeneration
                 calculationData.Value2 = calculationData.Result / calculationData.Value1;
                 break;
 
-            case CalculationData.CalculationType.Divide:
+            case CalculationDataObsolete.CalculationType.Divide:
                 // Divide
                 int range = DivideRange;
                 calculationData.Value2 = Random.Range(2, range);

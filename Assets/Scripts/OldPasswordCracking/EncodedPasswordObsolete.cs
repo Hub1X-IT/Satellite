@@ -1,24 +1,24 @@
-public class EncodedPassword
+public class EncodedPasswordObsolete
 {
     public string Password { get; private set; }
 
     public int[] AsciiCodes { get; private set; }
 
-    public EncryptedCharacter[] EncryptedCharacters { get; private set; }
+    public EncryptedCharacterObsolete[] EncryptedCharacters { get; private set; }
 
-    public EncodedPassword(string password)
+    public EncodedPasswordObsolete(string password)
     {
         Password = password;
         AsciiCodes = EncodeToAscii(Password);
         EncryptedCharacters = EncryptCharacters(AsciiCodes);
     }
 
-    private EncryptedCharacter[] EncryptCharacters(int[] asciiCodes)
+    private EncryptedCharacterObsolete[] EncryptCharacters(int[] asciiCodes)
     {
-        EncryptedCharacter[] encryptedCharacters = new EncryptedCharacter[asciiCodes.Length];
+        EncryptedCharacterObsolete[] encryptedCharacters = new EncryptedCharacterObsolete[asciiCodes.Length];
         for (int i = 0; i < asciiCodes.Length; i++)
         {
-            encryptedCharacters[i] = CalculationsGeneration.GetEncryptedCharacterForNumber(asciiCodes[i]);
+            encryptedCharacters[i] = CalculationsGenerationObsolete.GetEncryptedCharacterForNumber(asciiCodes[i]);
         }
         return encryptedCharacters;
     }

@@ -1,9 +1,9 @@
-public class CalculationData
+public class CalculationDataObsolete
 {
-    public CalculationData() { }
+    public CalculationDataObsolete() { }
 
 
-    public CalculationData(int result, CalculationType calculation)
+    public CalculationDataObsolete(int result, CalculationType calculation)
     {
         Result = result;
         Calculation = calculation;

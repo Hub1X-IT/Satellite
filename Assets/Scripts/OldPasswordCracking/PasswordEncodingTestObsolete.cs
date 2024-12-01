@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class PasswordEncodingTest : MonoBehaviour
+public class PasswordEncodingTestObsolete : MonoBehaviour
 {
     [SerializeField]
     private string password;
@@ -70,15 +70,15 @@ public class PasswordEncodingTest : MonoBehaviour
 
     private void InitializeEncoding()
     {
-        EncodedPassword encodedPassword = new (this.password);
+        EncodedPasswordObsolete encodedPassword = new (this.password);
         string password = encodedPassword.Password;
         int[] asciiCodes = encodedPassword.AsciiCodes;
-        EncryptedCharacter[] encryptedCharacters = encodedPassword.EncryptedCharacters;
+        EncryptedCharacterObsolete[] encryptedCharacters = encodedPassword.EncryptedCharacters;
 
         string asciiCodesDebugString = "";
         foreach (int asciiCode in asciiCodes) { asciiCodesDebugString += asciiCode.ToString() + "\n"; };
         string encryptedCharactersDebugString = "";
-        foreach (EncryptedCharacter encryptedCharacter in encryptedCharacters)
+        foreach (EncryptedCharacterObsolete encryptedCharacter in encryptedCharacters)
         {
             encryptedCharactersDebugString += encryptedCharacter.EncryptedCharacterString + "\n";
         }
