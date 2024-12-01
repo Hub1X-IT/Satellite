@@ -2300,7 +2300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b667e17713f6384c95eacca09de8342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monitorAppManager: {fileID: 638352770}
+  monitorAppsManager: {fileID: 638352770}
   rootFolderSO: {fileID: 11400000, guid: decb61ccf00bcd145a50c04b10442b86, type: 2}
 --- !u!1001 &220752138
 PrefabInstance:
@@ -6569,12 +6569,12 @@ GameObject:
   - component: {fileID: 741450011}
   - component: {fileID: 741450012}
   m_Layer: 0
-  m_Name: CaesarCipherTest
+  m_Name: CiphersTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &741450011
 Transform:
   m_ObjectHideFlags: 0
@@ -6602,9 +6602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c824285327b94b4da44b62f3baeda5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stringToCipher: ABCD
-  cipherBase: ABCDEFGHIJKLMNOPQRSTUVWXYZ
-  shiftAmount: 5
+  stringToEncrypt: LMNO
 --- !u!1 &762684307
 GameObject:
   m_ObjectHideFlags: 0
@@ -17597,7 +17595,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1945169896
 Transform:
   m_ObjectHideFlags: 0

@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class MonitorFileSystemManager : MonoBehaviour
 {
+    // Can be more than one instance in scene - for different computers
+
     [SerializeField]
-    MonitorAppsManagerUI monitorAppManager;
+    MonitorAppsManagerUI monitorAppsManager;
 
     [SerializeField]
     private FolderSO rootFolderSO;
@@ -12,6 +14,6 @@ public class MonitorFileSystemManager : MonoBehaviour
 
     private void Awake()
     {
-        monitorAppManager.MonitorFileSystemManager = this;
+        monitorAppsManager.MonitorFileSystemManager = this;
     }
 }

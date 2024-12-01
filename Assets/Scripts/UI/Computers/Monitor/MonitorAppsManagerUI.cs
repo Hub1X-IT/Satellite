@@ -24,7 +24,6 @@ public class MonitorAppsManagerUI : MonoBehaviour
 
     public MonitorFileSystemManager MonitorFileSystemManager { get; set; }
 
-
     public MonitorAppUI OpenApplication(ApplicationType application)
     {
         MonitorAppUI instantiatedApp;
