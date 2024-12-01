@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Monitor file system/FolderSO", order = 1)]
 public class FolderSO : DataContainerSO
 {
-    public bool AreChildFoldersShown = true;
+    public bool ShouldShowChildFolders = true;
 
     [SerializeField]
     private DataContainerSO[] childDataContainers;

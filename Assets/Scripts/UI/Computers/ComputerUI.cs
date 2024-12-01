@@ -63,14 +63,14 @@ public class ComputerUI : MonoBehaviour
         computerCursor.SetEnabled(enabled);
     }
 
-    private void AddInputField(TMP_InputField inputField)
+    public void AddInputField(TMP_InputField inputField)
     {
         inputField.onSelect.AddListener(SetCanExitComputerViewFalse);
         inputField.onDeselect.AddListener(SetCanExitComputerViewTrue);
         inputFieldSet.Add(inputField);
     }
 
-    private void RemoveInputField(TMP_InputField inputField)
+    public void RemoveInputField(TMP_InputField inputField)
     {
         inputField.onSelect.RemoveListener(SetCanExitComputerViewFalse);
         inputField.onDeselect.RemoveListener(SetCanExitComputerViewTrue);

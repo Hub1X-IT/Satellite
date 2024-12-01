@@ -8,26 +8,14 @@ public class FolderContentUIFolder : MonitorUIDataContainer
 
     private FolderSO selfFolderSO;
 
-    private MonitorFileExplorerUI currentMonitorFileExplorerUI;
+    private FolderContentUI parentFolderContentUI;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        // openButton.onClick.AddListener(OpenFolderContent);
-    }
-
-
-    public void InitializeFolder(FolderSO folderSO, MonitorFileExplorerUI monitorFileExplorerUI)
+    public void InitializeFolder(FolderSO folderSO, FolderContentUI parentFolderContentUI)
     {
         selfFolderSO = folderSO;
-        currentMonitorFileExplorerUI = monitorFileExplorerUI;
+        this.parentFolderContentUI = parentFolderContentUI;
+        SetName(folderSO.SelfName);
 
-
+        openButton.onClick.AddListener(() => parentFolderContentUI.OpenNewFolderContent(selfFolderSO));
     }
-
-    private void OpenFolderContent()
-    {
-
-    }
-
 }

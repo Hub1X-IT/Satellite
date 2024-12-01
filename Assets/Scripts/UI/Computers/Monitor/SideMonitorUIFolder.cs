@@ -17,15 +17,11 @@ public class SideMonitorUIFolder : MonitorUIDataContainer
 
     private FolderSO selfFolderSO;
 
-    private MonitorFileExplorerUI currentMonitorFileExplorerUI;
+    private FileExplorerUI currentMonitorFileExplorerUI;
 
     private VerticalLayoutGroup verticalLayoutGroup;
 
     private readonly Vector2 baseFolderSize = new(600f, 100f);
-
-    private Vector2 currentSize;
-
-    private float verticalChildOffset;
 
     protected override void Awake()
     {
@@ -36,7 +32,7 @@ public class SideMonitorUIFolder : MonitorUIDataContainer
         folderContentButton.onClick.AddListener(ToggleFolderContent);
     }
 
-    public void InitializeFolderUI(FolderSO folderSO, MonitorFileExplorerUI monitorFileExplorer)
+    public void InitializeFolderUI(FolderSO folderSO, FileExplorerUI monitorFileExplorer)
     {
         selfFolderSO = folderSO;
         currentMonitorFileExplorerUI = monitorFileExplorer;
@@ -44,18 +40,18 @@ public class SideMonitorUIFolder : MonitorUIDataContainer
         SetName(selfFolderSO.SelfName);
 
         childFoldersButton.gameObject.SetActive(gameObject.activeSelf && selfFolderSO.HasChildFolders());
-        childFoldersButton.image.sprite = selfFolderSO.AreChildFoldersShown ? childFoldersShownSprite : childFoldersHiddenSprite;
+        childFoldersButton.image.sprite = selfFolderSO.ShouldShowChildFolders ? childFoldersShownSprite : childFoldersHiddenSprite;
     }
 
     private void ToggleChildFolders()
     {
-        selfFolderSO.AreChildFoldersShown = !selfFolderSO.AreChildFoldersShown;
+        selfFolderSO.ShouldShowChildFolders = !selfFolderSO.ShouldShowChildFolders;
         currentMonitorFileExplorerUI.RefreshSideFolders();
     }
 
     private void ToggleFolderContent()
     {
-        Debug.Log(name + ": ToggleFolderContent");
+        currentMonitorFileExplorerUI.OpenFolderContent(selfFolderSO, new());
     }
 
     public void RefreshChildFolders()
@@ -87,15 +83,15 @@ public class SideMonitorUIFolder : MonitorUIDataContainer
 
                 newUIFolder.InitializeFolderUI(newFolderSO, currentMonitorFileExplorerUI);
                 newUIFolder.AddChildFolders(newFolderSO);
-                newUIFolder.gameObject.SetActive(currentFolderSO.AreChildFoldersShown);
+                newUIFolder.gameObject.SetActive(currentFolderSO.ShouldShowChildFolders);
             }
         }
     }
 
     private void RefreshFolderUISize()
     {
-        currentSize = baseFolderSize;
-        verticalChildOffset = verticalLayoutGroup.spacing;
+        Vector2 currentSize = baseFolderSize;
+        float verticalChildOffset = verticalLayoutGroup.spacing;
 
         MonitorUIDataContainer[] childDataContainersUI = GetComponentsInChildren<MonitorUIDataContainer>(true);
 
@@ -108,16 +104,12 @@ public class SideMonitorUIFolder : MonitorUIDataContainer
                 {
                     childFolderUI.RefreshFolderUISize();
                 }
-                AddChildDataContainerUI(childDataContainerUI);
+                // Add child data container UI
+                currentSize.x = Mathf.Max(currentSize.x, childDataContainerUI.SelfRectTransform.sizeDelta.x);
+                currentSize.y += childDataContainerUI.SelfRectTransform.sizeDelta.y + verticalChildOffset;
             }
         }
 
         SelfRectTransform.sizeDelta = currentSize;
-    }
-
-    private void AddChildDataContainerUI(MonitorUIDataContainer dataContainerUI)
-    {
-        currentSize.x = Mathf.Max(currentSize.x, dataContainerUI.SelfRectTransform.sizeDelta.x);
-        currentSize.y += dataContainerUI.SelfRectTransform.sizeDelta.y + verticalChildOffset;
     }
 }
