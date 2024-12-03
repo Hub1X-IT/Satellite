@@ -10,6 +10,6 @@ public static class CommandPromptManager
     public static void SubmitCommand(string command)
     {
         previousCommandsQueue.Enqueue(command);
-        Debug.Log(command);
+        // Debug.Log(command);
     }
 }

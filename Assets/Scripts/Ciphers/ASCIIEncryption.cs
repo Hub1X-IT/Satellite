@@ -1,15 +1,33 @@
 using System;
-using UnityEngine;
 
 public static class ASCIIEncryption
 {
     public static string Encode(string input, int outputBase)
     {
         string output = "";
+
+        int desiredLength = outputBase switch
+        {
+            2 => 8,
+            8 => 3,
+            16 => 2,
+            _ => 0,
+        };
+
+        string addedString = "";
+
+        /*
+        for (int i = 0; i < desiredLength; i++)
+        {
+            addedString += "0";
+        }
+        */
+
         foreach (char c in input)
         {
-            output += Convert.ToString(c, outputBase) + " ";
+            output += addedString + Convert.ToString(c, outputBase) + " ";
         }
+
         return output;
     }
 

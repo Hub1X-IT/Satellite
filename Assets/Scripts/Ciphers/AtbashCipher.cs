@@ -10,6 +10,12 @@ public static class AtbashCipher
 
         foreach (char c in input)
         {
+            if (!cipherBase.Contains(c))
+            {
+                output += "Error";
+                continue;
+            }
+
             int index = cipherBase.Length - cipherBase.IndexOf(c) - 1;
             output += cipherBase[index];
         }

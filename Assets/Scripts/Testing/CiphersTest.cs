@@ -14,6 +14,11 @@ public class CiphersTest : MonoBehaviour
     [SerializeField]
     private int decodeBase;
 
+    [SerializeField]
+    private Canvas testCanvas;
+
+    private bool isTestCanvasActive;
+
     private void Awake()
     {
         // Debug.Log("Caesar cipher: " + CaesarCipher.DefaultEncode(stringToEncrypt));
@@ -24,10 +29,22 @@ public class CiphersTest : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.Y))
         {
             Test();
         }
+        if (Input.GetKeyDown(KeyCode.T) && GameManager.HiddenCursorLockMode == CursorLockMode.Locked)
+        {
+            SetTestUIEnabled(!isTestCanvasActive);
+        }
+    }
+
+    private void SetTestUIEnabled(bool enabled)
+    {
+        isTestCanvasActive = enabled;
+        testCanvas.gameObject.SetActive(enabled);
+        PlayerScriptsController.SetPlayerMovementEnabled(!enabled);
+        GameManager.SetCursorShown(enabled);
     }
 
     private void Test()
