@@ -19,8 +19,11 @@ public class SingleEmailController : MonoBehaviour
     {
         emailButton.onClick.AddListener(() =>
         {
-            objectiveEvent.RaiseEvent();
-            Destroy(objectiveEvent);
+            if(objectiveEvent != null)
+            {
+                objectiveEvent.RaiseEvent();
+                objectiveEvent = null;
+            }
             DisableDay1EmailObject();
             emailContent.Enable(EnableDay1EmailObject);
         });
