@@ -148,8 +148,7 @@ GameObject:
   - component: {fileID: 4248858942993398054}
   - component: {fileID: 440176767863346249}
   - component: {fileID: 2225301399111784292}
-  - component: {fileID: 2110532895737922306}
-  - component: {fileID: 847311799278958904}
+  - component: {fileID: 5475647432179274378}
   m_Layer: 5
   m_Name: Email
   m_TagString: Untagged
@@ -262,7 +261,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2110532895737922306
+--- !u!114 &5475647432179274378
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -274,24 +273,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955bee529abb6d740b52486349016e9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  day1EmailButton: {fileID: 2225301399111784292}
-  eventTrigger: {fileID: 2110532895737922306}
-  openComputer: {fileID: 11400000, guid: aaa77a2a19e0f1c4c95acb8c133b72ad, type: 2}
---- !u!114 &847311799278958904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4505530213566707760}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4582f013d88bf7a4a80a930bb66c0689, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   emailButton: {fileID: 2225301399111784292}
-  emailButtonObject: {fileID: 4505530213566707760}
+  emailRectTransform: {fileID: 5521789195715539731}
   emailContent: {fileID: 0}
+  objectiveEvent: {fileID: 0}
 --- !u!1 &6338894105013119796
 GameObject:
   m_ObjectHideFlags: 0
