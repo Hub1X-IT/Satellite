@@ -14,18 +14,18 @@ public static class ASCIIEncryption
             _ => 0,
         };
 
-        string addedString = "";
-
-        /*
-        for (int i = 0; i < desiredLength; i++)
-        {
-            addedString += "0";
-        }
-        */
-
         foreach (char c in input)
         {
-            output += addedString + Convert.ToString(c, outputBase) + " ";
+            string convertedNumber = Convert.ToString(c, outputBase);
+
+            string addedString = "";
+
+            for (int i = 0; i < desiredLength - convertedNumber.Length; i++)
+            {
+                addedString += "0";
+            }
+
+            output += addedString + convertedNumber + " ";
         }
 
         return output;
@@ -35,22 +35,30 @@ public static class ASCIIEncryption
     {
         string output = "";
         string encodedCharacter = "";
-        foreach (char c in input)
+
+        for (int i = 0; i < input.Length + 1; i++)
         {
-            if (c == ' ')
+            if (i >= input.Length || input[i] == ' ')
             {
-                output += (TryDecodeCharacter(encodedCharacter, inputBase, out char decodedCharacter)) ? decodedCharacter.ToString() : "Error";
-                encodedCharacter = "";
+                if (encodedCharacter.Length > 0)
+                {
+                    if (TryDecodeCharacter(encodedCharacter, inputBase, out char decodedCharacter))
+                    {
+                        output += decodedCharacter;
+                        encodedCharacter = "";
+                    }
+                    else
+                    {
+                        return "Error";
+                    }
+                }
             }
             else
             {
-                encodedCharacter += c;
+                encodedCharacter += input[i];
             }
         }
-        if (encodedCharacter.Length > 0)
-        {
-            output += (TryDecodeCharacter(encodedCharacter, inputBase, out char decodedCharacter)) ? decodedCharacter.ToString() : "Error";
-        }
+
         return output;
     }
 

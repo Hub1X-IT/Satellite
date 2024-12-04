@@ -12,8 +12,7 @@ public static class AtbashCipher
         {
             if (!cipherBase.Contains(c))
             {
-                output += "Error";
-                continue;
+                return "Error";
             }
 
             int index = cipherBase.Length - cipherBase.IndexOf(c) - 1;

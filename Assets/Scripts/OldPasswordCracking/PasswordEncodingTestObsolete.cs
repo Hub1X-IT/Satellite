@@ -32,7 +32,6 @@ public class PasswordEncodingTestObsolete : MonoBehaviour
     private bool isCharacter2Correct = false;
     private bool isCharacter3Correct = false;
 
-
     private void Awake()
     {
         InitializeEncoding();

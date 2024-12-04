@@ -13,8 +13,7 @@ public static class CaesarCipher
         {
             if (!cipherBase.Contains(c))
             {
-                output += "Error";
-                continue;
+                return "Error";
             }
 
             int index = cipherBase.IndexOf(c) + shift;

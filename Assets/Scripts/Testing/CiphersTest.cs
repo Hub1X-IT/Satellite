@@ -43,8 +43,8 @@ public class CiphersTest : MonoBehaviour
     {
         isTestCanvasActive = enabled;
         testCanvas.gameObject.SetActive(enabled);
-        PlayerScriptsController.SetPlayerMovementEnabled(!enabled);
         GameManager.SetCursorShown(enabled);
+        GameManager.SetGamePaused(enabled);
     }
 
     private void Test()

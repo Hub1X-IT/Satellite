@@ -99,6 +99,8 @@ public class CiphersTestUI : MonoBehaviour
         convertedPasswordTextField.text = newPassword;
         // Debug.Log(newPassword);
         previousPasswordTextFieldsStack.Push(convertedPasswordTextField);
+
+        Debug.Log(currentPassword);
     }
 
     private string RemoveLastPasswordTextField()
@@ -115,16 +117,15 @@ public class CiphersTestUI : MonoBehaviour
         {
             return inputField.text;
         }
-        
-        Debug.Log(previousTextField.text);
+
         return previousTextField.text;
     }
 
     private void RemoveAllPasswordTextFields()
     {
-        for (int i = 0; i < convertedPasswordsHolder.childCount; i++)
+        while (previousPasswordTextFieldsStack.Count > 0)
         {
-            GameObject textFieldGO = convertedPasswordsHolder.GetChild(i).gameObject;
+            GameObject textFieldGO = previousPasswordTextFieldsStack.Pop().gameObject;
             textFieldGO.SetActive(false);
             Destroy(textFieldGO);
         }
