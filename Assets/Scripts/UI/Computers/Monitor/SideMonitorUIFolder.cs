@@ -21,7 +21,7 @@ public class SideMonitorUIFolder : MonitorUIDataContainer
 
     private VerticalLayoutGroup verticalLayoutGroup;
 
-    private readonly Vector2 baseFolderSize = new(600f, 100f);
+    private Vector2 baseFolderSize;
 
     protected override void Awake()
     {
@@ -30,6 +30,8 @@ public class SideMonitorUIFolder : MonitorUIDataContainer
 
         childFoldersButton.onClick.AddListener(ToggleChildFolders);
         folderContentButton.onClick.AddListener(ToggleFolderContent);
+
+        baseFolderSize = SelfRectTransform.sizeDelta;
     }
 
     public void InitializeFolderUI(FolderSO folderSO, FileExplorerUI monitorFileExplorer)

@@ -22,7 +22,7 @@ public class MonitorAppUI : MonoBehaviour
 
     public void CloseApp()
     {
-        Debug.Log("close app");
+        Debug.Log($"Close app: {gameObject.name}");
         gameObject.SetActive(false);
         Destroy(gameObject);
     }

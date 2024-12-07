@@ -4,7 +4,6 @@ public class MonitorAppsManagerUI : MonoBehaviour
 {
     public enum ApplicationType
     {
-        FileExplorer,
         Notepad,
     }
 
@@ -17,12 +16,7 @@ public class MonitorAppsManagerUI : MonoBehaviour
     */
 
     [SerializeField]
-    private FileExplorerUI fileExplorerAppPrefab;
-
-    [SerializeField]
-    private NewNotepadAppUI notepadAppPrefab;
-
-    public MonitorFileSystemManager MonitorFileSystemManager { get; set; }
+    private NotepadAppUI notepadAppPrefab;
 
     public MonitorAppUI OpenApplication(ApplicationType application)
     {
@@ -32,10 +26,6 @@ public class MonitorAppsManagerUI : MonoBehaviour
         {
             default:
                 return null;
-            case ApplicationType.FileExplorer:
-                // instantiatedApp = Instantiate(monitorAppPrefabs.FileExplorerAppPrefab, appsHolder).GetComponent<MonitorAppUI>();
-                instantiatedApp = Instantiate(fileExplorerAppPrefab, appsHolder).GetComponent<MonitorAppUI>();
-                break;
             case ApplicationType.Notepad:
                 // instantiatedApp = Instantiate(monitorAppPrefabs.NotepadAppPrefab, appsHolder).GetComponent<MonitorAppUI>();
                 instantiatedApp = Instantiate(notepadAppPrefab, appsHolder).GetComponent<MonitorAppUI>();
@@ -43,11 +33,5 @@ public class MonitorAppsManagerUI : MonoBehaviour
         }
         instantiatedApp.InitializeApp(this);
         return instantiatedApp;
-    }
-
-    public void OpenFileExplorer()
-    {
-        FileExplorerUI fileExplorerUI = (FileExplorerUI)OpenApplication(ApplicationType.FileExplorer);
-        fileExplorerUI.InitializeFileExplorer(MonitorFileSystemManager);
     }
 }

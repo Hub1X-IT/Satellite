@@ -10,7 +10,7 @@ public class FilesMenuUI : MonoBehaviour
     private Button closeButton;
 
     [SerializeField]
-    private NotepadAppUI notepadApp;
+    private NotepadAppUIObsolete notepadApp;
 
     private bool isNotepadAppEnabled;
 

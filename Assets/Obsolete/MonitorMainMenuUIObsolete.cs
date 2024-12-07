@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MonitorMainMenuUI : MonoBehaviour
+public class MonitorMainMenuUIObsolete : MonoBehaviour
 {
     [SerializeField]
     private Button applicationsButton;

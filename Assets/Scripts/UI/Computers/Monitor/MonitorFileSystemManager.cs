@@ -5,7 +5,7 @@ public class MonitorFileSystemManager : MonoBehaviour
     // Can be more than one instance in scene - for different computers
 
     [SerializeField]
-    MonitorAppsManagerUI monitorAppsManager;
+    MonitorUI monitorUI;
 
     [SerializeField]
     private FolderSO rootFolderSO;
@@ -14,6 +14,6 @@ public class MonitorFileSystemManager : MonoBehaviour
 
     private void Awake()
     {
-        monitorAppsManager.MonitorFileSystemManager = this;
+        monitorUI.FileExplorer.InitializeFileExplorer(this);
     }
 }

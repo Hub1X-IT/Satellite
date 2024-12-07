@@ -14,8 +14,6 @@ public class MonitorUIStartMenu : MonoBehaviour
 
     private void Awake()
     {
-        fileExplorerButton.onClick.AddListener(monitorAppsManager.OpenFileExplorer);
-
         SetStartMenuEnabled(isStartMenuEnabled);
     }
 

@@ -4,13 +4,15 @@ using UnityEngine.UI;
 public class MonitorUI : MonoBehaviour
 {
     [SerializeField]
-    private MonitorUIStartMenu startMenu;
+    private FileExplorerUI fileExplorer;
 
     [SerializeField]
-    private Button startMenuButton;
+    private MonitorAppsManagerUI appsManager;
+
+    public FileExplorerUI FileExplorer => fileExplorer;
 
     private void Awake()
     {
-        startMenuButton.onClick.AddListener(startMenu.ToggleStartMenu);
+        fileExplorer.CurrentMonitorAppsManager = appsManager;
     }
 }

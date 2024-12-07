@@ -1,20 +1,16 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class NotepadAppUI : MonoBehaviour
+public class NotepadAppUI : MonitorAppUI
 {
-    [SerializeField]
-    private FilesMenuUI filesMenu;
+    private const string BaseAppName = "Notepad - ";
 
     [SerializeField]
-    private NotepadTextSO textInput;
+    private TMP_InputField contentInputField;
 
-    [SerializeField]
-    private TMP_Text textField;
-
-    private void Awake()
+    public void InitializeNotepadAppUI(FileStringSO fileStringSO)
     {
-        textField.text = textInput.textboxText;
+        contentInputField.text = fileStringSO.DisplayedFileContent;
+        SetAppName(BaseAppName + fileStringSO.SelfName);
     }
 }

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FileExplorerUI : MonitorAppUI
+public class FileExplorerUI : MonoBehaviour
 {
     [SerializeField]
     private SideMonitorUIFolder sideFolderUIPrefab;
@@ -21,7 +21,7 @@ public class FileExplorerUI : MonitorAppUI
 
     public SideMonitorUIFolder SideFolderUIPrefab => sideFolderUIPrefab;
 
-    private const string BaseAppName = "File explorer - ";
+    public MonitorAppsManagerUI CurrentMonitorAppsManager { get; set; }
 
     private void Update()
     {
@@ -36,8 +36,6 @@ public class FileExplorerUI : MonitorAppUI
         RootFolderSO = fileSystemManager.RootFolderSO;
         RootFolderSO.RefreshChildDataContainers();
         RefreshSideFolders();
-
-        SetAppName(BaseAppName + RootFolderSO.SelfName);
     }
 
     public void RefreshSideFolders()
@@ -68,7 +66,5 @@ public class FileExplorerUI : MonitorAppUI
         }
         currentFolderContentUI = Instantiate(folderContentUIPrefab.gameObject, folderContentHolder).GetComponent<FolderContentUI>();
         currentFolderContentUI.InitializeFolderContentUI(folderSO, this, previousFolderSOList);
-
-        SetAppName(BaseAppName + folderSO.SelfName);
     }
 }

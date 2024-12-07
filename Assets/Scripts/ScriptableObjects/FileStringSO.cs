@@ -4,19 +4,19 @@ using UnityEngine;
 public class FileStringSO : FileSO
 {
     [SerializeField]
-    private string fileContent;
+    private string displayedFileContent;
 
-    // May be temporary.
+    [Tooltip("Leave empty if you want it to be the same as the displayed file content.")]
     [SerializeField]
-    private bool canWriteToFile = true;
+    private string realFileContent;
 
-    public string FileContent => fileContent;
+    public string DisplayedFileContent => displayedFileContent;
 
-    public void SetFileContent(string content)
+    public string RealFileContent
     {
-        if (canWriteToFile)
+        get
         {
-            fileContent = content;
+            return realFileContent != null ? realFileContent : displayedFileContent;
         }
     }
 }
