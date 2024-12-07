@@ -10,7 +10,7 @@ public class FPSCounter : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating("GetFPS", 1, 1);
+        InvokeRepeating(nameof(GetFPS), 1, 1);
     }
     
     private void GetFPS()

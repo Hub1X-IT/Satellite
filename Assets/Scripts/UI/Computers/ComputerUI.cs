@@ -54,7 +54,6 @@ public class ComputerUI : MonoBehaviour
         }
 
         SetComputerViewEnalbed(false);
-        computerCursor.SetEnabled(false);
     }
 
     private void SetComputerViewEnalbed(bool enabled)

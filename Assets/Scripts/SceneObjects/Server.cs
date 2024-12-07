@@ -1,16 +1,75 @@
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class Server : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField]
+    private GameEventBoolSO serverViewEnabledGameEvent;
+
+    [SerializeField]
+    private InteractionTrigger serverTrigger;
+
+    [SerializeField]
+    private CinemachineCamera serverCinemachineCamera;
+
+    private Outline outline;
+
+    private bool isInServerView;
+
+    private void Awake()
     {
-        
+        outline = GetComponent<Outline>();
+
+        serverTrigger.InteractVisual = GetComponent<InteractionVisual>();
+
+        serverTrigger.InteractionTriggered += () => SetServerViewActive(true);
+
+        // Action may be changed if a different key binding is preferred.
+        GameInput.OnInteractAction += () =>
+        {
+            if (isInServerView)
+            {
+                SetServerViewActive(false);
+            }
+        };
+
+        serverCinemachineCamera.enabled = false;
+
+        isInServerView = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void SetServerViewActive(bool active)
     {
-        
+        isInServerView = active;
+
+        PlayerScriptsController.SetCanShowPlayerHUD(!active);
+
+        PlayerScriptsController.SetPlayerMovementEnabled(!active);
+
+        SetServerTriggerEnabled(!active);
+
+        // Probably a temporary solution
+        outline.enabled = !active;
+
+        GameManager.HiddenCursorLockMode = active ? CursorLockMode.Confined : CursorLockMode.Locked;
+        GameManager.SetCursorShown(false);
+
+        serverViewEnabledGameEvent.RaiseEvent(active);
+
+        if (active)
+        {
+            GameInput.PlayerInputActions.Computer.Enable();
+            CameraController.SetActiveCinemachineCamera(serverCinemachineCamera);
+        }
+        else
+        {
+            GameInput.PlayerInputActions.Computer.Disable();
+            CameraController.SetActiveCinemachineCamera(CameraController.CinemachineMainCamera);
+        }
+    }
+
+    private void SetServerTriggerEnabled(bool enabled)
+    {
+        serverTrigger.gameObject.SetActive(enabled);
     }
 }

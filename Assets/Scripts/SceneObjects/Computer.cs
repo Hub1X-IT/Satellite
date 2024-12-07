@@ -32,11 +32,6 @@ public class Computer : MonoBehaviour
         desk = GetComponentInParent<Desk>();
         outline = GetComponent<Outline>();
 
-        /*
-        computerTrigger = GetComponentInChildren<InteractionTrigger>();
-        computerCinemachineCamera = GetComponentInChildren<CinemachineCamera>();
-        */
-
         computerTrigger.InteractVisual = GetComponent<InteractionVisual>();
 
         computerTrigger.InteractionTriggered += () => SetComputerViewActive(true);
