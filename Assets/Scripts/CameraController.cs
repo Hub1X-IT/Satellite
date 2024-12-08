@@ -7,8 +7,8 @@ public static class CameraController
     [Serializable]
     public struct InitializationData
     {
-        public Camera mainCamera;
-        public CinemachineCamera cinemachineMainCamera;
+        public Camera MainCamera;
+        public CinemachineCamera CinemachineMainCamera;
     }
 
     public static Camera ActiveCamera { get; private set; }
@@ -23,8 +23,8 @@ public static class CameraController
 
     public static void OnAwake(InitializationData data)
     {
-        MainCamera = data.mainCamera;
-        CinemachineMainCamera = data.cinemachineMainCamera;
+        MainCamera = data.MainCamera;
+        CinemachineMainCamera = data.CinemachineMainCamera;
 
         ActiveCamera = MainCamera;
         SetActiveCamera(MainCamera);

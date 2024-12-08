@@ -8,7 +8,7 @@ public static class VolumeController
     [Serializable]
     public struct InitializationData
     {
-        public AudioMixer mainAudioMixer;
+        public AudioMixer MainAudioMixer;
     }
 
     public enum Volume
@@ -26,7 +26,7 @@ public static class VolumeController
 
     public static void OnAwake(InitializationData data)
     {
-        mainAudioMixer = data.mainAudioMixer;
+        mainAudioMixer = data.MainAudioMixer;
     }
 
     public static void OnStart()

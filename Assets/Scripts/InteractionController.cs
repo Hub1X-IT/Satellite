@@ -6,11 +6,11 @@ public static class InteractionController
     [Serializable]
     public struct InitializationData
     {
-        public float interactRange;
+        public float InteractRange;
         [Tooltip("Only one should be selected!")]
-        public LayerMask defaultInteractableLayerMask;
-        public LayerMask interactableLayerMasks;
-        public LayerMask interactionBlockingLayerMasks;
+        public LayerMask DefaultInteractableLayerMask;
+        public LayerMask InteractableLayerMasks;
+        public LayerMask InteractionBlockingLayerMasks;
     }
 
     public static float InteractRange { get; private set; }
@@ -25,10 +25,10 @@ public static class InteractionController
 
     public static void OnAwake(InitializationData data)
     {
-        InteractRange = data.interactRange;
-        DefaultInteractableLayerMask = data.defaultInteractableLayerMask;
-        InteractableLayerMasks = data.interactableLayerMasks;
-        InteractionBlockingLayerMasks = data.interactionBlockingLayerMasks;
+        InteractRange = data.InteractRange;
+        DefaultInteractableLayerMask = data.DefaultInteractableLayerMask;
+        InteractableLayerMasks = data.InteractableLayerMasks;
+        InteractionBlockingLayerMasks = data.InteractionBlockingLayerMasks;
 
         DefaultInteractableLayerIndex = GetLayerIndex(DefaultInteractableLayerMask.value);
 
@@ -52,7 +52,7 @@ public static class InteractionController
         }
         */
         if (Physics.Raycast(CameraController.MainCamera.transform.position, CameraController.MainCamera.transform.forward,
-        out RaycastHit hit, InteractRange, InteractableLayerMasks |= InteractionBlockingLayerMasks))
+        out RaycastHit hit, InteractRange, InteractableLayerMasks | InteractionBlockingLayerMasks))
         {
             interactableObject = hit.transform.GetComponent<IInteractable>();
             if (interactableObject != null)

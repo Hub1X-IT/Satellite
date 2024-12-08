@@ -16,6 +16,8 @@ public class Server : MonoBehaviour
 
     private bool isInServerView;
 
+    private bool wasToggledThisFrame;
+
     private void Awake()
     {
         outline = GetComponent<Outline>();
@@ -27,7 +29,7 @@ public class Server : MonoBehaviour
         // Action may be changed if a different key binding is preferred.
         GameInput.OnInteractAction += () =>
         {
-            if (isInServerView)
+            if (isInServerView && !wasToggledThisFrame)
             {
                 SetServerViewActive(false);
             }
@@ -36,11 +38,23 @@ public class Server : MonoBehaviour
         serverCinemachineCamera.enabled = false;
 
         isInServerView = false;
+        wasToggledThisFrame = false;
+    }
+
+    private void LateUpdate()
+    {
+        if (wasToggledThisFrame)
+        {
+            wasToggledThisFrame = false;
+        }
     }
 
     private void SetServerViewActive(bool active)
     {
+        Debug.Log(active);
+
         isInServerView = active;
+        wasToggledThisFrame = true;
 
         PlayerScriptsController.SetCanShowPlayerHUD(!active);
 
