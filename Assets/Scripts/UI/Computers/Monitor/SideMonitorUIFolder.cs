@@ -106,7 +106,7 @@ public class SideMonitorUIFolder : MonitorUIDataContainer
                 {
                     childFolderUI.RefreshFolderUISize();
                 }
-                // Add child data container UI
+                // Add child data container UI.
                 currentSize.x = Mathf.Max(currentSize.x, childDataContainerUI.SelfRectTransform.sizeDelta.x);
                 currentSize.y += childDataContainerUI.SelfRectTransform.sizeDelta.y + verticalChildOffset;
             }

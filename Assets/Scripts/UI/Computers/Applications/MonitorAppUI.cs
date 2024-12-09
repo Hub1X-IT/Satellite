@@ -15,8 +15,9 @@ public class MonitorAppUI : MonoBehaviour
         titleBar.AppCloseTriggered += CloseApp;
     }
 
-    protected void SetAppName(string appName)
+    public void SetAppName(string appName)
     {
+        gameObject.name = name = appName;
         titleBar.SetAppName(appName);
     }
 

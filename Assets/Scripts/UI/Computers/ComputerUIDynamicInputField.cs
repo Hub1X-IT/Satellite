@@ -7,15 +7,29 @@ public class ComputerUIDynamicInputField : MonoBehaviour
 
     private TMP_InputField inputField;
 
-    private void Awake()
+    private void OnEnable()
     {
         computerUI = GetComponentInParent<ComputerUI>();
         inputField = GetComponent<TMP_InputField>();
-        computerUI.AddInputField(inputField);
+        if (computerUI != null && inputField != null)
+        {
+            computerUI.AddInputField(inputField);
+        }
+        else
+        {
+            Debug.LogWarning($"computerUI or inputField is null: {gameObject.name}");
+        }
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
-        computerUI.RemoveInputField(inputField);
+        if (computerUI != null && inputField != null)
+        {
+            computerUI.RemoveInputField(inputField);
+        }
+        else
+        {
+            Debug.LogWarning($"computerUI or inputField is null: {gameObject.name}");
+        }
     }
 }

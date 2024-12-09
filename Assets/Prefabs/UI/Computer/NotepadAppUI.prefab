@@ -327,6 +327,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4093923644531906981}
+  - component: {fileID: 2783483773372859226}
   - component: {fileID: 5017932644116531519}
   m_Layer: 5
   m_Name: NotepadAppUI
@@ -357,6 +358,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -540}
   m_SizeDelta: {x: 1880, y: 850}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2783483773372859226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4205114164030762970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f339cf01a9577e446a0b43ab15291a0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleBar: {fileID: 8502313467374557284}
 --- !u!114 &5017932644116531519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,7 +383,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f74f2a3449671f44bad24b07f3ab8b95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleBar: {fileID: 8502313467374557284}
   contentInputField: {fileID: 1171578474340943792}
 --- !u!1 &6909332392711119072
 GameObject:

@@ -32,8 +32,8 @@ public class FolderContentUIFile : MonitorUIDataContainer
     {
         if (selfFileSO is FileStringSO fileStringSO)
         {
-            NotepadAppUI notepadAppUI = (NotepadAppUI)parentFolderContentUI.CurrentFileExplorer.CurrentMonitorAppsManager.
-                OpenApplication(MonitorAppsManagerUI.ApplicationType.Notepad);
+            NotepadAppUI notepadAppUI = parentFolderContentUI.CurrentFileExplorer.CurrentMonitorAppsManager.
+                OpenApplication(MonitorAppsManagerUI.ApplicationType.NotepadApp).GetComponent<NotepadAppUI>();
             notepadAppUI.InitializeNotepadAppUI(fileStringSO);
         }
     }

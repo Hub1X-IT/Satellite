@@ -4,11 +4,6 @@ using UnityEngine.UI;
 
 public class FolderContentUI : MonoBehaviour
 {
-    /*
-    [SerializeField]
-    private Button closeButton;
-    */
-
     [SerializeField]
     private Button parentFolderButton;
 
@@ -31,7 +26,6 @@ public class FolderContentUI : MonoBehaviour
 
     private void Awake()
     {
-        // closeButton.onClick.AddListener(CloseFolderContentUI);
         parentFolderButton.onClick.AddListener(() => currentFileExplorer.OpenFolderContent(selfFolderSO.ParentFolderSO, previousFolderSOList));
     }
 

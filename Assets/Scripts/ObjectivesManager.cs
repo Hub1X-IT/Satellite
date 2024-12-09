@@ -9,8 +9,6 @@ public class ObjectivesManager : MonoBehaviour
         public GameEventSO[] GameEvents;
         public string Chapter;
         public string Objective;
-        // public ChapterSO ChapterSO;
-        // public ObjectiveSO ObjectiveSO;
     }
 
     [SerializeField]

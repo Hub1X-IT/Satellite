@@ -4,7 +4,8 @@ public class MonitorAppsManagerUI : MonoBehaviour
 {
     public enum ApplicationType
     {
-        Notepad,
+        NotepadApp,
+        PasswordCrackingApp,
     }
 
     [SerializeField]
@@ -18,6 +19,9 @@ public class MonitorAppsManagerUI : MonoBehaviour
     [SerializeField]
     private NotepadAppUI notepadAppPrefab;
 
+    [SerializeField]
+    private PasswordCrackingAppUI passwordCrackingAppPrefab;
+
     public MonitorAppUI OpenApplication(ApplicationType application)
     {
         MonitorAppUI instantiatedApp;
@@ -26,12 +30,21 @@ public class MonitorAppsManagerUI : MonoBehaviour
         {
             default:
                 return null;
-            case ApplicationType.Notepad:
+            case ApplicationType.NotepadApp:
                 // instantiatedApp = Instantiate(monitorAppPrefabs.NotepadAppPrefab, appsHolder).GetComponent<MonitorAppUI>();
                 instantiatedApp = Instantiate(notepadAppPrefab, appsHolder).GetComponent<MonitorAppUI>();
+                break;
+            case ApplicationType.PasswordCrackingApp:
+                instantiatedApp = Instantiate(passwordCrackingAppPrefab, appsHolder).GetComponent<MonitorAppUI>();
                 break;
         }
         instantiatedApp.InitializeApp(this);
         return instantiatedApp;
+    }
+
+    public void OpenPasswordCracking()
+    {
+        PasswordCrackingAppUI passwordCrackingApp = OpenApplication(ApplicationType.PasswordCrackingApp).GetComponent<PasswordCrackingAppUI>();
+        passwordCrackingApp.InitializePasswordCrackingApp("Password cracking - test");
     }
 }
