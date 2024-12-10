@@ -9,6 +9,8 @@ public class Desk : MonoBehaviour
     [SerializeField]
     private InteractionTrigger deskTrigger;
 
+    private DetectionManager detectionManager;
+
     [SerializeField]
     private CinemachineCamera deskCinemachineCamera;
 
@@ -27,11 +29,19 @@ public class Desk : MonoBehaviour
 
     public CinemachineCamera DeskCinemachineCamera => deskCinemachineCamera;
 
+    public bool ShouldEnableDeskTrigger { get; set; }
+
+    private bool isInDeskView;
 
     private void Awake()
     {
         deskTrigger.InteractVisual = GetComponent<InteractionVisual>();
         deskCameraRotationController = GetComponent<CameraRotationController>();
+        detectionManager = FindAnyObjectByType<DetectionManager>();
+
+        ShouldEnableDeskTrigger = false;
+        isInDeskView = false;
+        ToggleDeskTrigger();
 
         GameInput.OnExitDeskViewAction += () =>
         {
@@ -71,8 +81,10 @@ public class Desk : MonoBehaviour
 
     private void SetDeskViewActive(bool active)
     {
+        isInDeskView = active;
+
         // Disable or enable desk trigger.
-        deskTrigger.gameObject.SetActive(!active);
+        ToggleDeskTrigger();
 
         // Disable or enable player movement.
         PlayerScriptsController.SetPlayerMovementEnabled(!active);
@@ -85,6 +97,7 @@ public class Desk : MonoBehaviour
 
         // Disable/enable specific input actions.
         // Change active Cinemachine camera.
+            Debug.Log("abc");
         if (active)
         {
             GameInput.PlayerInputActions.PlayerWalking.Disable();
@@ -111,5 +124,10 @@ public class Desk : MonoBehaviour
     public void SetDeskCameraRotationEnabled(bool enabled)
     {
         deskCameraRotationController.enabled = enabled;
+    }
+
+    public void ToggleDeskTrigger()
+    {
+        deskTrigger.gameObject.SetActive(!isInDeskView && ShouldEnableDeskTrigger);
     }
 }

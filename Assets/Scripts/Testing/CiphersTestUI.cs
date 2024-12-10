@@ -43,6 +43,10 @@ public class CiphersTestUI : MonoBehaviour
 
     private Stack<TMP_Text> previousPasswordTextFieldsStack;
 
+    [SerializeField]
+    private TMP_Text detectionChance;
+    private DetectionManager detectionManager;
+
     private void Awake()
     {
         previousPasswordTextFieldsStack = new();
@@ -57,32 +61,44 @@ public class CiphersTestUI : MonoBehaviour
         {
             currentPassword = ASCIIEncryption.Decode(currentPassword, 10);
             CreateNewPasswordTextField(currentPassword);
+            detectionManager.CheckDetection();
+            detectionChance.text = detectionManager.detectionChance.ToString();
         });
         hexButton.onClick.AddListener(() =>
         {
             currentPassword = ASCIIEncryption.Decode(currentPassword, 16);
             CreateNewPasswordTextField(currentPassword);
+            detectionManager.CheckDetection();
+            detectionChance.text = detectionManager.detectionChance.ToString();
         });
         caesarButton.onClick.AddListener(() =>
         {
             int shift = Int32.Parse(caesarParameterInputField.text);
             currentPassword = CaesarCipher.Encode(currentPassword, CaesarCipher.DefaultBase, shift);
             CreateNewPasswordTextField(currentPassword);
+            detectionManager.CheckDetection();
+            detectionChance.text = detectionManager.detectionChance.ToString();
         });
         binButton.onClick.AddListener(() =>
         {
             currentPassword = ASCIIEncryption.Decode(currentPassword, 2);
             CreateNewPasswordTextField(currentPassword);
+            detectionManager.CheckDetection();
+            detectionChance.text = detectionManager.detectionChance.ToString();
         });
         octButton.onClick.AddListener(() =>
         {
             currentPassword = ASCIIEncryption.Decode(currentPassword, 8);
             CreateNewPasswordTextField(currentPassword);
+            detectionManager.CheckDetection();
+            detectionChance.text = detectionManager.detectionChance.ToString();
         });
         atbashButton.onClick.AddListener(() =>
         {
             currentPassword = AtbashCipher.DefaultEncode(currentPassword);
             CreateNewPasswordTextField(currentPassword);
+            detectionManager.CheckDetection();
+            detectionChance.text = detectionManager.detectionChance.ToString();
         });
 
         previousPasswordButton.onClick.AddListener(() =>
