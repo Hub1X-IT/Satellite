@@ -8,38 +8,31 @@ public class ServerItem : MonoBehaviour
     private Desk desk;
 
     [SerializeField]
-    private Button connectButton;
+    private Button toggleConnectionButton;
 
     [SerializeField]
-    TMP_Text buttonText;
+    private TMP_Text toggleConnectionButtonText;
 
-    private bool disconnected = true;
+    private bool isConnected = true;
 
-    private const string DISCONNECT = "Disconnect";
-    private const string CONNECT = "Connect";
+    private const string DisconnectText = "Disconnect";
+    private const string ConnectText = "Connect";
 
     private void Awake()
     {
         detectionManager = FindAnyObjectByType<DetectionManager>();
         desk = FindAnyObjectByType<Desk>();
-        connectButton.onClick.AddListener(() =>
+        toggleConnectionButton.onClick.AddListener(() =>
         {
-            if (disconnected)
-            {
-                buttonText.text = DISCONNECT;
-                disconnected = false;
-                detectionManager.currentServer = connectButton.gameObject;
-                desk.ShouldEnableDeskTrigger = true;
-                desk.ToggleDeskTrigger();
-            }
-            else
-            {
-                buttonText.text = CONNECT;
-                disconnected = true;
-                detectionManager.currentServer = null;
-                desk.ShouldEnableDeskTrigger = false;
-                desk.ToggleDeskTrigger();
-            }
+            SetConnectionEnabled(!isConnected);
         });
+    }
+
+    private void SetConnectionEnabled(bool enabled)
+    {
+        isConnected = enabled;
+        toggleConnectionButtonText.text = enabled ? DisconnectText : ConnectText;
+        desk.SetAllComputersEnabled(enabled);
+        detectionManager.currentServer = enabled ? toggleConnectionButton.gameObject : null;
     }
 }

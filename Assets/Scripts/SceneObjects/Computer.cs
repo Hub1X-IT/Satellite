@@ -26,6 +26,10 @@ public class Computer : MonoBehaviour
 
     public bool CanExitComputerView { get; set; }
 
+    public bool CanEnterComputerView { get; set; }
+
+    public bool IsComputerEnabled { get; set; }
+
 
     private void Awake()
     {
@@ -36,7 +40,11 @@ public class Computer : MonoBehaviour
 
         computerTrigger.InteractionTriggered += () => SetComputerViewActive(true);
 
-        desk.DeskViewEnabled += SetComputerTriggerEnabled;
+        desk.DeskViewEnabled += (enabled) =>
+        {
+            CanEnterComputerView = enabled;
+            ToggleComputerTrigger();
+        };
 
         GameInput.OnComputerExitAction += () =>
         {
@@ -48,11 +56,14 @@ public class Computer : MonoBehaviour
 
         computerCinemachineCamera.enabled = false;
 
-        SetComputerTriggerEnabled(false);
 
         isInComputerView = false;
 
         CanExitComputerView = true;
+        CanEnterComputerView = false;
+        IsComputerEnabled = false;
+
+        ToggleComputerTrigger();
     }
 
     private void SetComputerViewActive(bool active)
@@ -64,7 +75,7 @@ public class Computer : MonoBehaviour
         desk.CanExitDeskView = !active;
         desk.SetDeskCameraRotationEnabled(!active);
 
-        SetComputerTriggerEnabled(!active);
+        ToggleComputerTrigger();
 
         // Probably a temporary solution
         outline.enabled = !active;
@@ -88,8 +99,8 @@ public class Computer : MonoBehaviour
         }
     }
 
-    private void SetComputerTriggerEnabled(bool enabled)
+    public void ToggleComputerTrigger()
     {
-        computerTrigger.gameObject.SetActive(enabled);
+        computerTrigger.gameObject.SetActive(!isInComputerView && CanEnterComputerView && IsComputerEnabled);
     }
 }

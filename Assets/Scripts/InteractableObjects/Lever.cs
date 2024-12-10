@@ -41,11 +41,14 @@ public class Lever : MonoBehaviour, IInteractable
         isLeverEnabled = enabled;
         leverAnimator.SetTrigger(enabled ? LeverOnTrigger : LeverOffTrigger);
         leverToggleAudioSource.Play();
+        server.serverTrigger.gameObject.SetActive(!enabled);
+
         ResetPower();
     }
 
     private void ResetPower()
     {
+        
         if (leverOn)
         {
             leverOn = false;
