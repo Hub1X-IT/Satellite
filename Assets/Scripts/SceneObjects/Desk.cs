@@ -50,6 +50,13 @@ public class Desk : MonoBehaviour
         SetDeskCameraRotationEnabled(false);
         CanExitDeskView = true;
         shouldEnablePlayerMovement = false;
+
+        SetAllComputersEnabled(false);
+    }
+
+    private void Start()
+    {
+        ServerConnectionManager.ServerConnectionEnabled += SetAllComputersEnabled;
     }
 
     private void Update()
@@ -85,18 +92,18 @@ public class Desk : MonoBehaviour
         // Invoke enter/exit event.
         DeskViewEnabled?.Invoke(active);
 
+        CameraController.SetActiveCinemachineCamera(active ? DeskCinemachineCamera : CameraController.CinemachineMainCamera);
+
         // Disable/enable specific input actions.
         // Change active Cinemachine camera.
         if (active)
         {
             GameInput.PlayerInputActions.PlayerWalking.Disable();
-            CameraController.SetActiveCinemachineCamera(DeskCinemachineCamera);
             GameInput.PlayerInputActions.Desk.Enable();
         }
         else
         {
             GameInput.PlayerInputActions.Desk.Disable();
-            CameraController.SetActiveCinemachineCamera(CameraController.CinemachineMainCamera);
             // Set timer to enable player movement
             playerMovementEnableTimer = 0f;
             shouldEnablePlayerMovement = true;
@@ -117,6 +124,7 @@ public class Desk : MonoBehaviour
 
     public void SetAllComputersEnabled(bool enabled)
     {
+        Debug.Log(enabled);
         foreach (var computer in childComputers)
         {
             computer.IsComputerEnabled = enabled;

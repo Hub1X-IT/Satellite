@@ -40,6 +40,13 @@ public class Server : MonoBehaviour
         wasToggledThisFrame = false;
     }
 
+    private void Start()
+    {
+        // Should the trigger turn off when detection occurs or only when the player disables power?
+        DetectionManager.DetectionOccured += () => SetServerTriggerEnabled(false);
+        DetectionManager.ServerPowerEnabled += SetServerTriggerEnabled;
+    }
+
     private void LateUpdate()
     {
         if (wasToggledThisFrame)
@@ -50,8 +57,6 @@ public class Server : MonoBehaviour
 
     private void SetServerViewActive(bool active)
     {
-        Debug.Log(active);
-
         isInServerView = active;
         wasToggledThisFrame = true;
 

@@ -6,6 +6,9 @@ public class ScriptsInitializer : MonoBehaviour
     private CameraController.InitializationData cameraControllerData;
 
     [SerializeField]
+    private DetectionManager.InitializationData detectionManagerData;
+
+    [SerializeField]
     private InteractionController.InitializationData interactionControllerData;
 
     [SerializeField]
@@ -16,6 +19,7 @@ public class ScriptsInitializer : MonoBehaviour
         GameInput.InitializeInput();
 
         CameraController.OnAwake(cameraControllerData);
+        DetectionManager.InitializeDetectionManager(detectionManagerData);
         GameManager.OnAwake();
         GraphicsSettingsManager.OnAwake();
         InteractionController.OnAwake(interactionControllerData);
@@ -26,7 +30,6 @@ public class ScriptsInitializer : MonoBehaviour
 
     private void Start()
     {
-        // OldCommandPromptManager.OnStart();
         GameManager.OnStart();
         GraphicsSettingsManager.OnStart();
         VolumeController.OnStart();
@@ -34,8 +37,8 @@ public class ScriptsInitializer : MonoBehaviour
 
     private void OnDestroy()
     {
-        // OldCommandPromptManager.OnSceneExit();
         GameManager.OnSceneExit();
+        DetectionManager.OnSceneExit();
 
         GameInput.RemoveInput();
 

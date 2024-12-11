@@ -42,6 +42,7 @@ public class MonitorAppsManagerUI : MonoBehaviour
         return instantiatedApp;
     }
 
+    // Temporary solution
     public void OpenPasswordCracking()
     {
         PasswordCrackingAppUI passwordCrackingApp = OpenApplication(ApplicationType.PasswordCrackingApp).GetComponent<PasswordCrackingAppUI>();

@@ -1,88 +1,81 @@
+using System;
 using UnityEngine;
 
-public class DetectionManager : MonoBehaviour
+public static class DetectionManager
 {
-    private int detectionLevel;
-    public int detectionChance;
-    public int detectionChanceDefault = 98;
-    //Numbers are reversed to make random range work properly for chances
-    public bool detected = false;
-
-    public GameObject currentServer;
-
-    private Desk desk;
-    private Server server;
-
-    private void Awake()
+    [Serializable]
+    public struct InitializationData
     {
-        desk = FindAnyObjectByType<Desk>();
-        server = FindAnyObjectByType<Server>();
+        public int DefaultDetectionChance;
     }
-    private void OnEnable()
+
+    public static event Action DetectionOccured;
+    public static event Action DetectionRemoved;
+
+    public static event Action<bool> ServerPowerEnabled;
+
+    public static int CurrentDetectionChance { get; private set; }
+    private static int defaultDetectionChance;
+
+    private static int currentDetectionLevel;
+    private const int DefaultDetectionLevel = 1;
+
+    public static bool WasDetected { get; private set; }
+
+    public static void InitializeDetectionManager(InitializationData data)
     {
-        detectionChance = detectionChanceDefault;
+        currentDetectionLevel = DefaultDetectionLevel;
+        defaultDetectionChance = CurrentDetectionChance = data.DefaultDetectionChance;
     }
-    public void CheckDetection()
+
+    public static void OnSceneExit()
     {
-        if(Random.Range(1, detectionChance+1) == detectionChance)
+        DetectionOccured = null;
+        DetectionRemoved = null;
+        ServerPowerEnabled = null;
+    }
+
+    public static void CheckDetection()
+    {
+        int randomDetectionChance = UnityEngine.Random.Range(1, CurrentDetectionChance + 1);
+        if (randomDetectionChance == CurrentDetectionChance)
         {
-            detected = true;
-            Destroy(currentServer);
-            currentServer = null;
-            desk.ShouldEnableDeskTrigger = false;
-            desk.ToggleDeskTrigger();
-            server.serverTrigger.gameObject.SetActive(false);
+            WasDetected = true;
+            DetectionOccured?.Invoke();
+            Debug.Log("Detected!");
         }
         else
         {
-            SetDetectionLevel();
-            SetDetectionChance();
+            IncreaseDetectionChance();
+            Debug.Log($"Current detection chance: {CurrentDetectionChance}");
         }
     }
-    private void SetDetectionChance()
+
+    public static void SetServerPowerEnabled(bool enabled)
     {
-        if (detectionLevel == 1)
+        ServerPowerEnabled?.Invoke(enabled);
+        if (enabled && WasDetected)
         {
-            detectionChance = detectionChanceDefault;
-        }
-        else if (detectionLevel == 2)
-        {
-            detectionChance = 95;
-        }
-        else if (detectionLevel == 3)
-        {
-            detectionChance = 90;
-        }
-        else if (detectionLevel == 4)
-        {
-            detectionChance = 80;
-        }
-        else if (detectionLevel == 5)
-        {
-            detectionChance = 60;
-        }
-        else if (detectionLevel == 6)
-        {
-            detectionChance = 30;
-        }
-        else if (detectionLevel == 7)
-        {
-            detectionChance = 10;
-        }
-        else if (detectionLevel == 8)
-        {
-            detectionChance = 1;
+            ResetDetection();
         }
     }
-    private void SetDetectionLevel()
+
+    private static void ResetDetection()
     {
-        if(detectionLevel < 8)
+        DetectionRemoved?.Invoke();
+        WasDetected = false;
+        currentDetectionLevel = DefaultDetectionLevel;
+        CurrentDetectionChance = defaultDetectionChance;
+    }
+
+    private static void IncreaseDetectionChance()
+    {
+        int maxDetectionLevel = 8;
+        if (currentDetectionLevel < maxDetectionLevel)
         {
-            detectionLevel++;
+            currentDetectionLevel++;
         }
-        else
-        {
-            detectionLevel = 8;
-        }
+        // Works only if detection chance is less or equal to 8!
+        CurrentDetectionChance = (int)(-1.7 * currentDetectionLevel * currentDetectionLevel + 1.5 * currentDetectionLevel + 98);
     }
 }

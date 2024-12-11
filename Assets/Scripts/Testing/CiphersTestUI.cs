@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class CiphersTestUI : MonoBehaviour
 {
+    // Does not work!!!
+
     [SerializeField]
     private GameObject convertedPasswordPrefab;
 
@@ -45,7 +47,7 @@ public class CiphersTestUI : MonoBehaviour
 
     [SerializeField]
     private TMP_Text detectionChance;
-    private DetectionManager detectionManager;
+    // private DetectionManager detectionManager;
 
     private void Awake()
     {
@@ -57,6 +59,7 @@ public class CiphersTestUI : MonoBehaviour
             RemoveAllPasswordTextFields();
         });
 
+        /*
         decButton.onClick.AddListener(() =>
         {
             currentPassword = ASCIIEncryption.Decode(currentPassword, 10);
@@ -105,6 +108,7 @@ public class CiphersTestUI : MonoBehaviour
         {
             currentPassword = RemoveLastPasswordTextField();
         });
+        */
     }
 
     private void CreateNewPasswordTextField(string newPassword)

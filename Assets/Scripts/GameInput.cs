@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class GameInput
+public static class GameInput
 {
     public static PlayerInputActions PlayerInputActions { get; private set; }
 

@@ -6,67 +6,54 @@ using UnityEngine.UI;
 
 public class PasswordCrackingAppUI : MonoBehaviour
 {
-    private MonitorAppUI monitorAppUI;
+    // UI objects referenced in this script should not have listeners added to their events in any other scripts.
 
+    private MonitorAppUI monitorAppUI;
 
     [SerializeField]
     private ConvertedPasswordUI convertedPasswordPrefab;
-
     [SerializeField]
     private Transform convertedPasswordsHolder;
-
     [SerializeField]
     private TMP_InputField inputField;
-
     [SerializeField]
     private Button decompressButton;
-
     [SerializeField]
     private Button goBackToInputFieldButton;
 
-
     [SerializeField]
     private Button binButton;
-
     [SerializeField]
     private Button octButton;
-
     [SerializeField]
     private Button decButton;
-
     [SerializeField]
     private Button hexButton;
-
+    [SerializeField]
+    private Button atbashButton;
     [SerializeField]
     private Button caesarButton;
-
     [SerializeField]
     private TMP_InputField caesarParameterInputField;
 
-    [SerializeField]
-    private Button atbashButton;
-
     private string currentPassword;
-
     private string originalPassword;
-
     private Stack<ConvertedPasswordUI> previousConvertedPasswordUIStack;
 
     [SerializeField]
-    private TMP_Text detectionChance;
-    private DetectionManager detectionManager;
-    private const string DETECTION_CHANCE = "Detection Chance: ";
-    private int detectionChanceNumber;
+    private TMP_Text detectionChanceTextField;
+    private const string DetectionChanceText = "Detection Chance: ";
 
     public void InitializePasswordCrackingApp(string appName)
     {
         monitorAppUI = GetComponent<MonitorAppUI>();
         monitorAppUI.SetAppName(appName);
 
-        detectionManager = FindAnyObjectByType<DetectionManager>();
-
         InitializePasswordCracking();
         SetDetectionChanceText();
+
+        DetectionManager.DetectionOccured += DisableApp;
+        DetectionManager.DetectionRemoved += EnableApp;
     }
 
     private void InitializePasswordCracking()
@@ -75,6 +62,18 @@ public class PasswordCrackingAppUI : MonoBehaviour
 
         originalPassword = currentPassword = "";
 
+        if (!DetectionManager.WasDetected)
+        {
+            EnableApp();
+        }
+        else
+        {
+            DisableApp();
+        }
+    }
+
+    private void EnableApp()
+    {
         inputField.onEndEdit.AddListener((text) =>
         {
             originalPassword = currentPassword = text;
@@ -100,50 +99,70 @@ public class PasswordCrackingAppUI : MonoBehaviour
             RemoveAllPasswordTextFields();
         });
 
+        binButton.onClick.AddListener(() =>
+        {
+            currentPassword = ASCIIEncryption.Decode(currentPassword, 2);
+            SubmitPassword();
+        });
+        octButton.onClick.AddListener(() =>
+        {
+            currentPassword = ASCIIEncryption.Decode(currentPassword, 8);
+            SubmitPassword();
+        });
         decButton.onClick.AddListener(() =>
         {
             currentPassword = ASCIIEncryption.Decode(currentPassword, 10);
-            CreateNewPasswordTextField(currentPassword);
-            detectionManager.CheckDetection();
-            SetDetectionChanceText();
+            SubmitPassword();
         });
         hexButton.onClick.AddListener(() =>
         {
             currentPassword = ASCIIEncryption.Decode(currentPassword, 16);
-            CreateNewPasswordTextField(currentPassword);
-            detectionManager.CheckDetection();
-            SetDetectionChanceText();
+            SubmitPassword();
+        });
+        atbashButton.onClick.AddListener(() =>
+        {
+            currentPassword = AtbashCipher.DefaultEncode(currentPassword);
+            SubmitPassword();
         });
         caesarButton.onClick.AddListener(() =>
         {
             int shift = Int32.Parse(caesarParameterInputField.text);
             currentPassword = CaesarCipher.Encode(currentPassword, CaesarCipher.DefaultBase, shift);
-            CreateNewPasswordTextField(currentPassword);
-            detectionManager.CheckDetection();
-            SetDetectionChanceText();
-        });
-        binButton.onClick.AddListener(() =>
-        {
-            currentPassword = ASCIIEncryption.Decode(currentPassword, 2);
-            CreateNewPasswordTextField(currentPassword);
-            detectionManager.CheckDetection();
-            SetDetectionChanceText();
-        });
-        octButton.onClick.AddListener(() =>
-        {
-            currentPassword = ASCIIEncryption.Decode(currentPassword, 8);
-            CreateNewPasswordTextField(currentPassword);
-            detectionManager.CheckDetection();
-            SetDetectionChanceText();
-        });
-        atbashButton.onClick.AddListener(() =>
-        {
-            currentPassword = AtbashCipher.DefaultEncode(currentPassword);
-            CreateNewPasswordTextField(currentPassword);
-            detectionManager.CheckDetection();
-            SetDetectionChanceText();
+            SubmitPassword();
         });
     }
+
+    private void DisableApp()
+    {
+        inputField.onEndEdit.RemoveAllListeners();
+
+        decompressButton.onClick.RemoveAllListeners();
+        goBackToInputFieldButton.onClick.RemoveAllListeners();
+
+        binButton.onClick.RemoveAllListeners();
+        octButton.onClick.RemoveAllListeners();
+        decButton.onClick.RemoveAllListeners();
+        hexButton.onClick.RemoveAllListeners();
+        atbashButton.onClick.RemoveAllListeners();
+        caesarButton.onClick.RemoveAllListeners();
+    }
+
+    // May not be the best name
+    private void SubmitPassword()
+    {
+        CreateNewPasswordTextField(currentPassword);
+
+        DetectionManager.CheckDetection();
+
+        SetDetectionChanceText();
+    }
+
+    private void SetDetectionChanceText()
+    {
+        int detectionChanceNumber = -(DetectionManager.CurrentDetectionChance - 100);
+        detectionChanceTextField.text = DetectionChanceText + detectionChanceNumber.ToString() + "%";
+    }
+
 
     private void CreateNewPasswordTextField(string newPassword)
     {
@@ -179,11 +198,5 @@ public class PasswordCrackingAppUI : MonoBehaviour
             convertedPasswordUI.DestroySelf();
         }
         currentPassword = originalPassword;
-    }
-
-    private void SetDetectionChanceText()
-    {
-        detectionChanceNumber = -(detectionManager.detectionChance - 100);
-        detectionChance.text = DETECTION_CHANCE + detectionChanceNumber.ToString() + "%";
     }
 }
