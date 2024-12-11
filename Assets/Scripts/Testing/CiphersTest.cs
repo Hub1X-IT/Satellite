@@ -35,7 +35,7 @@ public class CiphersTest : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.T) && GameManager.HiddenCursorLockMode == CursorLockMode.Locked)
         {
-            SetTestUIEnabled(!isTestCanvasActive);
+            // SetTestUIEnabled(!isTestCanvasActive);
         }
     }
 
