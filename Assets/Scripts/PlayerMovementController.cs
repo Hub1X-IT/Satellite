@@ -53,4 +53,11 @@ public class PlayerMovementController : MonoBehaviour
         }
         moveDirection.y = verticalVelocity;
     }
+
+    public void WarpPosition(Vector3 newPosition)
+    {
+        characterController.enabled = false;
+        transform.position = newPosition;
+        characterController.enabled = true;
+    }
 }
