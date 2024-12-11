@@ -24,7 +24,7 @@ public class DebugTeleporter : MonoBehaviour
             if (Input.GetKeyDown(key) && GameManager.HiddenCursorLockMode == CursorLockMode.Locked)
             {
                 playerMovementController.WarpPosition(dictionary[key].position);
-                Debug.Log(playerMovementController.transform.position);
+                Debug.Log($"Debug teleporter: {playerMovementController.transform.position}");
                 break;
             }
         }

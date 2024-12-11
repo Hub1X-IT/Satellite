@@ -124,7 +124,6 @@ public class Desk : MonoBehaviour
 
     public void SetAllComputersEnabled(bool enabled)
     {
-        Debug.Log(enabled);
         foreach (var computer in childComputers)
         {
             computer.IsComputerEnabled = enabled;

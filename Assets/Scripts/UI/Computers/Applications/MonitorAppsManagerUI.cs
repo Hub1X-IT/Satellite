@@ -4,6 +4,7 @@ public class MonitorAppsManagerUI : MonoBehaviour
 {
     public enum ApplicationType
     {
+        FilePasswordScreen,
         NotepadApp,
         PasswordCrackingApp,
     }
@@ -15,6 +16,9 @@ public class MonitorAppsManagerUI : MonoBehaviour
     [SerializeField]
     MonitorAppPrefabsSO monitorAppPrefabs;
     */
+
+    [SerializeField]
+    private FilePasswordScreenUI filePasswordScreenPrefab;
 
     [SerializeField]
     private NotepadAppUI notepadAppPrefab;
@@ -30,6 +34,9 @@ public class MonitorAppsManagerUI : MonoBehaviour
         {
             default:
                 return null;
+            case ApplicationType.FilePasswordScreen:
+                instantiatedApp = Instantiate(filePasswordScreenPrefab, appsHolder).GetComponent<MonitorAppUI>();
+                break;
             case ApplicationType.NotepadApp:
                 // instantiatedApp = Instantiate(monitorAppPrefabs.NotepadAppPrefab, appsHolder).GetComponent<MonitorAppUI>();
                 instantiatedApp = Instantiate(notepadAppPrefab, appsHolder).GetComponent<MonitorAppUI>();

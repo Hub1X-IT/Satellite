@@ -10,6 +10,8 @@ public class FolderContentUIFile : MonitorUIDataContainer
 
     private FolderContentUI parentFolderContentUI;
 
+    private MonitorAppsManagerUI currentMonitorAppsManager;
+
     protected override void Awake()
     {
         base.Awake();
@@ -20,6 +22,7 @@ public class FolderContentUIFile : MonitorUIDataContainer
     {
         selfFileSO = fileSO;
         this.parentFolderContentUI = parentFolderContentUI;
+        currentMonitorAppsManager = parentFolderContentUI.CurrentFileExplorer.CurrentMonitorAppsManager;
         SetName(selfFileSO.SelfName);
 
         if (selfFileSO is FileStringSO)
@@ -30,11 +33,17 @@ public class FolderContentUIFile : MonitorUIDataContainer
 
     private void OpenFileContent()
     {
-        if (selfFileSO is FileStringSO fileStringSO)
+        if (selfFileSO.IsLocked)
         {
-            NotepadAppUI notepadAppUI = parentFolderContentUI.CurrentFileExplorer.CurrentMonitorAppsManager.
-                OpenApplication(MonitorAppsManagerUI.ApplicationType.NotepadApp).GetComponent<NotepadAppUI>();
-            notepadAppUI.InitializeNotepadAppUI(fileStringSO);
+            FilePasswordScreenUI filePasswordScreen = currentMonitorAppsManager.OpenApplication(MonitorAppsManagerUI.
+                ApplicationType.FilePasswordScreen).GetComponent<FilePasswordScreenUI>();
+            filePasswordScreen.InitializeFilePasswordScreen(selfFileSO);
+        }
+        else if (selfFileSO is FileStringSO fileStringSO)
+        {
+            NotepadAppUI notepadApp = currentMonitorAppsManager.OpenApplication(MonitorAppsManagerUI.
+                ApplicationType.NotepadApp).GetComponent<NotepadAppUI>();
+            notepadApp.InitializeNotepadAppUI(fileStringSO);
         }
     }
 }
