@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FolderContentUIFile : MonitorUIDataContainer
+public class FolderContentUIFile : FileExplorerUIDataContainer
 {
     [SerializeField]
     private Button openButton;
@@ -10,12 +10,10 @@ public class FolderContentUIFile : MonitorUIDataContainer
 
     private FolderContentUI parentFolderContentUI;
 
-    private MonitorAppsManagerUI currentMonitorAppsManager;
-
     protected override void Awake()
     {
         base.Awake();
-        openButton.onClick.AddListener(OpenFileContent);
+        openButton.onClick.AddListener(TryOpenFileContent);
     }
 
     public void InitializeFile(FileSO fileSO, FolderContentUI parentFolderContentUI)
@@ -23,7 +21,6 @@ public class FolderContentUIFile : MonitorUIDataContainer
         selfFileSO = fileSO;
         this.parentFolderContentUI = parentFolderContentUI;
         currentMonitorAppsManager = parentFolderContentUI.CurrentFileExplorer.CurrentMonitorAppsManager;
-        SetName(selfFileSO.SelfName);
 
         if (selfFileSO is FileStringSO)
         {
@@ -31,19 +28,16 @@ public class FolderContentUIFile : MonitorUIDataContainer
         }
     }
 
-    private void OpenFileContent()
+    private void TryOpenFileContent()
     {
-        if (selfFileSO.IsLocked)
+        if (TryOpenDataContainer())
         {
-            FilePasswordScreenUI filePasswordScreen = currentMonitorAppsManager.OpenApplication(MonitorAppsManagerUI.
-                ApplicationType.FilePasswordScreen).GetComponent<FilePasswordScreenUI>();
-            filePasswordScreen.InitializeFilePasswordScreen(selfFileSO);
-        }
-        else if (selfFileSO is FileStringSO fileStringSO)
-        {
-            NotepadAppUI notepadApp = currentMonitorAppsManager.OpenApplication(MonitorAppsManagerUI.
-                ApplicationType.NotepadApp).GetComponent<NotepadAppUI>();
-            notepadApp.InitializeNotepadAppUI(fileStringSO);
+            if (selfFileSO is FileStringSO fileStringSO)
+            {
+                NotepadAppUI notepadApp = currentMonitorAppsManager.OpenApplication(MonitorAppsManagerUI.
+                    ApplicationType.NotepadApp).GetComponent<NotepadAppUI>();
+                notepadApp.InitializeNotepadAppUI(fileStringSO);
+            }
         }
     }
 }

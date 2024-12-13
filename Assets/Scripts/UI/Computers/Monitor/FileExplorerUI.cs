@@ -35,12 +35,14 @@ public class FileExplorerUI : MonoBehaviour
     {
         RootFolderSO = fileSystemManager.RootFolderSO;
         RootFolderSO.RefreshChildDataContainers();
+        RootFolderSO.RefreshFolderSO();
         RefreshSideFolders();
     }
 
     public void RefreshSideFolders()
     {
-        rootSideFolderUI.InitializeFolderUI(RootFolderSO, this);
+        rootSideFolderUI.InitializeUIDataContainer(RootFolderSO, this);
+        rootSideFolderUI.InitializeFolderUI(RootFolderSO);
         rootSideFolderUI.RefreshChildFolders();
     }
 
@@ -58,13 +60,16 @@ public class FileExplorerUI : MonoBehaviour
         RefreshSideFolders();
     }
 
-    public void OpenFolderContent(FolderSO folderSO, List<FolderSO> previousFolderSOList)
+    public void TryOpenFolderContent(FolderSO folderSO, FileExplorerUIDataContainer dataContainerUI, List<FolderSO> previousFolderSOList)
     {
-        if (currentFolderContentUI != null)
+        if (dataContainerUI == null || dataContainerUI.TryOpenDataContainer())
         {
-            currentFolderContentUI.CloseFolderContentUI();
+            if (currentFolderContentUI != null)
+            {
+                currentFolderContentUI.CloseFolderContentUI();
+            }
+            currentFolderContentUI = Instantiate(folderContentUIPrefab.gameObject, folderContentHolder).GetComponent<FolderContentUI>();
+            currentFolderContentUI.InitializeFolderContentUI(folderSO, this, previousFolderSOList);
         }
-        currentFolderContentUI = Instantiate(folderContentUIPrefab.gameObject, folderContentHolder).GetComponent<FolderContentUI>();
-        currentFolderContentUI.InitializeFolderContentUI(folderSO, this, previousFolderSOList);
     }
 }

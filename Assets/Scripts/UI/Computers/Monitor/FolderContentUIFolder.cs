@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FolderContentUIFolder : MonitorUIDataContainer
+public class FolderContentUIFolder : FileExplorerUIDataContainer
 {
     [SerializeField]
     private Button openButton;
@@ -14,8 +14,7 @@ public class FolderContentUIFolder : MonitorUIDataContainer
     {
         selfFolderSO = folderSO;
         this.parentFolderContentUI = parentFolderContentUI;
-        SetName(folderSO.SelfName);
 
-        openButton.onClick.AddListener(() => parentFolderContentUI.OpenNewFolderContent(selfFolderSO));
+        openButton.onClick.AddListener(() => parentFolderContentUI.OpenNewFolderContent(selfFolderSO, this));
     }
 }

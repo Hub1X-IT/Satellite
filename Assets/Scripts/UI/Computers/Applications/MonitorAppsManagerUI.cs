@@ -18,7 +18,7 @@ public class MonitorAppsManagerUI : MonoBehaviour
     */
 
     [SerializeField]
-    private FilePasswordScreenUI filePasswordScreenPrefab;
+    private DataContainerPasswordScreenUI dataContainerPasswordScreenPrefab;
 
     [SerializeField]
     private NotepadAppUI notepadAppPrefab;
@@ -35,7 +35,7 @@ public class MonitorAppsManagerUI : MonoBehaviour
             default:
                 return null;
             case ApplicationType.FilePasswordScreen:
-                instantiatedApp = Instantiate(filePasswordScreenPrefab, appsHolder).GetComponent<MonitorAppUI>();
+                instantiatedApp = Instantiate(dataContainerPasswordScreenPrefab, appsHolder).GetComponent<MonitorAppUI>();
                 break;
             case ApplicationType.NotepadApp:
                 // instantiatedApp = Instantiate(monitorAppPrefabs.NotepadAppPrefab, appsHolder).GetComponent<MonitorAppUI>();
@@ -47,12 +47,5 @@ public class MonitorAppsManagerUI : MonoBehaviour
         }
         instantiatedApp.InitializeApp(this);
         return instantiatedApp;
-    }
-
-    // Temporary solution
-    public void OpenPasswordCracking()
-    {
-        PasswordCrackingAppUI passwordCrackingApp = OpenApplication(ApplicationType.PasswordCrackingApp).GetComponent<PasswordCrackingAppUI>();
-        passwordCrackingApp.InitializePasswordCrackingApp("Password cracking - test");
     }
 }

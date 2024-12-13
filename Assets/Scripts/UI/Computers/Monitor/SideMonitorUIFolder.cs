@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SideMonitorUIFolder : MonitorUIDataContainer
+public class SideMonitorUIFolder : FileExplorerUIDataContainer
 {
     [SerializeField]
     private Button childFoldersButton;
@@ -16,8 +16,6 @@ public class SideMonitorUIFolder : MonitorUIDataContainer
     private Sprite childFoldersShownSprite;
 
     private FolderSO selfFolderSO;
-
-    private FileExplorerUI currentMonitorFileExplorerUI;
 
     private VerticalLayoutGroup verticalLayoutGroup;
 
@@ -34,10 +32,9 @@ public class SideMonitorUIFolder : MonitorUIDataContainer
         baseFolderSize = SelfRectTransform.sizeDelta;
     }
 
-    public void InitializeFolderUI(FolderSO folderSO, FileExplorerUI monitorFileExplorer)
+    public void InitializeFolderUI(FolderSO folderSO)
     {
         selfFolderSO = folderSO;
-        currentMonitorFileExplorerUI = monitorFileExplorer;
 
         SetName(selfFolderSO.SelfName);
 
@@ -48,19 +45,19 @@ public class SideMonitorUIFolder : MonitorUIDataContainer
     private void ToggleChildFolders()
     {
         selfFolderSO.ShouldShowChildFolders = !selfFolderSO.ShouldShowChildFolders;
-        currentMonitorFileExplorerUI.RefreshSideFolders();
+        currentFileExplorer.RefreshSideFolders();
     }
 
     private void ToggleFolderContent()
     {
-        currentMonitorFileExplorerUI.OpenFolderContent(selfFolderSO, new());
+        currentFileExplorer.TryOpenFolderContent(selfFolderSO, this, new());
     }
 
     public void RefreshChildFolders()
     {
         // Should only be called on the root folder.
 
-        MonitorUIDataContainer[] childDataContainersUI = GetComponentsInChildren<MonitorUIDataContainer>(true);
+        FileExplorerUIDataContainer[] childDataContainersUI = GetComponentsInChildren<FileExplorerUIDataContainer>(true);
         foreach (var childDataContainer in childDataContainersUI)
         {
             if (childDataContainer.transform.parent == transform)
@@ -80,10 +77,11 @@ public class SideMonitorUIFolder : MonitorUIDataContainer
         {
             if (dataContainerSO is FolderSO newFolderSO)
             {
-                SideMonitorUIFolder newUIFolder = Instantiate(currentMonitorFileExplorerUI.SideFolderUIPrefab.gameObject,
+                SideMonitorUIFolder newUIFolder = Instantiate(currentFileExplorer.SideFolderUIPrefab.gameObject,
                     transform).GetComponent<SideMonitorUIFolder>();
 
-                newUIFolder.InitializeFolderUI(newFolderSO, currentMonitorFileExplorerUI);
+                newUIFolder.InitializeUIDataContainer(newFolderSO, currentFileExplorer);
+                newUIFolder.InitializeFolderUI(newFolderSO);
                 newUIFolder.AddChildFolders(newFolderSO);
                 newUIFolder.gameObject.SetActive(currentFolderSO.ShouldShowChildFolders);
             }
@@ -95,7 +93,7 @@ public class SideMonitorUIFolder : MonitorUIDataContainer
         Vector2 currentSize = baseFolderSize;
         float verticalChildOffset = verticalLayoutGroup.spacing;
 
-        MonitorUIDataContainer[] childDataContainersUI = GetComponentsInChildren<MonitorUIDataContainer>(true);
+        FileExplorerUIDataContainer[] childDataContainersUI = GetComponentsInChildren<FileExplorerUIDataContainer>(true);
 
         foreach (var childDataContainerUI in childDataContainersUI)
         {

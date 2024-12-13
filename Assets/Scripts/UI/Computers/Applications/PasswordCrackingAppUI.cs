@@ -163,7 +163,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
         detectionChanceTextField.text = DetectionChanceText + detectionChanceNumber.ToString() + "%";
     }
 
-
     private void CreateNewPasswordTextField(string newPassword)
     {
         ConvertedPasswordUI convertedPasswordUI = Instantiate(convertedPasswordPrefab.gameObject,

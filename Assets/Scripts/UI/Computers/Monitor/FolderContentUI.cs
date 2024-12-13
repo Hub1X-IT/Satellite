@@ -20,48 +20,50 @@ public class FolderContentUI : MonoBehaviour
 
     private List<FolderSO> previousFolderSOList;
 
-    private FileExplorerUI currentFileExplorer;
-
-    public FileExplorerUI CurrentFileExplorer => currentFileExplorer;
+    public FileExplorerUI CurrentFileExplorer { get; private set; }
 
     private void Awake()
     {
-        parentFolderButton.onClick.AddListener(() => currentFileExplorer.OpenFolderContent(selfFolderSO.ParentFolderSO, previousFolderSOList));
+        parentFolderButton.onClick.AddListener(() => CurrentFileExplorer.TryOpenFolderContent(selfFolderSO.ParentFolderSO, null, previousFolderSOList));
     }
 
-    public void InitializeFolderContentUI(FolderSO folderSO, FileExplorerUI fileExplorer, List<FolderSO> previousFolderSOList)
+    public void InitializeFolderContentUI(FolderSO folderSO, FileExplorerUI currentFileExplorer, List<FolderSO> previousFolderSOList)
     {
         selfFolderSO = folderSO;
-        currentFileExplorer = fileExplorer;
+        CurrentFileExplorer = currentFileExplorer;
         this.previousFolderSOList = previousFolderSOList;
         this.previousFolderSOList.Add(selfFolderSO);
 
         // Add all child data containers.
-        foreach (var childDataContainer in selfFolderSO.ChildDataContainers)
+        foreach (var childDataContainerSO in selfFolderSO.ChildDataContainers)
         {
-            if (childDataContainer is FolderSO childFolderSO)
+            FileExplorerUIDataContainer dataContainerUI = null;
+            if (childDataContainerSO is FolderSO childFolderSO)
             {
-                Instantiate(folderContentUIFolderPrefab.gameObject, childObjectsHolder)
-                    .GetComponent<FolderContentUIFolder>().InitializeFolder(childFolderSO, this);
+                FolderContentUIFolder folderUI = Instantiate(folderContentUIFolderPrefab.gameObject, childObjectsHolder).GetComponent<FolderContentUIFolder>();
+                folderUI.InitializeFolder(childFolderSO, this);
+                dataContainerUI = folderUI;
             }
-            else if (childDataContainer is FileSO childFileSO)
+            else if (childDataContainerSO is FileSO childFileSO)
             {
-                Instantiate(folderContentUIFilePrefab.gameObject, childObjectsHolder)
-                    .GetComponent<FolderContentUIFile>().InitializeFile(childFileSO, this);
+                FolderContentUIFile fileUI = Instantiate(folderContentUIFilePrefab.gameObject, childObjectsHolder).GetComponent<FolderContentUIFile>();
+                fileUI.InitializeFile(childFileSO, this);
+                dataContainerUI = fileUI;
             }
+            dataContainerUI.InitializeUIDataContainer(childDataContainerSO, currentFileExplorer);
         }
 
         currentFileExplorer.ShowSideFolder(selfFolderSO);
 
-        if (selfFolderSO == fileExplorer.RootFolderSO)
+        if (selfFolderSO == currentFileExplorer.RootFolderSO)
         {
             parentFolderButton.gameObject.SetActive(false);
         }
     }
 
-    public void OpenNewFolderContent(FolderSO folderSO)
+    public void OpenNewFolderContent(FolderSO folderSO, FolderContentUIFolder folderContentUIFolder)
     {
-        currentFileExplorer.OpenFolderContent(folderSO, previousFolderSOList);
+        CurrentFileExplorer.TryOpenFolderContent(folderSO, folderContentUIFolder, previousFolderSOList);
     }
 
     public void CloseFolderContentUI()
