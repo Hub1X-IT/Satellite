@@ -92,6 +92,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GuidebookToggle"",
+                    ""type"": ""Button"",
+                    ""id"": ""d0eb3231-cf93-4457-b4b3-5f6598e48ba7"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -114,6 +123,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""SmartphoneToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d015dd87-bf6a-4858-a9eb-9ff2a12c7e32"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GuidebookToggle"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -337,6 +357,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_PlayerWalkingAndDesk = asset.FindActionMap("PlayerWalkingAndDesk", throwIfNotFound: true);
         m_PlayerWalkingAndDesk_Rotate = m_PlayerWalkingAndDesk.FindAction("Rotate", throwIfNotFound: true);
         m_PlayerWalkingAndDesk_SmartphoneToggle = m_PlayerWalkingAndDesk.FindAction("SmartphoneToggle", throwIfNotFound: true);
+        m_PlayerWalkingAndDesk_GuidebookToggle = m_PlayerWalkingAndDesk.FindAction("GuidebookToggle", throwIfNotFound: true);
         // PlayerWalking
         m_PlayerWalking = asset.FindActionMap("PlayerWalking", throwIfNotFound: true);
         m_PlayerWalking_Move = m_PlayerWalking.FindAction("Move", throwIfNotFound: true);
@@ -478,12 +499,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private List<IPlayerWalkingAndDeskActions> m_PlayerWalkingAndDeskActionsCallbackInterfaces = new List<IPlayerWalkingAndDeskActions>();
     private readonly InputAction m_PlayerWalkingAndDesk_Rotate;
     private readonly InputAction m_PlayerWalkingAndDesk_SmartphoneToggle;
+    private readonly InputAction m_PlayerWalkingAndDesk_GuidebookToggle;
     public struct PlayerWalkingAndDeskActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerWalkingAndDeskActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Rotate => m_Wrapper.m_PlayerWalkingAndDesk_Rotate;
         public InputAction @SmartphoneToggle => m_Wrapper.m_PlayerWalkingAndDesk_SmartphoneToggle;
+        public InputAction @GuidebookToggle => m_Wrapper.m_PlayerWalkingAndDesk_GuidebookToggle;
         public InputActionMap Get() { return m_Wrapper.m_PlayerWalkingAndDesk; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -499,6 +522,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @SmartphoneToggle.started += instance.OnSmartphoneToggle;
             @SmartphoneToggle.performed += instance.OnSmartphoneToggle;
             @SmartphoneToggle.canceled += instance.OnSmartphoneToggle;
+            @GuidebookToggle.started += instance.OnGuidebookToggle;
+            @GuidebookToggle.performed += instance.OnGuidebookToggle;
+            @GuidebookToggle.canceled += instance.OnGuidebookToggle;
         }
 
         private void UnregisterCallbacks(IPlayerWalkingAndDeskActions instance)
@@ -509,6 +535,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @SmartphoneToggle.started -= instance.OnSmartphoneToggle;
             @SmartphoneToggle.performed -= instance.OnSmartphoneToggle;
             @SmartphoneToggle.canceled -= instance.OnSmartphoneToggle;
+            @GuidebookToggle.started -= instance.OnGuidebookToggle;
+            @GuidebookToggle.performed -= instance.OnGuidebookToggle;
+            @GuidebookToggle.canceled -= instance.OnGuidebookToggle;
         }
 
         public void RemoveCallbacks(IPlayerWalkingAndDeskActions instance)
@@ -735,6 +764,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnRotate(InputAction.CallbackContext context);
         void OnSmartphoneToggle(InputAction.CallbackContext context);
+        void OnGuidebookToggle(InputAction.CallbackContext context);
     }
     public interface IPlayerWalkingActions
     {

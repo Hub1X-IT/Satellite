@@ -20,6 +20,8 @@ public static class GameInput
 
     public static event Action OnSmartphoneToggleAction;
 
+    public static event Action OnGuidebookToggleAction;
+
     public static event Action OnExitDeskViewAction;
 
     public static event Action OnComputerExitAction;
@@ -45,6 +47,8 @@ public static class GameInput
 
         PlayerInputActions.PlayerWalkingAndDesk.SmartphoneToggle.performed += SmartphoneToggle_performed;
 
+        PlayerInputActions.PlayerWalkingAndDesk.GuidebookToggle.performed += GuidebookToggle_performed;
+
         PlayerInputActions.Desk.Interact.performed += Interact_performed; // Interact in Desk does the same thing as Interact in PlayerWalking
         PlayerInputActions.Desk.ExitDeskView.performed += ExitDeskView_performed;
         PlayerInputActions.Computer.Exit.performed += ComputerExit_performed;
@@ -62,6 +66,8 @@ public static class GameInput
 
         PlayerInputActions.PlayerWalkingAndDesk.SmartphoneToggle.performed -= SmartphoneToggle_performed;
 
+        PlayerInputActions.PlayerWalkingAndDesk.GuidebookToggle.performed -= GuidebookToggle_performed;
+
         PlayerInputActions.Desk.Interact.performed -= Interact_performed;
         PlayerInputActions.Desk.ExitDeskView.performed -= ExitDeskView_performed;
 
@@ -76,6 +82,7 @@ public static class GameInput
         OnPauseAction = null;
         OnInteractAction = null;
         OnSmartphoneToggleAction = null;
+        OnGuidebookToggleAction = null;
         OnExitDeskViewAction = null;
         OnComputerExitAction = null;
         OnKeyboardInputAction = null;
@@ -95,6 +102,8 @@ public static class GameInput
     private static void Interact_performed(InputAction.CallbackContext _) => OnInteractAction?.Invoke();
 
     private static void SmartphoneToggle_performed(InputAction.CallbackContext _) => OnSmartphoneToggleAction?.Invoke();
+
+    private static void GuidebookToggle_performed(InputAction.CallbackContext _) => OnGuidebookToggleAction?.Invoke();
 
     private static void ExitDeskView_performed(InputAction.CallbackContext _) => OnExitDeskViewAction?.Invoke();
 
