@@ -21,19 +21,15 @@ public class SideMonitorUIFolder : FileExplorerUIDataContainer
 
     private Vector2 baseFolderSize;
 
-    protected override void Awake()
+    public void InitializeFolderUI(FolderSO folderSO)
     {
-        base.Awake();
         verticalLayoutGroup = GetComponent<VerticalLayoutGroup>();
 
         childFoldersButton.onClick.AddListener(ToggleChildFolders);
         folderContentButton.onClick.AddListener(ToggleFolderContent);
 
         baseFolderSize = SelfRectTransform.sizeDelta;
-    }
 
-    public void InitializeFolderUI(FolderSO folderSO)
-    {
         selfFolderSO = folderSO;
 
         SetName(selfFolderSO.SelfName);
@@ -44,8 +40,11 @@ public class SideMonitorUIFolder : FileExplorerUIDataContainer
 
     private void ToggleChildFolders()
     {
-        selfFolderSO.ShouldShowChildFolders = !selfFolderSO.ShouldShowChildFolders;
-        currentFileExplorer.RefreshSideFolders();
+        if (TryOpenDataContainer())
+        {
+            selfFolderSO.ShouldShowChildFolders = !selfFolderSO.ShouldShowChildFolders;
+            currentFileExplorer.RefreshSideFolders();
+        }
     }
 
     private void ToggleFolderContent()

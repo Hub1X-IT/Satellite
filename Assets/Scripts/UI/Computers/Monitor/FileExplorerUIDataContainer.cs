@@ -14,13 +14,10 @@ public abstract class FileExplorerUIDataContainer : MonoBehaviour
 
     protected MonitorAppsManagerUI currentMonitorAppsManager;
 
-    protected virtual void Awake()
-    {
-        SelfRectTransform = GetComponent<RectTransform>();
-    }
-
     public void InitializeUIDataContainer(DataContainerSO dataContainerSO, FileExplorerUI currentFileExplorer)
     {
+        SelfRectTransform = GetComponent<RectTransform>();
+
         this.currentFileExplorer = currentFileExplorer;
         currentMonitorAppsManager = currentFileExplorer.CurrentMonitorAppsManager;
         selfDataContainerSO = dataContainerSO;

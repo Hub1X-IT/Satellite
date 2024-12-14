@@ -10,14 +10,10 @@ public class FolderContentUIFile : FileExplorerUIDataContainer
 
     private FolderContentUI parentFolderContentUI;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        openButton.onClick.AddListener(TryOpenFileContent);
-    }
-
     public void InitializeFile(FileSO fileSO, FolderContentUI parentFolderContentUI)
     {
+        openButton.onClick.AddListener(TryOpenFileContent);
+
         selfFileSO = fileSO;
         this.parentFolderContentUI = parentFolderContentUI;
         currentMonitorAppsManager = parentFolderContentUI.CurrentFileExplorer.CurrentMonitorAppsManager;
