@@ -48,4 +48,11 @@ public class MonitorAppsManagerUI : MonoBehaviour
         instantiatedApp.InitializeApp(this);
         return instantiatedApp;
     }
+
+    // Method for the temporary password cracking button
+    public void OpenPasswordCracking()
+    {
+        PasswordCrackingAppUI passwordCrackingApp = OpenApplication(ApplicationType.PasswordCrackingApp).GetComponent<PasswordCrackingAppUI>();
+        passwordCrackingApp.InitializePasswordCrackingApp("Password cracking - test");
+    }
 }

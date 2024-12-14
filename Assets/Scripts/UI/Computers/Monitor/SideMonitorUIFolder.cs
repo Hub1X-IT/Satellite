@@ -36,7 +36,7 @@ public class SideMonitorUIFolder : FileExplorerUIDataContainer
 
         childFoldersButton.gameObject.SetActive(gameObject.activeSelf && selfFolderSO.HasChildFolders());
         childFoldersButton.image.sprite = selfFolderSO.ShouldShowChildFolders ? childFoldersShownSprite : childFoldersHiddenSprite;
-        childFoldersButton.image.rectTransform.sizeDelta = selfFolderSO.ShouldShowChildFolders ? new Vector2(40,25) : new Vector2(25,40);
+        childFoldersButton.image.rectTransform.sizeDelta = selfFolderSO.ShouldShowChildFolders ? new Vector2(40, 25) : new Vector2(25, 40);
     }
 
     private void ToggleChildFolders()
