@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class PasswordCrackingAppUI : MonoBehaviour
 {
-    // UI objects referenced in this script should not have listeners added to their events in any other scripts.
-
     private MonitorAppUI monitorAppUI;
 
     [SerializeField]
@@ -74,86 +72,93 @@ public class PasswordCrackingAppUI : MonoBehaviour
 
     private void EnableApp()
     {
-        inputField.onEndEdit.AddListener((text) =>
-        {
-            originalPassword = currentPassword = text;
-            RemoveAllPasswordTextFields();
-        });
+        inputField.onEndEdit.AddListener(ChangeOriginalPassword);
+        decompressButton.onClick.AddListener(DecompressPassword);
+        goBackToInputFieldButton.onClick.AddListener(GoBackToInputField);
 
-        decompressButton.onClick.AddListener(() =>
-        {
-            string compressedPassword = inputField.text;
-            if (TextCompressor.TryGetDecompressedText(compressedPassword, out string decompressedPassword))
-            {
-                originalPassword = currentPassword = inputField.text = decompressedPassword;
-                RemoveAllPasswordTextFields();
-            }
-            else
-            {
-                Debug.Log("Decompression failed.");
-            }
-        });
-        goBackToInputFieldButton.onClick.AddListener(() =>
-        {
-            currentPassword = originalPassword;
-            RemoveAllPasswordTextFields();
-        });
-
-        binButton.onClick.AddListener(() =>
-        {
-            currentPassword = ASCIIEncryption.Decode(currentPassword, 2);
-            SubmitPassword();
-        });
-        octButton.onClick.AddListener(() =>
-        {
-            currentPassword = ASCIIEncryption.Decode(currentPassword, 8);
-            SubmitPassword();
-        });
-        decButton.onClick.AddListener(() =>
-        {
-            currentPassword = ASCIIEncryption.Decode(currentPassword, 10);
-            SubmitPassword();
-        });
-        hexButton.onClick.AddListener(() =>
-        {
-            currentPassword = ASCIIEncryption.Decode(currentPassword, 16);
-            SubmitPassword();
-        });
-        atbashButton.onClick.AddListener(() =>
-        {
-            currentPassword = AtbashCipher.DefaultEncode(currentPassword);
-            SubmitPassword();
-        });
-        caesarButton.onClick.AddListener(() =>
-        {
-            int shift = Int32.Parse(caesarParameterInputField.text);
-            currentPassword = CaesarCipher.Encode(currentPassword, CaesarCipher.DefaultBase, shift);
-            SubmitPassword();
-        });
+        binButton.onClick.AddListener(BinDecode);
+        octButton.onClick.AddListener(OctDecode);
+        decButton.onClick.AddListener(DecDecode);
+        hexButton.onClick.AddListener(HexDecode);
+        atbashButton.onClick.AddListener(AtbashDecode);
+        caesarButton.onClick.AddListener(CaesarDecode);
     }
 
     private void DisableApp()
     {
-        inputField.onEndEdit.RemoveAllListeners();
+        inputField.onEndEdit.RemoveListener(ChangeOriginalPassword);
+        decompressButton.onClick.RemoveListener(DecompressPassword);
+        goBackToInputFieldButton.onClick.RemoveListener(GoBackToInputField);
 
-        decompressButton.onClick.RemoveAllListeners();
-        goBackToInputFieldButton.onClick.RemoveAllListeners();
-
-        binButton.onClick.RemoveAllListeners();
-        octButton.onClick.RemoveAllListeners();
-        decButton.onClick.RemoveAllListeners();
-        hexButton.onClick.RemoveAllListeners();
-        atbashButton.onClick.RemoveAllListeners();
-        caesarButton.onClick.RemoveAllListeners();
+        binButton.onClick.RemoveListener(BinDecode);
+        octButton.onClick.RemoveListener(OctDecode);
+        decButton.onClick.RemoveListener(DecDecode);
+        hexButton.onClick.RemoveListener(HexDecode);
+        atbashButton.onClick.RemoveListener(AtbashDecode);
+        caesarButton.onClick.RemoveListener(CaesarDecode);
     }
 
-    // May not be the best name
-    private void SubmitPassword()
+    private void ChangeOriginalPassword(string newPassword)
+    {
+        originalPassword = currentPassword = newPassword;
+        RemoveAllPasswordTextFields();
+    }
+    private void DecompressPassword()
+    {
+        string compressedPassword = inputField.text;
+        if (TextCompressor.TryGetDecompressedText(compressedPassword, out string decompressedPassword))
+        {
+            originalPassword = currentPassword = inputField.text = decompressedPassword;
+            RemoveAllPasswordTextFields();
+        }
+        else
+        {
+            Debug.Log("Decompression failed.");
+        }
+    }
+    private void GoBackToInputField()
+    {
+        currentPassword = originalPassword;
+        RemoveAllPasswordTextFields();
+    }
+
+    private void BinDecode()
+    {
+        currentPassword = ASCIIEncryption.Decode(currentPassword, 2);
+        AddDecodedPasswordPassword();
+    }
+    private void OctDecode()
+    {
+        currentPassword = ASCIIEncryption.Decode(currentPassword, 8);
+        AddDecodedPasswordPassword();
+    }
+    private void DecDecode()
+    {
+        currentPassword = ASCIIEncryption.Decode(currentPassword, 10);
+        AddDecodedPasswordPassword();
+    }
+    private void HexDecode()
+    {
+        currentPassword = ASCIIEncryption.Decode(currentPassword, 16);
+        AddDecodedPasswordPassword();
+    }
+    private void AtbashDecode()
+    {
+        currentPassword = AtbashCipher.DefaultEncode(currentPassword);
+        AddDecodedPasswordPassword();
+    }
+    private void CaesarDecode()
+    {
+        int shift = Int32.Parse(caesarParameterInputField.text);
+        currentPassword = CaesarCipher.Encode(currentPassword, CaesarCipher.DefaultBase, shift);
+        AddDecodedPasswordPassword();
+    }
+
+    private void AddDecodedPasswordPassword()
     {
         CreateNewPasswordTextField(currentPassword);
 
         DetectionManager.CheckDetection();
-
         SetDetectionChanceText();
     }
 
@@ -169,9 +174,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
             convertedPasswordsHolder).GetComponent<ConvertedPasswordUI>();
 
         convertedPasswordUI.InitializeConvertedPasswordUI(newPassword);
-
         convertedPasswordUI.GoBackToPasswordTriggered += GoBackToPassword;
-
         previousConvertedPasswordUIStack.Push(convertedPasswordUI);
     }
 
