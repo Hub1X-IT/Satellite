@@ -32,4 +32,10 @@ public class FolderContentUIFolder : FileExplorerUIDataContainer
     {
         parentFolderContentUI.OpenNewFolderContent(selfFolderSO, this);
     }
+
+    protected override void OnDataContainerUnlocked()
+    {
+        base.OnDataContainerUnlocked();
+        CurrentFileExplorer.RefreshSideFolders();
+    }
 }

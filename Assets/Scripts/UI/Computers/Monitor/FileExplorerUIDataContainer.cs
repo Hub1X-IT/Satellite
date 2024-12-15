@@ -57,14 +57,20 @@ public abstract class FileExplorerUIDataContainer : MonoBehaviour
             DataContainerPasswordScreenUI DataContainerPasswordScreen = CurrentMonitorAppsManager.OpenApplication(MonitorAppsManagerUI.
                 ApplicationType.DataContainerPasswordScreen).GetComponent<DataContainerPasswordScreenUI>();
             DataContainerPasswordScreen.InitializeDataContainerPasswordScreen(SelfDataContainerSO);
-            DataContainerPasswordScreen.PasswordGuessed += UpdateIcon;
+            DataContainerPasswordScreen.PasswordGuessed += OnDataContainerUnlocked;
             return false;
         }
         return true;
     }
 
+    protected virtual void OnDataContainerUnlocked()
+    {
+        UpdateIcon();
+    }
+
     private void UpdateIcon()
     {
-        dataContainerIconImage.sprite = SelfDataContainerSO.IsLocked && LockedDataContainerIcon != null ? LockedDataContainerIcon : BaseDataContainerIcon;
+        dataContainerIconImage.sprite = SelfDataContainerSO.IsLocked && LockedDataContainerIcon != null ? 
+            LockedDataContainerIcon : BaseDataContainerIcon;
     }
 }

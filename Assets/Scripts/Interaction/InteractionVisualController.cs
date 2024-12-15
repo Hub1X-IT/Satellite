@@ -2,23 +2,17 @@ using UnityEngine;
 
 public class InteractionVisualController : MonoBehaviour
 {
+    [SerializeField]
     private InteractionUI interactionUI;
 
     private InteractionVisual previousInteractVisual;
 
     private IInteractable previousInteractableObject;
 
-
-    private void Awake()
-    {
-        interactionUI = GetComponent<InteractionUI>();
-    }
-
     private void Update()
     {
         CheckForInteraction();
     }
-
 
     private void CheckForInteraction()
     {
@@ -39,7 +33,6 @@ public class InteractionVisualController : MonoBehaviour
             }
         }
     }
-
 
     private void ChangeInteractVisual(IInteractable interactableObject)
     {

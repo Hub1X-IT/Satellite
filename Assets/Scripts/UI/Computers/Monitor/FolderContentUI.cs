@@ -30,6 +30,7 @@ public class FolderContentUI : MonoBehaviour
     public void InitializeFolderContentUI(FolderSO folderSO, FileExplorerUI currentFileExplorer, List<FolderSO> previousFolderSOList)
     {
         selfFolderSO = folderSO;
+        folderSO.IsFolderContentOpen = true;
         CurrentFileExplorer = currentFileExplorer;
         this.previousFolderSOList = previousFolderSOList;
         this.previousFolderSOList.Add(selfFolderSO);
@@ -68,6 +69,7 @@ public class FolderContentUI : MonoBehaviour
 
     public void CloseFolderContentUI()
     {
+        selfFolderSO.IsFolderContentOpen = false;
         gameObject.SetActive(false);
         Destroy(gameObject);
     }

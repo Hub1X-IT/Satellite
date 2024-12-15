@@ -23,6 +23,8 @@ public class SideMonitorUIFolder : FileExplorerUIDataContainer
 
     private FolderSO selfFolderSO;
 
+    private FolderSO parentFolderSO;
+
     private VerticalLayoutGroup verticalLayoutGroup;
 
     private Vector2 baseFolderSize;
@@ -34,7 +36,7 @@ public class SideMonitorUIFolder : FileExplorerUIDataContainer
         verticalLayoutGroup = GetComponent<VerticalLayoutGroup>();
 
         childFoldersButton.onClick.AddListener(ToggleChildFolders);
-        folderContentButton.onClick.AddListener(ToggleFolderContent);
+        folderContentButton.onClick.AddListener(OpenFolderContent);
 
         baseFolderSize = SelfRectTransform.sizeDelta;
     }
@@ -42,6 +44,7 @@ public class SideMonitorUIFolder : FileExplorerUIDataContainer
     public void InitializeFolderUI(FolderSO folderSO)
     {
         selfFolderSO = folderSO;
+        parentFolderSO = folderSO.ParentFolderSO;
         SelfDataContainerSO = folderSO;
 
         SetName(selfFolderSO.SelfName);
@@ -63,9 +66,23 @@ public class SideMonitorUIFolder : FileExplorerUIDataContainer
         }
     }
 
-    private void ToggleFolderContent()
+    private void OpenFolderContent()
     {
         CurrentFileExplorer.TryOpenFolderContent(selfFolderSO, this, new());
+    }
+
+    private void OpenParentFolderContent()
+    {
+        CurrentFileExplorer.TryOpenFolderContent(parentFolderSO, this, new());
+    }
+
+    protected override void OnDataContainerUnlocked()
+    {
+        base.OnDataContainerUnlocked();
+        if (parentFolderSO != null && parentFolderSO.IsFolderContentOpen)
+        {
+            OpenParentFolderContent();
+        }
     }
 
     public void RefreshChildFolders()

@@ -5,6 +5,8 @@ public class FolderSO : DataContainerSO
 {
     public bool ShouldShowChildFolders { get; set; }
 
+    public bool IsFolderContentOpen { get; set; }
+
     [SerializeField]
     private DataContainerSO[] childDataContainers;
 
@@ -39,5 +41,6 @@ public class FolderSO : DataContainerSO
     public void RefreshFolderSO()
     {
         ShouldShowChildFolders = false;
+        IsFolderContentOpen = false;
     }
 }

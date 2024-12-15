@@ -34,7 +34,7 @@ public class SerializableDictionary<TKey, TValue>
     }
 
     [Serializable]
-    private class DictionaryItem
+    private struct DictionaryItem
     {
         public TKey key;
         public TValue value;

@@ -578,8 +578,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1156198700391351284}
-  - component: {fileID: 9207718206992504255}
   - component: {fileID: 11998391503690975}
+  - component: {fileID: 9207718206992504255}
   m_Layer: 5
   m_Name: Guidebook
   m_TagString: Untagged
@@ -614,6 +614,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1300, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &11998391503690975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6546754077746047341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cd68f0b5bb28994b94864ad2e5d4f65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guidebookEnabledPosition: {x: 0, y: 0}
+  guidebookDisabledPosition: {x: 1580, y: 0}
 --- !u!114 &9207718206992504255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -627,7 +641,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextPageButton: {fileID: 9010841731676475348}
-  prevPageButton: {fileID: 4866906192157539084}
+  previousPageButton: {fileID: 4866906192157539084}
   textLeftPage: {fileID: 8068683267909563363}
   textRightPage: {fileID: 8950536938756754641}
   titlePage: {fileID: 4900000, guid: c4b92ecda6ea4c54a9924d0bfca7ade7, type: 3}
@@ -638,19 +652,6 @@ MonoBehaviour:
   octalPage: {fileID: 4900000, guid: e6023727fa5da5c4bb74ed2d5998ee1d, type: 3}
   atbashPage: {fileID: 4900000, guid: 519043fbecd066149af912667a1103c6, type: 3}
   caesarPage: {fileID: 4900000, guid: 475d45c592482b84da5c7e51bbbedc96, type: 3}
---- !u!114 &11998391503690975
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6546754077746047341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cd68f0b5bb28994b94864ad2e5d4f65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaulGuidebookPosition: {x: 1580, y: 0}
 --- !u!1 &8491833529717210808
 GameObject:
   m_ObjectHideFlags: 0

@@ -38,7 +38,8 @@ public class PlayerScriptsController : MonoBehaviour
 
     public static void SetCanShowPlayerHUD(bool canShow)
     {
-        playerHudUIStatic.SetCanShowPlayerHUD(canShow);
+        playerHudUIStatic.CanShowPlayerHUD = canShow;
+        playerHudUIStatic.SetPlayerHUDEnabled(!GameManager.IsGamePaused);
     }
 
     public static void SetCanShowSmartphoneUI(bool canShow)
