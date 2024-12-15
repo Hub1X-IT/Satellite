@@ -10,10 +10,15 @@ public class SingleEmailController : MonoBehaviour
     private RectTransform emailRectTransform;
 
     [SerializeField]
+    private Sprite readEmailSprite;
+
+    [SerializeField]
     private EnterableUIObject emailContent;
 
     [SerializeField]
     private GameEventSO objectiveEvent;
+
+    private bool wasOpened = false;
 
     private void Awake()
     {
@@ -25,6 +30,11 @@ public class SingleEmailController : MonoBehaviour
                 objectiveEvent = null;
             }
             DisableDay1EmailObject();
+            if (wasOpened == false)
+            {
+                emailButton.image.sprite = readEmailSprite;
+                wasOpened = true;
+            }
             emailContent.Enable(EnableDay1EmailObject);
         });
     }
