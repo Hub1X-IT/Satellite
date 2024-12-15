@@ -10,33 +10,32 @@ public abstract class FileExplorerUIDataContainer : MonoBehaviour
     [SerializeField]
     private Image dataContainerIconImage;
 
-    [SerializeField]
-    private Sprite baseDataContainerIcon;
-
-    [SerializeField]
-    private Sprite lockedDataContainerIcon;
-
     public RectTransform SelfRectTransform { get; private set; }
 
-    private DataContainerSO selfDataContainerSO;
+    protected DataContainerSO SelfDataContainerSO { private get; set; }
 
-    protected FileExplorerUI currentFileExplorer;
+    protected Sprite BaseDataContainerIcon { private get; set; }
 
-    protected MonitorAppsManagerUI currentMonitorAppsManager;
+    protected Sprite LockedDataContainerIcon { private get; set; }
+
+    protected FileExplorerUI CurrentFileExplorer { get; private set; }
+
+    protected MonitorAppsManagerUI CurrentMonitorAppsManager { get; private set; }
 
     protected virtual void Awake()
     {
         SelfRectTransform = GetComponent<RectTransform>();
     }
 
-    public void InitializeUIDataContainer(DataContainerSO dataContainerSO, FileExplorerUI currentFileExplorer)
+    public virtual void InitializeUIDataContainer(FileExplorerUI currentFileExplorer)
     {
-        this.currentFileExplorer = currentFileExplorer;
-        currentMonitorAppsManager = currentFileExplorer.CurrentMonitorAppsManager;
-        selfDataContainerSO = dataContainerSO;
+        // Should only be called after calling initialize method in child script!
 
-        SetName(dataContainerSO.SelfName);
-        UpdateDataContainerIcon();
+        CurrentFileExplorer = currentFileExplorer;
+        CurrentMonitorAppsManager = currentFileExplorer.CurrentMonitorAppsManager;
+
+        SetName(SelfDataContainerSO.SelfName);
+        UpdateIcon();
     }
 
     public void SetName(string newName)
@@ -53,19 +52,19 @@ public abstract class FileExplorerUIDataContainer : MonoBehaviour
 
     public bool TryOpenDataContainer()
     {
-        if (selfDataContainerSO.IsLocked)
+        if (SelfDataContainerSO.IsLocked)
         {
-            DataContainerPasswordScreenUI DataContainerPasswordScreen = currentMonitorAppsManager.OpenApplication(MonitorAppsManagerUI.
+            DataContainerPasswordScreenUI DataContainerPasswordScreen = CurrentMonitorAppsManager.OpenApplication(MonitorAppsManagerUI.
                 ApplicationType.DataContainerPasswordScreen).GetComponent<DataContainerPasswordScreenUI>();
-            DataContainerPasswordScreen.InitializeDataContainerPasswordScreen(selfDataContainerSO);
-            DataContainerPasswordScreen.PasswordGuessed += UpdateDataContainerIcon;
+            DataContainerPasswordScreen.InitializeDataContainerPasswordScreen(SelfDataContainerSO);
+            DataContainerPasswordScreen.PasswordGuessed += UpdateIcon;
             return false;
         }
         return true;
     }
 
-    private void UpdateDataContainerIcon()
+    private void UpdateIcon()
     {
-        dataContainerIconImage.sprite = selfDataContainerSO.IsLocked && lockedDataContainerIcon != null ? lockedDataContainerIcon : baseDataContainerIcon;
+        dataContainerIconImage.sprite = SelfDataContainerSO.IsLocked && LockedDataContainerIcon != null ? LockedDataContainerIcon : BaseDataContainerIcon;
     }
 }

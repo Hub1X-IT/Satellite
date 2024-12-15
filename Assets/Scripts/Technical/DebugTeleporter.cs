@@ -13,7 +13,7 @@ public class DebugTeleporter : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("Debug teleporter is active.");
+        Debug.LogWarning("Debug teleporter is active.");
         dictionary = serializableDictionary.Dictionary;
     }
 
@@ -24,7 +24,7 @@ public class DebugTeleporter : MonoBehaviour
             if (Input.GetKeyDown(key) && GameManager.HiddenCursorLockMode == CursorLockMode.Locked)
             {
                 playerMovementController.WarpPosition(dictionary[key].position);
-                Debug.Log($"Debug teleporter: {playerMovementController.transform.position}");
+                Debug.Log($"Teleporting {playerMovementController.gameObject.name} to: {playerMovementController.transform.position}");
                 break;
             }
         }

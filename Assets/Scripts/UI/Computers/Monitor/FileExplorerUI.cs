@@ -41,8 +41,8 @@ public class FileExplorerUI : MonoBehaviour
 
     public void RefreshSideFolders()
     {
-        rootSideFolderUI.InitializeUIDataContainer(RootFolderSO, this);
         rootSideFolderUI.InitializeFolderUI(RootFolderSO);
+        rootSideFolderUI.InitializeUIDataContainer(this);
         rootSideFolderUI.RefreshChildFolders();
     }
 

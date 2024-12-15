@@ -50,7 +50,7 @@ public class FolderContentUI : MonoBehaviour
                 fileUI.InitializeFile(childFileSO, this);
                 dataContainerUI = fileUI;
             }
-            dataContainerUI.InitializeUIDataContainer(childDataContainerSO, currentFileExplorer);
+            dataContainerUI.InitializeUIDataContainer(currentFileExplorer);
         }
 
         currentFileExplorer.ShowSideFolder(selfFolderSO);

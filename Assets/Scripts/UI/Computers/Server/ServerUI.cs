@@ -14,10 +14,7 @@ public class ServerUI : MonoBehaviour
     {
         canvasGroup = GetComponent<CanvasGroup>();
 
-        serverViewEnabledGameEvent.EventRaised += (enabled) =>
-        {
-            SetServerViewEnalbed(enabled);
-        };
+        serverViewEnabledGameEvent.EventRaised += (enabled) => SetServerViewEnalbed(enabled);
 
         SetServerViewEnalbed(false);
     }

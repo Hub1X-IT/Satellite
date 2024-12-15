@@ -10,6 +10,12 @@ public class SideMonitorUIFolder : FileExplorerUIDataContainer
     private Button folderContentButton;
 
     [SerializeField]
+    private Sprite baseFolderIcon;
+
+    [SerializeField]
+    private Sprite lockedFolderIcon;
+
+    [SerializeField]
     private Sprite childFoldersHiddenSprite;
 
     [SerializeField]
@@ -36,8 +42,12 @@ public class SideMonitorUIFolder : FileExplorerUIDataContainer
     public void InitializeFolderUI(FolderSO folderSO)
     {
         selfFolderSO = folderSO;
+        SelfDataContainerSO = folderSO;
 
         SetName(selfFolderSO.SelfName);
+
+        BaseDataContainerIcon = baseFolderIcon;
+        LockedDataContainerIcon = lockedFolderIcon;
 
         childFoldersButton.gameObject.SetActive(gameObject.activeSelf && selfFolderSO.HasChildFolders());
         childFoldersButton.image.sprite = selfFolderSO.ShouldShowChildFolders ? childFoldersShownSprite : childFoldersHiddenSprite;
@@ -49,13 +59,13 @@ public class SideMonitorUIFolder : FileExplorerUIDataContainer
         if (TryOpenDataContainer())
         {
             selfFolderSO.ShouldShowChildFolders = !selfFolderSO.ShouldShowChildFolders;
-            currentFileExplorer.RefreshSideFolders();
+            CurrentFileExplorer.RefreshSideFolders();
         }
     }
 
     private void ToggleFolderContent()
     {
-        currentFileExplorer.TryOpenFolderContent(selfFolderSO, this, new());
+        CurrentFileExplorer.TryOpenFolderContent(selfFolderSO, this, new());
     }
 
     public void RefreshChildFolders()
@@ -82,11 +92,11 @@ public class SideMonitorUIFolder : FileExplorerUIDataContainer
         {
             if (dataContainerSO is FolderSO newFolderSO)
             {
-                SideMonitorUIFolder newUIFolder = Instantiate(currentFileExplorer.SideFolderUIPrefab.gameObject,
+                SideMonitorUIFolder newUIFolder = Instantiate(CurrentFileExplorer.SideFolderUIPrefab.gameObject,
                     transform).GetComponent<SideMonitorUIFolder>();
 
-                newUIFolder.InitializeUIDataContainer(newFolderSO, currentFileExplorer);
                 newUIFolder.InitializeFolderUI(newFolderSO);
+                newUIFolder.InitializeUIDataContainer(CurrentFileExplorer);
                 newUIFolder.AddChildFolders(newFolderSO);
                 newUIFolder.gameObject.SetActive(currentFolderSO.ShouldShowChildFolders);
             }
