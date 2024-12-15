@@ -4,7 +4,7 @@ public class MonitorAppsManagerUI : MonoBehaviour
 {
     public enum ApplicationType
     {
-        FilePasswordScreen,
+        DataContainerPasswordScreen,
         NotepadApp,
         PasswordCrackingApp,
     }
@@ -34,7 +34,7 @@ public class MonitorAppsManagerUI : MonoBehaviour
         {
             default:
                 return null;
-            case ApplicationType.FilePasswordScreen:
+            case ApplicationType.DataContainerPasswordScreen:
                 instantiatedApp = Instantiate(dataContainerPasswordScreenPrefab, appsHolder).GetComponent<MonitorAppUI>();
                 break;
             case ApplicationType.NotepadApp:
@@ -49,9 +49,9 @@ public class MonitorAppsManagerUI : MonoBehaviour
         return instantiatedApp;
     }
 
-    // Method for the temporary password cracking button
     public void OpenPasswordCracking()
     {
+        // Method for temporary password cracking button - don't delete until the button is deleted!
         PasswordCrackingAppUI passwordCrackingApp = OpenApplication(ApplicationType.PasswordCrackingApp).GetComponent<PasswordCrackingAppUI>();
         passwordCrackingApp.InitializePasswordCrackingApp("Password cracking - test");
     }

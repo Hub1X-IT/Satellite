@@ -41,7 +41,7 @@ public abstract class FileExplorerUIDataContainer : MonoBehaviour
         if (selfDataContainerSO.IsLocked)
         {
             DataContainerPasswordScreenUI DataContainerPasswordScreen = currentMonitorAppsManager.OpenApplication(MonitorAppsManagerUI.
-                ApplicationType.FilePasswordScreen).GetComponent<DataContainerPasswordScreenUI>();
+                ApplicationType.DataContainerPasswordScreen).GetComponent<DataContainerPasswordScreenUI>();
             DataContainerPasswordScreen.InitializeDataContainerPasswordScreen(selfDataContainerSO);
             return false;
         }

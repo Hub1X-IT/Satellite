@@ -26,6 +26,7 @@ public static class DetectionManager
     {
         currentDetectionLevel = DefaultDetectionLevel;
         defaultDetectionChance = CurrentDetectionChance = data.DefaultDetectionChance;
+        WasDetected = false;
     }
 
     public static void OnSceneExit()
@@ -75,7 +76,7 @@ public static class DetectionManager
         {
             currentDetectionLevel++;
         }
-        // Works only if detection chance is less or equal to 8!
+        // Works only if detection chance is less than or equal to 8!
         CurrentDetectionChance = (int)(-1.7 * currentDetectionLevel * currentDetectionLevel + 1.5 * currentDetectionLevel + 98);
     }
 }
