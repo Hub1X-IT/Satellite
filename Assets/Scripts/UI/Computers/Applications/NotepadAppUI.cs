@@ -14,7 +14,19 @@ public class NotepadAppUI : MonoBehaviour
     {
         monitorApp = GetComponent<MonitorAppUI>();
 
-        contentInputField.text = fileStringSO.FileContent;
+        /*
+        string[] multilineFileContent = fileStringSO.MultilineFileContent;
+        string multilineFileOutput = "";
+        foreach (var line in multilineFileContent)
+        {
+            multilineFileOutput += line + '\n';
+        }
+        */
+
+        string outputText = fileStringSO.ShouldCompressContent ? 
+            TextCompressor.GetCompressedText(fileStringSO.FileContent) : fileStringSO.FileContent;
+
+        contentInputField.text = outputText;
         monitorApp.SetAppName(BaseAppName + fileStringSO.SelfName);
     }
 }
