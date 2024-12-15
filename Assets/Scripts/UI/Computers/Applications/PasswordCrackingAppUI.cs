@@ -51,7 +51,11 @@ public class PasswordCrackingAppUI : MonoBehaviour
         SetDetectionChanceText();
 
         DetectionManager.DetectionOccured += DisableApp;
-        DetectionManager.DetectionRemoved += EnableApp;
+        DetectionManager.DetectionRemoved += () =>
+        {
+            EnableApp();
+            SetDetectionChanceText();
+        };
     }
 
     private void InitializePasswordCracking()
@@ -124,37 +128,41 @@ public class PasswordCrackingAppUI : MonoBehaviour
 
     private void BinDecode()
     {
-        currentPassword = ASCIIEncryption.Decode(currentPassword, 2);
-        AddDecodedPasswordPassword();
+        int decodeBase = 2;
+        currentPassword = ASCIIEncryption.Decode(currentPassword, decodeBase);
+        AddDecodedPassword();
     }
     private void OctDecode()
     {
-        currentPassword = ASCIIEncryption.Decode(currentPassword, 8);
-        AddDecodedPasswordPassword();
+        int decodeBase = 8;
+        currentPassword = ASCIIEncryption.Decode(currentPassword, decodeBase);
+        AddDecodedPassword();
     }
     private void DecDecode()
     {
-        currentPassword = ASCIIEncryption.Decode(currentPassword, 10);
-        AddDecodedPasswordPassword();
+        int decodeBase = 10;
+        currentPassword = ASCIIEncryption.Decode(currentPassword, decodeBase);
+        AddDecodedPassword();
     }
     private void HexDecode()
     {
-        currentPassword = ASCIIEncryption.Decode(currentPassword, 16);
-        AddDecodedPasswordPassword();
+        int decodeBase = 16;
+        currentPassword = ASCIIEncryption.Decode(currentPassword, decodeBase);
+        AddDecodedPassword();
     }
     private void AtbashDecode()
     {
         currentPassword = AtbashCipher.DefaultEncode(currentPassword);
-        AddDecodedPasswordPassword();
+        AddDecodedPassword();
     }
     private void CaesarDecode()
     {
         int shift = Int32.Parse(caesarParameterInputField.text);
         currentPassword = CaesarCipher.Encode(currentPassword, CaesarCipher.DefaultBase, shift);
-        AddDecodedPasswordPassword();
+        AddDecodedPassword();
     }
 
-    private void AddDecodedPasswordPassword()
+    private void AddDecodedPassword()
     {
         CreateNewPasswordTextField(currentPassword);
 
@@ -185,7 +193,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
             ConvertedPasswordUI convertedPasswordUI = previousConvertedPasswordUIStack.Peek();
             if (convertedPasswordUI == targetConvertedPasswordUI)
             {
-                currentPassword = previousConvertedPasswordUIStack.Peek().ConvertedPassword;
+                currentPassword = previousConvertedPasswordUIStack.Peek().PasswordString;
                 break;
             }
             convertedPasswordUI.DestroySelf();
