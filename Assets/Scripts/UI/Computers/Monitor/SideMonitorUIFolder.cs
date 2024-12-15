@@ -21,15 +21,20 @@ public class SideMonitorUIFolder : FileExplorerUIDataContainer
 
     private Vector2 baseFolderSize;
 
-    public void InitializeFolderUI(FolderSO folderSO)
+    protected override void Awake()
     {
+        base.Awake();
+
         verticalLayoutGroup = GetComponent<VerticalLayoutGroup>();
 
         childFoldersButton.onClick.AddListener(ToggleChildFolders);
         folderContentButton.onClick.AddListener(ToggleFolderContent);
 
         baseFolderSize = SelfRectTransform.sizeDelta;
+    }
 
+    public void InitializeFolderUI(FolderSO folderSO)
+    {
         selfFolderSO = folderSO;
 
         SetName(selfFolderSO.SelfName);

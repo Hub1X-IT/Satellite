@@ -15,6 +15,11 @@ public class FolderContentUIFolder : FileExplorerUIDataContainer
         selfFolderSO = folderSO;
         this.parentFolderContentUI = parentFolderContentUI;
 
-        openButton.onClick.AddListener(() => parentFolderContentUI.OpenNewFolderContent(selfFolderSO, this));
+        openButton.onClick.AddListener(OpenFolderContent);
+    }
+
+    private void OpenFolderContent()
+    {
+        parentFolderContentUI.OpenNewFolderContent(selfFolderSO, this);
     }
 }

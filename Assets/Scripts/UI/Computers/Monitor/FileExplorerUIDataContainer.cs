@@ -1,10 +1,20 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class FileExplorerUIDataContainer : MonoBehaviour
 {
     [SerializeField]
     protected TMP_Text nameTextField;
+
+    [SerializeField]
+    private Image dataContainerIconImage;
+
+    [SerializeField]
+    private Sprite baseDataContainerIcon;
+
+    [SerializeField]
+    private Sprite lockedDataContainerIcon;
 
     public RectTransform SelfRectTransform { get; private set; }
 
@@ -14,14 +24,19 @@ public abstract class FileExplorerUIDataContainer : MonoBehaviour
 
     protected MonitorAppsManagerUI currentMonitorAppsManager;
 
-    public void InitializeUIDataContainer(DataContainerSO dataContainerSO, FileExplorerUI currentFileExplorer)
+    protected virtual void Awake()
     {
         SelfRectTransform = GetComponent<RectTransform>();
+    }
 
+    public void InitializeUIDataContainer(DataContainerSO dataContainerSO, FileExplorerUI currentFileExplorer)
+    {
         this.currentFileExplorer = currentFileExplorer;
         currentMonitorAppsManager = currentFileExplorer.CurrentMonitorAppsManager;
         selfDataContainerSO = dataContainerSO;
+
         SetName(dataContainerSO.SelfName);
+        UpdateDataContainerIcon();
     }
 
     public void SetName(string newName)
@@ -43,8 +58,14 @@ public abstract class FileExplorerUIDataContainer : MonoBehaviour
             DataContainerPasswordScreenUI DataContainerPasswordScreen = currentMonitorAppsManager.OpenApplication(MonitorAppsManagerUI.
                 ApplicationType.DataContainerPasswordScreen).GetComponent<DataContainerPasswordScreenUI>();
             DataContainerPasswordScreen.InitializeDataContainerPasswordScreen(selfDataContainerSO);
+            DataContainerPasswordScreen.PasswordGuessed += UpdateDataContainerIcon;
             return false;
         }
         return true;
+    }
+
+    private void UpdateDataContainerIcon()
+    {
+        dataContainerIconImage.sprite = selfDataContainerSO.IsLocked && lockedDataContainerIcon != null ? lockedDataContainerIcon : baseDataContainerIcon;
     }
 }

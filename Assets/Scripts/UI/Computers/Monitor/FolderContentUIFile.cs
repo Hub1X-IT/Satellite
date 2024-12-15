@@ -12,11 +12,11 @@ public class FolderContentUIFile : FileExplorerUIDataContainer
 
     public void InitializeFile(FileSO fileSO, FolderContentUI parentFolderContentUI)
     {
-        openButton.onClick.AddListener(TryOpenFileContent);
-
         selfFileSO = fileSO;
         this.parentFolderContentUI = parentFolderContentUI;
         currentMonitorAppsManager = parentFolderContentUI.CurrentFileExplorer.CurrentMonitorAppsManager;
+        
+        openButton.onClick.AddListener(TryOpenFileContent);
 
         if (selfFileSO is FileStringSO)
         {

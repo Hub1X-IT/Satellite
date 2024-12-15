@@ -12,11 +12,6 @@ public class MonitorAppsManagerUI : MonoBehaviour
     [SerializeField]
     private Transform appsHolder;
 
-    /*
-    [SerializeField]
-    MonitorAppPrefabsSO monitorAppPrefabs;
-    */
-
     [SerializeField]
     private DataContainerPasswordScreenUI dataContainerPasswordScreenPrefab;
 
@@ -38,7 +33,6 @@ public class MonitorAppsManagerUI : MonoBehaviour
                 instantiatedApp = Instantiate(dataContainerPasswordScreenPrefab, appsHolder).GetComponent<MonitorAppUI>();
                 break;
             case ApplicationType.NotepadApp:
-                // instantiatedApp = Instantiate(monitorAppPrefabs.NotepadAppPrefab, appsHolder).GetComponent<MonitorAppUI>();
                 instantiatedApp = Instantiate(notepadAppPrefab, appsHolder).GetComponent<MonitorAppUI>();
                 break;
             case ApplicationType.PasswordCrackingApp:

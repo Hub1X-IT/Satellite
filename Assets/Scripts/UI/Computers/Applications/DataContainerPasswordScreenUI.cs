@@ -1,8 +1,11 @@
+using System;
 using TMPro;
 using UnityEngine;
 
 public class DataContainerPasswordScreenUI : MonoBehaviour
 {
+    public event Action PasswordGuessed;
+
     private MonitorAppUI monitorApp;
 
     private const string BaseAppName_Folder = "Locked folder - ";
@@ -29,11 +32,17 @@ public class DataContainerPasswordScreenUI : MonoBehaviour
         passwordInputField.onEndEdit.AddListener(CheckPassword);
     }
 
+    private void OnDestroy()
+    {
+        PasswordGuessed = null;
+    }
+
     private void CheckPassword(string password)
     {
         if (password == correctPassword)
         {
             selfDataContainerSO.IsLocked = false;
+            PasswordGuessed?.Invoke();
             monitorApp.CloseApp();
         }
     }
