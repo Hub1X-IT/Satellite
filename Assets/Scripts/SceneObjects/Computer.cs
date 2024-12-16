@@ -54,6 +54,14 @@ public class Computer : MonoBehaviour
             }
         };
 
+        DetectionManager.DetectionOccured += () =>
+        {
+            if (isInComputerView)
+            {
+                SetComputerViewActive(false);
+            }
+        };
+
         computerCinemachineCamera.enabled = false;
 
 

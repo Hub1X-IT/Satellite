@@ -25,6 +25,7 @@ public class DataContainerPasswordScreenUI : MonoBehaviour
         selfDataContainerSO = dataContainerSO;
 
         correctPassword = dataContainerSO.DataContainerPassword;
+        Debug.Log(correctPassword);
 
         string baseAppName = dataContainerSO is FolderSO _ ? BaseAppName_Folder : BaseAppName_File;
         monitorApp.SetAppName(baseAppName + dataContainerSO.SelfName);

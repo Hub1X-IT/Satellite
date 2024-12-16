@@ -83,7 +83,10 @@ public class ConvertedPasswordUI : MonoBehaviour
             if (currentCharactersNumber > maxCharactersNumber)
             {
                 string currentText = currentTextField.text;
-                currentTextField.text = currentText[..^SubstringDivisor.Length];
+                if (currentText.Length >= SubstringDivisor.Length)
+                {
+                    currentTextField.text = currentText[..^SubstringDivisor.Length];
+                }
 
                 currentTextField = CreateNewTextField();
 
@@ -97,7 +100,8 @@ public class ConvertedPasswordUI : MonoBehaviour
         string lastTextFieldText = currentTextField.text;
 
         // May be a temporary solution
-        if (lastTextFieldText.Substring(lastTextFieldText.Length - SubstringDivisor.Length, SubstringDivisor.Length) == SubstringDivisor)
+        if (lastTextFieldText.Length >= SubstringDivisor.Length &&
+            lastTextFieldText.Substring(lastTextFieldText.Length - SubstringDivisor.Length, SubstringDivisor.Length) == SubstringDivisor)
         {
             currentTextField.text = lastTextFieldText[..^SubstringDivisor.Length];
         }

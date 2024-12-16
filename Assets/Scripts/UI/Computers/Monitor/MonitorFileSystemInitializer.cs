@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MonitorFileSystemManager : MonoBehaviour
+public class MonitorFileSystemInitializer : MonoBehaviour
 {
     // Can be more than one instance in scene - for different computers
 
@@ -10,9 +10,17 @@ public class MonitorFileSystemManager : MonoBehaviour
     [SerializeField]
     private FolderSO rootFolderSO;
 
+    [SerializeField]
+    private PossiblePasswordsSO possiblePasswordsSO;
+
     public FolderSO RootFolderSO => rootFolderSO;
 
     private void Awake()
+    {
+        possiblePasswordsSO.InitializePossiblePasswords();
+    }
+
+    private void Start()
     {
         monitorUI.FileExplorer.InitializeFileExplorer(this);
     }

@@ -2,6 +2,8 @@ using System;
 
 public static class ASCIIEncryption
 {
+    private const string allowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890";
+
     public static string Encode(string input, int outputBase)
     {
         string output = "";
@@ -42,7 +44,7 @@ public static class ASCIIEncryption
             {
                 if (encodedCharacter.Length > 0)
                 {
-                    if (TryDecodeCharacter(encodedCharacter, inputBase, out char decodedCharacter))
+                    if (TryDecodeCharacter(encodedCharacter, inputBase, out char decodedCharacter) && allowedCharacters.Contains(decodedCharacter))
                     {
                         output += decodedCharacter;
                         encodedCharacter = "";

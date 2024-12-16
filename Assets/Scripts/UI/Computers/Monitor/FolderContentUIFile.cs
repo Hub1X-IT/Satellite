@@ -43,6 +43,7 @@ public class FolderContentUIFile : FileExplorerUIDataContainer
                     ApplicationType.NotepadApp).GetComponent<NotepadAppUI>();
                 notepadApp.InitializeNotepadAppUI(fileStringSO);
             }
+            selfFileSO.TriggerOnOpenEvent();
         }
     }
 

@@ -24,21 +24,21 @@ public class FolderSO : DataContainerSO
         return false;
     }
 
-    public void RefreshChildDataContainers()
+    public void InitializeChildDataContainers()
     {
         foreach (var childDataContainerSO in ChildDataContainers)
         {
             childDataContainerSO.ParentFolderSO = this;
-            childDataContainerSO.RefreshDataContainerSO();
+            childDataContainerSO.InitializeDataContainerSO();
             if (childDataContainerSO is FolderSO childFolderSO)
             {
-                childFolderSO.RefreshChildDataContainers();
-                childFolderSO.RefreshFolderSO();
+                childFolderSO.InitializeChildDataContainers();
+                childFolderSO.InitializeFolderSO();
             }
         }
     }
 
-    public void RefreshFolderSO()
+    public void InitializeFolderSO()
     {
         ShouldShowChildFolders = false;
         IsFolderContentOpen = false;

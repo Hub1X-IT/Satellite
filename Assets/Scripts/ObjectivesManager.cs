@@ -12,7 +12,7 @@ public class ObjectivesManager : MonoBehaviour
     }
 
     [SerializeField]
-    private ObjectivesUI objectivesUI;
+    private ObjectivesUI[] objectivesUIArray;
 
     [SerializeField]
     private string defaultChapter;
@@ -25,8 +25,7 @@ public class ObjectivesManager : MonoBehaviour
 
     private void Awake()
     {
-        objectivesUI.SetChapter(defaultChapter);
-        objectivesUI.SetObjective(defaultObjective);
+        SetChapterAndObjective(defaultChapter, defaultObjective);
 
         foreach (var objectiveData in objectivesData)
         {
@@ -34,15 +33,25 @@ public class ObjectivesManager : MonoBehaviour
             {
                 gameEvent.EventRaised += () =>
                 {
-                    if (objectiveData.Chapter != string.Empty)
-                    {
-                        objectivesUI.SetChapter(objectiveData.Chapter);
-                    }
-                    if (objectiveData.Objective != string.Empty)
-                    {
-                        objectivesUI.SetObjective(objectiveData.Objective);
-                    }
+                    SetChapterAndObjective(defaultChapter, defaultObjective);
                 };
+            }
+        }
+    }
+
+    private void SetChapterAndObjective(string chapter, string objective)
+    {
+        Debug.Log(chapter);
+        Debug.Log(objective);
+        foreach (var objectivesUI in objectivesUIArray)
+        {
+            if (chapter.Length > 0)
+            {
+                objectivesUI.SetChapter(chapter);
+            }
+            if (objective.Length > 0)
+            {
+                objectivesUI.SetObjective(objective);
             }
         }
     }

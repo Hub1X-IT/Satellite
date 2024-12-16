@@ -50,10 +50,17 @@ public class PasswordCrackingAppUI : MonoBehaviour
         InitializePasswordCracking();
         SetDetectionChanceText();
 
-        DetectionManager.DetectionOccured += DisableApp;
+        DetectionManager.DetectionOccured += () =>
+        {
+            // DisableApp();
+            if (monitorAppUI != null)
+            {
+                monitorAppUI.CloseApp();
+            }
+        };
         DetectionManager.DetectionRemoved += () =>
         {
-            EnableApp();
+            // EnableApp();
             SetDetectionChanceText();
         };
     }
@@ -174,6 +181,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
     {
         int detectionChanceNumber = -(DetectionManager.CurrentDetectionChance - 100);
         detectionChanceTextField.text = DetectionChanceText + detectionChanceNumber.ToString() + "%";
+
     }
 
     private void CreateNewPasswordTextField(string newPassword)

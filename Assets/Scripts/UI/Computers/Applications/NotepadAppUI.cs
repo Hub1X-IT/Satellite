@@ -13,20 +13,21 @@ public class NotepadAppUI : MonoBehaviour
     public void InitializeNotepadAppUI(FileStringSO fileStringSO)
     {
         monitorApp = GetComponent<MonitorAppUI>();
-
-        /*
+        
         string[] multilineFileContent = fileStringSO.MultilineFileContent;
         string multilineFileOutput = "";
         foreach (var line in multilineFileContent)
         {
             multilineFileOutput += line + '\n';
         }
-        */
 
-        string outputText = fileStringSO.ShouldCompressContent ? 
-            TextCompressor.GetCompressedText(fileStringSO.FileContent) : fileStringSO.FileContent;
+        if (fileStringSO is FilePasswordStringSO filePasswordStringSO)
+        {
+            string password = filePasswordStringSO.EncodedCompressedPasswordContent;
+            multilineFileOutput += password;
+        }
 
-        contentInputField.text = outputText;
+        contentInputField.text = multilineFileOutput;
         monitorApp.SetAppName(BaseAppName + fileStringSO.SelfName);
     }
 }

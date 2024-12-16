@@ -31,11 +31,11 @@ public class FileExplorerUI : MonoBehaviour
         }
     }
 
-    public void InitializeFileExplorer(MonitorFileSystemManager fileSystemManager)
+    public void InitializeFileExplorer(MonitorFileSystemInitializer fileSystemManager)
     {
         RootFolderSO = fileSystemManager.RootFolderSO;
-        RootFolderSO.RefreshChildDataContainers();
-        RootFolderSO.RefreshFolderSO();
+        RootFolderSO.InitializeChildDataContainers();
+        RootFolderSO.InitializeFolderSO();
         RefreshSideFolders();
     }
 

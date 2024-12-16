@@ -12,16 +12,13 @@ public class DataContainerSO : ScriptableObject
     [SerializeField]
     private bool isEncrypted;
 
-    [SerializeField]
-    private string dataContainerPassword;
-
     public bool IsEncrypted => isEncrypted;
 
-    public string DataContainerPassword => dataContainerPassword;
+    public string DataContainerPassword { get; set; }
 
     public bool IsLocked { get; set; }
 
-    public void RefreshDataContainerSO()
+    public virtual void InitializeDataContainerSO()
     {
         IsLocked = IsEncrypted;
     }

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -18,9 +17,12 @@ public class ComputerUI : MonoBehaviour
     [SerializeField]
     private ComputerUICursorController computerCursor;
 
+    [SerializeField]
+    private GameObject computerTurnedOffScreen;
+
     private CanvasGroup canvasGroup;
 
-    HashSet<TMP_InputField> inputFieldSet;
+    private ComputerUIDynamicInputField currentSelectedInputField;
 
     private void Awake()
     {
@@ -42,18 +44,28 @@ public class ComputerUI : MonoBehaviour
             ComputerViewEnabled?.Invoke(false);
         };
 
-        inputFieldSet = new();
+        DetectionManager.DetectionOccured += () =>
+        {
+            computerTurnedOffScreen.SetActive(true);
+        };
+
+        ServerConnectionManager.ServerConnectionEnabled += (enabled) =>
+        {
+            computerTurnedOffScreen.SetActive(!enabled);
+        };
 
         TMP_InputField[] inputFields = GetComponentsInChildren<TMP_InputField>(true);
         foreach (var inputField in inputFields)
         {
             if (!inputField.readOnly)
             {
-                AddInputField(inputField);
+                inputField.onSelect.AddListener((_) => SetCanExitComputerViewFalse(null));
+                inputField.onDeselect.AddListener((_) => SetCanExitComputerViewTrue());
             }
         }
 
         SetComputerViewEnalbed(false);
+        computerTurnedOffScreen.SetActive(true);
     }
 
     private void SetComputerViewEnalbed(bool enabled)
@@ -62,33 +74,37 @@ public class ComputerUI : MonoBehaviour
         computerCursor.SetEnabled(enabled);
     }
 
-    public void AddInputField(TMP_InputField inputField)
+    public void AddInputField(ComputerUIDynamicInputField inputField)
     {
-        inputField.onSelect.AddListener(SetCanExitComputerViewFalse);
-        inputField.onDeselect.AddListener(SetCanExitComputerViewTrue);
-        inputFieldSet.Add(inputField);
+        inputField.InputFieldSelected += SetCanExitComputerViewFalse;
+        inputField.InputFieldDeselected += SetCanExitComputerViewTrue;
     }
 
-    public void RemoveInputField(TMP_InputField inputField)
+    public void RemoveInputField(ComputerUIDynamicInputField inputField)
     {
-        inputField.onSelect.RemoveListener(SetCanExitComputerViewFalse);
-        inputField.onDeselect.RemoveListener(SetCanExitComputerViewTrue);
-        inputFieldSet.Remove(inputField);
+        inputField.InputFieldSelected -= SetCanExitComputerViewFalse;
+        inputField.InputFieldDeselected -= SetCanExitComputerViewTrue;
+        if (currentSelectedInputField == inputField)
+        {
+            SetCanExitComputerViewTrue();
+        }
     }
 
-    private void SetCanExitComputerViewFalse(string _)
+    private void SetCanExitComputerViewFalse(ComputerUIDynamicInputField inputField)
     {
         if (computer != null)
         {
             computer.CanExitComputerView = false;
+            currentSelectedInputField = inputField;
         }
     }
 
-    private void SetCanExitComputerViewTrue(string _)
+    private void SetCanExitComputerViewTrue()
     {
         if (computer != null)
         {
             computer.CanExitComputerView = true;
+            currentSelectedInputField = null;
         }
     }
 }
