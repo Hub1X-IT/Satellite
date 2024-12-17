@@ -42,9 +42,12 @@ public class ServerConnectionManager : MonoBehaviour
 
     private void SetCurrentConnectedServer(ServerConnectionItem serverConnectionItem)
     {
-        IsConnectionActive = true;
-        currentConnectedServer = serverConnectionItem;
-        ServerConnectionEnabled?.Invoke(true);
+        if(currentConnectedServer == null)
+        {
+            IsConnectionActive = true;
+            currentConnectedServer = serverConnectionItem;
+            ServerConnectionEnabled?.Invoke(true);
+        }    
     }
 
     public void DeleteServer(ServerConnectionItem serverConnectionItem)
