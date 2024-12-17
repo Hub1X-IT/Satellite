@@ -9,18 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f20d1e2d3d7f9b244964e7bd3504043c, type: 3}
-  m_Name: Possible Passwords SO 1
+  m_Script: {fileID: 11500000, guid: 2a587b9d11accc84a8b933fb29d2fde3, type: 3}
+  m_Name: File Door App Shortcut SO
   m_EditorClassIdentifier: 
-  possiblePasswords:
-  - Bin
-  - Door
-  - Pass
-  - Word
-  - Gear
-  - Good
-  - Sour
-  - Food
-  - Hello
-  - Tail
-  - Dead
+  selfName: Door app
+  isEncrypted: 0
+  onTryOpenFileGameEvent: {fileID: 11400000, guid: 7d0b962a1fd71534b87b493176d2c974, type: 2}
+  onOpenFileGameEvent: {fileID: 0}

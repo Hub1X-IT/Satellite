@@ -14,6 +14,9 @@ public class ServerConnectionManager : MonoBehaviour
 
     public static bool IsConnectionActive { get; private set; }
 
+    [SerializeField]
+    private GameEventSO objectiveGameEvent;
+
     private void Awake()
     {
         // possibleConnectionItems = GetComponentsInChildren<ServerConnectionItem>().ToList();
@@ -47,6 +50,10 @@ public class ServerConnectionManager : MonoBehaviour
             IsConnectionActive = true;
             currentConnectedServer = serverConnectionItem;
             ServerConnectionEnabled?.Invoke(true);
+            if(objectiveGameEvent != null)
+            {
+                objectiveGameEvent.RaiseEvent();
+            }
         }    
     }
 

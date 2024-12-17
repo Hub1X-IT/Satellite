@@ -181,7 +181,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
     {
         int detectionChanceNumber = -(DetectionManager.CurrentDetectionChance - 100);
         detectionChanceTextField.text = DetectionChanceText + detectionChanceNumber.ToString() + "%";
-
     }
 
     private void CreateNewPasswordTextField(string newPassword)

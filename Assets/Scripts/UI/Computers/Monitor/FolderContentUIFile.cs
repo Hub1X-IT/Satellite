@@ -18,6 +18,12 @@ public class FolderContentUIFile : FileExplorerUIDataContainer
     [SerializeField]
     private Sprite lockedTextFileIcon;
 
+    [SerializeField]
+    private Sprite baseDoorAppShortcutFileIcon;
+
+    [SerializeField]
+    private Sprite lockedDoorAppShortcutFileIcon;
+
     private FileSO selfFileSO;
 
     private FolderContentUI parentFolderContentUI;
@@ -43,7 +49,17 @@ public class FolderContentUIFile : FileExplorerUIDataContainer
                     ApplicationType.NotepadApp).GetComponent<NotepadAppUI>();
                 notepadApp.InitializeNotepadAppUI(fileStringSO);
             }
+            else if (selfFileSO is FileDoorAppShortcutSO fileAppShortcutSO)
+            {
+                DoorAppUI doorApp = CurrentMonitorAppsManager.
+                    OpenApplication(fileAppShortcutSO.TriggeredApplicationType).GetComponent<DoorAppUI>();
+                doorApp.InitializeDoorApp("Door app");
+            }
             selfFileSO.TriggerOnOpenEvent();
+        }
+        else
+        {
+            selfFileSO.TriggerOnTryOpenEvent();
         }
     }
 
@@ -53,6 +69,11 @@ public class FolderContentUIFile : FileExplorerUIDataContainer
         {
             BaseDataContainerIcon = baseTextFileIcon;
             LockedDataContainerIcon = lockedTextFileIcon;
+        }
+        else if (selfFileSO is FileDoorAppShortcutSO)
+        {
+            BaseDataContainerIcon = baseDoorAppShortcutFileIcon;
+            LockedDataContainerIcon = lockedDoorAppShortcutFileIcon;
         }
         else
         {
