@@ -33,7 +33,7 @@ public class ObjectivesManager : MonoBehaviour
             {
                 gameEvent.EventRaised += () =>
                 {
-                    SetChapterAndObjective(defaultChapter, defaultObjective);
+                    SetChapterAndObjective(objectiveData.Chapter, objectiveData.Objective);
                 };
             }
         }
