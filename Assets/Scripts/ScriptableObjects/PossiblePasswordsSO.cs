@@ -13,7 +13,6 @@ public class PossiblePasswordsSO : ScriptableObject
     public void InitializePossiblePasswords()
     {
         possiblePasswordsList = possiblePasswords.ToList();
-        Debug.Log(possiblePasswordsList.Count);
     }
 
     public string GetRandomPassword()

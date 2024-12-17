@@ -111,4 +111,13 @@ public class Computer : MonoBehaviour
     {
         computerTrigger.gameObject.SetActive(!isInComputerView && CanEnterComputerView && IsComputerEnabled);
     }
+
+    public void ExitComputerView()
+    {
+        // Method to be invoked by an event listener
+        if (isInComputerView)
+        {
+            SetComputerViewActive(false);
+        }
+    }
 }

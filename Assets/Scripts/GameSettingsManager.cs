@@ -9,7 +9,7 @@ public static class GameSettingsManager
     public const float MaxMouseSensitivity = 0.3f;
 
     [Range(0.0001f, 1f)]
-    private const float DefaultVolume = 0.5f;
+    private const float DefaultVolume = 0.9f;
 
     private const int DefaultGraphicsIndex = 0;
     private const int DefaultResolutionIndex = 0;

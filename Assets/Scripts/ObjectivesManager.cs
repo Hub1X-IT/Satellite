@@ -41,8 +41,6 @@ public class ObjectivesManager : MonoBehaviour
 
     private void SetChapterAndObjective(string chapter, string objective)
     {
-        Debug.Log(chapter);
-        Debug.Log(objective);
         foreach (var objectivesUI in objectivesUIArray)
         {
             if (chapter.Length > 0)

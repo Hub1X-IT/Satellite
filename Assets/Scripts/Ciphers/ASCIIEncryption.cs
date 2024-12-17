@@ -68,6 +68,7 @@ public static class ASCIIEncryption
     {
         try
         {
+
             int tempInt = Convert.ToInt32(encodedCharacter, inputBase);
             decodedCharacter = (char)tempInt;
             return true;
