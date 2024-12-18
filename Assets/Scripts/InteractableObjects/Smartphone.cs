@@ -20,7 +20,7 @@ public class Smartphone : MonoBehaviour, IInteractable
     public void Interact()
     {
         gameObject.SetActive(false);
-        phonePickupGameEvent.RaiseEvent();
+        phonePickupGameEvent.TryRaiseEvent();
         PlayerScriptsController.SetCanShowSmartphoneUI(true);
     }
 }

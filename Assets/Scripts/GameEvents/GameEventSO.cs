@@ -6,7 +6,37 @@ public class GameEventSO : ScriptableObject
 {
     public event Action EventRaised;
 
-    public void RaiseEvent() => EventRaised?.Invoke();
+    [SerializeField]
+    private bool oneTimeTrigger = false;
+
+    [SerializeField]
+    private GameEventSO[] previousGameEvents;
+
+    public void TryRaiseEvent()
+    {
+        if (oneTimeTrigger && GameEventOrderManager.WasGameEventRaised(this))
+        {
+            return;
+        }
+
+        foreach (var previousGameEvent in previousGameEvents)
+        {
+            if (!GameEventOrderManager.WasGameEventRaised(previousGameEvent))
+            {
+                return;
+            }
+        }
+
+        EventRaised?.Invoke();
+
+        GameEventOrderManager.AddGameEvent(this);
+    }
+
+    public void ForceRaiseEvent()
+    {
+        EventRaised?.Invoke();
+        GameEventOrderManager.AddGameEvent(this);
+    }
 }
 
 public class GameEventSO<T> : ScriptableObject

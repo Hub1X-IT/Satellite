@@ -9,6 +9,9 @@ public class ScriptsInitializer : MonoBehaviour
     private DetectionManager.InitializationData detectionManagerData;
 
     [SerializeField]
+    private GameEventOrderManager.InitializationData gameEventOrderManagerData;
+
+    [SerializeField]
     private InteractionController.InitializationData interactionControllerData;
 
     [SerializeField]
@@ -20,6 +23,7 @@ public class ScriptsInitializer : MonoBehaviour
 
         CameraController.OnAwake(cameraControllerData);
         DetectionManager.InitializeDetectionManager(detectionManagerData);
+        GameEventOrderManager.OnAwake(gameEventOrderManagerData);
         GameManager.OnAwake();
         GraphicsSettingsManager.OnAwake();
         InteractionController.OnAwake(interactionControllerData);

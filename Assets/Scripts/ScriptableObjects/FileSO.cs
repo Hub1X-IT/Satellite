@@ -12,7 +12,7 @@ public abstract class FileSO : DataContainerSO
     {
         if (onTryOpenFileGameEvent != null)
         {
-            onTryOpenFileGameEvent.RaiseEvent();
+            onTryOpenFileGameEvent.TryRaiseEvent();
         }
     }
 
@@ -20,7 +20,7 @@ public abstract class FileSO : DataContainerSO
     {
         if (onOpenFileGameEvent != null)
         {
-            onOpenFileGameEvent.RaiseEvent();
+            onOpenFileGameEvent.TryRaiseEvent();
         }
     }
 }

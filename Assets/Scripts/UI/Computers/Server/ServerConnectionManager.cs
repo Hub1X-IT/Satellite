@@ -52,7 +52,7 @@ public class ServerConnectionManager : MonoBehaviour
             ServerConnectionEnabled?.Invoke(true);
             if(objectiveGameEvent != null)
             {
-                objectiveGameEvent.RaiseEvent();
+                objectiveGameEvent.TryRaiseEvent();
             }
         }    
     }

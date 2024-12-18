@@ -103,7 +103,7 @@ public class Computer : MonoBehaviour
         {
             GameInput.PlayerInputActions.Computer.Disable();
             CameraController.SetActiveCinemachineCamera(desk.DeskCinemachineCamera);
-            computerViewDisabledGameEvent.RaiseEvent();
+            computerViewDisabledGameEvent.TryRaiseEvent();
         }
     }
 

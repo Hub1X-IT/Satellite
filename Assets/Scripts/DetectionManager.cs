@@ -53,7 +53,7 @@ public static class DetectionManager
             DetectionOccured?.Invoke();
             if (onDetectionOccuredGameEvent != null)
             {
-                onDetectionOccuredGameEvent.RaiseEvent();
+                onDetectionOccuredGameEvent.TryRaiseEvent();
             }
             Debug.Log("Detected!");
         }
@@ -81,7 +81,7 @@ public static class DetectionManager
         DetectionRemoved?.Invoke();
         if (onDetectionRemovedGameEvent != null)
         {
-            onDetectionRemovedGameEvent.RaiseEvent();
+            onDetectionRemovedGameEvent.TryRaiseEvent();
         }
     }
 

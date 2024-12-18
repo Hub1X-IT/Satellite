@@ -26,7 +26,7 @@ public class SingleEmailController : MonoBehaviour
         {
             if(objectiveEvent != null)
             {
-                objectiveEvent.RaiseEvent();
+                objectiveEvent.TryRaiseEvent();
                 objectiveEvent = null;
             }
             DisableDay1EmailObject();

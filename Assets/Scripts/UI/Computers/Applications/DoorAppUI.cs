@@ -36,7 +36,7 @@ public class DoorAppUI : MonoBehaviour
         doorAppTextField.text = open ? DoorOpenText : DoorClosedText;
         if (open && onDoorOpenGameEvent != null)
         {
-            onDoorOpenGameEvent.RaiseEvent();
+            onDoorOpenGameEvent.TryRaiseEvent();
         }
     }
 }
