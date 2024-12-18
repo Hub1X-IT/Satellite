@@ -2,7 +2,7 @@ using System;
 
 public static class ASCIIEncryption
 {
-    private const string allowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890";
+    private const string allowedCharacters = " 1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     public static string Encode(string input, int outputBase)
     {
@@ -68,7 +68,6 @@ public static class ASCIIEncryption
     {
         try
         {
-
             int tempInt = Convert.ToInt32(encodedCharacter, inputBase);
             decodedCharacter = (char)tempInt;
             return true;
