@@ -3,9 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ServerConnectionItem : MonoBehaviour
+public class ServerConnectionItemUI : MonoBehaviour
 {
-    public event Action<ServerConnectionItem> ConnectionEnabled;
+    public event Action<ServerConnectionItemUI> ConnectionEnabled;
     public event Action ConnectionDisabled;
 
     [SerializeField]
@@ -22,7 +22,15 @@ public class ServerConnectionItem : MonoBehaviour
     private void Awake()
     {
         isConnected = false;
-        toggleConnectionButton.onClick.AddListener(() => SetConnectionEnabled(!isConnected));
+        toggleConnectionButton.onClick.AddListener(TryToggleConnection);
+    }
+
+    private void TryToggleConnection()
+    {
+        if (isConnected || !ServerConnectionManager.IsConnectionActive)
+        {
+            SetConnectionEnabled(!isConnected);
+        }
     }
 
     private void SetConnectionEnabled(bool enabled)

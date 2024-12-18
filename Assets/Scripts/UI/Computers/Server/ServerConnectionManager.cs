@@ -8,9 +8,9 @@ public class ServerConnectionManager : MonoBehaviour
     public static event Action<bool> ServerConnectionEnabled;
 
     [SerializeField]
-    private List<ServerConnectionItem> possibleConnectionItems;
+    private List<ServerConnectionItemUI> possibleConnectionItems;
 
-    private ServerConnectionItem currentConnectedServer;
+    private ServerConnectionItemUI currentConnectedServer;
 
     public static bool IsConnectionActive { get; private set; }
 
@@ -23,6 +23,7 @@ public class ServerConnectionManager : MonoBehaviour
         foreach (var serverConnectionItem in possibleConnectionItems)
         {
             serverConnectionItem.ConnectionEnabled += SetCurrentConnectedServer;
+            serverConnectionItem.ConnectionDisabled += DisconnectCurrentServer;
         }
         IsConnectionActive = false;
     }
@@ -43,21 +44,25 @@ public class ServerConnectionManager : MonoBehaviour
         ServerConnectionEnabled = null;
     }
 
-    private void SetCurrentConnectedServer(ServerConnectionItem serverConnectionItem)
+    private void SetCurrentConnectedServer(ServerConnectionItemUI serverConnectionItem)
     {
-        if(currentConnectedServer == null)
+        IsConnectionActive = true;
+        currentConnectedServer = serverConnectionItem;
+        ServerConnectionEnabled?.Invoke(true);
+        if (objectiveGameEvent != null)
         {
-            IsConnectionActive = true;
-            currentConnectedServer = serverConnectionItem;
-            ServerConnectionEnabled?.Invoke(true);
-            if(objectiveGameEvent != null)
-            {
-                objectiveGameEvent.TryRaiseEvent();
-            }
-        }    
+            objectiveGameEvent.TryRaiseEvent();
+        }
     }
 
-    public void DeleteServer(ServerConnectionItem serverConnectionItem)
+    private void DisconnectCurrentServer()
+    {
+        IsConnectionActive = false;
+        currentConnectedServer = null;
+        ServerConnectionEnabled?.Invoke(false);
+    }
+
+    public void DeleteServer(ServerConnectionItemUI serverConnectionItem)
     {
         if (serverConnectionItem == currentConnectedServer)
         {
