@@ -13,7 +13,7 @@ public static class GameEventOrderManager
 
     private static HashSet<GameEventSO> raisedGameEvents;
 
-    public static void OnAwake(in InitializationData data)
+    public static void OnAwake(InitializationData data)
     {
         if (raisedGameEvents == null)
         {
