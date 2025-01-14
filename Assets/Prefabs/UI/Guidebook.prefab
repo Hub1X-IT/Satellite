@@ -184,8 +184,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -300, y: 30}
-  m_SizeDelta: {x: 500, y: 610}
+  m_AnchoredPosition: {x: -280, y: 0}
+  m_SizeDelta: {x: 460, y: 685}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7211533238765875523
 CanvasRenderer:
@@ -215,23 +215,32 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Atbash Encoding Method
+  m_text: 'Password Cracking Guidebook
+
+    Author: Vincent Sermack
 
 
-    This method only works with letters from
-    latin alphabet. It converts
 
-    the letter to it''s opposite like this:
+    Contents:
 
-    A
-    -> Z
+    1.
+    Basics
 
-    b -> y
+    2. Decimal
 
-    H -> S'
+    3. Binary
+
+    4. Hexadecimal
+
+    5. Octal
+
+    6.
+    Atbash
+
+    7. Caesar (WIP)'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3b4d58fdb7962034193e2c04cf3f678d, type: 2}
-  m_sharedMaterial: {fileID: -7340915476845089944, guid: 3b4d58fdb7962034193e2c04cf3f678d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d8737e05ad3a5c54ab90e1abb0b96e15, type: 2}
+  m_sharedMaterial: {fileID: 2709866317365345177, guid: d8737e05ad3a5c54ab90e1abb0b96e15, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -255,19 +264,19 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
-  m_fontSizeBase: 32
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_fontStyle: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_wordSpacing: 20
+  m_lineSpacing: 15
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -806,8 +815,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 300, y: 30}
-  m_SizeDelta: {x: 500, y: 610}
+  m_AnchoredPosition: {x: 280, y: 0}
+  m_SizeDelta: {x: 460, y: 685}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &601811101952174882
 CanvasRenderer:
@@ -837,13 +846,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Caesar Cipher Method
-
-
-    Coming soon!'
+  m_text: "Learning Basics\r\n\r\nEvery password used in Seattle is\r\ncoded and
+    compressed by one programme.\nRemember to decompress it first.\r\nIt converts
+    every symbol to text. \r\nFor example the word 'bin' could be \r\nencoded like
+    this:\r\n[Decimal]\r\nbin - 98105110\r\n[Hexadecimal]\r\n98105110 - 39 38 31
+    30 35 31 31 30\r\n\r\nAs you can see my dear reader, every\r\nsymbol in the password
+    is converted\r\nto text, so 9 in ASCII Table changed to\r\nhexadecimal is 39.\r\nYou
+    will learn more about different\r\nencoding methods further in the book.\r"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3b4d58fdb7962034193e2c04cf3f678d, type: 2}
-  m_sharedMaterial: {fileID: -7340915476845089944, guid: 3b4d58fdb7962034193e2c04cf3f678d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d8737e05ad3a5c54ab90e1abb0b96e15, type: 2}
+  m_sharedMaterial: {fileID: 2709866317365345177, guid: d8737e05ad3a5c54ab90e1abb0b96e15, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -867,19 +879,19 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
-  m_fontSizeBase: 32
+  m_fontSize: 27
+  m_fontSizeBase: 27
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_wordSpacing: 20
+  m_lineSpacing: 15
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0

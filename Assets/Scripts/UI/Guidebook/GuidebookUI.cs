@@ -61,11 +61,13 @@ public class GuidebookUI : MonoBehaviour
             case 1:
                 textLeftPage.text = titlePage.text;
                 textLeftPage.horizontalAlignment = HorizontalAlignmentOptions.Center;
+                textLeftPage.fontSize = 40f;
                 textRightPage.text = basicsPage.text;
                 break;
             case 2:
                 textLeftPage.text = decimalPage.text;
                 textLeftPage.horizontalAlignment = HorizontalAlignmentOptions.Left;
+                textLeftPage.fontSize = 27f;
                 textRightPage.text = binaryPage.text;
                 break;
             case 3:
@@ -74,7 +76,7 @@ public class GuidebookUI : MonoBehaviour
                 break;
             case 4:
                 textLeftPage.text = atbashPage.text;
-                textRightPage.text = caesarPage.text;
+                textRightPage.text = null;
                 break;
         }
     }
