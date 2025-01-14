@@ -22,6 +22,6 @@ public class ServerUI : MonoBehaviour
     private void SetServerViewEnalbed(bool enabled)
     {
         canvasGroup.blocksRaycasts = enabled;
-        serverCursor.SetEnabled(enabled);
+        serverCursor.SetCursorEnabled(enabled);
     }
 }

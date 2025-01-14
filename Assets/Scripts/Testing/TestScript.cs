@@ -6,6 +6,11 @@ public class TestScript : MonoBehaviour
 
     private void Awake()
     {
+
+    }
+
+    private void TestTextCompressor()
+    {
         // TextCompressor.InitializeTextCompressor();
         string uncompressedText = "123487917209 90812374908 172389064612740980 580921384 11";
         string compressedText = TextCompressor.GetCompressedText(uncompressedText);
@@ -17,5 +22,4 @@ public class TestScript : MonoBehaviour
         string compressedText2 = TextCompressor.GetCompressedText(uncompressedText);
         Debug.Log(compressedText2);
     }
-
 }

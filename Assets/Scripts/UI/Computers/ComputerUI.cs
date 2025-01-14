@@ -71,7 +71,7 @@ public class ComputerUI : MonoBehaviour
     private void SetComputerViewEnalbed(bool enabled)
     {
         canvasGroup.blocksRaycasts = enabled;
-        computerCursor.SetEnabled(enabled);
+        computerCursor.SetCursorEnabled(enabled);
     }
 
     public void AddInputField(ComputerUIDynamicInputField inputField)
