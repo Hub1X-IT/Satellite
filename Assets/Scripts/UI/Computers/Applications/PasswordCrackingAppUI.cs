@@ -111,16 +111,18 @@ public class PasswordCrackingAppUI : MonoBehaviour
 
     private void ChangeOriginalPassword(string newPassword)
     {
-        originalPassword = currentPassword = newPassword;
         RemoveAllPasswordTextFields();
+        originalPassword = currentPassword = newPassword;
     }
     private void DecompressPassword()
     {
         string compressedPassword = inputField.text;
         if (TextCompressor.TryGetDecompressedText(compressedPassword, out string decompressedPassword))
         {
-            originalPassword = currentPassword = inputField.text = decompressedPassword;
             RemoveAllPasswordTextFields();
+            // originalPassword = currentPassword = inputField.text = decompressedPassword;
+            currentPassword = decompressedPassword;
+            CreateNewPasswordTextField(decompressedPassword);
         }
         else
         {
