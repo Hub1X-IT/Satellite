@@ -9,7 +9,9 @@ public class ServerConnectionItemUI : MonoBehaviour
     public event Action ConnectionDisabled;
 
     [SerializeField]
-    private Button toggleConnectionButton;
+    public Button toggleConnectionButton;
+
+    public Image serverIcon;
 
     [SerializeField]
     private TMP_Text connectionTextField;

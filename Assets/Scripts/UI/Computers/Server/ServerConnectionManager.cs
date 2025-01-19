@@ -49,6 +49,7 @@ public class ServerConnectionManager : MonoBehaviour
         IsConnectionActive = true;
         currentConnectedServer = serverConnectionItem;
         ServerConnectionEnabled?.Invoke(true);
+        ChangeColors();
         if (objectiveGameEvent != null)
         {
             objectiveGameEvent.TryRaiseEvent();
@@ -60,6 +61,7 @@ public class ServerConnectionManager : MonoBehaviour
         IsConnectionActive = false;
         currentConnectedServer = null;
         ServerConnectionEnabled?.Invoke(false);
+        ChangeColors();
     }
 
     public void DeleteServer(ServerConnectionItemUI serverConnectionItem)
@@ -73,5 +75,30 @@ public class ServerConnectionManager : MonoBehaviour
         }
         possibleConnectionItems.Remove(serverConnectionItem);
         ServerConnectionEnabled?.Invoke(false);
+        ChangeColors();
+    }
+
+    private void ChangeColors()
+    {
+        for(int i = 0; i < possibleConnectionItems.Count; i++)
+        {
+            if (currentConnectedServer == null)
+            {
+                possibleConnectionItems[i].serverIcon.color = Color.red;
+                possibleConnectionItems[i].toggleConnectionButton.image.color = Color.red;
+                possibleConnectionItems[i].toggleConnectionButton.interactable = true;
+            }
+            if (currentConnectedServer != null)
+            {
+                possibleConnectionItems[i].serverIcon.color = Color.gray;
+                possibleConnectionItems[i].toggleConnectionButton.image.color = Color.gray;
+                currentConnectedServer.serverIcon.color = Color.green;
+                currentConnectedServer.toggleConnectionButton.image.color = Color.green;
+                if (currentConnectedServer != possibleConnectionItems[i])
+                {
+                    possibleConnectionItems[i].toggleConnectionButton.interactable = false;
+                }
+            }
+        }
     }
 }
