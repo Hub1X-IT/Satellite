@@ -67,7 +67,7 @@ public class GuidebookUI : MonoBehaviour
             case 2:
                 textLeftPage.text = decimalPage.text;
                 textLeftPage.horizontalAlignment = HorizontalAlignmentOptions.Left;
-                textLeftPage.fontSize = 27f;
+                textLeftPage.fontSize = 32f;
                 textRightPage.text = binaryPage.text;
                 break;
             case 3:
