@@ -9,9 +9,10 @@ public class ServerConnectionItemUI : MonoBehaviour
     public event Action ConnectionDisabled;
 
     [SerializeField]
-    public Button toggleConnectionButton;
+    private Button toggleConnectionButton;
 
-    public Image serverIcon;
+    [SerializeField]
+    private Image serverIcon;
 
     [SerializeField]
     private TMP_Text connectionTextField;
@@ -48,5 +49,16 @@ public class ServerConnectionItemUI : MonoBehaviour
         {
             ConnectionDisabled?.Invoke();
         }
+    }
+
+    public void SetColor(Color color)
+    {
+        serverIcon.color = color;
+        toggleConnectionButton.image.color = color;
+    }
+
+    public void SetInteractionEnabled(bool enabled)
+    {
+        toggleConnectionButton.interactable = enabled;
     }
 }

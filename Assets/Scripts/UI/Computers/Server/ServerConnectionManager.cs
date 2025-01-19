@@ -17,6 +17,13 @@ public class ServerConnectionManager : MonoBehaviour
     [SerializeField]
     private GameEventSO objectiveGameEvent;
 
+    [SerializeField]
+    private Color connectionInactiveColor = Color.red;
+    [SerializeField]
+    private Color notConnectedColor = Color.gray;
+    [SerializeField]
+    private Color connectedColor = Color.green;
+
     private void Awake()
     {
         // possibleConnectionItems = GetComponentsInChildren<ServerConnectionItem>().ToList();
@@ -49,7 +56,7 @@ public class ServerConnectionManager : MonoBehaviour
         IsConnectionActive = true;
         currentConnectedServer = serverConnectionItem;
         ServerConnectionEnabled?.Invoke(true);
-        ChangeColors();
+        UpdateConnectionItems();
         if (objectiveGameEvent != null)
         {
             objectiveGameEvent.TryRaiseEvent();
@@ -61,7 +68,7 @@ public class ServerConnectionManager : MonoBehaviour
         IsConnectionActive = false;
         currentConnectedServer = null;
         ServerConnectionEnabled?.Invoke(false);
-        ChangeColors();
+        UpdateConnectionItems();
     }
 
     public void DeleteServer(ServerConnectionItemUI serverConnectionItem)
@@ -75,30 +82,20 @@ public class ServerConnectionManager : MonoBehaviour
         }
         possibleConnectionItems.Remove(serverConnectionItem);
         ServerConnectionEnabled?.Invoke(false);
-        ChangeColors();
+        UpdateConnectionItems();
     }
 
-    private void ChangeColors()
+    private void UpdateConnectionItems()
     {
-        for(int i = 0; i < possibleConnectionItems.Count; i++)
+        foreach (var connectionItem in possibleConnectionItems)
         {
-            if (currentConnectedServer == null)
-            {
-                possibleConnectionItems[i].serverIcon.color = Color.red;
-                possibleConnectionItems[i].toggleConnectionButton.image.color = Color.red;
-                possibleConnectionItems[i].toggleConnectionButton.interactable = true;
-            }
-            if (currentConnectedServer != null)
-            {
-                possibleConnectionItems[i].serverIcon.color = Color.gray;
-                possibleConnectionItems[i].toggleConnectionButton.image.color = Color.gray;
-                currentConnectedServer.serverIcon.color = Color.green;
-                currentConnectedServer.toggleConnectionButton.image.color = Color.green;
-                if (currentConnectedServer != possibleConnectionItems[i])
-                {
-                    possibleConnectionItems[i].toggleConnectionButton.interactable = false;
-                }
-            }
+            connectionItem.SetColor(IsConnectionActive ? notConnectedColor : connectionInactiveColor);
+            connectionItem.SetInteractionEnabled(!IsConnectionActive);
+        }
+        if (IsConnectionActive)
+        {
+            currentConnectedServer.SetColor(connectedColor);
+            currentConnectedServer.SetInteractionEnabled(true);
         }
     }
 }
