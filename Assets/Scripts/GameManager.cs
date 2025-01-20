@@ -7,6 +7,8 @@ public static class GameManager
 
     public static bool IsGamePaused { get; private set; }
 
+    public static bool IsInScreenView { get; set; }
+
     public static CursorLockMode HiddenCursorLockMode { get; set; }
     private static CursorLockMode ShownCursorLockMode { get; set; } = CursorLockMode.None;
 
@@ -14,6 +16,7 @@ public static class GameManager
     {
         GameInput.OnPauseAction += () => PauseGameToMenu(!IsGamePaused);
         HiddenCursorLockMode = CursorLockMode.Locked;
+        IsInScreenView = false;
     }
 
     public static void OnStart()

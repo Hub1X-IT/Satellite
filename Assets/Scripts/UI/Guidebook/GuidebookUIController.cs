@@ -23,23 +23,27 @@ public class GuidebookUIController : MonoBehaviour
 
     private void OnEnable()
     {
-        GameInput.OnGuidebookToggleAction += ToggleGuidebook;
+        GameInput.OnGuidebookToggleAction += TryToggleGuidebook;
     }
 
     private void OnDisable()
     {
-        GameInput.OnGuidebookToggleAction -= ToggleGuidebook;
+        GameInput.OnGuidebookToggleAction -= TryToggleGuidebook;
     }
 
-    private void ToggleGuidebook()
+    private void TryToggleGuidebook()
     {
-        SetGuidebookEnabled(!isGuidebookEnabled);
+        // Check all the necessary conditions here.
+        if (!GameManager.IsInScreenView)
+        {
+            SetGuidebookEnabled(!isGuidebookEnabled);
+        }
     }
 
     private void SetGuidebookEnabled(bool enabled)
     {
         isGuidebookEnabled = enabled;
-        
+
         rectTransform.localPosition = enabled ? guidebookEnabledPosition : guidebookDisabledPosition;
 
         GameManager.SetGamePaused(enabled);

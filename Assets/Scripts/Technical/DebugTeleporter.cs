@@ -21,7 +21,7 @@ public class DebugTeleporter : MonoBehaviour
     {
         foreach (var key in dictionary.Keys)
         {
-            if (Input.GetKeyDown(key) && GameManager.HiddenCursorLockMode == CursorLockMode.Locked)
+            if (Input.GetKeyDown(key) && GameManager.HiddenCursorLockMode == CursorLockMode.Locked && !GameManager.IsInScreenView)
             {
                 playerMovementController.WarpPosition(dictionary[key].position);
                 Debug.Log($"Teleporting {playerMovementController.gameObject.name} to: {playerMovementController.transform.position}");

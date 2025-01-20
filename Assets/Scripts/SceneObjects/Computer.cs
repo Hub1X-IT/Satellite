@@ -64,7 +64,6 @@ public class Computer : MonoBehaviour
 
         computerCinemachineCamera.enabled = false;
 
-
         isInComputerView = false;
 
         CanExitComputerView = true;
@@ -77,6 +76,7 @@ public class Computer : MonoBehaviour
     private void SetComputerViewActive(bool active)
     {
         isInComputerView = active;
+        GameManager.IsInScreenView = active;
 
         PlayerScriptsController.SetCanShowPlayerHUD(!active);
 
@@ -89,9 +89,6 @@ public class Computer : MonoBehaviour
         outline.enabled = !active;
 
         ComputerViewEnabled?.Invoke(active);
-
-        GameManager.HiddenCursorLockMode = active ? CursorLockMode.Confined : CursorLockMode.Locked;
-        GameManager.SetCursorShown(false);
 
         if (active)
         {

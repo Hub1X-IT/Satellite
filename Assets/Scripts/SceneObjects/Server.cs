@@ -42,7 +42,6 @@ public class Server : MonoBehaviour
 
     private void Start()
     {
-        // Should the trigger turn off when detection occurs or only when the player disables power?
         DetectionManager.DetectionOccured += () => SetServerTriggerEnabled(false);
         DetectionManager.ServerPowerEnabled += SetServerTriggerEnabled;
     }
@@ -59,6 +58,7 @@ public class Server : MonoBehaviour
     {
         isInServerView = active;
         wasToggledThisFrame = true;
+        GameManager.IsInScreenView = active;
 
         PlayerScriptsController.SetCanShowPlayerHUD(!active);
 
@@ -68,9 +68,6 @@ public class Server : MonoBehaviour
 
         // Probably a temporary solution
         outline.enabled = !active;
-
-        GameManager.HiddenCursorLockMode = active ? CursorLockMode.Confined : CursorLockMode.Locked;
-        GameManager.SetCursorShown(false);
 
         serverViewEnabledGameEvent.RaiseEvent(active);
 

@@ -15,11 +15,9 @@ public abstract class FileExplorerUIDataContainer : MonoBehaviour
     protected DataContainerSO SelfDataContainerSO { private get; set; }
 
     protected Sprite BaseDataContainerIcon { private get; set; }
-
     protected Sprite LockedDataContainerIcon { private get; set; }
 
     protected FileExplorerUI CurrentFileExplorer { get; private set; }
-
     protected MonitorAppsManagerUI CurrentMonitorAppsManager { get; private set; }
 
     protected virtual void Awake()

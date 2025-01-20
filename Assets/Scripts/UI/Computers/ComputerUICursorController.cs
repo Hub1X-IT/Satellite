@@ -1,76 +1,56 @@
-using System.Collections;
 using UnityEngine;
 
 public class ComputerUICursorController : MonoBehaviour
 {
     private RectTransform rectTransform;
 
-    private readonly Vector2 defaultPosition = new(50f, -50f);
+    private const float SensitivityMultiplier = 10f;
 
-    // Temporary solution - should be dynamic, dependent on current resolution.
-    private Vector2 positionAddition;
+    private readonly Vector2 defaultPosition = new(50f, -50f);
 
     [SerializeField]
     private Vector2 canvasSize = new(1920f, 1080f);
 
-    private Vector2 positionMultiplier;
+    private Vector2 currentPosition;
 
-    private bool shouldUpdatePosition;
+    private bool isCursorActive;
 
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
 
-        rectTransform.anchoredPosition = defaultPosition;
+        GameInput.OnLeftClickPerformedAction += TryPerformLeftClick;
 
-        GameManager.GamePausedUnpaused += (_) =>
-        {
-            SetPositionMultiplier();
-        };
+        currentPosition = defaultPosition;
+        rectTransform.anchoredPosition = currentPosition - new Vector2(0f, canvasSize.y);
 
-        SetPositionMultiplier();
+        isCursorActive = false;
     }
 
     private void Update()
     {
-        if (shouldUpdatePosition)
-        {
-            UpdatePosition();
-        }
+        UpdatePosition();
     }
 
     private void UpdatePosition()
     {
-        Vector2 newPosition = GameInput.CursorPosition * positionMultiplier + positionAddition;
-        rectTransform.anchoredPosition = newPosition;
+        Vector2 positionShift = GameInput.RotationVector * (GameSettingsManager.MouseSensitivity * SensitivityMultiplier);
+        Vector2 newPosition = new(Mathf.Clamp(currentPosition.x + positionShift.x, 0f, canvasSize.x),
+            Mathf.Clamp(currentPosition.y + positionShift.y, 0f, canvasSize.y));
+        currentPosition = newPosition;
+        rectTransform.anchoredPosition = currentPosition - new Vector2(0f, canvasSize.y);
+    }
+
+    private void TryPerformLeftClick()
+    {
+        if (isCursorActive)
+        {
+            MouseClick.SimulateClick(currentPosition);
+        }
     }
 
     public void SetCursorEnabled(bool enabled)
     {
-        this.enabled = enabled;
-        if (enabled)
-        {
-            Vector2 newPosition = (rectTransform.anchoredPosition - positionAddition) / positionMultiplier;
-            StartCoroutine(SetMousePositionOnNextFrame(newPosition));
-        }
-    }
-
-    private IEnumerator SetMousePositionOnNextFrame(Vector2 position)
-    {
-        shouldUpdatePosition = false;
-        yield return null;
-        GameInput.SetMousePosition(position);
-        shouldUpdatePosition = true;
-    }
-
-    private void SetPositionMultiplier()
-    {
-        Resolution currentResolution = Screen.currentResolution;
-        Vector2 currentScreenSize = new(currentResolution.width, currentResolution.height);
-        Debug.Log(currentScreenSize);
-        Debug.Log(canvasSize);
-        positionMultiplier = canvasSize / currentScreenSize;
-        positionAddition = new(0f, -canvasSize.y);
-        Debug.Log(positionMultiplier);
+        this.enabled = isCursorActive = enabled;
     }
 }

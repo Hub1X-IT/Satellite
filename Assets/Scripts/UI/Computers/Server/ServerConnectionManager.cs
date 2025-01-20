@@ -71,7 +71,7 @@ public class ServerConnectionManager : MonoBehaviour
         UpdateConnectionItems();
     }
 
-    public void DeleteServer(ServerConnectionItemUI serverConnectionItem)
+    private void DeleteServer(ServerConnectionItemUI serverConnectionItem)
     {
         if (serverConnectionItem == currentConnectedServer)
         {

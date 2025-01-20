@@ -9,6 +9,11 @@ public class TestScript : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+
+    }
+
     private void TestTextCompressor()
     {
         // TextCompressor.InitializeTextCompressor();

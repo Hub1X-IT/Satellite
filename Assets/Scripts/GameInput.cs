@@ -11,7 +11,9 @@ public static class GameInput
 
     public static Vector2 RotationVector => PlayerInputActions.PlayerWalkingAndDesk.Rotate.ReadValue<Vector2>();
 
-    public static Vector2 CursorPosition => PlayerInputActions.All.CursorPosition.ReadValue<Vector2>();
+    // public static Vector2 CursorPosition => PlayerInputActions.All.CursorPosition.ReadValue<Vector2>();
+
+    public static Vector2 MouseDelta => PlayerInputActions.Computer.MouseDelta.ReadValue<Vector2>();
 
 
     public static event Action OnPauseAction;
@@ -25,6 +27,8 @@ public static class GameInput
     public static event Action OnExitDeskViewAction;
 
     public static event Action OnComputerExitAction;
+
+    public static event Action OnLeftClickPerformedAction;
 
     public static event Action<char> OnKeyboardInputAction;
 
@@ -51,7 +55,9 @@ public static class GameInput
 
         PlayerInputActions.Desk.Interact.performed += Interact_performed; // Interact in Desk does the same thing as Interact in PlayerWalking
         PlayerInputActions.Desk.ExitDeskView.performed += ExitDeskView_performed;
+
         PlayerInputActions.Computer.Exit.performed += ComputerExit_performed;
+        PlayerInputActions.Computer.LeftClick.performed += LeftClick_performed;
 
         Keyboard.current.onTextInput += Keyboard_onTextInput;
 
@@ -72,6 +78,7 @@ public static class GameInput
         PlayerInputActions.Desk.ExitDeskView.performed -= ExitDeskView_performed;
 
         PlayerInputActions.Computer.Exit.performed -= ComputerExit_performed;
+        PlayerInputActions.Computer.LeftClick.performed -= LeftClick_performed;
 
         Keyboard.current.onTextInput -= Keyboard_onTextInput;
 
@@ -85,6 +92,7 @@ public static class GameInput
         OnGuidebookToggleAction = null;
         OnExitDeskViewAction = null;
         OnComputerExitAction = null;
+        OnLeftClickPerformedAction = null;
         OnKeyboardInputAction = null;
         OnCommandSubmitAction = null;
     }
@@ -108,6 +116,8 @@ public static class GameInput
     private static void ExitDeskView_performed(InputAction.CallbackContext _) => OnExitDeskViewAction?.Invoke();
 
     private static void ComputerExit_performed(InputAction.CallbackContext _) => OnComputerExitAction?.Invoke();
+
+    private static void LeftClick_performed(InputAction.CallbackContext _) => OnLeftClickPerformedAction?.Invoke();
 
     private static void CommandSubmit_performed(InputAction.CallbackContext _) => OnCommandSubmitAction?.Invoke();
 
