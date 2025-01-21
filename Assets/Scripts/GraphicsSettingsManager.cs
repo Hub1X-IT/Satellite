@@ -55,5 +55,18 @@ public static class GraphicsSettingsManager
     public static void SetFullscreen(bool fullscreen)
     {
         Screen.fullScreen = fullscreen;
+        GameSettingsManager.SetFullscreen(fullscreen);
+    }
+
+    public static void SetVSync(bool vsync)
+    {
+        QualitySettings.vSyncCount = vsync ? 1 : 0;
+        GameSettingsManager.SetVSync(vsync);
+    }
+
+    public static void SetFPSMax(int value)
+    {
+        Application.targetFrameRate = value;
+        GameSettingsManager.SetFPSMax(value);
     }
 }

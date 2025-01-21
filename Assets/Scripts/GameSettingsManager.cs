@@ -14,6 +14,9 @@ public static class GameSettingsManager
     private const int DefaultGraphicsIndex = 0;
     private const int DefaultResolutionIndex = 0;
     private const int DefaultFullscreenIndex = 1;
+    private const int DefaultVSyncIndex = 1;
+    private const int DefaultFPSMax = 0;
+    private const int DefaultFPSDisplayIndex = 0;
 
     private const string PlayerPrefs_MouseSensitivity = "MouseSensitivity";
 
@@ -24,6 +27,9 @@ public static class GameSettingsManager
     private const string PlayerPrefs_GraphicsIndex = "GraphicsIndex";
     private const string PlayerPrefs_ResolutionIndex = "ResolutionIndex";
     private const string PlayerPrefs_FullscreenIndex = "FullscreenIndex";
+    private const string PlayerPrefs_VSyncIndex = "VSyncIndex";
+    private const string PlayerPrefs_FPSMax = "FPSMax";
+    private const string PlayerPrefs_FPSDisplayIndex = "FPSDisplayIndex";
 
     public static float MouseSensitivity { get; private set; }
 
@@ -34,7 +40,11 @@ public static class GameSettingsManager
     public static int GraphicsIndex { get; private set; }
     public static int ResolutionIndex { get; private set; }
 
+    public static int FPSMax { get; private set; }
+    public static bool FPSDisplay { get; private set; }
+
     public static bool Fullscreen { get; private set; }
+    public static bool VSync { get; private set; }
 
     public static void LoadSettings()
     {
@@ -47,6 +57,9 @@ public static class GameSettingsManager
         GraphicsIndex = PlayerPrefs.GetInt(PlayerPrefs_GraphicsIndex, DefaultGraphicsIndex);
         ResolutionIndex = PlayerPrefs.GetInt(PlayerPrefs_ResolutionIndex, DefaultResolutionIndex);
         Fullscreen = PlayerPrefs.GetInt(PlayerPrefs_FullscreenIndex, DefaultFullscreenIndex) == 1;
+        VSync = PlayerPrefs.GetInt(PlayerPrefs_VSyncIndex, DefaultVSyncIndex) == 1;
+        FPSMax = PlayerPrefs.GetInt(PlayerPrefs_FPSMax, DefaultFPSMax);
+        FPSDisplay = PlayerPrefs.GetInt(PlayerPrefs_FPSDisplayIndex, DefaultFPSDisplayIndex) == 1;
     }
 
     
@@ -97,5 +110,23 @@ public static class GameSettingsManager
     {
         Fullscreen = fullscreen;
         PlayerPrefs.SetInt(PlayerPrefs_FullscreenIndex, Fullscreen ? 1 : 0);
+    }
+
+    public static void SetVSync(bool vsync)
+    {
+        VSync = vsync;
+        PlayerPrefs.SetInt(PlayerPrefs_VSyncIndex, VSync ? 1 : 0);
+    }
+
+    public static void SetFPSMax(int value)
+    {
+        FPSMax = value;
+        PlayerPrefs.SetInt(PlayerPrefs_FPSMax, FPSMax);
+    }
+    
+    public static void SetFPSDisplay(bool display)
+    {
+        FPSDisplay = display;
+        PlayerPrefs.SetInt(PlayerPrefs_FPSDisplayIndex, FPSDisplay ? 1 : 0);
     }
 }
