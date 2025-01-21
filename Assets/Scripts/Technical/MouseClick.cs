@@ -1,34 +1,49 @@
+using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class MouseClick
 {
-    // Script from ChatGPT XD
+    private static readonly Type[] interactableTypes = {
+        typeof(Button),
+        typeof(TMP_InputField),
+    };
+    private static readonly Type[] interactionBlockingTypes = {
+        typeof(Image),
+    };
+
     public static void SimulateClick(Vector2 screenPosition)
     {
-        // Create a pointer event
         PointerEventData pointerData = new(EventSystem.current)
         {
             position = screenPosition
         };
 
-        // Debug log !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // Debug.Log(screenPosition);
-
-        // Create a list to hold the results of the raycast
         List<RaycastResult> raycastResults = new();
-
-        // Raycast using the EventSystem
         EventSystem.current.RaycastAll(pointerData, raycastResults);
 
-        // Iterate through the results to interact with UI elements
         foreach (var result in raycastResults)
         {
-            // Execute the pointer click event
-            // Debug log !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            Debug.Log(result);
-            ExecuteEvents.Execute(result.gameObject, pointerData, ExecuteEvents.pointerClickHandler);
+            foreach (var type in interactableTypes)
+            {
+                if (result.gameObject.GetComponent(type) != null)
+                {
+                    Debug.Log($"Execute click on object: {result.gameObject.name} of type: {type.Name}");
+                    ExecuteEvents.Execute(result.gameObject, pointerData, ExecuteEvents.pointerClickHandler);
+                    return;
+                }
+            }
+            foreach (var type in interactionBlockingTypes)
+            {
+                if (result.gameObject.GetComponent(type) != null)
+                {
+                    Debug.Log($"Interaction blocked by object: {result.gameObject.name} of type: {type.Name}");
+                    return;
+                }
+            }
         }
     }
 }
