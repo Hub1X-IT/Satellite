@@ -13,6 +13,7 @@ public static class GameSettingsManager
 
     private const int DefaultGraphicsIndex = 0;
     private const int DefaultResolutionIndex = 0;
+    private const int DefaultFullscreenIndex = 1;
 
     private const string PlayerPrefs_MouseSensitivity = "MouseSensitivity";
 
@@ -22,6 +23,7 @@ public static class GameSettingsManager
 
     private const string PlayerPrefs_GraphicsIndex = "GraphicsIndex";
     private const string PlayerPrefs_ResolutionIndex = "ResolutionIndex";
+    private const string PlayerPrefs_FullscreenIndex = "FullscreenIndex";
 
     public static float MouseSensitivity { get; private set; }
 
@@ -31,6 +33,8 @@ public static class GameSettingsManager
 
     public static int GraphicsIndex { get; private set; }
     public static int ResolutionIndex { get; private set; }
+
+    public static bool Fullscreen { get; private set; }
 
     public static void LoadSettings()
     {
@@ -42,6 +46,7 @@ public static class GameSettingsManager
 
         GraphicsIndex = PlayerPrefs.GetInt(PlayerPrefs_GraphicsIndex, DefaultGraphicsIndex);
         ResolutionIndex = PlayerPrefs.GetInt(PlayerPrefs_ResolutionIndex, DefaultResolutionIndex);
+        Fullscreen = PlayerPrefs.GetInt(PlayerPrefs_FullscreenIndex, DefaultFullscreenIndex) == 1;
     }
 
     
@@ -86,5 +91,11 @@ public static class GameSettingsManager
     {
         ResolutionIndex = index;
         PlayerPrefs.SetInt(PlayerPrefs_ResolutionIndex, ResolutionIndex);
+    }
+
+    public static void SetFullscreen(bool fullscreen)
+    {
+        Fullscreen = fullscreen;
+        PlayerPrefs.SetInt(PlayerPrefs_FullscreenIndex, Fullscreen ? 1 : 0);
     }
 }

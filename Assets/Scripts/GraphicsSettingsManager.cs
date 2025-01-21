@@ -51,13 +51,9 @@ public static class GraphicsSettingsManager
         Screen.SetResolution(resolutions[index].width, resolutions[index].height, Screen.fullScreen);
         GameSettingsManager.SetResolutionIndex(index);
     }
-    /*
-    public static void SetFullscreen()
+    
+    public static void SetFullscreen(bool fullscreen)
     {
-        Screen.fullScreen = !Screen.fullScreen;
-        if (Screen.fullScreen)
-            Debug.Log("El Full");
-        else
-            Debug.Log("El Empty");
-    }*/
+        Screen.fullScreen = fullscreen;
+    }
 }
