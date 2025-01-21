@@ -7,15 +7,22 @@ public static class GraphicsSettingsManager
 
     public static List<string> ResolutionOptionsStrings { get; private set; }
 
+    public static float currentRefreshRate;
+
     public static void OnAwake()
     {
         resolutions = Screen.resolutions;
+
+        currentRefreshRate = (float)Screen.currentResolution.refreshRateRatio.value;
 
         List<string> options = new();
 
         for (int i = 0; i < resolutions.Length; i++)
         {
-            options.Add(resolutions[i].width + " x " + resolutions[i].height);
+            if (resolutions[i].refreshRateRatio.value == currentRefreshRate)
+            {
+                options.Add(resolutions[i].width + " x " + resolutions[i].height);
+            }
 
             if (resolutions[i].width == Screen.currentResolution.width
                 && resolutions[i].height == Screen.currentResolution.height)
