@@ -27,7 +27,7 @@ public class MouseClick
         {
             // Execute the pointer click event
             // Debug log !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            // Debug.Log(result);
+            Debug.Log(result);
             ExecuteEvents.Execute(result.gameObject, pointerData, ExecuteEvents.pointerClickHandler);
         }
     }

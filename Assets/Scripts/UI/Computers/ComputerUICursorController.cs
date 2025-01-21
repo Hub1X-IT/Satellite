@@ -43,7 +43,8 @@ public class ComputerUICursorController : MonoBehaviour
 
     private void TryPerformLeftClick()
     {
-        if (isCursorActive)
+        // Checking for paused game may be a temporary fix.
+        if (isCursorActive && !GameManager.IsGamePaused)
         {
             MouseClick.SimulateClick(currentPosition);
         }
