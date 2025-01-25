@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ConvertedPasswordUI : MonoBehaviour
 {
-    public event Action<ConvertedPasswordUI> GoBackToPasswordTriggered;
+    public event Action<ConvertedPasswordUI> DeletePasswordTriggered;
 
     [SerializeField]
     private int maxCharactersNumber;
@@ -14,7 +14,7 @@ public class ConvertedPasswordUI : MonoBehaviour
     private const string SubstringDivisor = " | ";
 
     [SerializeField]
-    private Button goBackToPasswordButton;
+    private Button deletePasswordButton;
 
     [SerializeField]
     private Transform backgroundHolder;
@@ -24,11 +24,11 @@ public class ConvertedPasswordUI : MonoBehaviour
     [SerializeField]
     private TMP_Text convertedPasswordTextFieldPrefab;
     [SerializeField]
-    private Image oneLinePasswordBackround;
+    private Image oneLinePasswordBackground;
     [SerializeField]
-    private Image twoLinePasswordBackround;
+    private Image twoLinePasswordBackground;
     [SerializeField]
-    private Image threeLinePasswordBackround;
+    private Image threeLinePasswordBackground;
 
     private RectTransform rectTransform;
 
@@ -40,14 +40,14 @@ public class ConvertedPasswordUI : MonoBehaviour
 
     public void InitializeConvertedPasswordUI(string passwordToDisplay)
     {
-        goBackToPasswordButton.onClick.AddListener(() => GoBackToPasswordTriggered?.Invoke(this));
+        deletePasswordButton.onClick.AddListener(() => DeletePasswordTriggered?.Invoke(this));
         rectTransform = GetComponent<RectTransform>();
 
         passwordString = passwordToDisplay;
 
         if (passwordToDisplay.Length == 0)
         {
-            SetBackround(1);
+            SetBackground(1);
             SetSize();
 
             return;
@@ -106,7 +106,7 @@ public class ConvertedPasswordUI : MonoBehaviour
             currentTextField.text = lastTextFieldText[..^SubstringDivisor.Length];
         }
 
-        SetBackround(textFieldsNumber);
+        SetBackground(textFieldsNumber);
         SetSize();
     }
 
@@ -117,20 +117,20 @@ public class ConvertedPasswordUI : MonoBehaviour
         return textField;
     }
 
-    private void SetBackround(int linesNumber)
+    private void SetBackground(int linesNumber)
     {
         GameObject backgroundToInstantiate = linesNumber switch
         {
-            1 => oneLinePasswordBackround.gameObject,
-            2 => twoLinePasswordBackround.gameObject,
-            3 => threeLinePasswordBackround.gameObject,
+            1 => oneLinePasswordBackground.gameObject,
+            2 => twoLinePasswordBackground.gameObject,
+            3 => threeLinePasswordBackground.gameObject,
             _ => null
         };
 
         if (backgroundToInstantiate == null)
         {
             Debug.LogWarning("Error: wrong number of lines in decoded password!");
-            backgroundToInstantiate = oneLinePasswordBackround.gameObject;
+            backgroundToInstantiate = oneLinePasswordBackground.gameObject;
         }
 
         RectTransform backgroundRectTransform = Instantiate(backgroundToInstantiate, backgroundHolder).GetComponent<RectTransform>();

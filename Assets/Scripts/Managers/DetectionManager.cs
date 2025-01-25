@@ -6,7 +6,6 @@ public static class DetectionManager
     [Serializable]
     public struct InitializationData
     {
-        public int DefaultDetectionChance;
         // Probably a temporary solution; only for demo level / level 1
         public GameEventSO onDetectionOccuredGameEvent;
         public GameEventSO onDetectionRemovedGameEvent;
@@ -25,17 +24,19 @@ public static class DetectionManager
     private static int currentDetectionLevel;
     private const int DefaultDetectionLevel = 0;
 
-    private static int[] levels = { 2, 5, 10, 25, 40, 70, 98, 100};
+    private static readonly int[] detectionLevels = { 2, 5, 10, 25, 40, 70, 98, 100 };
+    // Debug detection level:
+    // private static readonly int[] detectionLevels = { -1 };
 
     public static bool WasDetected { get; private set; }
 
     public static void InitializeDetectionManager(InitializationData data)
     {
         currentDetectionLevel = DefaultDetectionLevel;
-        CurrentDetectionChance = data.DefaultDetectionChance;
         onDetectionOccuredGameEvent = data.onDetectionOccuredGameEvent;
         onDetectionRemovedGameEvent = data.onDetectionRemovedGameEvent;
         WasDetected = false;
+        SetDetectionChance();
     }
 
     public static void OnSceneExit()
@@ -47,12 +48,9 @@ public static class DetectionManager
 
     public static void CheckDetection()
     {
-        int randomDetectionChance = UnityEngine.Random.Range(100, 0);
-        
-        // randomDetectionChance = UnityEngine.Random.Range(0, 100);
-        // if (randomDetectionChance < levels[currentDetectionLevel])
+        int randomDetectionChance = UnityEngine.Random.Range(0, 100);
 
-        if (randomDetectionChance < levels[currentDetectionLevel])
+        if (randomDetectionChance < CurrentDetectionChance)
         {
             WasDetected = true;
             DetectionOccured?.Invoke();
@@ -63,10 +61,10 @@ public static class DetectionManager
         }
         else
         {
-            IncreaseDetectionLevel();            
+            IncreaseDetectionLevel();
         }
-        Debug.Log($"Current detection chance: {levels[currentDetectionLevel]}");
-        Debug.Log($"{(WasDetected ? "" : "Not ")}Detected");
+        // Debug.Log($"Current detection chance: {detectionLevels[currentDetectionLevel]}");
+        // Debug.Log($"{(WasDetected ? "" : "Not ")}Detected");
     }
 
     public static void SetServerPowerEnabled(bool enabled)
@@ -82,7 +80,7 @@ public static class DetectionManager
     {
         WasDetected = false;
         currentDetectionLevel = DefaultDetectionLevel;
-        CurrentDetectionChance = levels[DefaultDetectionLevel];
+        SetDetectionChance();
         DetectionRemoved?.Invoke();
         if (onDetectionRemovedGameEvent != null)
         {
@@ -90,18 +88,17 @@ public static class DetectionManager
         }
     }
 
-    const int maxDetectionLevel = 7;
-
     private static void IncreaseDetectionLevel()
     {
-        if (currentDetectionLevel < maxDetectionLevel)
+        if (currentDetectionLevel < detectionLevels.Length - 1)
         {
             currentDetectionLevel++;
+            SetDetectionChance();
         }
+    }
 
-        // OBSOLETE
-        // Works only if detection chance is less than or equal to 8!
-        // CurrentDetectionChance = (int)(-1.7 * currentDetectionLevel * currentDetectionLevel + 1.5 * currentDetectionLevel + 98);
-        // END OBSOLETE
+    private static void SetDetectionChance()
+    {
+        CurrentDetectionChance = detectionLevels[currentDetectionLevel];
     }
 }

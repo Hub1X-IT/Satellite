@@ -16,8 +16,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
     private TMP_InputField inputField;
     [SerializeField]
     private Button decompressButton;
-    [SerializeField]
-    private Button goBackToInputFieldButton;
 
     [SerializeField]
     private Button binButton;
@@ -85,7 +83,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
     {
         inputField.onEndEdit.AddListener(ChangeOriginalPassword);
         decompressButton.onClick.AddListener(DecompressPassword);
-        goBackToInputFieldButton.onClick.AddListener(GoBackToInputField);
 
         binButton.onClick.AddListener(BinDecode);
         octButton.onClick.AddListener(OctDecode);
@@ -99,7 +96,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
     {
         inputField.onEndEdit.RemoveListener(ChangeOriginalPassword);
         decompressButton.onClick.RemoveListener(DecompressPassword);
-        goBackToInputFieldButton.onClick.RemoveListener(GoBackToInputField);
 
         binButton.onClick.RemoveListener(BinDecode);
         octButton.onClick.RemoveListener(OctDecode);
@@ -120,7 +116,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
         if (TextCompressor.TryGetDecompressedText(compressedPassword, out string decompressedPassword))
         {
             RemoveAllPasswordTextFields();
-            // originalPassword = currentPassword = inputField.text = decompressedPassword;
             currentPassword = decompressedPassword;
             CreateNewPasswordTextField(decompressedPassword);
         }
@@ -128,11 +123,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
         {
             Debug.Log("Decompression failed.");
         }
-    }
-    private void GoBackToInputField()
-    {
-        currentPassword = originalPassword;
-        RemoveAllPasswordTextFields();
     }
 
     private void BinDecode()
@@ -181,8 +171,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
 
     private void SetDetectionChanceText()
     {
-        int detectionChanceNumber = -(DetectionManager.CurrentDetectionChance - 100);
-        detectionChanceTextField.text = DetectionChanceText + detectionChanceNumber.ToString() + "%";
+        detectionChanceTextField.text = DetectionChanceText + DetectionManager.CurrentDetectionChance + "%";
     }
 
     private void CreateNewPasswordTextField(string newPassword)
@@ -191,23 +180,25 @@ public class PasswordCrackingAppUI : MonoBehaviour
             convertedPasswordsHolder).GetComponent<ConvertedPasswordUI>();
 
         convertedPasswordUI.InitializeConvertedPasswordUI(newPassword);
-        convertedPasswordUI.GoBackToPasswordTriggered += GoBackToPassword;
+        convertedPasswordUI.DeletePasswordTriggered += DeletePassword;
         previousConvertedPasswordUIStack.Push(convertedPasswordUI);
     }
 
-    private void GoBackToPassword(ConvertedPasswordUI targetConvertedPasswordUI)
+    private void DeletePassword(ConvertedPasswordUI targetConvertedPasswordUI)
     {
         while (true)
         {
-            ConvertedPasswordUI convertedPasswordUI = previousConvertedPasswordUIStack.Peek();
-            if (convertedPasswordUI == targetConvertedPasswordUI)
+            ConvertedPasswordUI currentConvertedPasswordUI = previousConvertedPasswordUIStack.Pop();
+            Debug.Log(currentConvertedPasswordUI);
+            currentConvertedPasswordUI.DestroySelf();
+            if (currentConvertedPasswordUI == targetConvertedPasswordUI)
             {
-                currentPassword = previousConvertedPasswordUIStack.Peek().PasswordString;
                 break;
             }
-            convertedPasswordUI.DestroySelf();
-            previousConvertedPasswordUIStack.Pop();
         }
+
+        bool peeked = previousConvertedPasswordUIStack.TryPeek(out ConvertedPasswordUI convertedPasswordUI);
+        currentPassword = peeked ? convertedPasswordUI.PasswordString : originalPassword;
     }
 
     private void RemoveAllPasswordTextFields()
