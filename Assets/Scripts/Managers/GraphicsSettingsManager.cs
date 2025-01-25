@@ -3,35 +3,15 @@ using UnityEngine;
 
 public static class GraphicsSettingsManager
 {
-    private static Resolution[] resolutions;
+    private static Resolution[] availableResolutions;
 
-    public static List<string> ResolutionOptionsStrings { get; private set; }
+    public static List<string> ResolutionDropdownOptions { get; private set; }
 
     public static float currentRefreshRate;
 
     public static void OnAwake()
     {
-        resolutions = Screen.resolutions;
-
-        currentRefreshRate = (float)Screen.currentResolution.refreshRateRatio.value;
-
-        List<string> options = new();
-
-        for (int i = 0; i < resolutions.Length; i++)
-        {
-            if (resolutions[i].refreshRateRatio.value == currentRefreshRate)
-            {
-                options.Add(resolutions[i].width + " x " + resolutions[i].height);
-            }
-
-            if (resolutions[i].width == Screen.currentResolution.width
-                && resolutions[i].height == Screen.currentResolution.height)
-            {
-                GameSettingsManager.SetResolutionIndex(i);
-            }
-        }
-
-        ResolutionOptionsStrings = options;
+        SetupResolutionSettings();
     }
 
     public static void OnStart()
@@ -48,10 +28,10 @@ public static class GraphicsSettingsManager
 
     public static void SetResolution(int index)
     {
-        Screen.SetResolution(resolutions[index].width, resolutions[index].height, Screen.fullScreen);
+        Screen.SetResolution(availableResolutions[index].width, availableResolutions[index].height, Screen.fullScreen);
         GameSettingsManager.SetResolutionIndex(index);
     }
-    
+
     public static void SetFullscreen(bool fullscreen)
     {
         Screen.fullScreen = fullscreen;
@@ -68,5 +48,32 @@ public static class GraphicsSettingsManager
     {
         Application.targetFrameRate = value;
         GameSettingsManager.SetFPSMax(value);
+    }
+
+    private static void SetupResolutionSettings()
+    {
+        Resolution[] screenResolutions = Screen.resolutions;
+        currentRefreshRate = (float)Screen.currentResolution.refreshRateRatio.value;
+
+        List<string> dropdownOptions = new();
+        List<Resolution> validResolutionsList = new();
+
+        for (int i = 0; i < screenResolutions.Length; i++)
+        {
+            Resolution resolution = screenResolutions[i];
+            if (resolution.refreshRateRatio.value == currentRefreshRate)
+            {
+                validResolutionsList.Add(resolution);
+                dropdownOptions.Add($"{resolution.width} x {resolution.height}");
+            }
+
+            if (resolution.width == Screen.currentResolution.width && resolution.height == Screen.currentResolution.height)
+            {
+                GameSettingsManager.SetResolutionIndex(i);
+            }
+        }
+
+        availableResolutions = validResolutionsList.ToArray();
+        ResolutionDropdownOptions = dropdownOptions;
     }
 }

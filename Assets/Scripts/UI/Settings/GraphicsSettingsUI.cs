@@ -51,7 +51,7 @@ public class GraphicSettingsUI : MonoBehaviour
         graphicsDropdown.value = GameSettingsManager.GraphicsIndex;
 
         resolutionDropdown.ClearOptions();
-        resolutionDropdown.AddOptions(GraphicsSettingsManager.ResolutionOptionsStrings);
+        resolutionDropdown.AddOptions(GraphicsSettingsManager.ResolutionDropdownOptions);
         resolutionDropdown.value = GameSettingsManager.ResolutionIndex;
         resolutionDropdown.RefreshShownValue();
     }
