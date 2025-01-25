@@ -48,6 +48,10 @@ public static class DetectionManager
     public static void CheckDetection()
     {
         int randomDetectionChance = UnityEngine.Random.Range(levels[currentDetectionLevel], 0);
+        
+        // randomDetectionChance = UnityEngine.Random.Range(0, 100);
+        // if (randomDetectionChance < levels[currentDetectionLevel])
+
         if (randomDetectionChance == 1)
         {
             WasDetected = true;
