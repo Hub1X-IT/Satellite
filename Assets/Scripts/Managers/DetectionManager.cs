@@ -25,7 +25,7 @@ public static class DetectionManager
     private static int currentDetectionLevel;
     private const int DefaultDetectionLevel = 0;
 
-    private static int[] levels = { 2, 5, 10, 25, 40, 70, 98, 100};
+    private static int[] levels = { 100, 98, 70, 40, 25, 10, 5, 2};
 
     public static bool WasDetected { get; private set; }
 
