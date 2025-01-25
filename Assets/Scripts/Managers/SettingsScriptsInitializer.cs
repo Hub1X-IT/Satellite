@@ -21,6 +21,6 @@ public class SettingsScriptsInitializer : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameSettingsManager.SaveSettings();
+        // GameSettingsManager.SaveSettings();
     }
 }

@@ -62,12 +62,6 @@ public static class GameSettingsManager
         FPSDisplay = PlayerPrefs.GetInt(PlayerPrefs_FPSDisplayIndex, DefaultFPSDisplayIndex) == 1;
     }
 
-    
-    public static void SaveSettings()
-    {
-        // All the PlayerPrefs.SetX method calls should later be put here
-    }
-    
 
     public static void SetMouseSensitivity(float value)
     {
