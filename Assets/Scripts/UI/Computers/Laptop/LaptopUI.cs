@@ -2,5 +2,18 @@ using UnityEngine;
 
 public class LaptopUI : MonoBehaviour
 {
-    // Left for future use.
+    private ComputerUI computerUI;
+
+    [SerializeField]
+    private CommandPromptScroll commandPromptScroll;
+
+    private void Awake()
+    {
+        computerUI = GetComponent<ComputerUI>();
+        computerUI.ComputerViewEnabled += (enabled) => {
+            commandPromptScroll.enabled = enabled;
+        };
+
+        commandPromptScroll.enabled = false;
+    }
 }

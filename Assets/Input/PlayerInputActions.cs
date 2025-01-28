@@ -359,6 +359,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseScroll"",
+                    ""type"": ""Value"",
+                    ""id"": ""6e0c295e-c056-484c-9564-d2a33f627eee"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -381,6 +390,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""CommandSubmit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cda96ac9-603e-4c49-a5e5-c7fa56eff7a1"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseScroll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -414,6 +434,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // CommandPrompt
         m_CommandPrompt = asset.FindActionMap("CommandPrompt", throwIfNotFound: true);
         m_CommandPrompt_CommandSubmit = m_CommandPrompt.FindAction("CommandSubmit", throwIfNotFound: true);
+        m_CommandPrompt_MouseScroll = m_CommandPrompt.FindAction("MouseScroll", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -772,11 +793,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_CommandPrompt;
     private List<ICommandPromptActions> m_CommandPromptActionsCallbackInterfaces = new List<ICommandPromptActions>();
     private readonly InputAction m_CommandPrompt_CommandSubmit;
+    private readonly InputAction m_CommandPrompt_MouseScroll;
     public struct CommandPromptActions
     {
         private @PlayerInputActions m_Wrapper;
         public CommandPromptActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @CommandSubmit => m_Wrapper.m_CommandPrompt_CommandSubmit;
+        public InputAction @MouseScroll => m_Wrapper.m_CommandPrompt_MouseScroll;
         public InputActionMap Get() { return m_Wrapper.m_CommandPrompt; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -789,6 +812,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @CommandSubmit.started += instance.OnCommandSubmit;
             @CommandSubmit.performed += instance.OnCommandSubmit;
             @CommandSubmit.canceled += instance.OnCommandSubmit;
+            @MouseScroll.started += instance.OnMouseScroll;
+            @MouseScroll.performed += instance.OnMouseScroll;
+            @MouseScroll.canceled += instance.OnMouseScroll;
         }
 
         private void UnregisterCallbacks(ICommandPromptActions instance)
@@ -796,6 +822,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @CommandSubmit.started -= instance.OnCommandSubmit;
             @CommandSubmit.performed -= instance.OnCommandSubmit;
             @CommandSubmit.canceled -= instance.OnCommandSubmit;
+            @MouseScroll.started -= instance.OnMouseScroll;
+            @MouseScroll.performed -= instance.OnMouseScroll;
+            @MouseScroll.canceled -= instance.OnMouseScroll;
         }
 
         public void RemoveCallbacks(ICommandPromptActions instance)
@@ -843,5 +872,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public interface ICommandPromptActions
     {
         void OnCommandSubmit(InputAction.CallbackContext context);
+        void OnMouseScroll(InputAction.CallbackContext context);
     }
 }

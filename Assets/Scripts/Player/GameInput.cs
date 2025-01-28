@@ -15,6 +15,8 @@ public static class GameInput
 
     public static Vector2 MouseDelta => PlayerInputActions.Computer.MouseDelta.ReadValue<Vector2>();
 
+    public static float MouseScroll => PlayerInputActions.CommandPrompt.MouseScroll.ReadValue<Vector2>().y;
+
 
     public static event Action OnPauseAction;
 
@@ -43,7 +45,7 @@ public static class GameInput
         PlayerInputActions.PlayerWalkingAndDesk.Enable();
         PlayerInputActions.PlayerWalking.Enable();
         PlayerInputActions.Computer.Disable();
-        PlayerInputActions.CommandPrompt.Disable(); // should be enabled when testing monitor command prompt
+        PlayerInputActions.CommandPrompt.Enable(); // should be enabled when testing monitor command prompt
 
         PlayerInputActions.All.Pause.performed += Pause_performed;
 
