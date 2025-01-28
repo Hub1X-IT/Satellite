@@ -75,10 +75,6 @@ public class CommandPromptUI : MonoBehaviour
         outputTextField.text = CommandPromptStartText + command;
         //outputTextField.text = outputText;
 
-        // outputFieldScrollRect.verticalNormalizedPosition = 0;
-
-        // outputTextField.caretPosition = outputTextField.text.Length;
-
         Instantiate(outputTextField, outputField);
     }
 

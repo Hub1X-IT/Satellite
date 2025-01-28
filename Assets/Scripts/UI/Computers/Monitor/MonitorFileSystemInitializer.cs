@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MonitorFileSystemInitializer : MonoBehaviour
@@ -7,21 +8,47 @@ public class MonitorFileSystemInitializer : MonoBehaviour
     [SerializeField]
     MonitorUI monitorUI;
 
-    [SerializeField]
     private FolderSO rootFolderSO;
 
     [SerializeField]
     private PossiblePasswordsSO possiblePasswordsSO;
 
+    [SerializeField]
+    private GameEventCommandDataSO connectCommandGameEvent;
+
     public FolderSO RootFolderSO => rootFolderSO;
+
+    [SerializeField]
+    private SerializableDictionary<string, FolderSO> ipAndFolderSerializableDictionary;
+
+    private Dictionary<string, FolderSO> ipAndFolderDictionary;
 
     private void Awake()
     {
+        ipAndFolderDictionary = ipAndFolderSerializableDictionary.Dictionary;
+
         possiblePasswordsSO.InitializePossiblePasswords();
+
+        connectCommandGameEvent.EventRaised += OnConnectCommand;
     }
 
     private void Start()
     {
-        monitorUI.FileExplorer.InitializeFileExplorer(this);
+        // monitorUI.FileExplorer.InitializeFileExplorer(this);
+    }
+
+    private void OnConnectCommand(CommandData commandData)
+    {
+        string ipAddress = commandData.CommandDataArray[0];
+        if (ipAndFolderDictionary.ContainsKey(ipAddress))
+        {
+            rootFolderSO = ipAndFolderDictionary[ipAddress];
+            monitorUI.FileExplorer.InitializeFileExplorer(this);
+            commandData.Response?.Invoke(true, $"Connected to: {ipAddress}");
+        }
+        else
+        {
+            commandData.Response?.Invoke(false, $"Failed to connect to: {ipAddress}");
+        }
     }
 }

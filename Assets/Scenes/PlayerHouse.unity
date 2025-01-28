@@ -2753,8 +2753,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monitorUI: {fileID: 406053539}
-  rootFolderSO: {fileID: 11400000, guid: 5b13abf0529b617489831190b3a49bbc, type: 2}
   possiblePasswordsSO: {fileID: 11400000, guid: 19b1f1b11482ffb4ea77438ba23aad4d, type: 2}
+  connectCommandGameEvent: {fileID: 11400000, guid: 768bd6e4582c4ea4eb4d2f61557db60b, type: 2}
+  ipAndFolderSerializableDictionary:
+    items:
+    - key: 100
+      value: {fileID: 11400000, guid: 5b13abf0529b617489831190b3a49bbc, type: 2}
 --- !u!1001 &220752138
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7948,6 +7952,8 @@ MonoBehaviour:
   cameraControllerData:
     MainCamera: {fileID: 979979600}
     CinemachineMainCamera: {fileID: 438686340}
+  commandPromptManagerData:
+    possibleCommandsSO: {fileID: 11400000, guid: fa81277d883692340b2a9ee84a287ffa, type: 2}
   detectionManagerData:
     onDetectionOccuredGameEvent: {fileID: 11400000, guid: e94f8e1725bc0ba4abd16f983fb46606, type: 2}
     onDetectionRemovedGameEvent: {fileID: 11400000, guid: 884550ddc3a4b7b4e9ee72fe7642aa7a, type: 2}

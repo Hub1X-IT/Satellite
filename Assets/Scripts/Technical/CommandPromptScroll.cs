@@ -4,8 +4,6 @@ public class CommandPromptScroll : MonoBehaviour
 {
     [SerializeField]
     private RectTransform content;
-    [SerializeField]
-    private RectTransform viewport;
 
     private const float ScrollSpeed = 50f;
 
