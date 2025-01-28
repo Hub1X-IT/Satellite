@@ -9,7 +9,9 @@ public class CommandPromptUI : MonoBehaviour
 
     [SerializeField]
     private TMP_Text outputTextField;
-    // private 
+
+    [SerializeField]
+    private RectTransform outputField;
 
     [SerializeField]
     private TextAsset cmdStartText;
@@ -55,7 +57,7 @@ public class CommandPromptUI : MonoBehaviour
             */
         });
 
-        SetStartupText(cmdStartText.text + "\n");
+        //SetStartupText(cmdStartText.text + "\n");
     }
 
     private void SubmitCommand(string command)
@@ -63,12 +65,15 @@ public class CommandPromptUI : MonoBehaviour
         inputTextField.text = CommandPromptStartText;
         inputTextField.ActivateInputField();
 
-        outputText += CommandPromptStartText + command + CommandPromptEndText;
-        outputTextField.text = outputText;
+        //outputText += CommandPromptStartText + command + CommandPromptEndText;
+        outputTextField.text = CommandPromptStartText + command;
+        //outputTextField.text = outputText;
 
         // outputFieldScrollRect.verticalNormalizedPosition = 0;
 
         // outputTextField.caretPosition = outputTextField.text.Length;
+
+        Instantiate(outputTextField, outputField);
     }
 
     private void SetStartupText(string text)

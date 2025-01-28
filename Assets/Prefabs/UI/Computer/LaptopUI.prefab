@@ -178,6 +178,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3590736367100869470}
+  - component: {fileID: 4927908077669816497}
+  - component: {fileID: 3972562690386269245}
   m_Layer: 5
   m_Name: OutputField
   m_TagString: Untagged
@@ -200,11 +202,51 @@ RectTransform:
   - {fileID: 4495773547002825661}
   m_Father: {fileID: 4333230753768073033}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -70, y: 940}
-  m_Pivot: {x: 0.5, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.000061035156}
+  m_SizeDelta: {x: -70, y: 0}
+  m_Pivot: {x: 0.49999997, y: 0}
+--- !u!114 &4927908077669816497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2137915692617024209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 6
+  m_Spacing: 10
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
+--- !u!114 &3972562690386269245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2137915692617024209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 1
 --- !u!1 &2895124339232321180
 GameObject:
   m_ObjectHideFlags: 0
@@ -463,13 +505,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5751494845793441824}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5490523864877240783}
-  m_Father: {fileID: 4333230753768073033}
+  m_Father: {fileID: 5056257907952638953}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -626,6 +668,7 @@ GameObject:
   - component: {fileID: 4333230753768073033}
   - component: {fileID: 8562382874323461113}
   - component: {fileID: 7532268600873915590}
+  - component: {fileID: 8987013819226710208}
   m_Layer: 5
   m_Name: CommandPrompt
   m_TagString: Untagged
@@ -646,13 +689,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3590736367100869470}
-  - {fileID: 1573867079302163260}
   m_Father: {fileID: 5056257907952638953}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 59.99997}
+  m_SizeDelta: {x: 0, y: -120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8562382874323461113
 MonoBehaviour:
@@ -667,7 +709,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputTextField: {fileID: 7379873850896294036}
-  outputTextField: {fileID: 7714662018599779460}
+  outputTextField: {fileID: 99577737745977310, guid: 02a275169895d9740b0eb29928070e1a, type: 3}
+  outputField: {fileID: 3590736367100869470}
   cmdStartText: {fileID: 4900000, guid: 7b6c956cde0a1064bb052a2935e7d1b9, type: 3}
 --- !u!114 &7532268600873915590
 MonoBehaviour:
@@ -688,8 +731,8 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 0
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
-  m_Viewport: {fileID: 0}
+  m_ScrollSensitivity: 50
+  m_Viewport: {fileID: 4333230753768073033}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
   m_HorizontalScrollbarVisibility: 0
@@ -699,6 +742,14 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!222 &8987013819226710208
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7057654450271175537}
+  m_CullTransparentMesh: 1
 --- !u!1 &8334665809188835962
 GameObject:
   m_ObjectHideFlags: 0
@@ -785,6 +836,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3546752710742989958}
+  - {fileID: 1573867079302163260}
   - {fileID: 4333230753768073033}
   - {fileID: 95435061182753472}
   - {fileID: 6632186294140640975}
@@ -981,7 +1033,7 @@ GameObject:
   - component: {fileID: 8102734072501368173}
   - component: {fileID: 7714662018599779460}
   m_Layer: 5
-  m_Name: OutputTextField
+  m_Name: DefaultTextFieldTextField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1002,9 +1054,9 @@ RectTransform:
   m_Father: {fileID: 3590736367100869470}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1850, y: 730}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8102734072501368173
 CanvasRenderer:
@@ -1034,7 +1086,22 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: "                           -++++++++:        Luc45_M1ll3r\r\n                       
+    :=#-    :=+*+#:      OS: Sputnik OS\r\n                    .-++#*         .*+#-    
+    Kernel: x86_64 SP20 6.11.2-amd64\r\n                 :==-.  @            %-%    
+    Uptime: 10h 12m\r\n             .-==:     .@            +:%     Packages: 4563\r\n         
+    :--:          ++            *=     Shell: zsc 7.9\r\n      .---              
+    *#:        :#-      Resolution: 1920x1080\r\n   ::-.                 +#:=+++==++%%.      
+    DE: Xgcd\r\n:::                   -#-         =#         WM: Xgwm5\r\n                   
+    .*=          =*          WM Theme: Sputnik-Dark\r\n                   ++          
+    ++           GTK Theme: Sputnik-Dark [GTK2]\r\n                 -*.          
+    +=            Icon Theme: Flat-Remix-Yellow-Dark\r\n               .+-           
+    *-             Font: Fira Monospace\r\n              ==             *:             
+    Disk: 61G / 506G (12%)\r\n            -=              *.               CPU: Intel
+    Core i7-6820HQ @ 8x 3.6GHz [49.0\xB0C]\r\n          .=.              +                
+    GPU: NVIDIA Corporation GM107GLM [Quadro M1000M]\r\n         -:              
+    +                  RAM: 2384MiB / 31351MiB\r\n        .               .=             
+    \r\n                       .-               "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 871af607f76f13b41a9e212d5ca61562, type: 2}
   m_sharedMaterial: {fileID: 6401778941531856212, guid: 871af607f76f13b41a9e212d5ca61562, type: 2}
