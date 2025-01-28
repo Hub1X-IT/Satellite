@@ -39,6 +39,12 @@ public class CommandPromptUI : MonoBehaviour
             CommandPromptManager.SubmitCommand(command);
         };
 
+        inputTextField.onSelect.AddListener((_) =>
+        {
+            inputTextField.caretPosition = inputTextField.text.Length;
+        });
+
+
         inputTextField.onValueChanged.AddListener((text) =>
         {
             if (text.Length < CommandPromptStartText.Length)
