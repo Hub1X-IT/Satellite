@@ -15,6 +15,7 @@ public static class PasswordEncryption
         CaesarCipher,
     }
 
+    
     /*
         Case:
         0: No ciphers used, every cipher allowed.
@@ -23,6 +24,7 @@ public static class PasswordEncryption
         3: Caesar cipher was used, the next one can't be Atbash.
     */
 
+    /*
     // private static readonly Cipher[] case0OutputCiphers = { Cipher.ASCII_Base2, Cipher.ASCII_Base8, Cipher.ASCII_Base10, Cipher.ASCII_Base16, Cipher.CaesarCipher, Cipher.AtbashCipher };
     private static readonly Cipher[] case0OutputCiphers = { Cipher.ASCII_Base8, Cipher.ASCII_Base10, Cipher.ASCII_Base16, Cipher.CaesarCipher, Cipher.AtbashCipher };
     // private static readonly Cipher[] case0OutputCiphers = { Cipher.CaesarCipher, Cipher.AtbashCipher };
@@ -35,6 +37,26 @@ public static class PasswordEncryption
     private static readonly Cipher[] case3InputCiphers = { Cipher.CaesarCipher };
     // private static readonly Cipher[] case3OutputCiphers = { Cipher.ASCII_Base2, Cipher.ASCII_Base8, Cipher.ASCII_Base10, Cipher.ASCII_Base16, Cipher.CaesarCipher };
     private static readonly Cipher[] case3OutputCiphers = { Cipher.ASCII_Base8, Cipher.ASCII_Base10, Cipher.ASCII_Base16, Cipher.CaesarCipher };
+    */
+    
+
+    /*
+        Case:
+        0: No ciphers used, every cipher allowed.
+        1: An ASCII cipher was used: the next cipher has to be one of the ASCII ciphers.
+        2: Atbash cipher was used, every cipher allowed.
+    */
+
+    // private static readonly Cipher[] case0OutputCiphers = { Cipher.ASCII_Base2, Cipher.ASCII_Base8, Cipher.ASCII_Base10, Cipher.ASCII_Base16, Cipher.AtbashCipher };
+    private static readonly Cipher[] case0OutputCiphers = { Cipher.ASCII_Base8, Cipher.ASCII_Base10, Cipher.ASCII_Base16, Cipher.AtbashCipher };
+    // private static readonly Cipher[] case0OutputCiphers = { Cipher.CaesarCipher, Cipher.AtbashCipher };
+    private static readonly Cipher[] case1InputCiphers = { Cipher.ASCII_Base2, Cipher.ASCII_Base8, Cipher.ASCII_Base10, Cipher.ASCII_Base16 };
+    // private static readonly Cipher[] case1OutputCiphers = { Cipher.ASCII_Base2, Cipher.ASCII_Base8, Cipher.ASCII_Base10, Cipher.ASCII_Base16 };
+    private static readonly Cipher[] case1OutputCiphers = { Cipher.ASCII_Base8, Cipher.ASCII_Base10, Cipher.ASCII_Base16 };
+    private static readonly Cipher[] case2InputCiphers = { Cipher.AtbashCipher };
+    // private static readonly Cipher[] case2OutputCiphers = { Cipher.ASCII_Base2, Cipher.ASCII_Base8, Cipher.ASCII_Base10, Cipher.ASCII_Base16, Cipher.AtbashCipher };
+    private static readonly Cipher[] case2OutputCiphers = { Cipher.ASCII_Base8, Cipher.ASCII_Base10, Cipher.ASCII_Base16, Cipher.AtbashCipher };
+
 
     public static EncryptedPassword EncryptPassword(string password, int numberOfEncryptions)
     {
@@ -99,9 +121,11 @@ public static class PasswordEncryption
             case 2:
                 allowedCiphers = case2OutputCiphers;
                 break;
+            /*
             case 3:
                 allowedCiphers = case3OutputCiphers;
                 break;
+            */
         }
 
         // May be better to just use a list
@@ -122,10 +146,12 @@ public static class PasswordEncryption
         {
             newCase = 2;
         }
+        /*
         else if (case3InputCiphers.Contains(randomCipher))
         {
             newCase = 3;
         }
+        */
 
         return randomCipher;
     }
