@@ -23,12 +23,20 @@ public class FileExplorerUI : MonoBehaviour
 
     public MonitorAppsManagerUI CurrentMonitorAppsManager { get; set; }
 
+    private bool isFileExplorerEnabled;
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.V))
         {
             RefreshSideFolders();
         }
+    }
+
+    public void SetFileExplorerEnabled(bool enabled)
+    {
+        isFileExplorerEnabled = enabled;
+        gameObject.SetActive(enabled);
     }
 
     public void InitializeFileExplorer(MonitorFileSystemInitializer fileSystemManager)

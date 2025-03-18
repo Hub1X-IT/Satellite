@@ -30,6 +30,8 @@ public class MonitorFileSystemInitializer : MonoBehaviour
         possiblePasswordsSO.InitializePossiblePasswords();
 
         connectCommandGameEvent.EventRaised += OnConnectCommand;
+
+        monitorUI.FileExplorer.SetFileExplorerEnabled(false);
     }
 
     private void Start()
@@ -43,6 +45,7 @@ public class MonitorFileSystemInitializer : MonoBehaviour
         if (ipAndFolderDictionary.ContainsKey(ipAddress))
         {
             rootFolderSO = ipAndFolderDictionary[ipAddress];
+            monitorUI.FileExplorer.SetFileExplorerEnabled(true);
             monitorUI.FileExplorer.InitializeFileExplorer(this);
             commandData.Response?.Invoke(true, $"Connected to: {ipAddress}");
         }
