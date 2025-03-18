@@ -16,68 +16,57 @@ public class GuidebookUI : MonoBehaviour
     private int pageNumber;
 
     [SerializeField]
-    private TextAsset titlePage;
+    private GameObject[] pages;
+
     [SerializeField]
-    private TextAsset basicsPage;
-    [SerializeField]
-    private TextAsset decimalPage;
-    [SerializeField]
-    private TextAsset binaryPage;
-    [SerializeField]
-    private TextAsset hexadecimalPage;
-    [SerializeField]
-    private TextAsset octalPage;
-    [SerializeField]
-    private TextAsset atbashPage;
-    [SerializeField]
-    private TextAsset caesarPage;
+    private Button[] pageListButtons;
 
     private void Awake()
     {
-        pageNumber = 1;
-        ChangePageText();
-        previousPageButton.onClick.AddListener(() =>
+        foreach (var button in pageListButtons)
         {
-            if (pageNumber > 1)
+            button.onClick.AddListener(() =>
             {
-                pageNumber--;
-            }
-            ChangePageText();
-        });
+            for (int i = 0, y = 0; i < pages.Length && y < pageListButtons.Length; i++, y++)
+                {
+                    if (y == i+1)
+                    {
+                        pages[0].SetActive(false);
+                        pages[1].SetActive(false);
+                        pages[i + 1].gameObject.SetActive(true);
+                        pages[i + 2].gameObject.SetActive(true);
+                        break;
+                    }
+                }
+            });
+        }
         nextPageButton.onClick.AddListener(() =>
         {
-            if (pageNumber < 4)
+            for (int i = 0; i < pages.Length; i++)
             {
-                pageNumber++;
+                if (pages[i] == isActiveAndEnabled && pages[i + 1] == isActiveAndEnabled && i < pages.Length + 1)
+                {
+                    pages[i].SetActive(false);
+                    pages[i + 1].SetActive(false);
+                    pages[i + 2].SetActive(true);
+                    pages[i + 3].SetActive(true);
+                    break;
+                }
             }
-            ChangePageText();
         });
-    }
-
-    private void ChangePageText()
-    {
-        switch (pageNumber)
+        previousPageButton.onClick.AddListener(() =>
         {
-            case 1:
-                textLeftPage.text = titlePage.text;
-                textLeftPage.horizontalAlignment = HorizontalAlignmentOptions.Center;
-                textLeftPage.fontSize = 40f;
-                textRightPage.text = basicsPage.text;
-                break;
-            case 2:
-                textLeftPage.text = decimalPage.text;
-                textLeftPage.horizontalAlignment = HorizontalAlignmentOptions.Left;
-                textLeftPage.fontSize = 32f;
-                textRightPage.text = binaryPage.text;
-                break;
-            case 3:
-                textLeftPage.text = hexadecimalPage.text;
-                textRightPage.text = octalPage.text;
-                break;
-            case 4:
-                textLeftPage.text = atbashPage.text;
-                textRightPage.text = null;
-                break;
-        }
+            for (int i = 0; i < pages.Length; i++)
+            {
+                if (pages[i] == isActiveAndEnabled && pages[i + 1] == isActiveAndEnabled && i >= 2)
+                {
+                    pages[i].SetActive(false);
+                    pages[i + 1].SetActive(false);
+                    pages[i - 1].SetActive(true);
+                    pages[i - 2].SetActive(true);
+                    break;
+                }
+            }
+        });
     }
 }
