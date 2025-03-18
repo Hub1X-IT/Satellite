@@ -261,6 +261,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeComputerLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""9c3cc326-9ce5-47c3-9122-67898f93bbb8"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeComputerRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""14dda0ca-04b7-4e71-a486-856bcb55d217"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -294,6 +312,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MouseDelta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6f8d7a09-5969-4470-9674-c5a4d8ac980b"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeComputerLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""055d29bc-53e8-402e-bed0-ad4005ecef99"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeComputerRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -379,6 +419,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Computer_Exit = m_Computer.FindAction("Exit", throwIfNotFound: true);
         m_Computer_MouseDelta = m_Computer.FindAction("MouseDelta", throwIfNotFound: true);
         m_Computer_LeftClick = m_Computer.FindAction("LeftClick", throwIfNotFound: true);
+        m_Computer_ChangeComputerLeft = m_Computer.FindAction("ChangeComputerLeft", throwIfNotFound: true);
+        m_Computer_ChangeComputerRight = m_Computer.FindAction("ChangeComputerRight", throwIfNotFound: true);
         // CommandPrompt
         m_CommandPrompt = asset.FindActionMap("CommandPrompt", throwIfNotFound: true);
         m_CommandPrompt_CommandSubmit = m_CommandPrompt.FindAction("CommandSubmit", throwIfNotFound: true);
@@ -626,6 +668,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Computer_Exit;
     private readonly InputAction m_Computer_MouseDelta;
     private readonly InputAction m_Computer_LeftClick;
+    private readonly InputAction m_Computer_ChangeComputerLeft;
+    private readonly InputAction m_Computer_ChangeComputerRight;
     public struct ComputerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -633,6 +677,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Exit => m_Wrapper.m_Computer_Exit;
         public InputAction @MouseDelta => m_Wrapper.m_Computer_MouseDelta;
         public InputAction @LeftClick => m_Wrapper.m_Computer_LeftClick;
+        public InputAction @ChangeComputerLeft => m_Wrapper.m_Computer_ChangeComputerLeft;
+        public InputAction @ChangeComputerRight => m_Wrapper.m_Computer_ChangeComputerRight;
         public InputActionMap Get() { return m_Wrapper.m_Computer; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -651,6 +697,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @LeftClick.started += instance.OnLeftClick;
             @LeftClick.performed += instance.OnLeftClick;
             @LeftClick.canceled += instance.OnLeftClick;
+            @ChangeComputerLeft.started += instance.OnChangeComputerLeft;
+            @ChangeComputerLeft.performed += instance.OnChangeComputerLeft;
+            @ChangeComputerLeft.canceled += instance.OnChangeComputerLeft;
+            @ChangeComputerRight.started += instance.OnChangeComputerRight;
+            @ChangeComputerRight.performed += instance.OnChangeComputerRight;
+            @ChangeComputerRight.canceled += instance.OnChangeComputerRight;
         }
 
         private void UnregisterCallbacks(IComputerActions instance)
@@ -664,6 +716,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @LeftClick.started -= instance.OnLeftClick;
             @LeftClick.performed -= instance.OnLeftClick;
             @LeftClick.canceled -= instance.OnLeftClick;
+            @ChangeComputerLeft.started -= instance.OnChangeComputerLeft;
+            @ChangeComputerLeft.performed -= instance.OnChangeComputerLeft;
+            @ChangeComputerLeft.canceled -= instance.OnChangeComputerLeft;
+            @ChangeComputerRight.started -= instance.OnChangeComputerRight;
+            @ChangeComputerRight.performed -= instance.OnChangeComputerRight;
+            @ChangeComputerRight.canceled -= instance.OnChangeComputerRight;
         }
 
         public void RemoveCallbacks(IComputerActions instance)
@@ -756,6 +814,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnExit(InputAction.CallbackContext context);
         void OnMouseDelta(InputAction.CallbackContext context);
         void OnLeftClick(InputAction.CallbackContext context);
+        void OnChangeComputerLeft(InputAction.CallbackContext context);
+        void OnChangeComputerRight(InputAction.CallbackContext context);
     }
     public interface ICommandPromptActions
     {

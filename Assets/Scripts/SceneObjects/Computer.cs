@@ -20,6 +20,12 @@ public class Computer : MonoBehaviour
     [SerializeField]
     private CinemachineCamera computerCinemachineCamera;
 
+    [SerializeField]
+    private Computer computerOnLeft;
+
+    [SerializeField]
+    private Computer computerOnRight;
+
     private Outline outline;
 
     private bool isInComputerView;
@@ -49,6 +55,22 @@ public class Computer : MonoBehaviour
             if (isInComputerView && CanExitComputerView)
             {
                 SetComputerViewActive(false);
+            }
+        };
+
+        GameInput.OnChangeComputerLeftAction += () =>
+        {
+            if (isInComputerView && CanExitComputerView && computerOnLeft != null)
+            {
+                ChangeCurrentComputer(computerOnLeft);
+            }
+        };
+
+        GameInput.OnChangeComputerRightAction += () =>
+        {
+            if (isInComputerView && CanExitComputerView && computerOnRight != null)
+            {
+                ChangeCurrentComputer(computerOnRight);
             }
         };
 
@@ -133,6 +155,32 @@ public class Computer : MonoBehaviour
         }
 
         desk.PlayDeskSitSound();
+    }
+
+    private void ChangeCurrentComputer(Computer newComputer)
+    {
+        isInComputerView = false;
+
+        ToggleComputerTrigger();
+
+        ComputerViewEnabled?.Invoke(false);
+
+        computerViewDisabledGameEvent.TryRaiseEvent();
+
+        newComputer.ChangeToThisComputer();
+    }
+
+    public void ChangeToThisComputer()
+    {
+        isInComputerView = true;
+
+        ToggleComputerTrigger();
+
+        ComputerViewEnabled?.Invoke(true);
+
+        computerViewEnabledGameEvent.RaiseEvent(this);
+        
+        CameraController.SetActiveCinemachineCamera(computerCinemachineCamera);
     }
 
     public void ToggleComputerTrigger()
