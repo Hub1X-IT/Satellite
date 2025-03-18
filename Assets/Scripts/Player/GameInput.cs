@@ -26,8 +26,6 @@ public static class GameInput
 
     public static event Action OnGuidebookToggleAction;
 
-    public static event Action OnExitDeskViewAction;
-
     public static event Action OnComputerExitAction;
 
     public static event Action OnLeftClickPerformedAction;
@@ -55,9 +53,6 @@ public static class GameInput
 
         PlayerInputActions.PlayerWalkingAndDesk.GuidebookToggle.performed += GuidebookToggle_performed;
 
-        PlayerInputActions.Desk.Interact.performed += Interact_performed; // Interact in Desk does the same thing as Interact in PlayerWalking
-        PlayerInputActions.Desk.ExitDeskView.performed += ExitDeskView_performed;
-
         PlayerInputActions.Computer.Exit.performed += ComputerExit_performed;
         PlayerInputActions.Computer.LeftClick.performed += LeftClick_performed;
 
@@ -76,9 +71,6 @@ public static class GameInput
 
         PlayerInputActions.PlayerWalkingAndDesk.GuidebookToggle.performed -= GuidebookToggle_performed;
 
-        PlayerInputActions.Desk.Interact.performed -= Interact_performed;
-        PlayerInputActions.Desk.ExitDeskView.performed -= ExitDeskView_performed;
-
         PlayerInputActions.Computer.Exit.performed -= ComputerExit_performed;
         PlayerInputActions.Computer.LeftClick.performed -= LeftClick_performed;
 
@@ -92,7 +84,6 @@ public static class GameInput
         OnInteractAction = null;
         OnSmartphoneToggleAction = null;
         OnGuidebookToggleAction = null;
-        OnExitDeskViewAction = null;
         OnComputerExitAction = null;
         OnLeftClickPerformedAction = null;
         OnKeyboardInputAction = null;
@@ -114,8 +105,6 @@ public static class GameInput
     private static void SmartphoneToggle_performed(InputAction.CallbackContext _) => OnSmartphoneToggleAction?.Invoke();
 
     private static void GuidebookToggle_performed(InputAction.CallbackContext _) => OnGuidebookToggleAction?.Invoke();
-
-    private static void ExitDeskView_performed(InputAction.CallbackContext _) => OnExitDeskViewAction?.Invoke();
 
     private static void ComputerExit_performed(InputAction.CallbackContext _) => OnComputerExitAction?.Invoke();
 

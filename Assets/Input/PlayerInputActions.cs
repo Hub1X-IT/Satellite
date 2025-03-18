@@ -232,54 +232,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""Desk"",
-            ""id"": ""69ef7312-dcbb-4a29-a88d-7ed7793b1001"",
-            ""actions"": [
-                {
-                    ""name"": ""Interact"",
-                    ""type"": ""Button"",
-                    ""id"": ""575a4810-4699-4057-8b1d-bcf519d97db2"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""ExitDeskView"",
-                    ""type"": ""Button"",
-                    ""id"": ""34c9a93b-8748-4a42-a1e9-ba1ec4ada3f5"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""403a7fea-24cd-4aa5-bb50-78ab88a8eebb"",
-                    ""path"": ""<Keyboard>/f"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ee2bb422-c6d2-40e6-8f05-330437abea2e"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ExitDeskView"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
             ""name"": ""Computer"",
             ""id"": ""e78e4f17-246c-4115-8ccc-6fb6703ab68a"",
             ""actions"": [
@@ -315,7 +267,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a31fc6a1-5db2-4c27-b45b-fc4248275547"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -422,10 +374,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_PlayerWalking = asset.FindActionMap("PlayerWalking", throwIfNotFound: true);
         m_PlayerWalking_Move = m_PlayerWalking.FindAction("Move", throwIfNotFound: true);
         m_PlayerWalking_Interact = m_PlayerWalking.FindAction("Interact", throwIfNotFound: true);
-        // Desk
-        m_Desk = asset.FindActionMap("Desk", throwIfNotFound: true);
-        m_Desk_Interact = m_Desk.FindAction("Interact", throwIfNotFound: true);
-        m_Desk_ExitDeskView = m_Desk.FindAction("ExitDeskView", throwIfNotFound: true);
         // Computer
         m_Computer = asset.FindActionMap("Computer", throwIfNotFound: true);
         m_Computer_Exit = m_Computer.FindAction("Exit", throwIfNotFound: true);
@@ -442,7 +390,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         UnityEngine.Debug.Assert(!m_All.enabled, "This will cause a leak and performance issues, PlayerInputActions.All.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_PlayerWalkingAndDesk.enabled, "This will cause a leak and performance issues, PlayerInputActions.PlayerWalkingAndDesk.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_PlayerWalking.enabled, "This will cause a leak and performance issues, PlayerInputActions.PlayerWalking.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_Desk.enabled, "This will cause a leak and performance issues, PlayerInputActions.Desk.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Computer.enabled, "This will cause a leak and performance issues, PlayerInputActions.Computer.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_CommandPrompt.enabled, "This will cause a leak and performance issues, PlayerInputActions.CommandPrompt.Disable() has not been called.");
     }
@@ -673,60 +620,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     }
     public PlayerWalkingActions @PlayerWalking => new PlayerWalkingActions(this);
 
-    // Desk
-    private readonly InputActionMap m_Desk;
-    private List<IDeskActions> m_DeskActionsCallbackInterfaces = new List<IDeskActions>();
-    private readonly InputAction m_Desk_Interact;
-    private readonly InputAction m_Desk_ExitDeskView;
-    public struct DeskActions
-    {
-        private @PlayerInputActions m_Wrapper;
-        public DeskActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Interact => m_Wrapper.m_Desk_Interact;
-        public InputAction @ExitDeskView => m_Wrapper.m_Desk_ExitDeskView;
-        public InputActionMap Get() { return m_Wrapper.m_Desk; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(DeskActions set) { return set.Get(); }
-        public void AddCallbacks(IDeskActions instance)
-        {
-            if (instance == null || m_Wrapper.m_DeskActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_DeskActionsCallbackInterfaces.Add(instance);
-            @Interact.started += instance.OnInteract;
-            @Interact.performed += instance.OnInteract;
-            @Interact.canceled += instance.OnInteract;
-            @ExitDeskView.started += instance.OnExitDeskView;
-            @ExitDeskView.performed += instance.OnExitDeskView;
-            @ExitDeskView.canceled += instance.OnExitDeskView;
-        }
-
-        private void UnregisterCallbacks(IDeskActions instance)
-        {
-            @Interact.started -= instance.OnInteract;
-            @Interact.performed -= instance.OnInteract;
-            @Interact.canceled -= instance.OnInteract;
-            @ExitDeskView.started -= instance.OnExitDeskView;
-            @ExitDeskView.performed -= instance.OnExitDeskView;
-            @ExitDeskView.canceled -= instance.OnExitDeskView;
-        }
-
-        public void RemoveCallbacks(IDeskActions instance)
-        {
-            if (m_Wrapper.m_DeskActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(IDeskActions instance)
-        {
-            foreach (var item in m_Wrapper.m_DeskActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_DeskActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public DeskActions @Desk => new DeskActions(this);
-
     // Computer
     private readonly InputActionMap m_Computer;
     private List<IComputerActions> m_ComputerActionsCallbackInterfaces = new List<IComputerActions>();
@@ -857,11 +750,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
-    }
-    public interface IDeskActions
-    {
-        void OnInteract(InputAction.CallbackContext context);
-        void OnExitDeskView(InputAction.CallbackContext context);
     }
     public interface IComputerActions
     {

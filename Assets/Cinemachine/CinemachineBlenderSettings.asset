@@ -25,21 +25,43 @@ MonoBehaviour:
         m_PostInfinity: 0
         m_RotationOrder: 4
   - From: CinemachineMainCamera
-    To: DeskCinemachineCamera
+    To: MonitorCinemachineCamera
     Blend:
       Style: 1
-      Time: 1.2
+      Time: 0.7
       CustomCurve:
         serializedVersion: 2
         m_Curve: []
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 4
-  - From: DeskCinemachineCamera
-    To: CinemachineMainCamera
+  - From: CinemachineMainCamera
+    To: LaptopCinemachineCamera
     Blend:
       Style: 1
-      Time: 1.2
+      Time: 0.7
+      CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 4
+  - From: MonitorCinemachineCamera
+    To: ServerCinemachineCamera
+    Blend:
+      Style: 1
+      Time: 0.7
+      CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 4
+  - From: LaptopCinemachineCamera
+    To: ServerCinemachineCamera
+    Blend:
+      Style: 1
+      Time: 0.7
       CustomCurve:
         serializedVersion: 2
         m_Curve: []

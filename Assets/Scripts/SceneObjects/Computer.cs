@@ -24,11 +24,15 @@ public class Computer : MonoBehaviour
 
     private bool isInComputerView;
 
+    private const float PlayerMovementEnableTimeOffset = 0.6f;
+
+    private bool shouldEnablePlayerMovement;
+
+    private float playerMovementEnableTimer;
+
     public bool CanExitComputerView { get; set; }
 
-    public bool CanEnterComputerView { get; set; }
-
-    public bool IsComputerEnabled { get; set; }
+    private bool isComputerEnabled;
 
 
     private void Awake()
@@ -39,12 +43,6 @@ public class Computer : MonoBehaviour
         computerTrigger.InteractVisual = GetComponent<InteractionVisual>();
 
         computerTrigger.InteractionTriggered += () => SetComputerViewActive(true);
-
-        desk.DeskViewEnabled += (enabled) =>
-        {
-            CanEnterComputerView = enabled;
-            ToggleComputerTrigger();
-        };
 
         GameInput.OnComputerExitAction += () =>
         {
@@ -67,10 +65,34 @@ public class Computer : MonoBehaviour
         isInComputerView = false;
 
         CanExitComputerView = true;
-        CanEnterComputerView = false;
-        IsComputerEnabled = false;
+        isComputerEnabled = false;
+
+        shouldEnablePlayerMovement = false;
 
         ToggleComputerTrigger();
+    }
+
+    private void Start()
+    {
+        ServerConnectionManager.ServerConnectionEnabled += (enabled) =>
+        {
+            isComputerEnabled = enabled;
+            ToggleComputerTrigger();
+        };
+    }
+
+    private void Update()
+    {
+        // Player movement enable timer
+        if (shouldEnablePlayerMovement)
+        {
+            if (playerMovementEnableTimer >= PlayerMovementEnableTimeOffset)
+            {
+                shouldEnablePlayerMovement = false;
+                EnablePlayerMovement();
+            }
+            playerMovementEnableTimer += Time.deltaTime;
+        }
     }
 
     private void SetComputerViewActive(bool active)
@@ -78,10 +100,10 @@ public class Computer : MonoBehaviour
         isInComputerView = active;
         GameManager.IsInScreenView = active;
 
-        PlayerScriptsController.SetCanShowPlayerHUD(!active);
+        // Disable or enable player movement.
+        PlayerScriptsController.SetPlayerMovementEnabled(!active);
 
-        desk.CanExitDeskView = !active;
-        desk.SetDeskCameraRotationEnabled(!active);
+        PlayerScriptsController.SetCanShowPlayerHUD(!active);
 
         ToggleComputerTrigger();
 
@@ -90,8 +112,11 @@ public class Computer : MonoBehaviour
 
         ComputerViewEnabled?.Invoke(active);
 
+        // Disable/enable specific input actions.
+        // Change active Cinemachine camera.
         if (active)
         {
+            GameInput.PlayerInputActions.PlayerWalking.Disable();
             GameInput.PlayerInputActions.Computer.Enable();
             CameraController.SetActiveCinemachineCamera(computerCinemachineCamera);
             computerViewEnabledGameEvent.RaiseEvent(this);
@@ -99,14 +124,25 @@ public class Computer : MonoBehaviour
         else
         {
             GameInput.PlayerInputActions.Computer.Disable();
-            CameraController.SetActiveCinemachineCamera(desk.DeskCinemachineCamera);
+            CameraController.SetActiveCinemachineCamera(CameraController.CinemachineMainCamera);
             computerViewDisabledGameEvent.TryRaiseEvent();
+
+            // Set timer to enable player movement
+            playerMovementEnableTimer = 0f;
+            shouldEnablePlayerMovement = true;
         }
+
+        desk.PlayDeskSitSound();
     }
 
     public void ToggleComputerTrigger()
     {
-        computerTrigger.gameObject.SetActive(!isInComputerView && CanEnterComputerView && IsComputerEnabled);
+        computerTrigger.gameObject.SetActive(!isInComputerView && isComputerEnabled);
+    }
+
+    private void EnablePlayerMovement()
+    {
+        GameInput.PlayerInputActions.PlayerWalking.Enable();
     }
 
     public void ExitComputerView()
