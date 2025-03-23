@@ -13,32 +13,36 @@ public static class InteractionController
         public LayerMask InteractionBlockingLayerMasks;
     }
 
-    public static float InteractRange { get; private set; }
+    public static bool IsInteractionEnabled { get; set; }
 
-    public static LayerMask DefaultInteractableLayerMask { get; private set; }
+    private static float interactRange;
+
+    private static LayerMask defaultInteractableLayerMask;
 
     public static int DefaultInteractableLayerIndex { get; private set; }
 
-    public static LayerMask InteractableLayerMasks { get; private set; }
+    private static LayerMask interactableLayerMasks;
 
-    public static LayerMask InteractionBlockingLayerMasks { get; private set; }
+    private static LayerMask interactionBlockingLayerMasks;
 
     public static void OnAwake(InitializationData data)
     {
-        InteractRange = data.InteractRange;
-        DefaultInteractableLayerMask = data.DefaultInteractableLayerMask;
-        InteractableLayerMasks = data.InteractableLayerMasks;
-        InteractionBlockingLayerMasks = data.InteractionBlockingLayerMasks;
+        interactRange = data.InteractRange;
+        defaultInteractableLayerMask = data.DefaultInteractableLayerMask;
+        interactableLayerMasks = data.InteractableLayerMasks;
+        interactionBlockingLayerMasks = data.InteractionBlockingLayerMasks;
 
-        DefaultInteractableLayerIndex = GetLayerIndex(DefaultInteractableLayerMask.value);
+        DefaultInteractableLayerIndex = GetLayerIndex(defaultInteractableLayerMask.value);
 
         GameInput.OnInteractAction += () =>
         {
-            if (TryGetInteractableObject(out IInteractable interactableObject))
+            if (IsInteractionEnabled && TryGetInteractableObject(out IInteractable interactableObject))
             {
                 interactableObject.Interact();
             }
         };
+
+        IsInteractionEnabled = true;
     }
 
     public static bool TryGetInteractableObject(out IInteractable interactableObject)
@@ -52,7 +56,7 @@ public static class InteractionController
         }
         */
         if (Physics.Raycast(CameraController.MainCamera.transform.position, CameraController.MainCamera.transform.forward,
-        out RaycastHit hit, InteractRange, InteractableLayerMasks | InteractionBlockingLayerMasks))
+        out RaycastHit hit, interactRange, interactableLayerMasks | interactionBlockingLayerMasks))
         {
             interactableObject = hit.transform.GetComponent<IInteractable>();
             if (interactableObject != null)

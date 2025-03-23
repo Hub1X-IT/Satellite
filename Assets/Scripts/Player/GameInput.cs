@@ -47,7 +47,7 @@ public static class GameInput
         PlayerInputActions.PlayerWalkingAndDesk.Enable();
         PlayerInputActions.PlayerWalking.Enable();
         PlayerInputActions.Computer.Disable();
-        PlayerInputActions.CommandPrompt.Enable(); // should be enabled when testing monitor command prompt
+        PlayerInputActions.CommandPrompt.Disable();
 
         PlayerInputActions.All.Pause.performed += Pause_performed;
 

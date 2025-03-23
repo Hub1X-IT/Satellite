@@ -9,7 +9,7 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField]
     private float moveSpeed = 5f;
 
-    private const float GRAVITY = -9.81f;
+    private const float Gravity = -9.81f;
 
     [SerializeField]
     private float gravityMultiplier = 0.8f;
@@ -49,7 +49,7 @@ public class PlayerMovementController : MonoBehaviour
         }
         else
         {
-            verticalVelocity += GRAVITY * gravityMultiplier * Time.deltaTime;
+            verticalVelocity += Gravity * gravityMultiplier * Time.deltaTime;
         }
         moveDirection.y = verticalVelocity;
     }

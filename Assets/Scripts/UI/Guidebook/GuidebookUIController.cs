@@ -34,9 +34,13 @@ public class GuidebookUIController : MonoBehaviour
     private void TryToggleGuidebook()
     {
         // Check all the necessary conditions here.
-        if (!GameManager.IsInScreenView)
+        if (isGuidebookEnabled)
         {
-            SetGuidebookEnabled(!isGuidebookEnabled);
+            SetGuidebookEnabled(false);
+        }
+        else if (!isGuidebookEnabled && !GameManager.IsInScreenView && !GameManager.IsGuidebookOrSmartphoneEnabled)
+        {
+            SetGuidebookEnabled(true);
         }
     }
 
@@ -46,6 +50,7 @@ public class GuidebookUIController : MonoBehaviour
 
         rectTransform.localPosition = enabled ? guidebookEnabledPosition : guidebookDisabledPosition;
 
+        GameManager.IsGuidebookOrSmartphoneEnabled = enabled;
         GameManager.SetGamePaused(enabled);
     }
 }

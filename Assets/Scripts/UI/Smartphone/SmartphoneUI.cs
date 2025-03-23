@@ -10,7 +10,7 @@ public class SmartphoneUI : MonoBehaviour
 
     [SerializeField]
     private Vector2 defaultSmartphonePosition = new(640f, -800f);
-    
+
     private bool isSmartphoneEnabled;
 
     private const string PHONE_ON_TRIGGER = "PhoneOn";
@@ -35,23 +35,31 @@ public class SmartphoneUI : MonoBehaviour
 
     private void OnEnable()
     {
-        GameInput.OnSmartphoneToggleAction += EnableDisableSmartphone;
+        GameInput.OnSmartphoneToggleAction += TryToggleSmartphone;
     }
 
     private void OnDisable()
     {
-        GameInput.OnSmartphoneToggleAction -= EnableDisableSmartphone;
+        GameInput.OnSmartphoneToggleAction -= TryToggleSmartphone;
     }
 
-    private void EnableDisableSmartphone()
+    private void TryToggleSmartphone()
     {
-        SetSmartphoneEnabled(!isSmartphoneEnabled);
+        if (isSmartphoneEnabled)
+        {
+            SetSmartphoneEnabled(false);
+        }
+        else if (!isSmartphoneEnabled && !GameManager.IsInScreenView && !GameManager.IsGuidebookOrSmartphoneEnabled)
+        {
+            SetSmartphoneEnabled(true);
+        }
     }
 
     private void SetSmartphoneEnabled(bool enabled)
     {
         isSmartphoneEnabled = enabled;
 
+        GameManager.IsGuidebookOrSmartphoneEnabled = enabled;
         GameManager.SetGamePaused(enabled);
 
         if (enabled)

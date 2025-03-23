@@ -9,6 +9,8 @@ public static class GameManager
 
     public static bool IsInScreenView { get; set; }
 
+    public static bool IsGuidebookOrSmartphoneEnabled { get; set; }
+
     public static CursorLockMode HiddenCursorLockMode { get; set; }
     private static CursorLockMode ShownCursorLockMode { get; set; } = CursorLockMode.None;
 
@@ -17,6 +19,7 @@ public static class GameManager
         GameInput.OnPauseAction += () => PauseGameToMenu(!IsGamePaused);
         HiddenCursorLockMode = CursorLockMode.Locked;
         IsInScreenView = false;
+        IsGuidebookOrSmartphoneEnabled = false;
     }
 
     public static void OnStart()
@@ -32,6 +35,7 @@ public static class GameManager
     public static void SetGamePaused(bool paused)
     {
         IsGamePaused = paused;
+        InteractionController.IsInteractionEnabled = !paused;
         SetTimeStarted(!paused);
         SetCursorShown(paused);
     }
