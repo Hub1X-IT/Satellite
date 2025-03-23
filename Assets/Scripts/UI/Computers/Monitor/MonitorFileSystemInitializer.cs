@@ -25,6 +25,8 @@ public class MonitorFileSystemInitializer : MonoBehaviour
 
     private Dictionary<string, FolderSO> ipAndFolderDictionary;
 
+    private string currentIPAddress;
+
     private void Awake()
     {
         ipAndFolderDictionary = ipAndFolderSerializableDictionary.Dictionary;
@@ -45,16 +47,21 @@ public class MonitorFileSystemInitializer : MonoBehaviour
     private void OnConnectCommand(CommandData commandData)
     {
         string ipAddress = commandData.CommandDataArray[0];
-        if (ipAndFolderDictionary.ContainsKey(ipAddress))
+        if (rootFolderSO != null)
+        {
+            commandData.Response?.Invoke(false, $"Already connected to {currentIPAddress}. Disconnect first.");
+        }
+        else if (ipAndFolderDictionary.ContainsKey(ipAddress))
         {
             rootFolderSO = ipAndFolderDictionary[ipAddress];
             monitorUI.FileExplorer.SetFileExplorerEnabled(true);
             monitorUI.FileExplorer.InitializeFileExplorer(this);
+            currentIPAddress = ipAddress;
             commandData.Response?.Invoke(true, $"Connected to: {ipAddress}");
         }
         else
         {
-            commandData.Response?.Invoke(false, $"Failed to connect to: {ipAddress}");
+            commandData.Response?.Invoke(false, $"{ipAddress} is not available or is not a valid IP address.");
         }
     }
 
@@ -64,11 +71,13 @@ public class MonitorFileSystemInitializer : MonoBehaviour
         {
             monitorUI.FileExplorer.SetFileExplorerEnabled(false);
             rootFolderSO = null;
-            commandData.Response?.Invoke(true, "Disconnected successfully.");
+            string ipAddress = currentIPAddress;
+            currentIPAddress = null;
+            commandData.Response?.Invoke(true, $"Disconnected successfully from {ipAddress}.");
         }
         else
         {
-            commandData.Response?.Invoke(false, "Wasn't connected");
+            commandData.Response?.Invoke(false, "Currently not connected.");
         }
     }
 }

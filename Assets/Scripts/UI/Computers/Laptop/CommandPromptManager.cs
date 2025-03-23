@@ -10,6 +10,8 @@ public static class CommandPromptManager
         public PossibleCommandsSO possibleCommandsSO;
     }
 
+    public static Action<string> CommandResponse;
+
     private static PossibleCommandsSO possibleCommandsSO;
 
     private static string currentCommand;
@@ -63,7 +65,9 @@ public static class CommandPromptManager
 
     private static void RespondToCommand(bool wasSuccessful, string response)
     {
-        Debug.Log(wasSuccessful);
-        Debug.Log(response);
+        string responseString = wasSuccessful ? "" : "Command failed: ";
+        responseString += response;
+
+        CommandResponse?.Invoke(responseString);
     }
 }
