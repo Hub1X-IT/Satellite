@@ -67,7 +67,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Binary Encoding Method
 
-    
+
 
     Less common, however much easier to
 
@@ -78,7 +78,7 @@ MonoBehaviour:
 
     01110011 01100001 01110100
 
-    
+
 
     You
     can be sure it is binary encoding.'
@@ -623,43 +623,42 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Hexadecimal Encoding Method
 
-    
 
-    Average popularity, similar to
-    decimal.
 
-    Uses ASCII Table, converts symbols to
+    Average popularity, similar to decimal.
+
+    Uses
+    ASCII Table, converts symbols to
 
     hexadecimal numbers.
 
-    You
-    may see symbols from 0-9 and A-F
+    You may see symbols
+    from 0-9 and A-F
 
     where A = 10, B = 11, C = 12, D = 13,
 
-    E
-    = 14, F = 15.
+    E = 14, F =
+    15.
 
-    
+
 
     Ranges to remember:
 
     A-Z ~ 41-5A (Includes A-F)
 
-    a-z
-    ~ 61-7A (Includes A-F)
+    a-z ~ 61-7A
+    (Includes A-F)
 
     0-9 ~ 30-39 (Does not include A-F)
 
-    
 
-    One
-    symbol encoded in hexadecimal
+
+    One symbol encoded
+    in hexadecimal
 
     has two numbers or one number and
 
-    one
-    letter.'
+    one letter.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d8737e05ad3a5c54ab90e1abb0b96e15, type: 2}
   m_sharedMaterial: {fileID: 2709866317365345177, guid: d8737e05ad3a5c54ab90e1abb0b96e15, type: 2}
@@ -1039,15 +1038,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Atbash Cipher Method
 
-    
 
-    This method only works with letters
-    from latin alphabet. It converts
+
+    This method only works with letters from latin
+    alphabet. It converts
 
     the letter to it''s opposite like this:
 
-    A
-    -> Z
+    A ->
+    Z
 
     b -> y
 
@@ -1189,7 +1188,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Octal Encoding Method
 
-    
+
 
     Average popularity, similar to decimal.
 
@@ -1201,7 +1200,7 @@ MonoBehaviour:
     You may see symbols
     from 0-8.
 
-    
+
 
     Ranges to remember:
 
@@ -1212,17 +1211,16 @@ MonoBehaviour:
     0-9
     ~ 060-071
 
-    
+
 
     You might have already noticed that
 
-    one symbol is
-    a three-digit number.
+    one symbol is a three-digit
+    number.
 
     Remember that there is no "9" in
 
-    octal encoding
-    method!'
+    octal encoding method!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d8737e05ad3a5c54ab90e1abb0b96e15, type: 2}
   m_sharedMaterial: {fileID: 2709866317365345177, guid: d8737e05ad3a5c54ab90e1abb0b96e15, type: 2}
@@ -2876,10 +2874,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e2cf5c09e04dd3428eff1e61463f4bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextPageButton: {fileID: 9010841731676475348}
-  previousPageButton: {fileID: 4866906192157539084}
-  textLeftPage: {fileID: 0}
-  textRightPage: {fileID: 0}
   pages:
   - {fileID: 7489760783673098850}
   - {fileID: 1406494186190768895}
@@ -2889,12 +2883,15 @@ MonoBehaviour:
   - {fileID: 7352946522880219233}
   - {fileID: 5573165679058069687}
   pageListButtons:
+  - {fileID: 0}
   - {fileID: 1094714969347777197}
   - {fileID: 9099868910892707765}
   - {fileID: 4436621413575316982}
   - {fileID: 5997318858999591240}
   - {fileID: 2365481455578036403}
   - {fileID: 2911370055220776903}
+  nextPageButton: {fileID: 9010841731676475348}
+  previousPageButton: {fileID: 4866906192157539084}
 --- !u!114 &9207718206992504255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3671,7 +3668,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Decimal Encoding Method
 
-    
+
 
     Most Popular and pretty easy, based
 
@@ -3680,7 +3677,7 @@ MonoBehaviour:
 
     decimal number assigned in table.
 
-    
+
 
     Here
     are some examples:
@@ -3691,7 +3688,7 @@ MonoBehaviour:
 
     0-9 ~ 48-57
 
-    
+
 
     Being
     aware of these number ranges
