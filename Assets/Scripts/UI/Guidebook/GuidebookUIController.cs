@@ -52,5 +52,14 @@ public class GuidebookUIController : MonoBehaviour
 
         GameManager.IsGuidebookOrSmartphoneEnabled = enabled;
         GameManager.SetGamePaused(enabled);
+
+        if (enabled)
+        {
+            GameInput.PlayerInputActions.Guidebook.Enable();
+        }
+        else
+        {
+            GameInput.PlayerInputActions.Guidebook.Disable();
+        }
     }
 }

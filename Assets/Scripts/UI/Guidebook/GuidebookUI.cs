@@ -25,6 +25,16 @@ public class GuidebookUI : MonoBehaviour
 
     private void Awake()
     {
+        GameInput.OnGuidebookChangePageLeftAction += () =>
+        {
+            ChangePage(currentPageNumber + 2);
+        };
+
+        GameInput.OnGuidebookChangePageRightAction += () =>
+        {
+            ChangePage(currentPageNumber - 2);
+        };
+
         for (int i = 0; i < pageListButtons.Length; i++)
         {
             if (pageListButtons[i] != null)

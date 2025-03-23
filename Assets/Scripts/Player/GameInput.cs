@@ -23,15 +23,14 @@ public static class GameInput
     public static event Action OnInteractAction;
 
     public static event Action OnSmartphoneToggleAction;
-
     public static event Action OnGuidebookToggleAction;
 
+    public static event Action OnGuidebookChangePageLeftAction;
+    public static event Action OnGuidebookChangePageRightAction;
+
     public static event Action OnComputerExitAction;
-
     public static event Action OnLeftClickPerformedAction;
-
     public static event Action OnChangeComputerLeftAction;
-
     public static event Action OnChangeComputerRightAction;
 
     public static event Action<char> OnKeyboardInputAction;
@@ -46,6 +45,7 @@ public static class GameInput
         PlayerInputActions.All.Enable();
         PlayerInputActions.PlayerWalkingAndDesk.Enable();
         PlayerInputActions.PlayerWalking.Enable();
+        PlayerInputActions.Guidebook.Disable();
         PlayerInputActions.Computer.Disable();
         PlayerInputActions.CommandPrompt.Disable();
 
@@ -55,6 +55,9 @@ public static class GameInput
 
         PlayerInputActions.PlayerWalkingAndDesk.SmartphoneToggle.performed += SmartphoneToggle_performed;
         PlayerInputActions.PlayerWalkingAndDesk.GuidebookToggle.performed += GuidebookToggle_performed;
+
+        PlayerInputActions.Guidebook.ChangePageRight.performed += GuidebookChangePageLeft_performed;
+        PlayerInputActions.Guidebook.ChangePageLeft.performed += GuidebookChangePageRight_performed;
 
         PlayerInputActions.Computer.Exit.performed += ComputerExit_performed;
         PlayerInputActions.Computer.LeftClick.performed += LeftClick_performed;
@@ -75,6 +78,9 @@ public static class GameInput
         PlayerInputActions.PlayerWalkingAndDesk.SmartphoneToggle.performed -= SmartphoneToggle_performed;
         PlayerInputActions.PlayerWalkingAndDesk.GuidebookToggle.performed -= GuidebookToggle_performed;
 
+        PlayerInputActions.Guidebook.ChangePageRight.performed -= GuidebookChangePageLeft_performed;
+        PlayerInputActions.Guidebook.ChangePageLeft.performed -= GuidebookChangePageRight_performed;
+
         PlayerInputActions.Computer.Exit.performed -= ComputerExit_performed;
         PlayerInputActions.Computer.LeftClick.performed -= LeftClick_performed;
         PlayerInputActions.Computer.ChangeComputerLeft.performed -= ChangeComputerLeft_performed;
@@ -90,6 +96,8 @@ public static class GameInput
         OnInteractAction = null;
         OnSmartphoneToggleAction = null;
         OnGuidebookToggleAction = null;
+        OnGuidebookChangePageLeftAction = null;
+        OnGuidebookChangePageRightAction = null;
         OnComputerExitAction = null;
         OnLeftClickPerformedAction = null;
         OnKeyboardInputAction = null;
@@ -111,15 +119,14 @@ public static class GameInput
     private static void Interact_performed(InputAction.CallbackContext _) => OnInteractAction?.Invoke();
 
     private static void SmartphoneToggle_performed(InputAction.CallbackContext _) => OnSmartphoneToggleAction?.Invoke();
-
     private static void GuidebookToggle_performed(InputAction.CallbackContext _) => OnGuidebookToggleAction?.Invoke();
 
+    private static void GuidebookChangePageLeft_performed(InputAction.CallbackContext _) => OnGuidebookChangePageLeftAction?.Invoke();
+    private static void GuidebookChangePageRight_performed(InputAction.CallbackContext _) => OnGuidebookChangePageRightAction?.Invoke();
+
     private static void ComputerExit_performed(InputAction.CallbackContext _) => OnComputerExitAction?.Invoke();
-
     private static void LeftClick_performed(InputAction.CallbackContext _) => OnLeftClickPerformedAction?.Invoke();
-
     private static void ChangeComputerLeft_performed(InputAction.CallbackContext _) => OnChangeComputerLeftAction?.Invoke();
-
     private static void ChangeComputerRight_performed(InputAction.CallbackContext _) => OnChangeComputerRightAction?.Invoke();
 
     private static void CommandSubmit_performed(InputAction.CallbackContext _) => OnCommandSubmitAction?.Invoke();

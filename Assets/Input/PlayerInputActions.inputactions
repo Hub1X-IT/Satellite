@@ -210,6 +210,54 @@
             ]
         },
         {
+            "name": "Guidebook",
+            "id": "6e66f7df-925c-47b0-8ee9-aa7195489756",
+            "actions": [
+                {
+                    "name": "ChangePageLeft",
+                    "type": "Button",
+                    "id": "2527bb93-07d7-43a0-b779-f09cfb027ef2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ChangePageRight",
+                    "type": "Button",
+                    "id": "79b7697c-cde6-4223-9262-5e2eaae64b2c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "7ad0e613-a2ba-4f24-b0d3-57670d49131e",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChangePageLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1e1448ba-3a43-4791-8b9e-ff7f5ade1f6b",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChangePageRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
             "name": "Computer",
             "id": "e78e4f17-246c-4115-8ccc-6fb6703ab68a",
             "actions": [

@@ -232,6 +232,54 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ]
         },
         {
+            ""name"": ""Guidebook"",
+            ""id"": ""6e66f7df-925c-47b0-8ee9-aa7195489756"",
+            ""actions"": [
+                {
+                    ""name"": ""ChangePageLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""2527bb93-07d7-43a0-b779-f09cfb027ef2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangePageRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""79b7697c-cde6-4223-9262-5e2eaae64b2c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""7ad0e613-a2ba-4f24-b0d3-57670d49131e"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangePageLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1e1448ba-3a43-4791-8b9e-ff7f5ade1f6b"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangePageRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
             ""name"": ""Computer"",
             ""id"": ""e78e4f17-246c-4115-8ccc-6fb6703ab68a"",
             ""actions"": [
@@ -414,6 +462,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_PlayerWalking = asset.FindActionMap("PlayerWalking", throwIfNotFound: true);
         m_PlayerWalking_Move = m_PlayerWalking.FindAction("Move", throwIfNotFound: true);
         m_PlayerWalking_Interact = m_PlayerWalking.FindAction("Interact", throwIfNotFound: true);
+        // Guidebook
+        m_Guidebook = asset.FindActionMap("Guidebook", throwIfNotFound: true);
+        m_Guidebook_ChangePageLeft = m_Guidebook.FindAction("ChangePageLeft", throwIfNotFound: true);
+        m_Guidebook_ChangePageRight = m_Guidebook.FindAction("ChangePageRight", throwIfNotFound: true);
         // Computer
         m_Computer = asset.FindActionMap("Computer", throwIfNotFound: true);
         m_Computer_Exit = m_Computer.FindAction("Exit", throwIfNotFound: true);
@@ -432,6 +484,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         UnityEngine.Debug.Assert(!m_All.enabled, "This will cause a leak and performance issues, PlayerInputActions.All.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_PlayerWalkingAndDesk.enabled, "This will cause a leak and performance issues, PlayerInputActions.PlayerWalkingAndDesk.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_PlayerWalking.enabled, "This will cause a leak and performance issues, PlayerInputActions.PlayerWalking.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Guidebook.enabled, "This will cause a leak and performance issues, PlayerInputActions.Guidebook.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Computer.enabled, "This will cause a leak and performance issues, PlayerInputActions.Computer.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_CommandPrompt.enabled, "This will cause a leak and performance issues, PlayerInputActions.CommandPrompt.Disable() has not been called.");
     }
@@ -662,6 +715,60 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     }
     public PlayerWalkingActions @PlayerWalking => new PlayerWalkingActions(this);
 
+    // Guidebook
+    private readonly InputActionMap m_Guidebook;
+    private List<IGuidebookActions> m_GuidebookActionsCallbackInterfaces = new List<IGuidebookActions>();
+    private readonly InputAction m_Guidebook_ChangePageLeft;
+    private readonly InputAction m_Guidebook_ChangePageRight;
+    public struct GuidebookActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public GuidebookActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ChangePageLeft => m_Wrapper.m_Guidebook_ChangePageLeft;
+        public InputAction @ChangePageRight => m_Wrapper.m_Guidebook_ChangePageRight;
+        public InputActionMap Get() { return m_Wrapper.m_Guidebook; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(GuidebookActions set) { return set.Get(); }
+        public void AddCallbacks(IGuidebookActions instance)
+        {
+            if (instance == null || m_Wrapper.m_GuidebookActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_GuidebookActionsCallbackInterfaces.Add(instance);
+            @ChangePageLeft.started += instance.OnChangePageLeft;
+            @ChangePageLeft.performed += instance.OnChangePageLeft;
+            @ChangePageLeft.canceled += instance.OnChangePageLeft;
+            @ChangePageRight.started += instance.OnChangePageRight;
+            @ChangePageRight.performed += instance.OnChangePageRight;
+            @ChangePageRight.canceled += instance.OnChangePageRight;
+        }
+
+        private void UnregisterCallbacks(IGuidebookActions instance)
+        {
+            @ChangePageLeft.started -= instance.OnChangePageLeft;
+            @ChangePageLeft.performed -= instance.OnChangePageLeft;
+            @ChangePageLeft.canceled -= instance.OnChangePageLeft;
+            @ChangePageRight.started -= instance.OnChangePageRight;
+            @ChangePageRight.performed -= instance.OnChangePageRight;
+            @ChangePageRight.canceled -= instance.OnChangePageRight;
+        }
+
+        public void RemoveCallbacks(IGuidebookActions instance)
+        {
+            if (m_Wrapper.m_GuidebookActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IGuidebookActions instance)
+        {
+            foreach (var item in m_Wrapper.m_GuidebookActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_GuidebookActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public GuidebookActions @Guidebook => new GuidebookActions(this);
+
     // Computer
     private readonly InputActionMap m_Computer;
     private List<IComputerActions> m_ComputerActionsCallbackInterfaces = new List<IComputerActions>();
@@ -808,6 +915,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+    }
+    public interface IGuidebookActions
+    {
+        void OnChangePageLeft(InputAction.CallbackContext context);
+        void OnChangePageRight(InputAction.CallbackContext context);
     }
     public interface IComputerActions
     {
