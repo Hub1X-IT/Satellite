@@ -15,6 +15,8 @@ public class MonitorFileSystemInitializer : MonoBehaviour
 
     [SerializeField]
     private GameEventCommandDataSO connectCommandGameEvent;
+    [SerializeField]
+    private GameEventCommandDataSO disconnectCommandGameEvent;
 
     public FolderSO RootFolderSO => rootFolderSO;
 
@@ -30,6 +32,7 @@ public class MonitorFileSystemInitializer : MonoBehaviour
         possiblePasswordsSO.InitializePossiblePasswords();
 
         connectCommandGameEvent.EventRaised += OnConnectCommand;
+        disconnectCommandGameEvent.EventRaised += OnDisconnectCommand;
 
         monitorUI.FileExplorer.SetFileExplorerEnabled(false);
     }
@@ -52,6 +55,20 @@ public class MonitorFileSystemInitializer : MonoBehaviour
         else
         {
             commandData.Response?.Invoke(false, $"Failed to connect to: {ipAddress}");
+        }
+    }
+
+    private void OnDisconnectCommand(CommandData commandData)
+    {
+        if (rootFolderSO != null)
+        {
+            monitorUI.FileExplorer.SetFileExplorerEnabled(false);
+            rootFolderSO = null;
+            commandData.Response?.Invoke(true, "Disconnected successfully.");
+        }
+        else
+        {
+            commandData.Response?.Invoke(false, "Wasn't connected");
         }
     }
 }

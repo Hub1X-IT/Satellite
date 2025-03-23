@@ -34,6 +34,10 @@ public static class CommandPromptManager
                 string[] commandData = splitCommand[1..];
                 ExecuteCommand(baseCommand, commandData);
             }
+            else
+            {
+                ExecuteCommand(baseCommand, new string[0]);
+            }
         }
     }
 
@@ -41,7 +45,15 @@ public static class CommandPromptManager
     {
         if (possibleCommandsSO.PossibleCommandsDictionary.ContainsKey(command))
         {
-            possibleCommandsSO.PossibleCommandsDictionary[command].RaiseEvent(new CommandData()
+            GameEventCommandDataSO gameEvent = possibleCommandsSO.PossibleCommandsDictionary[command];
+
+            if (commandData.Length != gameEvent.RequiredArgumentsNumber)
+            {
+                RespondToCommand(false, "Invalid number of arguments");
+                return;
+            }
+
+            gameEvent.RaiseEvent(new CommandData()
             {
                 CommandDataArray = commandData,
                 Response = RespondToCommand,
