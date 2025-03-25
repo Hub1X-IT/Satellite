@@ -29,6 +29,14 @@ public class SideMonitorUIFolder : FileExplorerUIDataContainer
 
     private Vector2 baseFolderSize;
 
+    private enum OpenFolderAction
+    {
+        OpenContentUI,
+        ToggleChildFolders
+    }
+
+    private OpenFolderAction lastOpenFolderAction;
+
     protected override void Awake()
     {
         base.Awake();
@@ -59,6 +67,7 @@ public class SideMonitorUIFolder : FileExplorerUIDataContainer
 
     private void ToggleChildFolders()
     {
+        lastOpenFolderAction = OpenFolderAction.ToggleChildFolders;
         if (TryOpenDataContainer())
         {
             selfFolderSO.ShouldShowChildFolders = !selfFolderSO.ShouldShowChildFolders;
@@ -68,20 +77,21 @@ public class SideMonitorUIFolder : FileExplorerUIDataContainer
 
     private void OpenFolderContent()
     {
+        lastOpenFolderAction = OpenFolderAction.OpenContentUI;
         CurrentFileExplorer.TryOpenFolderContent(selfFolderSO, this, new());
-    }
-
-    private void OpenParentFolderContent()
-    {
-        CurrentFileExplorer.TryOpenFolderContent(parentFolderSO, this, new());
     }
 
     protected override void OnDataContainerUnlocked()
     {
         base.OnDataContainerUnlocked();
-        if (parentFolderSO != null && parentFolderSO.IsFolderContentOpen)
+        switch (lastOpenFolderAction)
         {
-            OpenParentFolderContent();
+            case OpenFolderAction.OpenContentUI:
+                OpenFolderContent();
+                break;
+            case OpenFolderAction.ToggleChildFolders:
+                ToggleChildFolders();
+                break;
         }
     }
 

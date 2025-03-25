@@ -63,6 +63,12 @@ public class FolderContentUIFile : FileExplorerUIDataContainer
         }
     }
 
+    override protected void OnDataContainerUnlocked()
+    {
+        base.OnDataContainerUnlocked();
+        TryOpenFileContent();
+    }
+
     private void SetFileIcon()
     {
         if (selfFileSO is FileStringSO)

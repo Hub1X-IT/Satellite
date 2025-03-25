@@ -36,6 +36,7 @@ public class FolderContentUIFolder : FileExplorerUIDataContainer
     protected override void OnDataContainerUnlocked()
     {
         base.OnDataContainerUnlocked();
-        CurrentFileExplorer.RefreshSideFolders();
+        // CurrentFileExplorer.RefreshSideFolders();
+        OpenFolderContent();
     }
 }
