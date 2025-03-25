@@ -14,6 +14,9 @@ public class DataContainerPasswordScreenUI : MonoBehaviour
     [SerializeField]
     private TMP_InputField passwordInputField;
 
+    [SerializeField]
+    private EnterableUIObject incorrectPasswordScreen;
+
     private string correctPassword;
 
     private DataContainerSO selfDataContainerSO;
@@ -31,6 +34,8 @@ public class DataContainerPasswordScreenUI : MonoBehaviour
         monitorApp.SetAppName(baseAppName + dataContainerSO.SelfName);
 
         passwordInputField.onEndEdit.AddListener(CheckPassword);
+
+        incorrectPasswordScreen.Disable();
     }
 
     private void OnDestroy()
@@ -46,5 +51,14 @@ public class DataContainerPasswordScreenUI : MonoBehaviour
             PasswordGuessed?.Invoke();
             monitorApp.CloseApp();
         }
+        else
+        {
+            incorrectPasswordScreen.Enable(ResetInputField);
+        }
+    }
+
+    private void ResetInputField()
+    {
+        passwordInputField.text = string.Empty;
     }
 }
