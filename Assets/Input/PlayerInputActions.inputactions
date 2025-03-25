@@ -289,6 +289,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Return",
+                    "type": "Button",
+                    "id": "a0fada47-ce97-467e-b38f-8a78811506d2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "ChangeComputerLeft",
                     "type": "Button",
                     "id": "9c3cc326-9ce5-47c3-9122-67898f93bbb8",
@@ -360,6 +369,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "ChangeComputerRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "703e2517-2e27-4e8a-97e7-1b9ad2d8e24e",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Return",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

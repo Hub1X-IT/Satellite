@@ -33,7 +33,7 @@ public class DataContainerPasswordScreenUI : MonoBehaviour
         string baseAppName = dataContainerSO is FolderSO _ ? BaseAppName_Folder : BaseAppName_File;
         monitorApp.SetAppName(baseAppName + dataContainerSO.SelfName);
 
-        passwordInputField.onEndEdit.AddListener(CheckPassword);
+        GameInput.OnReturnPerformedAction += CheckPassword;
 
         incorrectPasswordScreen.Disable();
     }
@@ -41,10 +41,12 @@ public class DataContainerPasswordScreenUI : MonoBehaviour
     private void OnDestroy()
     {
         PasswordGuessed = null;
+        GameInput.OnReturnPerformedAction -= CheckPassword;
     }
 
-    private void CheckPassword(string password)
+    private void CheckPassword()
     {
+        string password = passwordInputField.text;
         if (password == correctPassword)
         {
             selfDataContainerSO.IsLocked = false;

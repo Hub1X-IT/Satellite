@@ -30,6 +30,7 @@ public static class GameInput
 
     public static event Action OnComputerExitAction;
     public static event Action OnLeftClickPerformedAction;
+    public static event Action OnReturnPerformedAction;
     public static event Action OnChangeComputerLeftAction;
     public static event Action OnChangeComputerRightAction;
 
@@ -61,6 +62,7 @@ public static class GameInput
 
         PlayerInputActions.Computer.Exit.performed += ComputerExit_performed;
         PlayerInputActions.Computer.LeftClick.performed += LeftClick_performed;
+        PlayerInputActions.Computer.Return.performed += Return_performed;
         PlayerInputActions.Computer.ChangeComputerLeft.performed += ChangeComputerLeft_performed;
         PlayerInputActions.Computer.ChangeComputerRight.performed += ChangeComputerRight_performed;
 
@@ -83,6 +85,7 @@ public static class GameInput
 
         PlayerInputActions.Computer.Exit.performed -= ComputerExit_performed;
         PlayerInputActions.Computer.LeftClick.performed -= LeftClick_performed;
+        PlayerInputActions.Computer.Return.performed -= Return_performed;
         PlayerInputActions.Computer.ChangeComputerLeft.performed -= ChangeComputerLeft_performed;
         PlayerInputActions.Computer.ChangeComputerRight.performed -= ChangeComputerRight_performed;
 
@@ -101,6 +104,7 @@ public static class GameInput
         OnComputerExitAction = null;
         OnLeftClickPerformedAction = null;
         OnKeyboardInputAction = null;
+        OnReturnPerformedAction = null;
         OnChangeComputerLeftAction = null;
         OnChangeComputerRightAction = null;
         OnCommandSubmitAction = null;
@@ -126,6 +130,7 @@ public static class GameInput
 
     private static void ComputerExit_performed(InputAction.CallbackContext _) => OnComputerExitAction?.Invoke();
     private static void LeftClick_performed(InputAction.CallbackContext _) => OnLeftClickPerformedAction?.Invoke();
+    private static void Return_performed(InputAction.CallbackContext _) => OnReturnPerformedAction?.Invoke();
     private static void ChangeComputerLeft_performed(InputAction.CallbackContext _) => OnChangeComputerLeftAction?.Invoke();
     private static void ChangeComputerRight_performed(InputAction.CallbackContext _) => OnChangeComputerRightAction?.Invoke();
 

@@ -311,6 +311,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Return"",
+                    ""type"": ""Button"",
+                    ""id"": ""a0fada47-ce97-467e-b38f-8a78811506d2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""ChangeComputerLeft"",
                     ""type"": ""Button"",
                     ""id"": ""9c3cc326-9ce5-47c3-9122-67898f93bbb8"",
@@ -382,6 +391,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ChangeComputerRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""703e2517-2e27-4e8a-97e7-1b9ad2d8e24e"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Return"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -471,6 +491,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Computer_Exit = m_Computer.FindAction("Exit", throwIfNotFound: true);
         m_Computer_MouseDelta = m_Computer.FindAction("MouseDelta", throwIfNotFound: true);
         m_Computer_LeftClick = m_Computer.FindAction("LeftClick", throwIfNotFound: true);
+        m_Computer_Return = m_Computer.FindAction("Return", throwIfNotFound: true);
         m_Computer_ChangeComputerLeft = m_Computer.FindAction("ChangeComputerLeft", throwIfNotFound: true);
         m_Computer_ChangeComputerRight = m_Computer.FindAction("ChangeComputerRight", throwIfNotFound: true);
         // CommandPrompt
@@ -775,6 +796,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Computer_Exit;
     private readonly InputAction m_Computer_MouseDelta;
     private readonly InputAction m_Computer_LeftClick;
+    private readonly InputAction m_Computer_Return;
     private readonly InputAction m_Computer_ChangeComputerLeft;
     private readonly InputAction m_Computer_ChangeComputerRight;
     public struct ComputerActions
@@ -784,6 +806,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Exit => m_Wrapper.m_Computer_Exit;
         public InputAction @MouseDelta => m_Wrapper.m_Computer_MouseDelta;
         public InputAction @LeftClick => m_Wrapper.m_Computer_LeftClick;
+        public InputAction @Return => m_Wrapper.m_Computer_Return;
         public InputAction @ChangeComputerLeft => m_Wrapper.m_Computer_ChangeComputerLeft;
         public InputAction @ChangeComputerRight => m_Wrapper.m_Computer_ChangeComputerRight;
         public InputActionMap Get() { return m_Wrapper.m_Computer; }
@@ -804,6 +827,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @LeftClick.started += instance.OnLeftClick;
             @LeftClick.performed += instance.OnLeftClick;
             @LeftClick.canceled += instance.OnLeftClick;
+            @Return.started += instance.OnReturn;
+            @Return.performed += instance.OnReturn;
+            @Return.canceled += instance.OnReturn;
             @ChangeComputerLeft.started += instance.OnChangeComputerLeft;
             @ChangeComputerLeft.performed += instance.OnChangeComputerLeft;
             @ChangeComputerLeft.canceled += instance.OnChangeComputerLeft;
@@ -823,6 +849,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @LeftClick.started -= instance.OnLeftClick;
             @LeftClick.performed -= instance.OnLeftClick;
             @LeftClick.canceled -= instance.OnLeftClick;
+            @Return.started -= instance.OnReturn;
+            @Return.performed -= instance.OnReturn;
+            @Return.canceled -= instance.OnReturn;
             @ChangeComputerLeft.started -= instance.OnChangeComputerLeft;
             @ChangeComputerLeft.performed -= instance.OnChangeComputerLeft;
             @ChangeComputerLeft.canceled -= instance.OnChangeComputerLeft;
@@ -926,6 +955,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnExit(InputAction.CallbackContext context);
         void OnMouseDelta(InputAction.CallbackContext context);
         void OnLeftClick(InputAction.CallbackContext context);
+        void OnReturn(InputAction.CallbackContext context);
         void OnChangeComputerLeft(InputAction.CallbackContext context);
         void OnChangeComputerRight(InputAction.CallbackContext context);
     }
