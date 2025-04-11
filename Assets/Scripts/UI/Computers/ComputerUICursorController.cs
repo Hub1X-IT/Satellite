@@ -11,6 +11,9 @@ public class ComputerUICursorController : MonoBehaviour
     [SerializeField]
     private Vector2 canvasSize = new(1920f, 1080f);
 
+    [SerializeField]
+    private AudioSource mouseAudioSource;
+
     private Vector2 currentPosition;
 
     private bool isCursorActive;
@@ -48,6 +51,8 @@ public class ComputerUICursorController : MonoBehaviour
         {
             MouseClick.SimulateClick(currentPosition);
         }
+
+        mouseAudioSource.Play();
     }
 
     public void SetCursorEnabled(bool enabled)

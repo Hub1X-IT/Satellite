@@ -16,6 +16,9 @@ public class CommandPromptUI : MonoBehaviour
     [SerializeField]
     private TextAsset cmdStartText;
 
+    [SerializeField]
+    private AudioSource cmdAudioSource;
+
     /*
     [SerializeField]
     private ScrollRect outputFieldScrollRect;
@@ -57,6 +60,9 @@ public class CommandPromptUI : MonoBehaviour
                 inputTextField.text = CommandPromptStartText;
                 inputTextField.caretPosition = inputTextField.text.Length;
             }
+
+            cmdAudioSource.Play();
+
             /*
             for (int i = 0; i < CommandPromptStartText.Length; i++)
             {
