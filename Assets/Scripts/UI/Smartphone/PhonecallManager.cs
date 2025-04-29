@@ -21,6 +21,11 @@ public class PhonecallManager : MonoBehaviour
     private Button endCallButton;
     [SerializeField]
     private TMP_Text callerName2;
+    [SerializeField]
+    private TMP_Text callTime;
+
+    private int callTimeSeconds = 0;
+    private int callTimeMinutes = 0;
 
     [Header ("CallingUI")]
     [SerializeField]
@@ -34,8 +39,11 @@ public class PhonecallManager : MonoBehaviour
 
     private string callerName;
 
-    public event Action callAccepted;
-    public event Action callSent;
+    [Header ("GameEvents")]
+    [SerializeField]
+    private GameEventSO callAccepted;
+    [SerializeField]
+    private GameEventSO callTaken;
 
     private void Start()
     {
@@ -61,17 +69,19 @@ public class PhonecallManager : MonoBehaviour
     }
     private void NPCTakeCall()
     {
+        callTaken.TryRaiseEvent();
         callingUI.SetActive(false);
         ongoingCallUI.SetActive(true);
         callerName2.text = callerName;
-        callSent.Invoke();
+        InvokeRepeating("AddTime", 0f, 1f);
     }
     private void AcceptCall()
     {
+        callAccepted.TryRaiseEvent();
         comingCallUI.SetActive(false);
         ongoingCallUI.SetActive(true);
         callerName2.text = callerName;
-        callAccepted.Invoke();
+        InvokeRepeating("AddTime", 0f, 1f);
     }
     private void EndCall()
     {
@@ -80,5 +90,30 @@ public class PhonecallManager : MonoBehaviour
     private void StopCalling()
     {
         callingUI.SetActive(false);
+    }
+    private void AddTime()
+    {
+        callTimeSeconds += 1;
+        if(callTimeSeconds == 60)
+        {
+            callTimeMinutes += 1;
+            callTimeSeconds = 0;
+        }
+        if(callTimeSeconds <= 9 && callTimeMinutes == 0)
+        {
+            callTime.text = "00:0" + callTimeSeconds;
+        }
+        else if(callTimeSeconds >= 10 && callTimeMinutes == 0)
+        {
+            callTime.text = "00:" + callTimeSeconds;
+        }
+        else if(callTimeSeconds <= 9 && callTimeMinutes <= 9)
+        {
+            callTime.text = "0" + callTimeMinutes + ":0" + callTimeSeconds;
+        }
+        else if(callTimeSeconds >= 10 && callTimeMinutes >= 10)
+        {
+            callTime.text = callTimeMinutes + ":" + callTimeSeconds;
+        }
     }
 }
