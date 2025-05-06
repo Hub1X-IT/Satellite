@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Xml;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,24 +47,27 @@ public class PhonecallManager : MonoBehaviour
     [SerializeField]
     private GameEventSO callTaken;
 
+    [Header("Contact List")]
+    [SerializeField]
+    private ContactSO[] contactList;
+
     private void Start()
     {
         acceptCallButton.onClick.AddListener(AcceptCall);
         endCallButton.onClick.AddListener(EndCall);
         stopCallingButton.onClick.AddListener(StopCalling);
 
-        callPlayer("Sp1k3");
+        callPlayer("Sp1k3");    
     }
-    private void callPlayer(string callerNameTemp)
+    private void callPlayer(string contactName)
     {
-        callerName = callerNameTemp;
-        callerName1.text = callerNameTemp;
+        callerName = contactName;
+        callerName1.text = contactName;
         comingCallUI.SetActive(true);
     }
-    private void callNPC(string callerNameTemp)
+    public void callNPC(string contactName)
     {
-        callerName = callerNameTemp;
-        callingName.text = callerNameTemp;
+        callingName.text = contactName;
         callingUI.SetActive(true);
         InvokeRepeating("CallingSound", 1f, 2f);
         Invoke("NPCTakeCall", 10f);
