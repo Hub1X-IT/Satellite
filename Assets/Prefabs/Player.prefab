@@ -192,7 +192,33 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   triggerState: 2
-  sentences: []
+  sentences:
+  - dialogueCharacter: {fileID: 11400000, guid: b1b793a8aec62724babddc590ab0235e, type: 2}
+    sentence: Tralala
+    skipDelayTime: 0
+    sentenceSound: {fileID: 8300000, guid: 681d55b03328b9a4bb3b0e7884eb90a2, type: 3}
+    sentenceEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - dialogueCharacter: {fileID: 11400000, guid: 60bd061e7938d5848990f159338c7a33, type: 2}
+    sentence: Tralala2
+    skipDelayTime: 0
+    sentenceSound: {fileID: 8300000, guid: 681d55b03328b9a4bb3b0e7884eb90a2, type: 3}
+    sentenceEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000, guid: 5ba6531333a3d33469c99836913a23f2, type: 2}
+          m_TargetAssemblyTypeName: GameEventSO, Assembly-CSharp
+          m_MethodName: TryRaiseEvent
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!82 &6890582359040437573
 AudioSource:
   m_ObjectHideFlags: 0
@@ -436,6 +462,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1279851485805400171, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 2746903985617481811, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 32
+      objectReference: {fileID: 0}
     - target: {fileID: 2789146544322516887, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -524,9 +558,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4909174876519735557, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 5073855308384200465, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 24
+      objectReference: {fileID: 0}
     - target: {fileID: 7809237348274262115, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
       propertyPath: m_Name
       value: PlayerUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 7961855038857391846, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 8482212695058048010, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
       propertyPath: m_AnchorMax.y

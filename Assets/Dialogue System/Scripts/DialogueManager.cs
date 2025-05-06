@@ -40,7 +40,7 @@ namespace HeneGames.DialogueSystem
             {
                 callAccepted.EventRaised += () =>
                 {
-                    StartDialogue();
+                    DialogueUI.instance.StartDialogue(this);
                 };
             }
         }

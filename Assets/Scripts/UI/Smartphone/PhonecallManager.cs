@@ -50,6 +50,10 @@ public class PhonecallManager : MonoBehaviour
     [Header("Contact List")]
     [SerializeField]
     private ContactSO[] contactList;
+    [SerializeField]
+    private GameEventSO objectiveAnswerPhone;
+    [SerializeField]
+    private GameEventSO objectiveCheckEmail;
 
     private void Start()
     {
@@ -78,11 +82,13 @@ public class PhonecallManager : MonoBehaviour
         callingUI.SetActive(false);
         ongoingCallUI.SetActive(true);
         callerName2.text = callerName;
+        CancelInvoke("CallingSound");
         InvokeRepeating("AddTime", 0f, 1f);
     }
     private void AcceptCall()
     {
         callAccepted.TryRaiseEvent();
+        objectiveAnswerPhone.TryRaiseEvent();
         comingCallUI.SetActive(false);
         ongoingCallUI.SetActive(true);
         callerName2.text = callerName;
@@ -120,5 +126,9 @@ public class PhonecallManager : MonoBehaviour
         {
             callTime.text = callTimeMinutes + ":" + callTimeSeconds;
         }
+    }
+    private void CallingSound()
+    {
+        callingSound.Play();
     }
 }
