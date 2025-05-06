@@ -57,7 +57,7 @@ public class PhonecallManager : MonoBehaviour
         endCallButton.onClick.AddListener(EndCall);
         stopCallingButton.onClick.AddListener(StopCalling);
 
-        callPlayer("Sp1k3");    
+        callPlayer(contactList[0].contactName);    
     }
     private void callPlayer(string contactName)
     {
