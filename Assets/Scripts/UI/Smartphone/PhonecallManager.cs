@@ -97,6 +97,7 @@ public class PhonecallManager : MonoBehaviour
     private void EndCall()
     {
         ongoingCallUI.SetActive(false);
+        CancelInvoke("AddTime");
     }
     private void StopCalling()
     {
