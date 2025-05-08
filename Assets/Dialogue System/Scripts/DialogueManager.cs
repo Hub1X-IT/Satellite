@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,7 +12,7 @@ namespace HeneGames.DialogueSystem
         private DialogueTrigger dialogueTrigger;
 
         [SerializeField]
-        private GameEventSO callAccepted;
+        private GameEventSO triggerEvent;
 
         public enum TriggerState
         {
@@ -38,7 +37,7 @@ namespace HeneGames.DialogueSystem
         {
             if (triggerState == TriggerState.Event)
             {
-                callAccepted.EventRaised += () =>
+                triggerEvent.EventRaised += () =>
                 {
                     DialogueUI.instance.StartDialogue(this);
                 };
