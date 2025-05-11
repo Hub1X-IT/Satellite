@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Xml;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -50,10 +47,15 @@ public class PhonecallManager : MonoBehaviour
     [Header("Contact List")]
     [SerializeField]
     private ContactSO[] contactList;
+
+    [Header("Objectives")]
     [SerializeField]
     private GameEventSO objectiveAnswerPhone;
     [SerializeField]
-    private GameEventSO objectiveCheckEmail;
+    private GameEventSO objectiveCallSomeone;
+    [SerializeField]
+    private GameEventSO[] nextObjectives;
+    private int objective = 0;
 
     private void Start()
     {
@@ -79,6 +81,7 @@ public class PhonecallManager : MonoBehaviour
     private void NPCTakeCall()
     {
         callTaken.TryRaiseEvent();
+        objectiveCallSomeone.TryRaiseEvent();
         callingUI.SetActive(false);
         ongoingCallUI.SetActive(true);
         callerName2.text = callerName;
@@ -92,10 +95,14 @@ public class PhonecallManager : MonoBehaviour
         comingCallUI.SetActive(false);
         ongoingCallUI.SetActive(true);
         callerName2.text = callerName;
+        callTimeSeconds = 0;
+        callTimeMinutes = 0;
         InvokeRepeating("AddTime", 0f, 1f);
     }
     private void EndCall()
     {
+        nextObjectives[objective].TryRaiseEvent();
+        objective++;
         ongoingCallUI.SetActive(false);
         CancelInvoke("AddTime");
     }
