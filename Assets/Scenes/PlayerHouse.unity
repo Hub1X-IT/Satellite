@@ -1220,26 +1220,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3590736367100869470, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4495773547002825661, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4495773547002825661, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4495773547002825661, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4495773547002825661, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3999,17 +3979,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df4ce11902f7f534da756028b7a76e88, type: 3}
---- !u!114 &356955119 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2715841642825338910, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
-  m_PrefabInstance: {fileID: 1422935265}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a886235d8e6f75438df5a56d5ad3379, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &370837452
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8033,6 +8002,12 @@ MonoBehaviour:
     InteractionBlockingLayerMasks:
       serializedVersion: 2
       m_Bits: 0
+  phonecallManagerData:
+    CallAcceptedGameEvent: {fileID: 11400000, guid: ec07c540d958f7847bfe0010eb2c002f, type: 2}
+    OutgoingCallStartedGameEvent: {fileID: 11400000, guid: 11a13d18df3bad149a1aaebf6da731b4, type: 2}
+    ContactList:
+    - {fileID: 11400000, guid: bc18ab159df759d4daf5d01d851ce733, type: 2}
+    OutgoingCallTime: 10
   volumeControllerData:
     MainAudioMixer: {fileID: 24100000, guid: f19853364afa6214a962ddccd71ff23b, type: 2}
 --- !u!1 &785988047
@@ -8626,24 +8601,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 133324309}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &836699950 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3414911973402475305, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
-  m_PrefabInstance: {fileID: 1422935265}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &836699956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 836699950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShowMaskGraphic: 1
 --- !u!4 &844151492 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 31370774449418374, guid: aeb4431240a0b6c4ab9093da7fe4a741, type: 3}
@@ -14389,38 +14346,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1178052667493287936, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
-      propertyPath: emailContent
-      value: 
-      objectReference: {fileID: 356955119}
-    - target: {fileID: 1178052667493287936, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
-      propertyPath: objectiveEvent
-      value: 
-      objectReference: {fileID: 11400000, guid: aaa77a2a19e0f1c4c95acb8c133b72ad, type: 2}
     - target: {fileID: 1678582442171483607, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2405219235173618090, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
-      propertyPath: objectiveAnswerPhone
-      value: 
-      objectReference: {fileID: 11400000, guid: 4856af7cd6f6b6b469fddcdf8c877e2b, type: 2}
-    - target: {fileID: 2405219235173618090, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
-      propertyPath: objectiveCallSomeone
-      value: 
-      objectReference: {fileID: 11400000, guid: 5e80baf39dd969542a5f7ef119303449, type: 2}
-    - target: {fileID: 2405219235173618090, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
-      propertyPath: nextObjectives.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2405219235173618090, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
-      propertyPath: 'nextObjectives.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 5ba6531333a3d33469c99836913a23f2, type: 2}
-    - target: {fileID: 2405219235173618090, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
-      propertyPath: 'nextObjectives.Array.data[1]'
-      value: 
-      objectReference: {fileID: 11400000, guid: b4d0b43f06bc51b40acfcb232b9e9b8c, type: 2}
     - target: {fileID: 2894350001687765535, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -14431,10 +14360,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2894350001687765535, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3515876970388040311, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3844605690437125054, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
@@ -14497,10 +14422,6 @@ PrefabInstance:
       propertyPath: sentences.Array.data[1].skipDelayTime
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5272579561349022864, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
-      propertyPath: m_VerticalScrollbar
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 5903378471068296309, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -14538,9 +14459,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8062827724298154431, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1986040632}
-    - targetCorrespondingSourceObject: {fileID: 3414911973402475305, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 836699956}
   m_SourcePrefab: {fileID: 100100000, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
 --- !u!114 &1422935266 stripped
 MonoBehaviour:

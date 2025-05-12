@@ -146,7 +146,7 @@ MonoBehaviour:
   playerMovementController: {fileID: 1861445443321875357}
   playerCameraRotationController: {fileID: 3586738301585459168}
   playerHudUI: {fileID: 1181459138887678763}
-  smartphoneController: {fileID: 7003157401951931486}
+  smartphoneController: {fileID: 6973255905009282764}
 --- !u!114 &8781261676174586386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -434,18 +434,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4195053427897529104}
     m_Modifications:
-    - target: {fileID: 376845339295830485, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
-      propertyPath: callTime
-      value: 
-      objectReference: {fileID: 5342936056892698265}
-    - target: {fileID: 376845339295830485, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
-      propertyPath: callTaken
-      value: 
-      objectReference: {fileID: 11400000, guid: 8e0f59df0293a6a44bfb5feff05939ef, type: 2}
-    - target: {fileID: 376845339295830485, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
-      propertyPath: callAccepted
-      value: 
-      objectReference: {fileID: 11400000, guid: 4ad46c8a025b037498f10d94aec83d69, type: 2}
     - target: {fileID: 896523148022293088, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -461,14 +449,6 @@ PrefabInstance:
     - target: {fileID: 1225283050250421185, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1279851485805400171, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 32
-      objectReference: {fileID: 0}
-    - target: {fileID: 2746903985617481811, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 2789146544322516887, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
       propertyPath: m_AnchorMax.y
@@ -558,21 +538,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4909174876519735557, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 32
-      objectReference: {fileID: 0}
-    - target: {fileID: 5073855308384200465, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 24
-      objectReference: {fileID: 0}
     - target: {fileID: 7809237348274262115, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
       propertyPath: m_Name
       value: PlayerUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 7961855038857391846, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 8482212695058048010, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
       propertyPath: m_AnchorMax.y
@@ -615,20 +583,9 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3691313598351533487, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
   m_PrefabInstance: {fileID: 2619930532679024767}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5342936056892698265 stripped
+--- !u!114 &6973255905009282764 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7961855038857391846, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
-  m_PrefabInstance: {fileID: 2619930532679024767}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7003157401951931486 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5002349636971039777, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4944433133491695283, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
   m_PrefabInstance: {fileID: 2619930532679024767}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

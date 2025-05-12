@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PhonecallManager : MonoBehaviour
+public class PhonecallManagerOld : MonoBehaviour
 {
     [Header("ComingCallUI")]
     [SerializeField]

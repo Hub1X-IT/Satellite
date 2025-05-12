@@ -7,7 +7,7 @@ public class CallContact : MonoBehaviour
     private ContactSO contact;
 
     [SerializeField]
-    private PhonecallManager phonecallManager;
+    private PhonecallManagerOld phonecallManager;
 
     [SerializeField]
     private Button callButton;

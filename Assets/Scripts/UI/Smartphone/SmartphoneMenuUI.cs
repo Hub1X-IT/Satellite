@@ -7,7 +7,7 @@ public class SmartphoneMenuUI : MonoBehaviour
     [SerializeField]
     private EmailUI emailUI;
     [SerializeField]
-    private ContactsUI contactsUI;
+    private ContactsOverviewUI contactsUI;
 
     [Header ("Buttons")]
     [SerializeField]
