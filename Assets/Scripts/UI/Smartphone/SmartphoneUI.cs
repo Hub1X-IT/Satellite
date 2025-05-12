@@ -60,7 +60,11 @@ public class SmartphoneUI : MonoBehaviour
         isSmartphoneEnabled = enabled;
 
         GameManager.IsGuidebookOrSmartphoneEnabled = enabled;
-        GameManager.SetGamePaused(enabled);
+
+        PlayerScriptsController.SetPlayerMovementEnabled(!enabled);
+        InteractionController.IsInteractionEnabled = !enabled;
+
+        GameManager.SetCursorShown(enabled);
 
         if (enabled)
         {
