@@ -14,6 +14,6 @@ public class CallContact : MonoBehaviour
     
     private void Start()
     {
-        callButton.onClick.AddListener(() => phonecallManager.callNPC(contact.contactName));
+        callButton.onClick.AddListener(() => phonecallManager.CallNPC(contact.ContactName));
     }
 }

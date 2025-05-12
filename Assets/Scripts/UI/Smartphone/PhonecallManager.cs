@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class PhonecallManager : MonoBehaviour
 {
-    [Header ("ComingCallUI")]
+    [Header("ComingCallUI")]
     [SerializeField]
     private GameObject comingCallUI;
     [SerializeField]
@@ -13,7 +13,7 @@ public class PhonecallManager : MonoBehaviour
     private TMP_Text callerName1;
 
 
-    [Header ("OngoingCallUI")]
+    [Header("OngoingCallUI")]
     [SerializeField]
     private GameObject ongoingCallUI;
     [SerializeField]
@@ -26,7 +26,7 @@ public class PhonecallManager : MonoBehaviour
     private int callTimeSeconds = 0;
     private int callTimeMinutes = 0;
 
-    [Header ("CallingUI")]
+    [Header("CallingUI")]
     [SerializeField]
     private GameObject callingUI;
     [SerializeField]
@@ -38,7 +38,7 @@ public class PhonecallManager : MonoBehaviour
 
     private string callerName;
 
-    [Header ("GameEvents")]
+    [Header("GameEvents")]
     [SerializeField]
     private GameEventSO callAccepted;
     [SerializeField]
@@ -63,21 +63,24 @@ public class PhonecallManager : MonoBehaviour
         endCallButton.onClick.AddListener(EndCall);
         stopCallingButton.onClick.AddListener(StopCalling);
 
-        callPlayer(contactList[0].contactName);    
+        CallPlayer(contactList[0].ContactName);
     }
-    private void callPlayer(string contactName)
+
+    private void CallPlayer(string contactName)
     {
         callerName = contactName;
         callerName1.text = contactName;
         comingCallUI.SetActive(true);
     }
-    public void callNPC(string contactName)
+
+    public void CallNPC(string contactName)
     {
         callingName.text = contactName;
         callingUI.SetActive(true);
-        InvokeRepeating("CallingSound", 1f, 2f);
-        Invoke("NPCTakeCall", 10f);
+        InvokeRepeating(nameof(PlayCallingSound), 1f, 2f);
+        Invoke(nameof(NPCTakeCall), 10f);
     }
+
     private void NPCTakeCall()
     {
         callTaken.TryRaiseEvent();
@@ -85,9 +88,10 @@ public class PhonecallManager : MonoBehaviour
         callingUI.SetActive(false);
         ongoingCallUI.SetActive(true);
         callerName2.text = callerName;
-        CancelInvoke("CallingSound");
-        InvokeRepeating("AddTime", 0f, 1f);
+        CancelInvoke(nameof(PlayCallingSound));
+        InvokeRepeating(nameof(AddTime), 0f, 1f);
     }
+
     private void AcceptCall()
     {
         callAccepted.TryRaiseEvent();
@@ -97,45 +101,49 @@ public class PhonecallManager : MonoBehaviour
         callerName2.text = callerName;
         callTimeSeconds = 0;
         callTimeMinutes = 0;
-        InvokeRepeating("AddTime", 0f, 1f);
+        InvokeRepeating(nameof(AddTime), 0f, 1f);
     }
+
     private void EndCall()
     {
         nextObjectives[objective].TryRaiseEvent();
         objective++;
         ongoingCallUI.SetActive(false);
-        CancelInvoke("AddTime");
+        CancelInvoke(nameof(AddTime));
     }
+
     private void StopCalling()
     {
         callingUI.SetActive(false);
     }
+
     private void AddTime()
     {
         callTimeSeconds += 1;
-        if(callTimeSeconds == 60)
+        if (callTimeSeconds == 60)
         {
             callTimeMinutes += 1;
             callTimeSeconds = 0;
         }
-        if(callTimeSeconds <= 9 && callTimeMinutes == 0)
+        if (callTimeSeconds <= 9 && callTimeMinutes == 0)
         {
             callTime.text = "00:0" + callTimeSeconds;
         }
-        else if(callTimeSeconds >= 10 && callTimeMinutes == 0)
+        else if (callTimeSeconds >= 10 && callTimeMinutes == 0)
         {
             callTime.text = "00:" + callTimeSeconds;
         }
-        else if(callTimeSeconds <= 9 && callTimeMinutes <= 9)
+        else if (callTimeSeconds <= 9 && callTimeMinutes <= 9)
         {
             callTime.text = "0" + callTimeMinutes + ":0" + callTimeSeconds;
         }
-        else if(callTimeSeconds >= 10 && callTimeMinutes >= 10)
+        else if (callTimeSeconds >= 10 && callTimeMinutes >= 10)
         {
             callTime.text = callTimeMinutes + ":" + callTimeSeconds;
         }
     }
-    private void CallingSound()
+
+    private void PlayCallingSound()
     {
         callingSound.Play();
     }
