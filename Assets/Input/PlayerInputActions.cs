@@ -72,74 +72,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""PlayerWalkingAndDesk"",
-            ""id"": ""4d7aed84-4714-4abd-b129-52277757db92"",
-            ""actions"": [
-                {
-                    ""name"": ""Rotate"",
-                    ""type"": ""Value"",
-                    ""id"": ""d57dce0d-08b7-47b5-bf9b-f1e5970acce9"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""SmartphoneToggle"",
-                    ""type"": ""Button"",
-                    ""id"": ""ec7cb3d2-4248-4cf7-bae4-b2efd974dc60"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""GuidebookToggle"",
-                    ""type"": ""Button"",
-                    ""id"": ""d0eb3231-cf93-4457-b4b3-5f6598e48ba7"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""1b0ee327-bb7e-421a-91e4-6566c18a22b4"",
-                    ""path"": ""<Mouse>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Rotate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""abf23dd0-5b7f-4b2a-b160-e53c9bde3969"",
-                    ""path"": ""<Keyboard>/tab"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SmartphoneToggle"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d015dd87-bf6a-4858-a9eb-9ff2a12c7e32"",
-                    ""path"": ""<Keyboard>/g"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""GuidebookToggle"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
             ""name"": ""PlayerWalking"",
             ""id"": ""d03916ab-8bca-4e1d-b0c5-2392b4dc05d2"",
             ""actions"": [
@@ -153,9 +85,36 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Value"",
+                    ""id"": ""21d33bf8-8f42-49d3-98e9-dbe260e7903b"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""6a99ab8b-a478-4638-8b28-c9da480ce756"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SmartphoneToggle"",
+                    ""type"": ""Button"",
+                    ""id"": ""2313d576-ef07-4496-8ef9-e49ebd06663b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GuidebookToggle"",
+                    ""type"": ""Button"",
+                    ""id"": ""6734d569-cc08-49fb-b98a-ca945a1927fb"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -226,6 +185,39 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ac1a60d1-b59b-4a99-b133-410f5fdc16c1"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7222dc0c-713d-49e7-8321-1f4757b7fb32"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SmartphoneToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3e01cbf8-0ce9-48e2-974c-bd596cc3a01e"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GuidebookToggle"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -473,15 +465,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_All = asset.FindActionMap("All", throwIfNotFound: true);
         m_All_Pause = m_All.FindAction("Pause", throwIfNotFound: true);
         m_All_CursorPosition = m_All.FindAction("CursorPosition", throwIfNotFound: true);
-        // PlayerWalkingAndDesk
-        m_PlayerWalkingAndDesk = asset.FindActionMap("PlayerWalkingAndDesk", throwIfNotFound: true);
-        m_PlayerWalkingAndDesk_Rotate = m_PlayerWalkingAndDesk.FindAction("Rotate", throwIfNotFound: true);
-        m_PlayerWalkingAndDesk_SmartphoneToggle = m_PlayerWalkingAndDesk.FindAction("SmartphoneToggle", throwIfNotFound: true);
-        m_PlayerWalkingAndDesk_GuidebookToggle = m_PlayerWalkingAndDesk.FindAction("GuidebookToggle", throwIfNotFound: true);
         // PlayerWalking
         m_PlayerWalking = asset.FindActionMap("PlayerWalking", throwIfNotFound: true);
         m_PlayerWalking_Move = m_PlayerWalking.FindAction("Move", throwIfNotFound: true);
+        m_PlayerWalking_Rotate = m_PlayerWalking.FindAction("Rotate", throwIfNotFound: true);
         m_PlayerWalking_Interact = m_PlayerWalking.FindAction("Interact", throwIfNotFound: true);
+        m_PlayerWalking_SmartphoneToggle = m_PlayerWalking.FindAction("SmartphoneToggle", throwIfNotFound: true);
+        m_PlayerWalking_GuidebookToggle = m_PlayerWalking.FindAction("GuidebookToggle", throwIfNotFound: true);
         // Guidebook
         m_Guidebook = asset.FindActionMap("Guidebook", throwIfNotFound: true);
         m_Guidebook_ChangePageLeft = m_Guidebook.FindAction("ChangePageLeft", throwIfNotFound: true);
@@ -503,7 +493,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     ~@PlayerInputActions()
     {
         UnityEngine.Debug.Assert(!m_All.enabled, "This will cause a leak and performance issues, PlayerInputActions.All.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_PlayerWalkingAndDesk.enabled, "This will cause a leak and performance issues, PlayerInputActions.PlayerWalkingAndDesk.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_PlayerWalking.enabled, "This will cause a leak and performance issues, PlayerInputActions.PlayerWalking.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Guidebook.enabled, "This will cause a leak and performance issues, PlayerInputActions.Guidebook.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Computer.enabled, "This will cause a leak and performance issues, PlayerInputActions.Computer.Disable() has not been called.");
@@ -620,79 +609,23 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     }
     public AllActions @All => new AllActions(this);
 
-    // PlayerWalkingAndDesk
-    private readonly InputActionMap m_PlayerWalkingAndDesk;
-    private List<IPlayerWalkingAndDeskActions> m_PlayerWalkingAndDeskActionsCallbackInterfaces = new List<IPlayerWalkingAndDeskActions>();
-    private readonly InputAction m_PlayerWalkingAndDesk_Rotate;
-    private readonly InputAction m_PlayerWalkingAndDesk_SmartphoneToggle;
-    private readonly InputAction m_PlayerWalkingAndDesk_GuidebookToggle;
-    public struct PlayerWalkingAndDeskActions
-    {
-        private @PlayerInputActions m_Wrapper;
-        public PlayerWalkingAndDeskActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Rotate => m_Wrapper.m_PlayerWalkingAndDesk_Rotate;
-        public InputAction @SmartphoneToggle => m_Wrapper.m_PlayerWalkingAndDesk_SmartphoneToggle;
-        public InputAction @GuidebookToggle => m_Wrapper.m_PlayerWalkingAndDesk_GuidebookToggle;
-        public InputActionMap Get() { return m_Wrapper.m_PlayerWalkingAndDesk; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerWalkingAndDeskActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerWalkingAndDeskActions instance)
-        {
-            if (instance == null || m_Wrapper.m_PlayerWalkingAndDeskActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerWalkingAndDeskActionsCallbackInterfaces.Add(instance);
-            @Rotate.started += instance.OnRotate;
-            @Rotate.performed += instance.OnRotate;
-            @Rotate.canceled += instance.OnRotate;
-            @SmartphoneToggle.started += instance.OnSmartphoneToggle;
-            @SmartphoneToggle.performed += instance.OnSmartphoneToggle;
-            @SmartphoneToggle.canceled += instance.OnSmartphoneToggle;
-            @GuidebookToggle.started += instance.OnGuidebookToggle;
-            @GuidebookToggle.performed += instance.OnGuidebookToggle;
-            @GuidebookToggle.canceled += instance.OnGuidebookToggle;
-        }
-
-        private void UnregisterCallbacks(IPlayerWalkingAndDeskActions instance)
-        {
-            @Rotate.started -= instance.OnRotate;
-            @Rotate.performed -= instance.OnRotate;
-            @Rotate.canceled -= instance.OnRotate;
-            @SmartphoneToggle.started -= instance.OnSmartphoneToggle;
-            @SmartphoneToggle.performed -= instance.OnSmartphoneToggle;
-            @SmartphoneToggle.canceled -= instance.OnSmartphoneToggle;
-            @GuidebookToggle.started -= instance.OnGuidebookToggle;
-            @GuidebookToggle.performed -= instance.OnGuidebookToggle;
-            @GuidebookToggle.canceled -= instance.OnGuidebookToggle;
-        }
-
-        public void RemoveCallbacks(IPlayerWalkingAndDeskActions instance)
-        {
-            if (m_Wrapper.m_PlayerWalkingAndDeskActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(IPlayerWalkingAndDeskActions instance)
-        {
-            foreach (var item in m_Wrapper.m_PlayerWalkingAndDeskActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerWalkingAndDeskActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public PlayerWalkingAndDeskActions @PlayerWalkingAndDesk => new PlayerWalkingAndDeskActions(this);
-
     // PlayerWalking
     private readonly InputActionMap m_PlayerWalking;
     private List<IPlayerWalkingActions> m_PlayerWalkingActionsCallbackInterfaces = new List<IPlayerWalkingActions>();
     private readonly InputAction m_PlayerWalking_Move;
+    private readonly InputAction m_PlayerWalking_Rotate;
     private readonly InputAction m_PlayerWalking_Interact;
+    private readonly InputAction m_PlayerWalking_SmartphoneToggle;
+    private readonly InputAction m_PlayerWalking_GuidebookToggle;
     public struct PlayerWalkingActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerWalkingActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PlayerWalking_Move;
+        public InputAction @Rotate => m_Wrapper.m_PlayerWalking_Rotate;
         public InputAction @Interact => m_Wrapper.m_PlayerWalking_Interact;
+        public InputAction @SmartphoneToggle => m_Wrapper.m_PlayerWalking_SmartphoneToggle;
+        public InputAction @GuidebookToggle => m_Wrapper.m_PlayerWalking_GuidebookToggle;
         public InputActionMap Get() { return m_Wrapper.m_PlayerWalking; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -705,9 +638,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @Rotate.started += instance.OnRotate;
+            @Rotate.performed += instance.OnRotate;
+            @Rotate.canceled += instance.OnRotate;
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @SmartphoneToggle.started += instance.OnSmartphoneToggle;
+            @SmartphoneToggle.performed += instance.OnSmartphoneToggle;
+            @SmartphoneToggle.canceled += instance.OnSmartphoneToggle;
+            @GuidebookToggle.started += instance.OnGuidebookToggle;
+            @GuidebookToggle.performed += instance.OnGuidebookToggle;
+            @GuidebookToggle.canceled += instance.OnGuidebookToggle;
         }
 
         private void UnregisterCallbacks(IPlayerWalkingActions instance)
@@ -715,9 +657,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @Rotate.started -= instance.OnRotate;
+            @Rotate.performed -= instance.OnRotate;
+            @Rotate.canceled -= instance.OnRotate;
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @SmartphoneToggle.started -= instance.OnSmartphoneToggle;
+            @SmartphoneToggle.performed -= instance.OnSmartphoneToggle;
+            @SmartphoneToggle.canceled -= instance.OnSmartphoneToggle;
+            @GuidebookToggle.started -= instance.OnGuidebookToggle;
+            @GuidebookToggle.performed -= instance.OnGuidebookToggle;
+            @GuidebookToggle.canceled -= instance.OnGuidebookToggle;
         }
 
         public void RemoveCallbacks(IPlayerWalkingActions instance)
@@ -934,16 +885,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnPause(InputAction.CallbackContext context);
         void OnCursorPosition(InputAction.CallbackContext context);
     }
-    public interface IPlayerWalkingAndDeskActions
-    {
-        void OnRotate(InputAction.CallbackContext context);
-        void OnSmartphoneToggle(InputAction.CallbackContext context);
-        void OnGuidebookToggle(InputAction.CallbackContext context);
-    }
     public interface IPlayerWalkingActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnRotate(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnSmartphoneToggle(InputAction.CallbackContext context);
+        void OnGuidebookToggle(InputAction.CallbackContext context);
     }
     public interface IGuidebookActions
     {

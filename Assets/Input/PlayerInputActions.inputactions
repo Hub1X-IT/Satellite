@@ -50,74 +50,6 @@
             ]
         },
         {
-            "name": "PlayerWalkingAndDesk",
-            "id": "4d7aed84-4714-4abd-b129-52277757db92",
-            "actions": [
-                {
-                    "name": "Rotate",
-                    "type": "Value",
-                    "id": "d57dce0d-08b7-47b5-bf9b-f1e5970acce9",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "SmartphoneToggle",
-                    "type": "Button",
-                    "id": "ec7cb3d2-4248-4cf7-bae4-b2efd974dc60",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "GuidebookToggle",
-                    "type": "Button",
-                    "id": "d0eb3231-cf93-4457-b4b3-5f6598e48ba7",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "1b0ee327-bb7e-421a-91e4-6566c18a22b4",
-                    "path": "<Mouse>/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Rotate",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "abf23dd0-5b7f-4b2a-b160-e53c9bde3969",
-                    "path": "<Keyboard>/tab",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SmartphoneToggle",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d015dd87-bf6a-4858-a9eb-9ff2a12c7e32",
-                    "path": "<Keyboard>/g",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "GuidebookToggle",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
             "name": "PlayerWalking",
             "id": "d03916ab-8bca-4e1d-b0c5-2392b4dc05d2",
             "actions": [
@@ -131,9 +63,36 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Rotate",
+                    "type": "Value",
+                    "id": "21d33bf8-8f42-49d3-98e9-dbe260e7903b",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Interact",
                     "type": "Button",
                     "id": "6a99ab8b-a478-4638-8b28-c9da480ce756",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SmartphoneToggle",
+                    "type": "Button",
+                    "id": "2313d576-ef07-4496-8ef9-e49ebd06663b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GuidebookToggle",
+                    "type": "Button",
+                    "id": "6734d569-cc08-49fb-b98a-ca945a1927fb",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -204,6 +163,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ac1a60d1-b59b-4a99-b133-410f5fdc16c1",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7222dc0c-713d-49e7-8321-1f4757b7fb32",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SmartphoneToggle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3e01cbf8-0ce9-48e2-974c-bd596cc3a01e",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GuidebookToggle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

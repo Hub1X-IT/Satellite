@@ -9,7 +9,7 @@ public static class GameInput
 
     public static Vector2 MovementVectorNormalized => PlayerInputActions.PlayerWalking.Move.ReadValue<Vector2>().normalized;
 
-    public static Vector2 RotationVector => PlayerInputActions.PlayerWalkingAndDesk.Rotate.ReadValue<Vector2>();
+    public static Vector2 RotationVector => PlayerInputActions.PlayerWalking.Rotate.ReadValue<Vector2>();
 
     // public static Vector2 CursorPosition => PlayerInputActions.All.CursorPosition.ReadValue<Vector2>();
 
@@ -44,7 +44,6 @@ public static class GameInput
         PlayerInputActions = new();
 
         PlayerInputActions.All.Enable();
-        PlayerInputActions.PlayerWalkingAndDesk.Enable();
         PlayerInputActions.PlayerWalking.Enable();
         PlayerInputActions.Guidebook.Disable();
         PlayerInputActions.Computer.Disable();
@@ -54,8 +53,8 @@ public static class GameInput
 
         PlayerInputActions.PlayerWalking.Interact.performed += Interact_performed;
 
-        PlayerInputActions.PlayerWalkingAndDesk.SmartphoneToggle.performed += SmartphoneToggle_performed;
-        PlayerInputActions.PlayerWalkingAndDesk.GuidebookToggle.performed += GuidebookToggle_performed;
+        PlayerInputActions.PlayerWalking.SmartphoneToggle.performed += SmartphoneToggle_performed;
+        PlayerInputActions.PlayerWalking.GuidebookToggle.performed += GuidebookToggle_performed;
 
         PlayerInputActions.Guidebook.ChangePageRight.performed += GuidebookChangePageLeft_performed;
         PlayerInputActions.Guidebook.ChangePageLeft.performed += GuidebookChangePageRight_performed;
@@ -76,9 +75,8 @@ public static class GameInput
         PlayerInputActions.All.Pause.performed -= Pause_performed;
 
         PlayerInputActions.PlayerWalking.Interact.performed -= Interact_performed;
-
-        PlayerInputActions.PlayerWalkingAndDesk.SmartphoneToggle.performed -= SmartphoneToggle_performed;
-        PlayerInputActions.PlayerWalkingAndDesk.GuidebookToggle.performed -= GuidebookToggle_performed;
+        PlayerInputActions.PlayerWalking.SmartphoneToggle.performed -= SmartphoneToggle_performed;
+        PlayerInputActions.PlayerWalking.GuidebookToggle.performed -= GuidebookToggle_performed;
 
         PlayerInputActions.Guidebook.ChangePageRight.performed -= GuidebookChangePageLeft_performed;
         PlayerInputActions.Guidebook.ChangePageLeft.performed -= GuidebookChangePageRight_performed;
