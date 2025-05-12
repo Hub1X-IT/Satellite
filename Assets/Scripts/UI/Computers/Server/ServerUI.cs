@@ -5,23 +5,14 @@ public class ServerUI : MonoBehaviour
     [SerializeField]
     private GameEventBoolSO serverViewEnabledGameEvent;
 
-    [SerializeField]
-    private ComputerUICursorController serverCursor;
-
-    private CanvasGroup canvasGroup;
+    private ScreenUI screenUI;
 
     private void Awake()
     {
-        canvasGroup = GetComponent<CanvasGroup>();
+        screenUI = GetComponent<ScreenUI>();
 
-        serverViewEnabledGameEvent.EventRaised += (enabled) => SetServerViewEnalbed(enabled);
+        serverViewEnabledGameEvent.EventRaised += screenUI.SetScreenViewEnalbed;
 
-        SetServerViewEnalbed(false);
-    }
-
-    private void SetServerViewEnalbed(bool enabled)
-    {
-        canvasGroup.blocksRaycasts = enabled;
-        serverCursor.SetCursorEnabled(enabled);
+        screenUI.SetScreenViewEnalbed(false);
     }
 }

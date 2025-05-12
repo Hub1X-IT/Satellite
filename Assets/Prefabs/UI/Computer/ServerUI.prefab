@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RenderShadows: 1
+  m_RenderShadows: 0
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
@@ -143,6 +143,7 @@ GameObject:
   - component: {fileID: 8542147808249456428}
   - component: {fileID: 8488139356491066015}
   - component: {fileID: 2284213737073396204}
+  - component: {fileID: 5384816798996892466}
   m_Layer: 5
   m_Name: ServerUICanvas
   m_TagString: Untagged
@@ -265,7 +266,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serverViewEnabledGameEvent: {fileID: 11400000, guid: afbe7a2755a5fa24fa1c116d787af9db, type: 2}
-  serverCursor: {fileID: 5679739873928571618}
 --- !u!114 &2284213737073396204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,10 +285,24 @@ MonoBehaviour:
   - {fileID: 7524428938124855369}
   - {fileID: 19517215326838292}
   - {fileID: 6960631441389148929}
-  objectiveGameEvent: {fileID: 11400000, guid: 9e4ac48839ecc65448f7d9b3c1523f48, type: 2}
+  objectiveGameEvent: {fileID: 11400000, guid: 5e80baf39dd969542a5f7ef119303449, type: 2}
   connectionInactiveColor: {r: 0, g: 1, b: 1, a: 1}
   notConnectedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   connectedColor: {r: 0, g: 1, b: 0, a: 1}
+--- !u!114 &5384816798996892466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4435371910128469743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57bdd872a7029b6418fc69ceebff6a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenCursor: {fileID: 5679739873928571618}
+  screenUICamera: {fileID: 1206291683575177844}
 --- !u!1 &5977447881365654525
 GameObject:
   m_ObjectHideFlags: 0

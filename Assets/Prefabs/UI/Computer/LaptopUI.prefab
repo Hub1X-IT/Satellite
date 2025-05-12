@@ -975,6 +975,7 @@ GameObject:
   - component: {fileID: 7377176231262375850}
   - component: {fileID: 3999487893513537375}
   - component: {fileID: 1077887570814622599}
+  - component: {fileID: 3271774098495511042}
   m_Layer: 5
   m_Name: LaptopUICanvas
   m_TagString: Untagged
@@ -1095,7 +1096,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   computerViewEnabledGameEvent: {fileID: 11400000, guid: 19cb4a22fe4cb8742a8377b822b80b2f, type: 2}
   computerViewDisabledGameEvent: {fileID: 11400000, guid: 1c04e8ca8f563b04592271d32aaa322f, type: 2}
-  computerCursor: {fileID: 8309079589403446960}
   computerTurnedOffScreen: {fileID: 5479690506060338929}
 --- !u!114 &1077887570814622599
 MonoBehaviour:
@@ -1110,6 +1110,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   commandPromptScroll: {fileID: 5151752025072475796}
+--- !u!114 &3271774098495511042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8704038278049990864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57bdd872a7029b6418fc69ceebff6a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenCursor: {fileID: 8309079589403446960}
+  screenUICamera: {fileID: 7947182751358780305}
 --- !u!1 &8826879670396455816
 GameObject:
   m_ObjectHideFlags: 0
@@ -1206,7 +1220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RenderShadows: 1
+  m_RenderShadows: 0
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0

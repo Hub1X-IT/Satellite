@@ -37,7 +37,7 @@ public class ComputerUICursorController : MonoBehaviour
 
     private void UpdatePosition()
     {
-        Vector2 positionShift = GameInput.RotationVector * (GameSettingsManager.MouseSensitivity * SensitivityMultiplier);
+        Vector2 positionShift = GameInput.MouseDelta * (GameSettingsManager.MouseSensitivity * SensitivityMultiplier);
         Vector2 newPosition = new(Mathf.Clamp(currentPosition.x + positionShift.x, 0f, canvasSize.x),
             Mathf.Clamp(currentPosition.y + positionShift.y, 0f, canvasSize.y));
         currentPosition = newPosition;

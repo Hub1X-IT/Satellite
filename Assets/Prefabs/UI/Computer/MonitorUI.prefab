@@ -3055,6 +3055,7 @@ GameObject:
   - component: {fileID: 8094060335440229806}
   - component: {fileID: 2173344687841827790}
   - component: {fileID: 1154226776115070889}
+  - component: {fileID: 1277243091092085825}
   m_Layer: 5
   m_Name: MonitorUICanvas
   m_TagString: Untagged
@@ -3180,7 +3181,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   computerViewEnabledGameEvent: {fileID: 11400000, guid: ce793c91c3ff2434dbd95c558a0878a0, type: 2}
   computerViewDisabledGameEvent: {fileID: 11400000, guid: af253edeca4497444b4bcf7931247593, type: 2}
-  computerCursor: {fileID: 3519359461907359629}
   computerTurnedOffScreen: {fileID: 4926102669095550919}
 --- !u!114 &1154226776115070889
 MonoBehaviour:
@@ -3196,6 +3196,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fileExplorer: {fileID: 3416248662797886964}
   appsManager: {fileID: 1610081207929608306}
+--- !u!114 &1277243091092085825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8704038278049990864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57bdd872a7029b6418fc69ceebff6a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenCursor: {fileID: 3519359461907359629}
+  screenUICamera: {fileID: 7947182751358780305}
 --- !u!1 &8758384875291136031
 GameObject:
   m_ObjectHideFlags: 0
@@ -3313,7 +3327,7 @@ Camera:
   m_GameObject: {fileID: 8826879670396455816}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 4
   m_BackGroundColor: {r: 1, g: 1, b: 1, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -3367,7 +3381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RenderShadows: 1
+  m_RenderShadows: 0
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0

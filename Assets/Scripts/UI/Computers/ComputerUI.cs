@@ -8,6 +8,8 @@ public class ComputerUI : MonoBehaviour
 
     private Computer computer;
 
+    private ScreenUI screenUI;
+
     [SerializeField]
     private GameEventComputerSO computerViewEnabledGameEvent;
 
@@ -15,24 +17,19 @@ public class ComputerUI : MonoBehaviour
     private GameEventSO computerViewDisabledGameEvent;
 
     [SerializeField]
-    private ComputerUICursorController computerCursor;
-
-    [SerializeField]
     private GameObject computerTurnedOffScreen;
-
-    private CanvasGroup canvasGroup;
 
     private ComputerUIDynamicInputField currentSelectedInputField;
 
     private void Awake()
     {
-        canvasGroup = GetComponent<CanvasGroup>();
+        screenUI = GetComponent<ScreenUI>();
 
         computerViewEnabledGameEvent.EventRaised += (callerComputer) =>
         {
             // Enter computer view.
             computer = callerComputer;
-            SetComputerViewEnalbed(true);
+            screenUI.SetScreenViewEnalbed(true);
             ComputerViewEnabled?.Invoke(true);
         };
 
@@ -40,19 +37,16 @@ public class ComputerUI : MonoBehaviour
         {
             // Exit computer view.
             computer = null;
-            SetComputerViewEnalbed(false);
+            screenUI.SetScreenViewEnalbed(false);
             ComputerViewEnabled?.Invoke(false);
         };
 
         DetectionManager.DetectionOccured += () =>
         {
-            computerTurnedOffScreen.SetActive(true);
+            SetComputerEnabled(false);
         };
 
-        ServerConnectionManager.ServerConnectionEnabled += (enabled) =>
-        {
-            computerTurnedOffScreen.SetActive(!enabled);
-        };
+        ServerConnectionManager.ServerConnectionEnabled += SetComputerEnabled;
 
         TMP_InputField[] inputFields = GetComponentsInChildren<TMP_InputField>(true);
         foreach (var inputField in inputFields)
@@ -64,14 +58,8 @@ public class ComputerUI : MonoBehaviour
             }
         }
 
-        SetComputerViewEnalbed(false);
+        screenUI.SetScreenViewEnalbed(false);
         computerTurnedOffScreen.SetActive(true);
-    }
-
-    private void SetComputerViewEnalbed(bool enabled)
-    {
-        canvasGroup.blocksRaycasts = enabled;
-        computerCursor.SetCursorEnabled(enabled);
     }
 
     public void AddInputField(ComputerUIDynamicInputField inputField)
@@ -106,5 +94,11 @@ public class ComputerUI : MonoBehaviour
             computer.CanExitComputerView = true;
             currentSelectedInputField = null;
         }
+    }
+
+    private void SetComputerEnabled(bool enabled)
+    {
+        computerTurnedOffScreen.SetActive(!enabled);
+        screenUI.RenderScreen();
     }
 }
