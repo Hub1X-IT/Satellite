@@ -17,19 +17,25 @@ public class MonitorFileSystemInitializer : MonoBehaviour
     private GameEventCommandDataSO connectCommandGameEvent;
     [SerializeField]
     private GameEventCommandDataSO disconnectCommandGameEvent;
+    private GameEventSO objective;
 
     public FolderSO RootFolderSO => rootFolderSO;
 
     [SerializeField]
     private SerializableDictionary<string, FolderSO> ipAndFolderSerializableDictionary;
+    [SerializeField]
+    private SerializableDictionary<string, GameEventSO> ipAndObjectiveSerializableDictionary;
 
     private Dictionary<string, FolderSO> ipAndFolderDictionary;
+    private Dictionary<string, GameEventSO> ipAndObjectiveDictionary;
+
 
     private string currentIPAddress;
 
     private void Awake()
     {
         ipAndFolderDictionary = ipAndFolderSerializableDictionary.Dictionary;
+        ipAndObjectiveDictionary = ipAndObjectiveSerializableDictionary.Dictionary;
 
         possiblePasswordsSO.InitializePossiblePasswords();
 
@@ -58,6 +64,8 @@ public class MonitorFileSystemInitializer : MonoBehaviour
             monitorUI.FileExplorer.InitializeFileExplorer(this);
             currentIPAddress = ipAddress;
             commandData.Response?.Invoke(true, $"Connected to: {ipAddress}");
+            objective = ipAndObjectiveDictionary[ipAddress];
+            objective?.TryRaiseEvent();
         }
         else
         {

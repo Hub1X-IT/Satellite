@@ -106,8 +106,6 @@ public class PhonecallManager : MonoBehaviour
 
     private void EndCall()
     {
-        nextObjectives[objective].TryRaiseEvent();
-        objective++;
         ongoingCallUI.SetActive(false);
         CancelInvoke(nameof(AddTime));
     }

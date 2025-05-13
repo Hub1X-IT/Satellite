@@ -1220,6 +1220,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3590736367100869470, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495773547002825661, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495773547002825661, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495773547002825661, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495773547002825661, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2714,6 +2734,10 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: 5b13abf0529b617489831190b3a49bbc, type: 2}
     - key: test1
       value: {fileID: 11400000, guid: decb61ccf00bcd145a50c04b10442b86, type: 2}
+  ipAndObjectiveSerializableDictionary:
+    items:
+    - key: 59.121.83.128
+      value: {fileID: 11400000, guid: 9e4ac48839ecc65448f7d9b3c1523f48, type: 2}
 --- !u!1001 &220752138
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3312,6 +3336,7 @@ MonoBehaviour:
   objectivesUIArray:
   - {fileID: 1422935266}
   - {fileID: 185723241}
+  - {fileID: 654671978}
   defaultChapter: Day 1
   defaultObjective: Take the phone from the night table
   objectivesData:
@@ -3322,7 +3347,7 @@ MonoBehaviour:
   - GameEvents:
     - {fileID: 11400000, guid: 5ba6531333a3d33469c99836913a23f2, type: 2}
     Chapter: 
-    Objective: 'Open phone and check Email [Tab]'
+    Objective: Check email on your phone
   - GameEvents:
     - {fileID: 11400000, guid: aaa77a2a19e0f1c4c95acb8c133b72ad, type: 2}
     Chapter: 
@@ -3334,15 +3359,15 @@ MonoBehaviour:
   - GameEvents:
     - {fileID: 11400000, guid: b4d0b43f06bc51b40acfcb232b9e9b8c, type: 2}
     Chapter: 
-    Objective: Connect to IP given in mail
+    Objective: Connect to IP given in mail using laptop (59.121.83.128)
   - GameEvents:
     - {fileID: 11400000, guid: 9e4ac48839ecc65448f7d9b3c1523f48, type: 2}
     Chapter: 
     Objective: Find and open Door Control App
   - GameEvents:
-    - {fileID: 11400000, guid: 56d7a9847b6bf544693ae5f58401a0e6, type: 2}
+    - {fileID: 11400000, guid: 7d0b962a1fd71534b87b493176d2c974, type: 2}
     Chapter: 
-    Objective: Open Door in Door App
+    Objective: Find Door Control App password
   - GameEvents:
     - {fileID: 11400000, guid: 14e8021979f65f644aba1861e40a07fd, type: 2}
     Chapter: 
@@ -4582,6 +4607,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1970334097342285162, guid: a37221582604fea41a5f5e893ea588eb, type: 3}
   m_PrefabInstance: {fileID: 419803427}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &420638191 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4948149093367096019, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
+  m_PrefabInstance: {fileID: 1422935265}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &422063536
 GameObject:
   m_ObjectHideFlags: 0
@@ -5725,22 +5755,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 710156001}
     m_Modifications:
-    - target: {fileID: 2338859298468319739, guid: 66a0aba2ba55058439c92574558222ac, type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
-    - target: {fileID: 6449296285419502213, guid: 66a0aba2ba55058439c92574558222ac, type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
-    - target: {fileID: 6449296285444158425, guid: 66a0aba2ba55058439c92574558222ac, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6449296285614807723, guid: 66a0aba2ba55058439c92574558222ac, type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
     - target: {fileID: 6449296285829880521, guid: 66a0aba2ba55058439c92574558222ac, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -6938,6 +6952,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e65149fa4b563954e815d1fddec8b9fc, type: 3}
   m_PrefabInstance: {fileID: 2092426947}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &654671978 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5078316920720320552, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
+  m_PrefabInstance: {fileID: 110851046}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e1e7d4972065b9469e132885616bd5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &660618894
 GameObject:
   m_ObjectHideFlags: 0
@@ -14448,11 +14473,11 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 4ad46c8a025b037498f10d94aec83d69, type: 2}
     - target: {fileID: 5228147565102793183, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
       propertyPath: sentences.Array.data[0].skipDelayTime
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5228147565102793183, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
       propertyPath: sentences.Array.data[1].skipDelayTime
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5903378471068296309, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
       propertyPath: m_AnchorMax.y
@@ -14485,6 +14510,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1813681666}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4948149093367096019, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1583305520}
     - targetCorrespondingSourceObject: {fileID: 8062827724298154431, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1986040632}
@@ -16949,12 +16977,68 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1861445443321875357, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
   m_PrefabInstance: {fileID: 1422935265}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 420638191}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7c114426de6df64699404df618b99c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &1583305514 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 6890582359040437573, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
+  m_PrefabInstance: {fileID: 1422935265}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1583305520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420638191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b89b2c8d34df52d4e89cba040401d38b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerEvent: {fileID: 11400000, guid: 8e0f59df0293a6a44bfb5feff05939ef, type: 2}
+  audioSource: {fileID: 1583305514}
+  startDialogueEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  nextSentenceDialogueEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  endDialogueEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  triggerState: 2
+  sentences:
+  - dialogueCharacter: {fileID: 11400000, guid: b1b793a8aec62724babddc590ab0235e, type: 2}
+    sentence: Tralala3
+    skipDelayTime: 0
+    sentenceSound: {fileID: 8300000, guid: 681d55b03328b9a4bb3b0e7884eb90a2, type: 3}
+    sentenceEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - dialogueCharacter: {fileID: 11400000, guid: 60bd061e7938d5848990f159338c7a33, type: 2}
+    sentence: Tralala4
+    skipDelayTime: 0
+    sentenceSound: {fileID: 8300000, guid: 681d55b03328b9a4bb3b0e7884eb90a2, type: 3}
+    sentenceEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000, guid: b4d0b43f06bc51b40acfcb232b9e9b8c, type: 2}
+          m_TargetAssemblyTypeName: GameEventSO, Assembly-CSharp
+          m_MethodName: TryRaiseEvent
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1604101060
 GameObject:
   m_ObjectHideFlags: 0
