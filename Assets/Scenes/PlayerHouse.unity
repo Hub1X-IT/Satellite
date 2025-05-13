@@ -8626,6 +8626,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 133324309}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &836699950 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3414911973402475305, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
+  m_PrefabInstance: {fileID: 1422935265}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &836699956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 836699950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 1
 --- !u!4 &844151492 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 31370774449418374, guid: aeb4431240a0b6c4ab9093da7fe4a741, type: 3}
@@ -14479,6 +14497,10 @@ PrefabInstance:
       propertyPath: sentences.Array.data[1].skipDelayTime
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5272579561349022864, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
+      propertyPath: m_VerticalScrollbar
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5903378471068296309, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -14516,6 +14538,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8062827724298154431, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1986040632}
+    - targetCorrespondingSourceObject: {fileID: 3414911973402475305, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 836699956}
   m_SourcePrefab: {fileID: 100100000, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
 --- !u!114 &1422935266 stripped
 MonoBehaviour:
