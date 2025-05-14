@@ -13,15 +13,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "CursorPosition",
-                    "type": "Value",
-                    "id": "46c15789-a451-4eb8-a235-d33beb742cf5",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -33,17 +24,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "739f7f76-baf9-44a7-932c-91a259d56f6f",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CursorPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -196,6 +176,34 @@
                     "processors": "",
                     "groups": "",
                     "action": "GuidebookToggle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Dialogue",
+            "id": "5b6b2377-0126-480e-afa7-fa74d145346a",
+            "actions": [
+                {
+                    "name": "NextSentence",
+                    "type": "Button",
+                    "id": "ba7cc3f3-3e01-40fd-82b7-2f0a58c1fdb8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "43b3073e-5456-4d09-9618-2685de2551be",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextSentence",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -11,8 +11,6 @@ public static class GameInput
 
     public static Vector2 RotationVector => PlayerInputActions.PlayerWalking.Rotate.ReadValue<Vector2>();
 
-    // public static Vector2 CursorPosition => PlayerInputActions.All.CursorPosition.ReadValue<Vector2>();
-
     public static Vector2 MouseDelta => PlayerInputActions.Computer.MouseDelta.ReadValue<Vector2>();
 
     public static float MouseScroll => PlayerInputActions.CommandPrompt.MouseScroll.ReadValue<Vector2>().y;
@@ -24,6 +22,8 @@ public static class GameInput
 
     public static event Action OnSmartphoneToggleAction;
     public static event Action OnGuidebookToggleAction;
+
+    public static event Action OnNextDialogueSentenceAction;
 
     public static event Action OnGuidebookChangePageLeftAction;
     public static event Action OnGuidebookChangePageRightAction;
@@ -45,6 +45,7 @@ public static class GameInput
 
         PlayerInputActions.All.Enable();
         PlayerInputActions.PlayerWalking.Enable();
+        PlayerInputActions.Dialogue.Disable();
         PlayerInputActions.Guidebook.Disable();
         PlayerInputActions.Computer.Disable();
         PlayerInputActions.CommandPrompt.Disable();
@@ -55,6 +56,8 @@ public static class GameInput
 
         PlayerInputActions.PlayerWalking.SmartphoneToggle.performed += SmartphoneToggle_performed;
         PlayerInputActions.PlayerWalking.GuidebookToggle.performed += GuidebookToggle_performed;
+
+        PlayerInputActions.Dialogue.NextSentence.performed += NextDialogueSentence_performed;
 
         PlayerInputActions.Guidebook.ChangePageRight.performed += GuidebookChangePageLeft_performed;
         PlayerInputActions.Guidebook.ChangePageLeft.performed += GuidebookChangePageRight_performed;
@@ -78,6 +81,8 @@ public static class GameInput
         PlayerInputActions.PlayerWalking.SmartphoneToggle.performed -= SmartphoneToggle_performed;
         PlayerInputActions.PlayerWalking.GuidebookToggle.performed -= GuidebookToggle_performed;
 
+        PlayerInputActions.Dialogue.NextSentence.performed -= NextDialogueSentence_performed;
+
         PlayerInputActions.Guidebook.ChangePageRight.performed -= GuidebookChangePageLeft_performed;
         PlayerInputActions.Guidebook.ChangePageLeft.performed -= GuidebookChangePageRight_performed;
 
@@ -97,6 +102,7 @@ public static class GameInput
         OnInteractAction = null;
         OnSmartphoneToggleAction = null;
         OnGuidebookToggleAction = null;
+        OnNextDialogueSentenceAction = null;
         OnGuidebookChangePageLeftAction = null;
         OnGuidebookChangePageRightAction = null;
         OnComputerExitAction = null;
@@ -122,6 +128,8 @@ public static class GameInput
 
     private static void SmartphoneToggle_performed(InputAction.CallbackContext _) => OnSmartphoneToggleAction?.Invoke();
     private static void GuidebookToggle_performed(InputAction.CallbackContext _) => OnGuidebookToggleAction?.Invoke();
+
+    private static void NextDialogueSentence_performed(InputAction.CallbackContext _) => OnNextDialogueSentenceAction?.Invoke();
 
     private static void GuidebookChangePageLeft_performed(InputAction.CallbackContext _) => OnGuidebookChangePageLeftAction?.Invoke();
     private static void GuidebookChangePageRight_performed(InputAction.CallbackContext _) => OnGuidebookChangePageRightAction?.Invoke();

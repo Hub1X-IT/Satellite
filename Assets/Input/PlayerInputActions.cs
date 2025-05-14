@@ -35,15 +35,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""CursorPosition"",
-                    ""type"": ""Value"",
-                    ""id"": ""46c15789-a451-4eb8-a235-d33beb742cf5"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -55,17 +46,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Pause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""739f7f76-baf9-44a7-932c-91a259d56f6f"",
-                    ""path"": ""<Mouse>/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CursorPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -218,6 +198,34 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""GuidebookToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Dialogue"",
+            ""id"": ""5b6b2377-0126-480e-afa7-fa74d145346a"",
+            ""actions"": [
+                {
+                    ""name"": ""NextSentence"",
+                    ""type"": ""Button"",
+                    ""id"": ""ba7cc3f3-3e01-40fd-82b7-2f0a58c1fdb8"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""43b3073e-5456-4d09-9618-2685de2551be"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextSentence"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -464,7 +472,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // All
         m_All = asset.FindActionMap("All", throwIfNotFound: true);
         m_All_Pause = m_All.FindAction("Pause", throwIfNotFound: true);
-        m_All_CursorPosition = m_All.FindAction("CursorPosition", throwIfNotFound: true);
         // PlayerWalking
         m_PlayerWalking = asset.FindActionMap("PlayerWalking", throwIfNotFound: true);
         m_PlayerWalking_Move = m_PlayerWalking.FindAction("Move", throwIfNotFound: true);
@@ -472,6 +479,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_PlayerWalking_Interact = m_PlayerWalking.FindAction("Interact", throwIfNotFound: true);
         m_PlayerWalking_SmartphoneToggle = m_PlayerWalking.FindAction("SmartphoneToggle", throwIfNotFound: true);
         m_PlayerWalking_GuidebookToggle = m_PlayerWalking.FindAction("GuidebookToggle", throwIfNotFound: true);
+        // Dialogue
+        m_Dialogue = asset.FindActionMap("Dialogue", throwIfNotFound: true);
+        m_Dialogue_NextSentence = m_Dialogue.FindAction("NextSentence", throwIfNotFound: true);
         // Guidebook
         m_Guidebook = asset.FindActionMap("Guidebook", throwIfNotFound: true);
         m_Guidebook_ChangePageLeft = m_Guidebook.FindAction("ChangePageLeft", throwIfNotFound: true);
@@ -494,6 +504,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         UnityEngine.Debug.Assert(!m_All.enabled, "This will cause a leak and performance issues, PlayerInputActions.All.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_PlayerWalking.enabled, "This will cause a leak and performance issues, PlayerInputActions.PlayerWalking.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Dialogue.enabled, "This will cause a leak and performance issues, PlayerInputActions.Dialogue.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Guidebook.enabled, "This will cause a leak and performance issues, PlayerInputActions.Guidebook.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Computer.enabled, "This will cause a leak and performance issues, PlayerInputActions.Computer.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_CommandPrompt.enabled, "This will cause a leak and performance issues, PlayerInputActions.CommandPrompt.Disable() has not been called.");
@@ -559,13 +570,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_All;
     private List<IAllActions> m_AllActionsCallbackInterfaces = new List<IAllActions>();
     private readonly InputAction m_All_Pause;
-    private readonly InputAction m_All_CursorPosition;
     public struct AllActions
     {
         private @PlayerInputActions m_Wrapper;
         public AllActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Pause => m_Wrapper.m_All_Pause;
-        public InputAction @CursorPosition => m_Wrapper.m_All_CursorPosition;
         public InputActionMap Get() { return m_Wrapper.m_All; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -578,9 +587,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
-            @CursorPosition.started += instance.OnCursorPosition;
-            @CursorPosition.performed += instance.OnCursorPosition;
-            @CursorPosition.canceled += instance.OnCursorPosition;
         }
 
         private void UnregisterCallbacks(IAllActions instance)
@@ -588,9 +594,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
-            @CursorPosition.started -= instance.OnCursorPosition;
-            @CursorPosition.performed -= instance.OnCursorPosition;
-            @CursorPosition.canceled -= instance.OnCursorPosition;
         }
 
         public void RemoveCallbacks(IAllActions instance)
@@ -686,6 +689,52 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public PlayerWalkingActions @PlayerWalking => new PlayerWalkingActions(this);
+
+    // Dialogue
+    private readonly InputActionMap m_Dialogue;
+    private List<IDialogueActions> m_DialogueActionsCallbackInterfaces = new List<IDialogueActions>();
+    private readonly InputAction m_Dialogue_NextSentence;
+    public struct DialogueActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public DialogueActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @NextSentence => m_Wrapper.m_Dialogue_NextSentence;
+        public InputActionMap Get() { return m_Wrapper.m_Dialogue; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DialogueActions set) { return set.Get(); }
+        public void AddCallbacks(IDialogueActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DialogueActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DialogueActionsCallbackInterfaces.Add(instance);
+            @NextSentence.started += instance.OnNextSentence;
+            @NextSentence.performed += instance.OnNextSentence;
+            @NextSentence.canceled += instance.OnNextSentence;
+        }
+
+        private void UnregisterCallbacks(IDialogueActions instance)
+        {
+            @NextSentence.started -= instance.OnNextSentence;
+            @NextSentence.performed -= instance.OnNextSentence;
+            @NextSentence.canceled -= instance.OnNextSentence;
+        }
+
+        public void RemoveCallbacks(IDialogueActions instance)
+        {
+            if (m_Wrapper.m_DialogueActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IDialogueActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DialogueActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DialogueActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public DialogueActions @Dialogue => new DialogueActions(this);
 
     // Guidebook
     private readonly InputActionMap m_Guidebook;
@@ -883,7 +932,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public interface IAllActions
     {
         void OnPause(InputAction.CallbackContext context);
-        void OnCursorPosition(InputAction.CallbackContext context);
     }
     public interface IPlayerWalkingActions
     {
@@ -892,6 +940,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnSmartphoneToggle(InputAction.CallbackContext context);
         void OnGuidebookToggle(InputAction.CallbackContext context);
+    }
+    public interface IDialogueActions
+    {
+        void OnNextSentence(InputAction.CallbackContext context);
     }
     public interface IGuidebookActions
     {
