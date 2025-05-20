@@ -105,7 +105,6 @@ public class PhonecallUI : MonoBehaviour
     {
         incomingCallCallerNameTextField.text = contactName;
         incomingCallUI.SetActive(true);
-        Debug.Log("inc");
     }
 
     private void StartOutgoingCall(string contactName)

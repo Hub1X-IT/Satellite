@@ -44,9 +44,7 @@ GameObject:
   - component: {fileID: 1861445443321875357}
   - component: {fileID: 3586738301585459168}
   - component: {fileID: 921558185454954189}
-  - component: {fileID: 8781261676174586386}
   - component: {fileID: 6890582359040437573}
-  - component: {fileID: 5228147565102793183}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -147,27 +145,6 @@ MonoBehaviour:
   playerCameraRotationController: {fileID: 3586738301585459168}
   playerHudUI: {fileID: 1181459138887678763}
   smartphoneController: {fileID: 6973255905009282764}
---- !u!114 &8781261676174586386
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4948149093367096019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9da6c51194ab84042bc718fd8ead8aa6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startDialogueEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  nextSentenceDialogueEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  endDialogueEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!82 &6890582359040437573
 AudioSource:
   m_ObjectHideFlags: 0
@@ -265,57 +242,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &5228147565102793183
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4948149093367096019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b89b2c8d34df52d4e89cba040401d38b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  triggerEvent: {fileID: 0}
-  audioSource: {fileID: 6890582359040437573}
-  startDialogueEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  nextSentenceDialogueEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  endDialogueEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  triggerState: 2
-  sentences:
-  - dialogueCharacter: {fileID: 11400000, guid: b1b793a8aec62724babddc590ab0235e, type: 2}
-    sentence: Tralala
-    skipDelayTime: 0
-    sentenceSound: {fileID: 8300000, guid: 681d55b03328b9a4bb3b0e7884eb90a2, type: 3}
-    sentenceEvent:
-      m_PersistentCalls:
-        m_Calls: []
-  - dialogueCharacter: {fileID: 11400000, guid: 60bd061e7938d5848990f159338c7a33, type: 2}
-    sentence: Tralala2
-    skipDelayTime: 0
-    sentenceSound: {fileID: 8300000, guid: 681d55b03328b9a4bb3b0e7884eb90a2, type: 3}
-    sentenceEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 11400000, guid: 5ba6531333a3d33469c99836913a23f2, type: 2}
-          m_TargetAssemblyTypeName: GameEventSO, Assembly-CSharp
-          m_MethodName: TryRaiseEvent
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1 &8559839758003907826
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,6 +16,7 @@ public class DialogueUINew : MonoBehaviour
     {
         DialogueManagerNew.NewDialogueSentenceStarted += ShowDialogue;
         DialogueManagerNew.DialogueEnded += HideDialogue;
+        HideDialogue();
     }
 
     private void ShowDialogue(DialogueManagerNew.DialogueSentence dialogueStatement)

@@ -35,7 +35,7 @@ public class DialogueManagerNew : MonoBehaviour
         {
             foreach (var gameEvent in dialogueInvokeData.GameEvents)
             {
-                StartNewDialogue(dialogueInvokeData.DialogueSO);
+                gameEvent.EventRaised += () => StartNewDialogue(dialogueInvokeData.DialogueSO);
             }
         }
     }
