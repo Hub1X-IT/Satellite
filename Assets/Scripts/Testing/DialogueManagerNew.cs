@@ -17,8 +17,8 @@ public class DialogueManagerNew : MonoBehaviour
         public DialogueSO DialogueSO;
     }
 
-    public static Action<DialogueSentence> NewDialogueSentenceStarted;
-    public static Action DialogueEnded;
+    public static event Action<DialogueSentence> NewDialogueSentenceStarted;
+    public static event Action DialogueEnded;
 
     [SerializeField]
     private DialogueInvokeData[] dialoguesInvokeData;

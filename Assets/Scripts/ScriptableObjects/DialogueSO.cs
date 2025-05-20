@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "DialogueSO", menuName = "Scriptable Objects/DialogueSO")]
+[CreateAssetMenu(fileName = "DialogueSO", menuName = "DialogueSO")]
 public class DialogueSO : ScriptableObject
 {
     [SerializeField]

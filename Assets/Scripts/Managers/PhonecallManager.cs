@@ -1,17 +1,8 @@
 using System;
 using UnityEngine;
 
-public static class PhonecallManager
+public class PhonecallManager : MonoBehaviour
 {
-    [Serializable]
-    public struct InitializationData
-    {
-        public GameEventContactSO CallAcceptedGameEvent;
-        public GameEventContactSO OutgoingCallStartedGameEvent;
-        public ContactSO[] ContactList;
-        public float OutgoingCallTime;
-    }
-
     public enum CallType
     {
         IncomingCall,
@@ -30,22 +21,54 @@ public static class PhonecallManager
 
     private static Call currentCall;
 
-    private static float outgoingCallTime;
-    public static float OutgoingCallTime => outgoingCallTime;
+    [SerializeField]
+    private float outgoingCallTime;
 
-    private static GameEventContactSO callAcceptedGameEvent;
-    private static GameEventContactSO outgoingCallStartedGameEvent;
+    private static float outgoingCallTimeStatic;
 
-    private static ContactSO[] contactList;
+    [SerializeField]
+    private GameEventContactSO callAcceptedGameEvent;
+    [SerializeField]
+    private GameEventContactSO outgoingCallStartedGameEvent;
 
-    public static ContactSO[] ContactList => contactList;
+    private static GameEventContactSO callAcceptedGameEventStatic;
+    private static GameEventContactSO outgoingCallStartedGameEventStatic;
 
-    public static void OnAwake(InitializationData initializationData)
+    [SerializeField]
+    private ContactSO[] contactList;
+
+    private static bool isOutgoingCallActive;
+    private static float outgoingCallTimer;
+
+    public static ContactSO[] ContactList { get; private set; }
+
+    private void Awake()
     {
-        callAcceptedGameEvent = initializationData.CallAcceptedGameEvent;
-        outgoingCallStartedGameEvent = initializationData.OutgoingCallStartedGameEvent;
-        contactList = initializationData.ContactList;
-        outgoingCallTime = initializationData.OutgoingCallTime;
+        outgoingCallTimeStatic = outgoingCallTime;
+        callAcceptedGameEventStatic = callAcceptedGameEvent;
+        outgoingCallStartedGameEventStatic = outgoingCallStartedGameEvent;
+        ContactList = contactList;
+
+        isOutgoingCallActive = false;
+        outgoingCallTimer = 0;
+
+        TempStartCall();
+    }
+
+    private void Update()
+    {
+        // Calling sound and outgoing call timers
+        if (isOutgoingCallActive)
+        {
+            if (outgoingCallTimer <= 0)
+            {
+                AnswerOutgoingCall();
+            }
+            else
+            {
+                outgoingCallTimer -= Time.deltaTime;
+            }
+        }
     }
 
     public static void TempStartCall()
@@ -53,7 +76,7 @@ public static class PhonecallManager
         StartCall(new Call()
         {
             CallType = CallType.IncomingCall,
-            ContactSO = contactList[0]
+            ContactSO = ContactList[0]
         });
     }
 
@@ -65,7 +88,7 @@ public static class PhonecallManager
             newCall.CallType = CallType.OngoingCall;
             StopCurrentCall();
             StartCall(newCall);
-            callAcceptedGameEvent?.RaiseEvent(newCall.ContactSO);
+            callAcceptedGameEventStatic.RaiseEvent(newCall.ContactSO);
             newCall.ContactSO.InvokePhoneAnsweredGameEvents();
         }
         else
@@ -100,8 +123,10 @@ public static class PhonecallManager
         }
     }
 
-    public static void AnswerOutgoingCall()
+    private static void AnswerOutgoingCall()
     {
+        isOutgoingCallActive = false;
+
         if (currentCall != null && currentCall.CallType == CallType.OutgoingCall)
         {
             Call newCall = currentCall;
@@ -114,7 +139,6 @@ public static class PhonecallManager
         {
             Debug.LogWarning("AnswerOutgoingCall invoked when no outcoming call");
         }
-            
     }
 
     private static void StopCurrentCall()
@@ -143,8 +167,10 @@ public static class PhonecallManager
         if (currentCall == null)
         {
             StartCall(CallType.OutgoingCall, contactSO);
-            outgoingCallStartedGameEvent?.RaiseEvent(contactSO);
+            outgoingCallStartedGameEventStatic.RaiseEvent(contactSO);
             contactSO.InvokeOutgoingCallGameEvents();
+            isOutgoingCallActive = true;
+            outgoingCallTimer = outgoingCallTimeStatic;
         }
         else
         {

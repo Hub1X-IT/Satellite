@@ -18,9 +18,6 @@ public class ScriptsInitializer : MonoBehaviour
     private InteractionController.InitializationData interactionControllerData;
 
     [SerializeField]
-    private PhonecallManager.InitializationData phonecallManagerData;
-
-    [SerializeField]
     private VolumeController.InitializationData volumeControllerData;
 
     private void Awake()
@@ -34,7 +31,6 @@ public class ScriptsInitializer : MonoBehaviour
         GameManager.OnAwake();
         GraphicsSettingsManager.OnAwake();
         InteractionController.OnAwake(interactionControllerData);
-        PhonecallManager.OnAwake(phonecallManagerData);
         VolumeController.OnAwake(volumeControllerData);
 
         GameSettingsManager.LoadSettings();

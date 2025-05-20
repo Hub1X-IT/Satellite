@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ContactSO", menuName = "Scriptable Objects/ContactSO")]
+[CreateAssetMenu(fileName = "ContactSO", menuName = "ContactSO")]
 public class ContactSO : ScriptableObject
 {
     [SerializeField]

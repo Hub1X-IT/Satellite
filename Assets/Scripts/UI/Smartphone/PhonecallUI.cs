@@ -34,7 +34,6 @@ public class PhonecallUI : MonoBehaviour
 
     private bool isOutgoingCallActive;
     private float callingSoundTimer;
-    private float outgoingCallTimer;
     private const float CallingSoundInterval = 2f;
 
     private bool isCallTimerActive;
@@ -55,7 +54,7 @@ public class PhonecallUI : MonoBehaviour
 
     private void Update()
     {
-        // Calling sound and outgoing call timers
+        // Calling sound timer
         if (isOutgoingCallActive)
         {
             if (callingSoundTimer <= 0)
@@ -67,15 +66,6 @@ public class PhonecallUI : MonoBehaviour
             {
                 callingSoundTimer -= Time.deltaTime;
             }
-
-            if (outgoingCallTimer <= 0)
-            {
-                PhonecallManager.AnswerOutgoingCall();
-            }
-            else
-            {
-                outgoingCallTimer -= Time.deltaTime;
-            }
         }
 
         // CallTimer
@@ -84,7 +74,7 @@ public class PhonecallUI : MonoBehaviour
             if (callTimeTimer <= 0)
             {
                 callTime += 1;
-                SetCallTimer();
+                SetCallTimerText();
                 callTimeTimer = 1f;
             }
             else
@@ -115,6 +105,7 @@ public class PhonecallUI : MonoBehaviour
     {
         incomingCallCallerNameTextField.text = contactName;
         incomingCallUI.SetActive(true);
+        Debug.Log("inc");
     }
 
     private void StartOutgoingCall(string contactName)
@@ -123,7 +114,6 @@ public class PhonecallUI : MonoBehaviour
         outgoingCallUI.SetActive(true);
         isOutgoingCallActive = true;
         callingSoundTimer = 0f;
-        outgoingCallTimer = PhonecallManager.OutgoingCallTime;
     }
 
     private void StartOngoingCall(string contactName)
@@ -133,6 +123,7 @@ public class PhonecallUI : MonoBehaviour
         isCallTimerActive = true;
         callTimeTimer = 1f;
         callTime = 0;
+        SetCallTimerText();
     }
 
     private void StopCall()
@@ -145,7 +136,7 @@ public class PhonecallUI : MonoBehaviour
         callingSound.Stop();
     }
 
-    private void SetCallTimer()
+    private void SetCallTimerText()
     {
         int callTimeMinutes = callTime / 60;
         int callTimeSeconds = callTime % 60;

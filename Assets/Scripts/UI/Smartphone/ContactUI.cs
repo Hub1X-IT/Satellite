@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class ContactUI : MonoBehaviour
 {
-    ContactSO thisContactSO;
+    private ContactSO thisContactSO;
 
     [SerializeField]
     private Button callButton;
