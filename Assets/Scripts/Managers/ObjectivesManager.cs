@@ -8,6 +8,7 @@ public class ObjectivesManager : MonoBehaviour
     {
         public GameEventSO[] GameEvents;
         public string Chapter;
+        [TextArea(3, 6)]
         public string Objective;
     }
 
