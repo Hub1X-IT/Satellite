@@ -1220,6 +1220,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3590736367100869470, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495773547002825661, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495773547002825661, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495773547002825661, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495773547002825661, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7818,6 +7838,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8068127811275879608, guid: c21683d62c6fbec48b80464695057995, type: 3}
   m_PrefabInstance: {fileID: 1217615871}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &770754539 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2613590081735651980, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
+  m_PrefabInstance: {fileID: 1422935265}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a886235d8e6f75438df5a56d5ad3379, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &773589880 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8068127811275879608, guid: c21683d62c6fbec48b80464695057995, type: 3}
@@ -14342,10 +14373,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 16403817508618078, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 211342564858697704, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1273539484618893970, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
+      propertyPath: emailContent
+      value: 
+      objectReference: {fileID: 770754539}
+    - target: {fileID: 1273539484618893970, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
+      propertyPath: objectiveEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 5ba6531333a3d33469c99836913a23f2, type: 2}
     - target: {fileID: 1678582442171483607, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
