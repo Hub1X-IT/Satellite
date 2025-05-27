@@ -6,7 +6,7 @@ public class DialogueManagerNew : MonoBehaviour
     [Serializable]
     public class DialogueSentence
     {
-        public string SayerName;
+        public DialogueCharacterSO Character;
         public string Sentence;
     }
     

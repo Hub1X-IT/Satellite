@@ -1,10 +1,14 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DialogueUINew : MonoBehaviour
 {
     [SerializeField]
     private GameObject dialogueUI;
+
+    [SerializeField]
+    private Image characterImage;
 
     [SerializeField]
     private TMP_Text dialogueNameTextField;
@@ -21,7 +25,8 @@ public class DialogueUINew : MonoBehaviour
 
     private void ShowDialogue(DialogueManagerNew.DialogueSentence dialogueStatement)
     {
-        dialogueNameTextField.text = dialogueStatement.SayerName;
+        characterImage.sprite = dialogueStatement.Character.CharacterImage;
+        dialogueNameTextField.text = dialogueStatement.Character.CharacterName;
         dialogueSentenceTextField.text = dialogueStatement.Sentence;
         dialogueUI.SetActive(true);
     }
