@@ -19,7 +19,7 @@ public class Server : MonoBehaviour
 
     private void Awake()
     {
-        outline = GetComponent<Outline>();
+        outline = GetComponentInChildren<Outline>();
 
         serverTrigger.InteractVisual = GetComponent<InteractionVisual>();
 
