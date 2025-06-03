@@ -9,6 +9,7 @@ public class DialogueManagerNew : MonoBehaviour
         public DialogueCharacterSO Character;
         [TextArea(3, 10)]
         public string Sentence;
+        public AudioClip SentenceAudioClip;
     }
     
     [Serializable]

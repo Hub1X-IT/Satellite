@@ -16,6 +16,9 @@ public class DialogueUINew : MonoBehaviour
     [SerializeField]
     private TMP_Text dialogueSentenceTextField;
 
+    [SerializeField]
+    private AudioSource dialogueAudioSource;
+
     private void Awake()
     {
         DialogueManagerNew.NewDialogueSentenceStarted += ShowDialogue;
@@ -29,6 +32,9 @@ public class DialogueUINew : MonoBehaviour
         dialogueNameTextField.text = dialogueStatement.Character.CharacterName;
         dialogueSentenceTextField.text = dialogueStatement.Sentence;
         dialogueUI.SetActive(true);
+
+        dialogueAudioSource.clip = dialogueStatement.SentenceAudioClip;
+        dialogueAudioSource.Play();
     }
 
     private void HideDialogue()
