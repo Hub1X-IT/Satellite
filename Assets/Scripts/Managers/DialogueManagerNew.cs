@@ -10,6 +10,7 @@ public class DialogueManagerNew : MonoBehaviour
         [TextArea(3, 10)]
         public string Sentence;
         public AudioClip SentenceAudioClip;
+        public float MinSentenceTime;
     }
     
     [Serializable]
@@ -29,6 +30,10 @@ public class DialogueManagerNew : MonoBehaviour
     private int currentSentenceIndex;
     private int currentDialogueLength;
 
+    private bool canGoToNextSentence;
+    private bool isNextSentenceTimerActive;
+    private float nextSentenceTimer;
+
     private void Awake()
     {
         GameInput.OnNextDialogueSentenceAction += OnNextDialogueSentence;
@@ -38,6 +43,22 @@ public class DialogueManagerNew : MonoBehaviour
             foreach (var gameEvent in dialogueInvokeData.GameEvents)
             {
                 gameEvent.EventRaised += () => StartNewDialogue(dialogueInvokeData.DialogueSO);
+            }
+        }
+    }
+
+    private void Update()
+    {
+        if (isNextSentenceTimerActive)
+        {
+            if (nextSentenceTimer <= 0)
+            {
+                canGoToNextSentence = true;
+                isNextSentenceTimerActive = false;
+            }
+            else
+            {
+                nextSentenceTimer -= Time.deltaTime;
             }
         }
     }
@@ -64,14 +85,17 @@ public class DialogueManagerNew : MonoBehaviour
     {
         if (currentDialogueSO != null)
         {
-            currentSentenceIndex++;
-            if (currentSentenceIndex >= currentDialogueLength)
+            if (canGoToNextSentence)
             {
-                EndDialogue();
-            }
-            else
-            {
-                StartNewDialogueSentence(currentDialogueSO.DialogueSentences[currentSentenceIndex]);
+                currentSentenceIndex++;
+                if (currentSentenceIndex >= currentDialogueLength)
+                {
+                    EndDialogue();
+                }
+                else
+                {
+                    StartNewDialogueSentence(currentDialogueSO.DialogueSentences[currentSentenceIndex]);
+                }
             }
         }
         else
@@ -84,11 +108,18 @@ public class DialogueManagerNew : MonoBehaviour
     {
         GameInput.PlayerInputActions.Dialogue.Disable();
         DialogueEnded?.Invoke();
+        if (currentDialogueSO != null)
+        {
+            currentDialogueSO.DialogueEndedGameEvent.TryRaiseEvent();
+        }
     }
 
-    private void StartNewDialogueSentence(DialogueSentence dialogue)
+    private void StartNewDialogueSentence(DialogueSentence sentence)
     {
-        NewDialogueSentenceStarted?.Invoke(dialogue);
-    }
+        NewDialogueSentenceStarted?.Invoke(sentence);
 
+        canGoToNextSentence = false;
+        isNextSentenceTimerActive = true;
+        nextSentenceTimer = sentence.MinSentenceTime;
+    }
 }
