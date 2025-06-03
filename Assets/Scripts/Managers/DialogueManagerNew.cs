@@ -7,6 +7,7 @@ public class DialogueManagerNew : MonoBehaviour
     public class DialogueSentence
     {
         public DialogueCharacterSO Character;
+        [TextArea(3, 10)]
         public string Sentence;
     }
     
@@ -51,9 +52,9 @@ public class DialogueManagerNew : MonoBehaviour
         currentDialogueSO = dialogueSO;
 
         currentSentenceIndex = 0;
-        currentDialogueLength = dialogueSO.DialogueSenteces.Length;
+        currentDialogueLength = dialogueSO.DialogueSentences.Length;
 
-        StartNewDialogueSentence(dialogueSO.DialogueSenteces[0]);
+        StartNewDialogueSentence(dialogueSO.DialogueSentences[0]);
 
         GameInput.PlayerInputActions.Dialogue.Enable();
     }
@@ -69,7 +70,7 @@ public class DialogueManagerNew : MonoBehaviour
             }
             else
             {
-                StartNewDialogueSentence(currentDialogueSO.DialogueSenteces[currentSentenceIndex]);
+                StartNewDialogueSentence(currentDialogueSO.DialogueSentences[currentSentenceIndex]);
             }
         }
         else

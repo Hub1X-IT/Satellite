@@ -6,5 +6,5 @@ public class DialogueSO : ScriptableObject
     [SerializeField]
     private DialogueManagerNew.DialogueSentence[] dialogueSentences;
 
-    public DialogueManagerNew.DialogueSentence[] DialogueSenteces => dialogueSentences;
+    public DialogueManagerNew.DialogueSentence[] DialogueSentences => dialogueSentences;
 }
