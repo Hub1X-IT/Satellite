@@ -15,6 +15,7 @@ public static class VolumeController
         MasterVolume,
         MusicVolume,
         SoundVolume,
+        DialogueVolume,
     }
 
     private static AudioMixer mainAudioMixer;
@@ -22,6 +23,7 @@ public static class VolumeController
     public const string MasterVolume = "MasterVolume";
     public const string MusicVolume = "MusicVolume";
     public const string SoundFXVolume = "SoundFXVolume";
+    public const string DialogueVolume = "DialogueVolume";
 
     public static void OnAwake(InitializationData data)
     {
@@ -38,6 +40,7 @@ public static class VolumeController
         mainAudioMixer.SetFloat(MasterVolume, ValueToVolume(GameSettingsManager.MainVolume));
         mainAudioMixer.SetFloat(MusicVolume, ValueToVolume(GameSettingsManager.MusicVolume));
         mainAudioMixer.SetFloat(SoundFXVolume, ValueToVolume(GameSettingsManager.SoundVolume));
+        mainAudioMixer.SetFloat(DialogueVolume, ValueToVolume(GameSettingsManager.DialogueVolume));
     }
 
     private static float ValueToVolume(float value)

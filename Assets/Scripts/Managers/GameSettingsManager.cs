@@ -23,6 +23,7 @@ public static class GameSettingsManager
     private const string PlayerPrefs_MainVolume = VolumeController.MasterVolume;
     private const string PlayerPrefs_MusicVolume = VolumeController.MusicVolume;
     private const string PlayerPrefs_SoundFXVolume = VolumeController.SoundFXVolume;
+    private const string PlayerPrefs_DialogueVolume = VolumeController.DialogueVolume;
 
     private const string PlayerPrefs_GraphicsIndex = "GraphicsIndex";
     private const string PlayerPrefs_ResolutionIndex = "ResolutionIndex";
@@ -36,6 +37,7 @@ public static class GameSettingsManager
     public static float MainVolume { get; private set; }
     public static float MusicVolume { get; private set; }
     public static float SoundVolume { get; private set; }
+    public static float DialogueVolume { get; private set; }
 
     public static int GraphicsIndex { get; private set; }
     public static int ResolutionIndex { get; private set; }
@@ -53,6 +55,7 @@ public static class GameSettingsManager
         MainVolume = PlayerPrefs.GetFloat(PlayerPrefs_MainVolume, DefaultVolume);
         MusicVolume = PlayerPrefs.GetFloat(PlayerPrefs_MusicVolume, DefaultVolume);
         SoundVolume = PlayerPrefs.GetFloat(PlayerPrefs_SoundFXVolume, DefaultVolume);
+        DialogueVolume = PlayerPrefs.GetFloat(PlayerPrefs_DialogueVolume, DefaultVolume);
 
         GraphicsIndex = PlayerPrefs.GetInt(PlayerPrefs_GraphicsIndex, DefaultGraphicsIndex);
         ResolutionIndex = PlayerPrefs.GetInt(PlayerPrefs_ResolutionIndex, DefaultResolutionIndex);
@@ -84,6 +87,10 @@ public static class GameSettingsManager
             case VolumeController.Volume.SoundVolume:
                 SoundVolume = value;
                 PlayerPrefs.SetFloat(PlayerPrefs_SoundFXVolume, SoundVolume);
+                break;
+            case VolumeController.Volume.DialogueVolume:
+                DialogueVolume = value;
+                PlayerPrefs.SetFloat(PlayerPrefs_DialogueVolume, DialogueVolume);
                 break;
         }
     }
