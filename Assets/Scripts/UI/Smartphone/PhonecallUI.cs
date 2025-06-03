@@ -48,6 +48,7 @@ public class PhonecallUI : MonoBehaviour
 
         PhonecallManager.NewCallStarted += OnNewCallStarted;
         PhonecallManager.CurrentCallEnded += StopCall;
+        PhonecallManager.OnCanEndCall += OnCanEndCall;
 
         PhonecallManager.TempStartCall();
     }
@@ -82,6 +83,12 @@ public class PhonecallUI : MonoBehaviour
                 callTimeTimer -= Time.deltaTime;
             }
         }
+    }
+
+    private void OnCanEndCall(bool canEnd)
+    {
+        Debug.Log(canEnd);
+        endCallButton.interactable = canEnd;
     }
 
     private void OnNewCallStarted(PhonecallManager.Call newCall)
