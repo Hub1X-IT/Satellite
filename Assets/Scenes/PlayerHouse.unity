@@ -779,50 +779,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3908973024121013662, guid: db83a21a5eed7b843b67adde93dc187f, type: 3}
   m_PrefabInstance: {fileID: 73790124}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &76147863
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 76147864}
-  - component: {fileID: 76147865}
-  m_Layer: 0
-  m_Name: DialogueManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &76147864
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 76147863}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 710156001}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &76147865
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 76147863}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fc4998226830844f8f6d3d115bf5c77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &77388410
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4941,9 +4897,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialoguesInvokeData:
   - GameEvents:
-    - {fileID: 11400000, guid: 5ba6531333a3d33469c99836913a23f2, type: 2}
-    - {fileID: 11400000, guid: b4d0b43f06bc51b40acfcb232b9e9b8c, type: 2}
-    DialogueSO: {fileID: 11400000, guid: 6bf6e08000a7f0c47bc002159d6d8176, type: 2}
+    - {fileID: 11400000, guid: 4ad46c8a025b037498f10d94aec83d69, type: 2}
+    DialogueSO: {fileID: 11400000, guid: ccd7824a0887a7e4b919d5f20036e69c, type: 2}
+  - GameEvents:
+    - {fileID: 11400000, guid: 8e0f59df0293a6a44bfb5feff05939ef, type: 2}
+    DialogueSO: {fileID: 11400000, guid: 0992e8b84d6a4a842911c0250e3a1716, type: 2}
 --- !u!1 &438686337
 GameObject:
   m_ObjectHideFlags: 0
@@ -7381,7 +7339,6 @@ Transform:
   - {fileID: 1501374420}
   - {fileID: 1979368307}
   - {fileID: 511024895}
-  - {fileID: 76147864}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &723556996
