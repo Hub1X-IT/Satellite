@@ -54,12 +54,12 @@ public class MonitorAppsManagerUI : MonoBehaviour
     {
         // Method for temporary password cracking button - don't delete until the button is deleted!
         PasswordCrackingAppUI passwordCrackingApp = OpenApplication(ApplicationType.PasswordCrackingApp).GetComponent<PasswordCrackingAppUI>();
-        passwordCrackingApp.InitializePasswordCrackingApp("Password cracking - test");
+        passwordCrackingApp.InitializePasswordCrackingApp("Password cracking");
     }
 
     public void OpenDoorApp()
     {
-        // Temporary method
+        // Temporary method (idk whether it's used anywhere)
         DoorAppUI doorApp = OpenApplication(ApplicationType.DoorApp).GetComponent<DoorAppUI>();
 
     }
