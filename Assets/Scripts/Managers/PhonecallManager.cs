@@ -51,6 +51,11 @@ public class PhonecallManager : MonoBehaviour
         outgoingCallStartedGameEventStatic = outgoingCallStartedGameEvent;
         ContactList = contactList;
 
+        foreach (var contactSO in ContactList)
+        {
+            contactSO.InitializeContactSO();
+        }
+
         isOutgoingCallActive = false;
         outgoingCallTimer = 0;
 
@@ -139,11 +144,14 @@ public class PhonecallManager : MonoBehaviour
 
         if (currentCall != null && currentCall.CallType == CallType.OutgoingCall)
         {
-            Call newCall = currentCall;
-            newCall.CallType = CallType.OngoingCall;
-            StopCurrentCall();
-            newCall.ContactSO.InvokeOutgoingCallAnsweredGameEvents();
-            StartCall(newCall);
+            if (currentCall.ContactSO.CanPhoneBeAnswered)
+            {
+                Call newCall = currentCall;
+                newCall.CallType = CallType.OngoingCall;
+                StopCurrentCall();
+                newCall.ContactSO.InvokeOutgoingCallAnsweredGameEvents();
+                StartCall(newCall);
+            }
         }
         else
         {

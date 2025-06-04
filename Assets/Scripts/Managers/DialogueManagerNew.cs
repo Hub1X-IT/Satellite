@@ -52,7 +52,7 @@ public class DialogueManagerNew : MonoBehaviour
 
         if (debugDialogueSkipping)
         {
-            Debug.LogWarning("Debug dialogue skipping active!");
+            Debug.LogWarning("Debug dialogue skipping is active.");
         }
     }
 

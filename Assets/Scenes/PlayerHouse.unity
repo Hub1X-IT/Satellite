@@ -1228,24 +1228,12 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3590736367100869470, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3590736367100869470, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4495773547002825661, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4495773547002825661, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4495773547002825661, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
-      propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4495773547002825661, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
@@ -4895,6 +4883,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1295281131fcebf49870fbbb4a2b0715, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugDialogueSkipping: 1
   dialoguesInvokeData:
   - GameEvents:
     - {fileID: 11400000, guid: 4ad46c8a025b037498f10d94aec83d69, type: 2}
