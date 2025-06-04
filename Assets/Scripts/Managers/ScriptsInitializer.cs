@@ -31,6 +31,7 @@ public class ScriptsInitializer : MonoBehaviour
         GameManager.OnAwake();
         GraphicsSettingsManager.OnAwake();
         InteractionController.OnAwake(interactionControllerData);
+        VirtualClipboard.InitializeVirtualClipboard();
         VolumeController.OnAwake(volumeControllerData);
 
         GameSettingsManager.LoadSettings();

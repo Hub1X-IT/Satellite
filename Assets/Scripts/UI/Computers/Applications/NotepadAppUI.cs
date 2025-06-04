@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NotepadAppUI : MonoBehaviour
 {
@@ -7,8 +8,13 @@ public class NotepadAppUI : MonoBehaviour
 
     private const string BaseAppName = "Notepad - ";
 
+    private string fileContent;
+
     [SerializeField]
     private TMP_InputField contentInputField;
+
+    [SerializeField]
+    private Button copyButton;
 
     public void InitializeNotepadAppUI(FileStringSO fileStringSO)
     {
@@ -27,7 +33,14 @@ public class NotepadAppUI : MonoBehaviour
             multilineFileOutput += password;
         }
 
-        contentInputField.text = multilineFileOutput;
+        copyButton.onClick.AddListener(CopyText);
+
+        contentInputField.text = fileContent = multilineFileOutput;
         monitorApp.SetAppName(BaseAppName + fileStringSO.SelfName);
+    }
+
+    private void CopyText()
+    {
+        VirtualClipboard.SetClipboardText(fileContent);
     }
 }

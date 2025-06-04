@@ -15,7 +15,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
     [SerializeField]
     private TMP_InputField inputField;
     [SerializeField]
-    private Button decompressButton;
+    private Button pasteAndDecompressButton;
 
     [SerializeField]
     private Button binButton;
@@ -95,8 +95,8 @@ public class PasswordCrackingAppUI : MonoBehaviour
 
     private void EnableApp()
     {
-        inputField.onEndEdit.AddListener(ChangeOriginalPassword);
-        decompressButton.onClick.AddListener(DecompressPassword);
+        // inputField.onEndEdit.AddListener(ChangeOriginalPassword);
+        pasteAndDecompressButton.onClick.AddListener(PasteAndDecompress);
 
         binButton.onClick.AddListener(BinDecode);
         octButton.onClick.AddListener(OctDecode);
@@ -108,8 +108,8 @@ public class PasswordCrackingAppUI : MonoBehaviour
 
     private void DisableApp()
     {
-        inputField.onEndEdit.RemoveListener(ChangeOriginalPassword);
-        decompressButton.onClick.RemoveListener(DecompressPassword);
+        // inputField.onEndEdit.RemoveListener(ChangeOriginalPassword);
+        pasteAndDecompressButton.onClick.RemoveListener(PasteAndDecompress);
 
         binButton.onClick.RemoveListener(BinDecode);
         octButton.onClick.RemoveListener(OctDecode);
@@ -124,9 +124,8 @@ public class PasswordCrackingAppUI : MonoBehaviour
         RemoveAllPasswordTextFields();
         originalPassword = currentPassword = newPassword;
     }
-    private void DecompressPassword()
+    private void DecompressPassword(string compressedPassword)
     {
-        string compressedPassword = inputField.text;
         if (TextCompressor.TryGetDecompressedText(compressedPassword, out string decompressedPassword))
         {
             RemoveAllPasswordTextFields();
@@ -137,6 +136,11 @@ public class PasswordCrackingAppUI : MonoBehaviour
         {
             Debug.Log("Decompression failed.");
         }
+    }
+    private void PasteAndDecompress()
+    {
+        inputField.text = VirtualClipboard.GetClipboardText();
+        DecompressPassword(VirtualClipboard.GetClipboardText());
     }
 
     private void BinDecode()
