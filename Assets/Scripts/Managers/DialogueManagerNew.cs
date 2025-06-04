@@ -22,6 +22,7 @@ public class DialogueManagerNew : MonoBehaviour
 
     public static event Action<DialogueSentence> NewDialogueSentenceStarted;
     public static event Action DialogueEnded;
+    public static event Action<bool> OnCanStartNewSentence;
 
     [SerializeField]
     private DialogueInvokeData[] dialoguesInvokeData;
@@ -54,6 +55,7 @@ public class DialogueManagerNew : MonoBehaviour
             if (nextSentenceTimer <= 0)
             {
                 canGoToNextSentence = true;
+                OnCanStartNewSentence?.Invoke(true);
                 isNextSentenceTimerActive = false;
             }
             else
@@ -67,6 +69,7 @@ public class DialogueManagerNew : MonoBehaviour
     {
         NewDialogueSentenceStarted = null;
         DialogueEnded = null;
+        OnCanStartNewSentence = null;
     }
 
     private void StartNewDialogue(DialogueSO dialogueSO)
@@ -121,5 +124,6 @@ public class DialogueManagerNew : MonoBehaviour
         canGoToNextSentence = false;
         isNextSentenceTimerActive = true;
         nextSentenceTimer = sentence.MinSentenceTime;
+        OnCanStartNewSentence?.Invoke(false);
     }
 }

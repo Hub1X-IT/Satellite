@@ -73,6 +73,13 @@ public class PhonecallManager : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        NewCallStarted = null;
+        CurrentCallEnded = null;
+        OnCanEndCall = null;
+    }
+
     public static void TempStartCall()
     {
         StartCall(new Call()

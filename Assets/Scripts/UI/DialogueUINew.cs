@@ -19,10 +19,14 @@ public class DialogueUINew : MonoBehaviour
     [SerializeField]
     private AudioSource dialogueAudioSource;
 
+    [SerializeField]
+    private GameObject nextSentenceHintText;
+
     private void Awake()
     {
         DialogueManagerNew.NewDialogueSentenceStarted += ShowDialogue;
         DialogueManagerNew.DialogueEnded += HideDialogue;
+        DialogueManagerNew.OnCanStartNewSentence += SetNextSentenceHintActive;
         HideDialogue();
     }
 
@@ -40,5 +44,10 @@ public class DialogueUINew : MonoBehaviour
     private void HideDialogue()
     {
         dialogueUI.SetActive(false);
+    }
+
+    private void SetNextSentenceHintActive(bool active)
+    {
+        nextSentenceHintText.SetActive(active);
     }
 }
