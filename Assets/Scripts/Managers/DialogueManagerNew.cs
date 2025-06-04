@@ -111,7 +111,7 @@ public class DialogueManagerNew : MonoBehaviour
     {
         GameInput.PlayerInputActions.Dialogue.Disable();
         DialogueEnded?.Invoke();
-        if (currentDialogueSO != null)
+        if (currentDialogueSO != null && currentDialogueSO.DialogueEndedGameEvent != null)
         {
             currentDialogueSO.DialogueEndedGameEvent.TryRaiseEvent();
         }
