@@ -79,6 +79,7 @@ public class Computer : MonoBehaviour
             if (isInComputerView)
             {
                 SetComputerViewActive(false);
+                outline.enabled = false;
             }
         };
 
