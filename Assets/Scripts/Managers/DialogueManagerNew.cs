@@ -20,6 +20,9 @@ public class DialogueManagerNew : MonoBehaviour
         public DialogueSO DialogueSO;
     }
 
+    [SerializeField]
+    private bool debugDialogueSkipping;
+
     public static event Action<DialogueSentence> NewDialogueSentenceStarted;
     public static event Action DialogueEnded;
     public static event Action<bool> OnCanStartNewSentence;
@@ -45,6 +48,11 @@ public class DialogueManagerNew : MonoBehaviour
             {
                 gameEvent.EventRaised += () => StartNewDialogue(dialogueInvokeData.DialogueSO);
             }
+        }
+
+        if (debugDialogueSkipping)
+        {
+            Debug.LogWarning("Debug dialogue skipping active!");
         }
     }
 
@@ -88,7 +96,7 @@ public class DialogueManagerNew : MonoBehaviour
     {
         if (currentDialogueSO != null)
         {
-            if (canGoToNextSentence)
+            if (canGoToNextSentence || debugDialogueSkipping)
             {
                 currentSentenceIndex++;
                 if (currentSentenceIndex >= currentDialogueLength)
