@@ -23,5 +23,8 @@ public class FilePasswordStringSO : FileStringSO
         lockedDataContainerSO.DataContainerPassword = PasswordContent;
         string encodedPassword = PasswordEncryption.EncryptPassword(PasswordContent, numberOfEncryptions).Password;
         EncodedCompressedPasswordContent = TextCompressor.GetCompressedText(encodedPassword);
+
+        // Probably temporary
+        TempPasswordChecker.CorrectPassword = PasswordContent;
     }
 }

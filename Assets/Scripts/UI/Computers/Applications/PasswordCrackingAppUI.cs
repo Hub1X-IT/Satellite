@@ -40,6 +40,15 @@ public class PasswordCrackingAppUI : MonoBehaviour
     private TMP_Text detectionChanceTextField;
     private const string DetectionChanceText = "Detection Chance: ";
 
+    // Probably temporary
+    public event Action<string> NewPasswordConverted;
+    private bool wasDetected;
+
+    private void OnDestroy()
+    {
+        NewPasswordConverted = null;
+    }
+
     public void InitializePasswordCrackingApp(string appName)
     {
         monitorAppUI = GetComponent<MonitorAppUI>();
@@ -48,9 +57,12 @@ public class PasswordCrackingAppUI : MonoBehaviour
         InitializePasswordCracking();
         SetDetectionChanceText();
 
+        TempPasswordChecker.SetPasswordCrackingAppReference(this);
+
         DetectionManager.DetectionOccured += () =>
         {
             // DisableApp();
+            wasDetected = true;
             if (monitorAppUI != null)
             {
                 monitorAppUI.CloseApp();
@@ -61,6 +73,8 @@ public class PasswordCrackingAppUI : MonoBehaviour
             // EnableApp();
             SetDetectionChanceText();
         };
+
+        wasDetected = false;
     }
 
     private void InitializePasswordCracking()
@@ -167,6 +181,11 @@ public class PasswordCrackingAppUI : MonoBehaviour
 
         DetectionManager.CheckDetection();
         SetDetectionChanceText();
+
+        if (!wasDetected)
+        {
+            NewPasswordConverted?.Invoke(currentPassword);
+        }
     }
 
     private void SetDetectionChanceText()
