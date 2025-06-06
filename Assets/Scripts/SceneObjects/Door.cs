@@ -48,4 +48,13 @@ public class Door : MonoBehaviour
             doorAudioSource.Play();
         }
     }
+
+    // Method for timeline signal receiver (do not delete)
+    public void OpenDoor()
+    {
+        if (!isDoorOpen)
+        {
+            SetDoorOpen(true, true);
+        }
+    }
 }
