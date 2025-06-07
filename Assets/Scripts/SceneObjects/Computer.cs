@@ -197,6 +197,7 @@ public class Computer : MonoBehaviour
     public void ExitComputerView()
     {
         // Method to be invoked by an event listener
+        //Used by signal receiver
         if (isInComputerView)
         {
             SetComputerViewActive(false);
