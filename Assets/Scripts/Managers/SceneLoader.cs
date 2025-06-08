@@ -9,6 +9,7 @@ public static class SceneLoader
     {
         MainMenu,
         PlayerHouse,
+        TheEnd,
     }
 
     private static Scene targetScene;
