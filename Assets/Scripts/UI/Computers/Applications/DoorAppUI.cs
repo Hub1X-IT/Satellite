@@ -14,6 +14,10 @@ public class DoorAppUI : MonoBehaviour
 
     [SerializeField]
     private TMP_Text doorAppTextField;
+    [SerializeField]
+    private Sprite doorOpenedSprite;
+    [SerializeField]
+    private Sprite doorClosedSprite;
 
     private bool isDoorOpen;
 
@@ -34,6 +38,7 @@ public class DoorAppUI : MonoBehaviour
     {
         isDoorOpen = open;
         doorAppTextField.text = open ? DoorOpenText : DoorClosedText;
+        doorButton.image.sprite = open ? doorOpenedSprite : doorClosedSprite;
         if (open && onDoorOpenGameEvent != null)
         {
             onDoorOpenGameEvent.TryRaiseEvent();
