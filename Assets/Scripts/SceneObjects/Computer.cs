@@ -184,7 +184,7 @@ public class Computer : MonoBehaviour
         CameraController.SetActiveCinemachineCamera(computerCinemachineCamera);
     }
 
-    public void ToggleComputerTrigger()
+    private void ToggleComputerTrigger()
     {
         computerTrigger.gameObject.SetActive(!isInComputerView && isComputerEnabled);
     }
@@ -197,7 +197,7 @@ public class Computer : MonoBehaviour
     public void ExitComputerView()
     {
         // Method to be invoked by an event listener
-        //Used by signal receiver
+        // Used by signal receiver
         if (isInComputerView)
         {
             SetComputerViewActive(false);

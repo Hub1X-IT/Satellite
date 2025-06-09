@@ -58,8 +58,12 @@ public class ComputerUI : MonoBehaviour
             }
         }
 
-        screenUI.SetScreenViewEnalbed(false);
         computerTurnedOffScreen.SetActive(true);
+    }
+
+    private void Start()
+    {
+        screenUI.SetScreenViewEnalbed(false);
     }
 
     public void AddInputField(ComputerUIDynamicInputField inputField)
