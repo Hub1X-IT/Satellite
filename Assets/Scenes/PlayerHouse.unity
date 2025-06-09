@@ -5146,10 +5146,10 @@ AudioSource:
   m_GameObject: {fileID: 436630711}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 5110909884678772525, guid: f19853364afa6214a962ddccd71ff23b, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -5261,8 +5261,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 438686337}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 1.556, y: 3.2129998, z: 2.273}
+  m_LocalRotation: {x: -0, y: 0.030123223, z: -0, w: -0.99954623}
+  m_LocalPosition: {x: 1.9940319, y: 1.2700001, z: 1.6345409}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5953,7 +5953,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: e95032dc84a251a488b568ca0bbda7ff, type: 2}
-  m_InitialState: 0
+  m_InitialState: 1
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
@@ -5966,8 +5966,6 @@ PlayableDirector:
     value: {fileID: 1543942943}
   - key: {fileID: 7179294248087542990, guid: e95032dc84a251a488b568ca0bbda7ff, type: 2}
     value: {fileID: 1473525577}
-  - key: {fileID: -8930138601454018107, guid: e95032dc84a251a488b568ca0bbda7ff, type: 2}
-    value: {fileID: 1543942939}
   - key: {fileID: 3264437675648979704, guid: e95032dc84a251a488b568ca0bbda7ff, type: 2}
     value: {fileID: 1422935268}
   m_ExposedReferences:
@@ -10821,8 +10819,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 979979597}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 1.556, y: 3.2129998, z: 2.273}
+  m_LocalRotation: {x: 0, y: 0.030123223, z: -0, w: -0.99954623}
+  m_LocalPosition: {x: 1.9940319, y: 1.2700001, z: 1.6345409}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17201,6 +17199,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: c9f4aec85902d834fab8758c4156131f, type: 2}
     - {fileID: 11400000, guid: 4c2238105c84fd341a5ed4529d834d79, type: 2}
     - {fileID: 11400000, guid: 20021257f5e702a45a608b1e3bbee7ba, type: 2}
+    - {fileID: 0}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -17285,6 +17284,20 @@ MonoBehaviour:
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1543942939}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 5
+            m_StringArgument: 
+            m_BoolArgument: 1
           m_CallState: 2
 --- !u!114 &1473525578
 MonoBehaviour:
@@ -18778,7 +18791,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1543942940
 Transform:
   m_ObjectHideFlags: 0
@@ -25355,7 +25368,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: 45b9059cc18d94344abcd656f1f6ec84, type: 2}
-  m_InitialState: 1
+  m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
