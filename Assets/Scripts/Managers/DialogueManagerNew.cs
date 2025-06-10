@@ -79,8 +79,8 @@ public class DialogueManagerNew : MonoBehaviour
         {
             if (maxSentenceTimeTimer <= 0)
             {
-                StartNextDialogueSentence();
                 isMaxSentenceTimeTimerActive = false;
+                StartNextDialogueSentence();
             }
             else
             {

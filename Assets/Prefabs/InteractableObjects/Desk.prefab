@@ -406,28 +406,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6603152963769998397}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f132f3f12d8db1e4b9fe50d15ffde684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvents:
-  - {fileID: 11400000, guid: f83fc14d65f1ce549ba304177626da56, type: 2}
+  gameEvents: []
   OnGameEventRaised:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4971308447126197813}
-        m_TargetAssemblyTypeName: Computer, Assembly-CSharp
-        m_MethodName: ExitComputerView
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1001 &5763921200654248930
 PrefabInstance:
   m_ObjectHideFlags: 0
