@@ -20,12 +20,12 @@ public class SmartphoneMenuUI : MonoBehaviour
     {
         smsButton.onClick.AddListener(() =>
         {
-            SetEnabled(false);
+            //SetEnabled(false);
             smsUI.Enable(() => SetEnabled(true));
         });
         contactsButton.onClick.AddListener(() =>
         {
-            SetEnabled(false);
+            //SetEnabled(false);
             contactsUI.Enable(() => SetEnabled(true));
         });
     }
