@@ -1,5 +1,6 @@
 using System;
 using TMPro;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,6 +27,12 @@ public class GraphicSettingsUI : MonoBehaviour
     [SerializeField]
     private TMP_Text fpsDisplay;
 
+    [SerializeField]
+    private Toggle headBobToggle;
+
+    [SerializeField]
+    private CinemachineBasicMultiChannelPerlin headBob;
+
     private void Awake()
     {
         graphicsDropdown.onValueChanged.AddListener(GraphicsSettingsManager.SetGraphics);
@@ -42,6 +49,11 @@ public class GraphicSettingsUI : MonoBehaviour
         {
             fpsDisplay.gameObject.SetActive(enabled);
             GameSettingsManager.SetFPSDisplay(enabled);
+        });
+
+        headBobToggle.onValueChanged.AddListener((bool enabled) =>
+        {
+            headBob.AmplitudeGain = enabled ? 0.6f : 0f;
         });
     }
 
