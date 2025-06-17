@@ -12,6 +12,9 @@ public class FolderSO : DataContainerSO
 
     public DataContainerSO[] ChildDataContainers => childDataContainers;
 
+    [SerializeField]
+    private bool shouldShowChildFoldersOnStart;
+
     public bool HasChildFolders()
     {
         foreach (var dataContainerSO in ChildDataContainers)
@@ -40,7 +43,7 @@ public class FolderSO : DataContainerSO
 
     public void InitializeFolderSO()
     {
-        ShouldShowChildFolders = false;
+        ShouldShowChildFolders = shouldShowChildFoldersOnStart;
         IsFolderContentOpen = false;
     }
 }
