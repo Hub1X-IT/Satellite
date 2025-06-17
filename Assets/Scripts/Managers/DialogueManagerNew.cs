@@ -10,8 +10,7 @@ public class DialogueManagerNew : MonoBehaviour
         [TextArea(3, 10)]
         public string Sentence;
         public AudioClip SentenceAudioClip;
-        public float MinSentenceTime;
-        public float MaxSentenceTime;
+        public float SentenceTime;
     }
     
     [Serializable]
@@ -35,12 +34,8 @@ public class DialogueManagerNew : MonoBehaviour
     private int currentSentenceIndex;
     private int currentDialogueLength;
 
-    private bool canGoToNextSentence;
-    private bool isMinSentenceTimeTimerActive;
-    private float minSentenceTimeTimer;
-
-    private bool isMaxSentenceTimeTimerActive;
-    private float maxSentenceTimeTimer;
+    private bool isSentenceTimeTimerActive;
+    private float sentenceTimeTimer;
 
     private void Awake()
     {
@@ -62,29 +57,16 @@ public class DialogueManagerNew : MonoBehaviour
 
     private void Update()
     {
-        if (isMinSentenceTimeTimerActive)
+        if (isSentenceTimeTimerActive)
         {
-            if (minSentenceTimeTimer <= 0)
+            if (sentenceTimeTimer <= 0)
             {
-                canGoToNextSentence = true;
-                OnCanStartNewSentence?.Invoke(true);
-                isMinSentenceTimeTimerActive = false;
-            }
-            else
-            {
-                minSentenceTimeTimer -= Time.deltaTime;
-            }
-        }
-        if (isMaxSentenceTimeTimerActive)
-        {
-            if (maxSentenceTimeTimer <= 0)
-            {
-                isMaxSentenceTimeTimerActive = false;
+                isSentenceTimeTimerActive = false;
                 StartNextDialogueSentence();
             }
             else
             {
-                maxSentenceTimeTimer -= Time.deltaTime;
+                sentenceTimeTimer -= Time.deltaTime;
             }
         }
     }
@@ -112,7 +94,7 @@ public class DialogueManagerNew : MonoBehaviour
     {
         if (currentDialogueSO != null)
         {
-            if (canGoToNextSentence || debugDialogueSkipping)
+            if (debugDialogueSkipping)
             {
                 currentSentenceIndex++;
                 if (currentSentenceIndex >= currentDialogueLength)
@@ -145,14 +127,8 @@ public class DialogueManagerNew : MonoBehaviour
     {
         NewDialogueSentenceStarted?.Invoke(sentence);
 
-        bool shouldActivateMinSentenceTimeTimer = sentence.MinSentenceTime > 0;
-        canGoToNextSentence = !shouldActivateMinSentenceTimeTimer;
-        isMinSentenceTimeTimerActive = shouldActivateMinSentenceTimeTimer;
-        minSentenceTimeTimer = sentence.MinSentenceTime;
-        OnCanStartNewSentence?.Invoke(!shouldActivateMinSentenceTimeTimer);
-
-        bool shouldActivateMaxSentenceTimeTimer = sentence.MaxSentenceTime > 0;
-        isMaxSentenceTimeTimerActive = shouldActivateMaxSentenceTimeTimer;
-        maxSentenceTimeTimer = sentence.MaxSentenceTime;
+        bool shouldActivateSentenceTimeTimer = sentence.SentenceTime > 0;
+        isSentenceTimeTimerActive = shouldActivateSentenceTimeTimer;
+        sentenceTimeTimer = sentence.SentenceTime;
     }
 }
