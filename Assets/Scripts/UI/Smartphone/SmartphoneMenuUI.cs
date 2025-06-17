@@ -5,9 +5,9 @@ public class SmartphoneMenuUI : MonoBehaviour
 {
     [Header ("UIs")]
     [SerializeField]
-    private SMSUI smsUI;
+    private EnterableUIObject smsUI;
     [SerializeField]
-    private ContactsOverviewUI contactsUI;
+    private EnterableUIObject contactsUI;
 
     [Header ("Buttons")]
     [SerializeField]

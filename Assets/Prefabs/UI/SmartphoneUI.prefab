@@ -159,7 +159,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5150131616126687271}
-  - component: {fileID: 2169123951740936757}
   - component: {fileID: 3277894726338142525}
   m_Layer: 5
   m_Name: MessagesOverview
@@ -191,18 +190,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -49, y: -170}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2169123951740936757
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 540711689064200992}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26e5697c6d66a8c489a1c482ae090e4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3277894726338142525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -703,8 +690,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc076518a870b9e4eaee5164294c2385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smsUI: {fileID: 2169123951740936757}
-  contactsUI: {fileID: 7901747970109929107}
+  smsUI: {fileID: 3277894726338142525}
+  contactsUI: {fileID: 786183759832881432}
   smsButton: {fileID: 4225724104848752541}
   contactsButton: {fileID: 5688194914495447932}
 --- !u!1 &2946444150689057213
