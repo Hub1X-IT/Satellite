@@ -1,6 +1,6 @@
-public class Email
+public class SMS
 {
-    public Email(string title, string content)
+    public SMS(string title, string content)
     {
         Title = title;
         Content = content;

@@ -2,22 +2,22 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EmailUI : MonoBehaviour
+public class SMSUI : MonoBehaviour
 {
     /*
     [SerializeField]
-    private Button emailExitButton;
+    private Button smsExitButton;
     */
 
-    private Action emailOverviewClosed;
+    private Action smsOverviewClosed;
 
 
     private void Awake()
     {
         /*
-        emailExitButton.onClick.AddListener(() =>
+        smsExitButton.onClick.AddListener(() =>
         {
-            emailOverviewClosed();
+            smsOverviewClosed();
             Disable();
         });
         */
@@ -25,7 +25,7 @@ public class EmailUI : MonoBehaviour
 
     public void Enable(Action onCloseAction)
     {
-        emailOverviewClosed = onCloseAction;
+        smsOverviewClosed = onCloseAction;
 
         gameObject.SetActive(true);
     }

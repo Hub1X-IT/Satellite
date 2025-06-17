@@ -5,23 +5,23 @@ public class SmartphoneMenuUI : MonoBehaviour
 {
     [Header ("UIs")]
     [SerializeField]
-    private EmailUI emailUI;
+    private SMSUI smsUI;
     [SerializeField]
     private ContactsOverviewUI contactsUI;
 
     [Header ("Buttons")]
     [SerializeField]
-    private Button emailButton;
+    private Button smsButton;
     [SerializeField]
     private Button contactsButton;
 
 
     private void Awake()
     {
-        emailButton.onClick.AddListener(() =>
+        smsButton.onClick.AddListener(() =>
         {
             SetEnabled(false);
-            emailUI.Enable(() => SetEnabled(true));
+            smsUI.Enable(() => SetEnabled(true));
         });
         contactsButton.onClick.AddListener(() =>
         {
@@ -32,7 +32,7 @@ public class SmartphoneMenuUI : MonoBehaviour
     public void GoToMainMenu()
     {
         // Disable all objects except main menu
-        emailUI.Disable();
+        smsUI.Disable();
         contactsUI.Disable();
 
         SetEnabled(true);
