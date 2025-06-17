@@ -80,7 +80,7 @@ public class CommandPromptUI : MonoBehaviour
     private void SubmitCommand(string command)
     {
         inputTextField.text = CommandPromptStartText;
-        inputTextField.ActivateInputField();
+        FocusOnInputField();
 
         //outputText += CommandPromptStartText + command + CommandPromptEndText;
         outputTextField.text = CommandPromptStartText + command;
@@ -93,5 +93,10 @@ public class CommandPromptUI : MonoBehaviour
     {
         outputText = text;
         outputTextField.text = outputText;
+    }
+
+    public void FocusOnInputField()
+    {
+        inputTextField.ActivateInputField();
     }
 }

@@ -7,11 +7,19 @@ public class LaptopUI : MonoBehaviour
     [SerializeField]
     private CommandPromptScroll commandPromptScroll;
 
+    [SerializeField]
+    private CommandPromptUI commandPromptUI;
+
     private void Awake()
     {
         computerUI = GetComponent<ComputerUI>();
-        computerUI.ComputerViewEnabled += (enabled) => {
+        computerUI.ComputerViewEnabled += (enabled) =>
+        {
             commandPromptScroll.enabled = enabled;
+            if (enabled)
+            {
+                commandPromptUI.FocusOnInputField();
+            }
         };
 
         commandPromptScroll.enabled = false;
