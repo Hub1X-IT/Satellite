@@ -487,6 +487,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3888675319819545325, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
+      propertyPath: SmsButton
+      value: 
+      objectReference: {fileID: 4949516364672610172}
+    - target: {fileID: 3888675319819545325, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
+      propertyPath: SmsContent
+      value: 
+      objectReference: {fileID: 2613590081735651980}
+    - target: {fileID: 3888675319819545325, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
+      propertyPath: readSmsSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6e2f889c2900715438f21bf30b856b76, type: 3}
+    - target: {fileID: 3888675319819545325, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
+      propertyPath: objectiveEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: aaa77a2a19e0f1c4c95acb8c133b72ad, type: 2}
+    - target: {fileID: 3888675319819545325, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
+      propertyPath: SmsRectTransform
+      value: 
+      objectReference: {fileID: 1653026918565481227}
+    - target: {fileID: 7467221015521705386, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
+      propertyPath: m_Name
+      value: MessagesButton
+      objectReference: {fileID: 0}
     - target: {fileID: 7809237348274262115, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
       propertyPath: m_Name
       value: PlayerUI
@@ -527,11 +551,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36ba8cca7209b214789274605b896d46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &1653026918565481227 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3651126036668189556, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
+  m_PrefabInstance: {fileID: 2619930532679024767}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1684894750656128464 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3691313598351533487, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
   m_PrefabInstance: {fileID: 2619930532679024767}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2613590081735651980 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8596689415762675, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
+  m_PrefabInstance: {fileID: 2619930532679024767}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a886235d8e6f75438df5a56d5ad3379, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4949516364672610172 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6983933039034478339, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
+  m_PrefabInstance: {fileID: 2619930532679024767}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6973255905009282764 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4944433133491695283, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
