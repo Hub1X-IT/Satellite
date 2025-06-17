@@ -97,6 +97,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
     {
         // inputField.onEndEdit.AddListener(ChangeOriginalPassword);
         pasteAndDecompressButton.onClick.AddListener(PasteAndDecompress);
+        inputField.onEndEdit.AddListener(InputField_OnEndEdit);
 
         binButton.onClick.AddListener(BinDecode);
         octButton.onClick.AddListener(OctDecode);
@@ -110,6 +111,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
     {
         // inputField.onEndEdit.RemoveListener(ChangeOriginalPassword);
         pasteAndDecompressButton.onClick.RemoveListener(PasteAndDecompress);
+        inputField.onEndEdit.RemoveListener(InputField_OnEndEdit);
 
         binButton.onClick.RemoveListener(BinDecode);
         octButton.onClick.RemoveListener(OctDecode);
@@ -123,6 +125,10 @@ public class PasswordCrackingAppUI : MonoBehaviour
     {
         RemoveAllPasswordTextFields();
         originalPassword = currentPassword = newPassword;
+    }
+    private void InputField_OnEndEdit(string inputText)
+    {
+        DecompressPassword(inputText);
     }
     private void DecompressPassword(string compressedPassword)
     {
