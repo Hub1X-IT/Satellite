@@ -4,6 +4,9 @@ using UnityEngine.UI;
 public class ComputersChangingUI : MonoBehaviour
 {
     [SerializeField]
+    private GameObject computerExitHint;
+
+    [SerializeField]
     private Button changeComputerLeftButton;
 
     [SerializeField]
@@ -21,6 +24,11 @@ public class ComputersChangingUI : MonoBehaviour
     [SerializeField]
     private GameEventSO[] computerViewDisabledGameEvents;
 
+    // May be temporary
+    [SerializeField]
+    private GameEventBoolSO serverViewEnabledGameEvent;
+
+
     private void Awake()
     {
         changeComputerLeftButton.onClick.AddListener(changeComputerLeftGameEvent.TryRaiseEvent);
@@ -28,18 +36,24 @@ public class ComputersChangingUI : MonoBehaviour
 
         foreach (var gameEvent in computerViewEnabledGameEvents)
         {
-            gameEvent.EventRaised += EnableButtons;
+            gameEvent.EventRaised += Enable;
         }
         foreach (var gameEvent in computerViewDisabledGameEvents)
         {
-            gameEvent.EventRaised += DisableButtons;
+            gameEvent.EventRaised += Disable;
         }
 
-        DisableButtons();
+        serverViewEnabledGameEvent.EventRaised += (enabled) =>
+        {
+            computerExitHint.SetActive(enabled);
+        };
+
+        Disable();
     }
 
-    private void EnableButtons(Computer computer)
+    private void Enable(Computer computer)
     {
+        computerExitHint.SetActive(true);
         if (computer.ComputerOnLeft != null)
         {
             changeComputerLeftButton.gameObject.SetActive(true);
@@ -50,8 +64,9 @@ public class ComputersChangingUI : MonoBehaviour
         }
     }
 
-    private void DisableButtons()
+    private void Disable()
     {
+        computerExitHint.SetActive(false);
         changeComputerLeftButton.gameObject.SetActive(false);
         changeComputerRightButton.gameObject.SetActive(false);
     }
