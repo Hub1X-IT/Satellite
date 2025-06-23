@@ -293,15 +293,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""MouseDelta"",
-                    ""type"": ""Value"",
-                    ""id"": ""b04a53df-860d-457e-a70b-01780bc009b0"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""LeftClick"",
                     ""type"": ""Button"",
                     ""id"": ""c8a9728f-435c-4ac1-b75e-5285ba0933df"",
@@ -314,24 +305,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""Return"",
                     ""type"": ""Button"",
                     ""id"": ""a0fada47-ce97-467e-b38f-8a78811506d2"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""ChangeComputerLeft"",
-                    ""type"": ""Button"",
-                    ""id"": ""9c3cc326-9ce5-47c3-9122-67898f93bbb8"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""ChangeComputerRight"",
-                    ""type"": ""Button"",
-                    ""id"": ""14dda0ca-04b7-4e71-a486-856bcb55d217"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -358,39 +331,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""LeftClick"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""63c13fc5-c85f-4f17-bb13-a659dbf4b771"",
-                    ""path"": ""<Mouse>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MouseDelta"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6f8d7a09-5969-4470-9674-c5a4d8ac980b"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ChangeComputerLeft"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""055d29bc-53e8-402e-bed0-ad4005ecef99"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ChangeComputerRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -489,11 +429,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // Computer
         m_Computer = asset.FindActionMap("Computer", throwIfNotFound: true);
         m_Computer_Exit = m_Computer.FindAction("Exit", throwIfNotFound: true);
-        m_Computer_MouseDelta = m_Computer.FindAction("MouseDelta", throwIfNotFound: true);
         m_Computer_LeftClick = m_Computer.FindAction("LeftClick", throwIfNotFound: true);
         m_Computer_Return = m_Computer.FindAction("Return", throwIfNotFound: true);
-        m_Computer_ChangeComputerLeft = m_Computer.FindAction("ChangeComputerLeft", throwIfNotFound: true);
-        m_Computer_ChangeComputerRight = m_Computer.FindAction("ChangeComputerRight", throwIfNotFound: true);
         // CommandPrompt
         m_CommandPrompt = asset.FindActionMap("CommandPrompt", throwIfNotFound: true);
         m_CommandPrompt_CommandSubmit = m_CommandPrompt.FindAction("CommandSubmit", throwIfNotFound: true);
@@ -794,21 +731,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Computer;
     private List<IComputerActions> m_ComputerActionsCallbackInterfaces = new List<IComputerActions>();
     private readonly InputAction m_Computer_Exit;
-    private readonly InputAction m_Computer_MouseDelta;
     private readonly InputAction m_Computer_LeftClick;
     private readonly InputAction m_Computer_Return;
-    private readonly InputAction m_Computer_ChangeComputerLeft;
-    private readonly InputAction m_Computer_ChangeComputerRight;
     public struct ComputerActions
     {
         private @PlayerInputActions m_Wrapper;
         public ComputerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Exit => m_Wrapper.m_Computer_Exit;
-        public InputAction @MouseDelta => m_Wrapper.m_Computer_MouseDelta;
         public InputAction @LeftClick => m_Wrapper.m_Computer_LeftClick;
         public InputAction @Return => m_Wrapper.m_Computer_Return;
-        public InputAction @ChangeComputerLeft => m_Wrapper.m_Computer_ChangeComputerLeft;
-        public InputAction @ChangeComputerRight => m_Wrapper.m_Computer_ChangeComputerRight;
         public InputActionMap Get() { return m_Wrapper.m_Computer; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -821,21 +752,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Exit.started += instance.OnExit;
             @Exit.performed += instance.OnExit;
             @Exit.canceled += instance.OnExit;
-            @MouseDelta.started += instance.OnMouseDelta;
-            @MouseDelta.performed += instance.OnMouseDelta;
-            @MouseDelta.canceled += instance.OnMouseDelta;
             @LeftClick.started += instance.OnLeftClick;
             @LeftClick.performed += instance.OnLeftClick;
             @LeftClick.canceled += instance.OnLeftClick;
             @Return.started += instance.OnReturn;
             @Return.performed += instance.OnReturn;
             @Return.canceled += instance.OnReturn;
-            @ChangeComputerLeft.started += instance.OnChangeComputerLeft;
-            @ChangeComputerLeft.performed += instance.OnChangeComputerLeft;
-            @ChangeComputerLeft.canceled += instance.OnChangeComputerLeft;
-            @ChangeComputerRight.started += instance.OnChangeComputerRight;
-            @ChangeComputerRight.performed += instance.OnChangeComputerRight;
-            @ChangeComputerRight.canceled += instance.OnChangeComputerRight;
         }
 
         private void UnregisterCallbacks(IComputerActions instance)
@@ -843,21 +765,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Exit.started -= instance.OnExit;
             @Exit.performed -= instance.OnExit;
             @Exit.canceled -= instance.OnExit;
-            @MouseDelta.started -= instance.OnMouseDelta;
-            @MouseDelta.performed -= instance.OnMouseDelta;
-            @MouseDelta.canceled -= instance.OnMouseDelta;
             @LeftClick.started -= instance.OnLeftClick;
             @LeftClick.performed -= instance.OnLeftClick;
             @LeftClick.canceled -= instance.OnLeftClick;
             @Return.started -= instance.OnReturn;
             @Return.performed -= instance.OnReturn;
             @Return.canceled -= instance.OnReturn;
-            @ChangeComputerLeft.started -= instance.OnChangeComputerLeft;
-            @ChangeComputerLeft.performed -= instance.OnChangeComputerLeft;
-            @ChangeComputerLeft.canceled -= instance.OnChangeComputerLeft;
-            @ChangeComputerRight.started -= instance.OnChangeComputerRight;
-            @ChangeComputerRight.performed -= instance.OnChangeComputerRight;
-            @ChangeComputerRight.canceled -= instance.OnChangeComputerRight;
         }
 
         public void RemoveCallbacks(IComputerActions instance)
@@ -953,11 +866,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public interface IComputerActions
     {
         void OnExit(InputAction.CallbackContext context);
-        void OnMouseDelta(InputAction.CallbackContext context);
         void OnLeftClick(InputAction.CallbackContext context);
         void OnReturn(InputAction.CallbackContext context);
-        void OnChangeComputerLeft(InputAction.CallbackContext context);
-        void OnChangeComputerRight(InputAction.CallbackContext context);
     }
     public interface ICommandPromptActions
     {

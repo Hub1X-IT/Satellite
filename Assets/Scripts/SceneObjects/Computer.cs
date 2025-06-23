@@ -26,6 +26,15 @@ public class Computer : MonoBehaviour
     [SerializeField]
     private Computer computerOnRight;
 
+    public Computer ComputerOnLeft => computerOnLeft;
+    public Computer ComputerOnRight => computerOnRight;
+
+    [SerializeField]
+    private GameEventSO changeComputerLeftGameEvent;
+
+    [SerializeField]
+    private GameEventSO changeComputerRightGameEvent;
+
     private Outline outline;
 
     private bool isInComputerView;
@@ -60,7 +69,7 @@ public class Computer : MonoBehaviour
             }
         };
 
-        GameInput.OnChangeComputerLeftAction += () =>
+        changeComputerLeftGameEvent.EventRaised += () =>
         {
             if (isInComputerView && CanExitComputerView && !wasChangedToInThisFrame && computerOnLeft != null)
             {
@@ -69,7 +78,7 @@ public class Computer : MonoBehaviour
             }
         };
 
-        GameInput.OnChangeComputerRightAction += () =>
+        changeComputerRightGameEvent.EventRaised += () =>
         {
             if (isInComputerView && CanExitComputerView && !wasChangedToInThisFrame && computerOnRight != null)
             {

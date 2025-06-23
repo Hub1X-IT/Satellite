@@ -4,9 +4,9 @@ using UnityEngine;
 public class DialogueSO : ScriptableObject
 {
     [SerializeField]
-    private DialogueManagerNew.DialogueSentence[] dialogueSentences;
+    private DialogueManager.DialogueSentence[] dialogueSentences;
 
-    public DialogueManagerNew.DialogueSentence[] DialogueSentences => dialogueSentences;
+    public DialogueManager.DialogueSentence[] DialogueSentences => dialogueSentences;
 
     // May be temporary
     [Tooltip("Game event invoked when the dialogue ends")]

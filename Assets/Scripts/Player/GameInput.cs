@@ -11,7 +11,7 @@ public static class GameInput
 
     public static Vector2 RotationVector => PlayerInputActions.PlayerWalking.Rotate.ReadValue<Vector2>();
 
-    public static Vector2 MouseDelta => PlayerInputActions.Computer.MouseDelta.ReadValue<Vector2>();
+    // public static Vector2 MouseDelta => PlayerInputActions.Computer.MouseDelta.ReadValue<Vector2>();
 
     public static float MouseScroll => PlayerInputActions.CommandPrompt.MouseScroll.ReadValue<Vector2>().y;
 
@@ -31,8 +31,6 @@ public static class GameInput
     public static event Action OnComputerExitAction;
     public static event Action OnLeftClickPerformedAction;
     public static event Action OnReturnPerformedAction;
-    public static event Action OnChangeComputerLeftAction;
-    public static event Action OnChangeComputerRightAction;
 
     public static event Action<char> OnKeyboardInputAction;
 
@@ -65,8 +63,6 @@ public static class GameInput
         PlayerInputActions.Computer.Exit.performed += ComputerExit_performed;
         PlayerInputActions.Computer.LeftClick.performed += LeftClick_performed;
         PlayerInputActions.Computer.Return.performed += Return_performed;
-        PlayerInputActions.Computer.ChangeComputerLeft.performed += ChangeComputerLeft_performed;
-        PlayerInputActions.Computer.ChangeComputerRight.performed += ChangeComputerRight_performed;
 
         Keyboard.current.onTextInput += Keyboard_onTextInput;
 
@@ -89,8 +85,6 @@ public static class GameInput
         PlayerInputActions.Computer.Exit.performed -= ComputerExit_performed;
         PlayerInputActions.Computer.LeftClick.performed -= LeftClick_performed;
         PlayerInputActions.Computer.Return.performed -= Return_performed;
-        PlayerInputActions.Computer.ChangeComputerLeft.performed -= ChangeComputerLeft_performed;
-        PlayerInputActions.Computer.ChangeComputerRight.performed -= ChangeComputerRight_performed;
 
         Keyboard.current.onTextInput -= Keyboard_onTextInput;
 
@@ -109,8 +103,6 @@ public static class GameInput
         OnLeftClickPerformedAction = null;
         OnKeyboardInputAction = null;
         OnReturnPerformedAction = null;
-        OnChangeComputerLeftAction = null;
-        OnChangeComputerRightAction = null;
         OnCommandSubmitAction = null;
     }
 
@@ -137,8 +129,6 @@ public static class GameInput
     private static void ComputerExit_performed(InputAction.CallbackContext _) => OnComputerExitAction?.Invoke();
     private static void LeftClick_performed(InputAction.CallbackContext _) => OnLeftClickPerformedAction?.Invoke();
     private static void Return_performed(InputAction.CallbackContext _) => OnReturnPerformedAction?.Invoke();
-    private static void ChangeComputerLeft_performed(InputAction.CallbackContext _) => OnChangeComputerLeftAction?.Invoke();
-    private static void ChangeComputerRight_performed(InputAction.CallbackContext _) => OnChangeComputerRightAction?.Invoke();
 
     private static void CommandSubmit_performed(InputAction.CallbackContext _) => OnCommandSubmitAction?.Invoke();
 
