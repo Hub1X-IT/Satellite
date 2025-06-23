@@ -18,7 +18,6 @@ public class Guidebook : MonoBehaviour
 
     private bool isInGuidebookView;
 
-
     private void Awake()
     {
         desk = GetComponentInParent<Desk>();
@@ -58,6 +57,8 @@ public class Guidebook : MonoBehaviour
 
         // Probably a temporary solution
         outline.enabled = !active;
+
+        GameManager.SetCursorShown(active);
 
         // Disable/enable specific input actions.
         // Change active Cinemachine camera.

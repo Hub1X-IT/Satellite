@@ -135,6 +135,8 @@ public class Computer : MonoBehaviour
 
         ComputerViewEnabled?.Invoke(active);
 
+        GameManager.SetCursorShown(active);
+
         // Disable/enable specific input actions.
         // Change active Cinemachine camera.
         if (active)

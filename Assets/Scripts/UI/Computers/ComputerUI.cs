@@ -82,11 +82,12 @@ public class ComputerUI : MonoBehaviour
         }
     }
 
+    // Probably to be removed
     private void SetCanExitComputerViewFalse(ComputerUIDynamicInputField inputField)
     {
         if (computer != null)
         {
-            computer.CanExitComputerView = false;
+            // computer.CanExitComputerView = false;
             currentSelectedInputField = inputField;
         }
     }
@@ -95,7 +96,7 @@ public class ComputerUI : MonoBehaviour
     {
         if (computer != null)
         {
-            computer.CanExitComputerView = true;
+            // computer.CanExitComputerView = true;
             currentSelectedInputField = null;
         }
     }
@@ -103,6 +104,5 @@ public class ComputerUI : MonoBehaviour
     private void SetComputerEnabled(bool enabled)
     {
         computerTurnedOffScreen.SetActive(!enabled);
-        screenUI.RenderScreen();
     }
 }

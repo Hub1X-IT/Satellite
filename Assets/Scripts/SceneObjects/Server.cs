@@ -33,7 +33,7 @@ public class Server : MonoBehaviour
         serverTrigger.InteractionTriggered += () => SetServerViewActive(true);
 
         // Action may be changed if a different key binding is preferred.
-        GameInput.OnInteractAction += () =>
+        GameInput.OnComputerExitAction += () =>
         {
             if (isInServerView && !wasToggledThisFrame)
             {
@@ -82,6 +82,8 @@ public class Server : MonoBehaviour
         outline.enabled = !active;
 
         serverViewEnabledGameEvent.RaiseEvent(active);
+
+        GameManager.SetCursorShown(active);
 
         if (active)
         {
