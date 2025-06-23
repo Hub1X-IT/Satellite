@@ -11,6 +11,13 @@ public class Server : MonoBehaviour
     [SerializeField]
     private CinemachineCamera serverCinemachineCamera;
 
+    [SerializeField]
+    private MeshRenderer serverMeshRenderer;
+    [SerializeField]
+    private Material serrverOnMaterial;
+    [SerializeField]
+    private Material serverOffMaterial;
+
     private Outline outline;
 
     private bool isInServerView;
@@ -42,8 +49,13 @@ public class Server : MonoBehaviour
 
     private void Start()
     {
-        DetectionManager.DetectionOccured += () => SetServerTriggerEnabled(false);
+        DetectionManager.DetectionOccured += () =>
+        {
+            SetServerTriggerEnabled(false);
+            SetServerOnOffMaterial(false);
+        };
         DetectionManager.ServerPowerEnabled += SetServerTriggerEnabled;
+        DetectionManager.ServerPowerEnabled += SetServerOnOffMaterial;
     }
 
     private void LateUpdate()
@@ -86,5 +98,9 @@ public class Server : MonoBehaviour
     private void SetServerTriggerEnabled(bool enabled)
     {
         serverTrigger.gameObject.SetActive(enabled);
+    }
+    private void SetServerOnOffMaterial(bool enabled)
+    {
+        serverMeshRenderer.material = enabled ? serrverOnMaterial : serverOffMaterial;
     }
 }

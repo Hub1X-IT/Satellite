@@ -1,10 +1,13 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InteractionUI : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI interactionTextField;
+    [SerializeField]
+    private Image interactionIcon;
 
     private void Awake()
     {
@@ -19,5 +22,6 @@ public class InteractionUI : MonoBehaviour
     public void SetInteractionTextEnabled(bool enabled)
     {
         interactionTextField.gameObject.SetActive(enabled);
+        interactionIcon.gameObject.SetActive(enabled);
     }
 }

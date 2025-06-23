@@ -29,7 +29,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TurnLeverOn
+  m_Name: TurnLeverOff
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -43,7 +43,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 07365aa69f30f13488971eb089ef5d4d, type: 2}
+  m_Motion: {fileID: 7400000, guid: e262fb432c49d2b4c9e99579ff336258, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -56,7 +56,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TurnLeverOff
+  m_Name: TurnLeverOn
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -70,7 +70,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: e262fb432c49d2b4c9e99579ff336258, type: 2}
+  m_Motion: {fileID: 7400000, guid: 07365aa69f30f13488971eb089ef5d4d, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -87,7 +87,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -2191251032333568864}
-    m_Position: {x: 280, y: 20, z: 0}
+    m_Position: {x: 520, y: 100, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5611013630576457673}
     m_Position: {x: 520, y: 20, z: 0}
@@ -96,7 +96,7 @@ AnimatorStateMachine:
     m_Position: {x: 280, y: 100, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3303356838871318704}
-    m_Position: {x: 520, y: 100, z: 0}
+    m_Position: {x: 280, y: 20, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -106,7 +106,7 @@ AnimatorStateMachine:
   m_EntryPosition: {x: 540, y: 170, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: 3303356838871318704}
+  m_DefaultState: {fileID: -2191251032333568864}
 --- !u!1102 &-2191251032333568864
 AnimatorState:
   serializedVersion: 6
@@ -114,7 +114,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LeverOff
+  m_Name: LeverOn
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -143,7 +143,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: LeverOn
+    m_ConditionEvent: LeverOff
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5611013630576457673}
@@ -202,7 +202,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: LeverOff
+    m_ConditionEvent: LeverOn
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5264039588592331310}
@@ -225,7 +225,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LeverOn
+  m_Name: LeverOff
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:

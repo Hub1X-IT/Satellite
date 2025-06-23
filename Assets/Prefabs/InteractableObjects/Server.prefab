@@ -216,6 +216,9 @@ MonoBehaviour:
   serverViewEnabledGameEvent: {fileID: 11400000, guid: afbe7a2755a5fa24fa1c116d787af9db, type: 2}
   serverTrigger: {fileID: 4972464496268991969}
   serverCinemachineCamera: {fileID: 7356344829980974124}
+  serverMeshRenderer: {fileID: 2378407458295686264}
+  serrverOnMaterial: {fileID: 2100000, guid: 6fe01f46618b4ab4784ce1ed64eeda1f, type: 2}
+  serverOffMaterial: {fileID: 2100000, guid: d668b276a413ffc48870bed2925cdc10, type: 2}
 --- !u!114 &1775124273109483190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,7 +232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outline: {fileID: 5369089071725326655}
-  interactMessage: 'Server - Use [E]'
+  interactMessage: Use - Server
 --- !u!1 &6114826545115113598
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,6 +415,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 5369089071725326655}
   m_SourcePrefab: {fileID: 100100000, guid: 550d89117c1ce5041963e9e932272d87, type: 3}
+--- !u!23 &2378407458295686264 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -2053399718351658888, guid: 550d89117c1ce5041963e9e932272d87, type: 3}
+  m_PrefabInstance: {fileID: 4792136967101449216}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4975261889054696427 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 550d89117c1ce5041963e9e932272d87, type: 3}
@@ -435,7 +443,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 0, a: 1}
+  outlineColor: {r: 0, g: 1, b: 1, a: 1}
   outlineWidth: 3
   precomputeOutline: 1
   bakeKeys:
