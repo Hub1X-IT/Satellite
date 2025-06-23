@@ -40,6 +40,8 @@ public class Computer : MonoBehaviour
 
     private bool isComputerEnabled;
 
+    private bool wasChangedToInThisFrame;
+
 
     private void Awake()
     {
@@ -60,16 +62,18 @@ public class Computer : MonoBehaviour
 
         GameInput.OnChangeComputerLeftAction += () =>
         {
-            if (isInComputerView && CanExitComputerView && computerOnLeft != null)
+            if (isInComputerView && CanExitComputerView && !wasChangedToInThisFrame && computerOnLeft != null)
             {
+                Debug.Log(gameObject + " l " + computerOnLeft);
                 ChangeCurrentComputer(computerOnLeft);
             }
         };
 
         GameInput.OnChangeComputerRightAction += () =>
         {
-            if (isInComputerView && CanExitComputerView && computerOnRight != null)
+            if (isInComputerView && CanExitComputerView && !wasChangedToInThisFrame && computerOnRight != null)
             {
+                Debug.Log(gameObject + " r " + computerOnRight);
                 ChangeCurrentComputer(computerOnRight);
             }
         };
@@ -91,6 +95,8 @@ public class Computer : MonoBehaviour
         isComputerEnabled = false;
 
         shouldEnablePlayerMovement = false;
+
+        wasChangedToInThisFrame = false;
 
         ToggleComputerTrigger();
     }
@@ -115,6 +121,14 @@ public class Computer : MonoBehaviour
                 EnablePlayerMovement();
             }
             playerMovementEnableTimer += Time.deltaTime;
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if (wasChangedToInThisFrame)
+        {
+            wasChangedToInThisFrame = false;
         }
     }
 
@@ -184,6 +198,8 @@ public class Computer : MonoBehaviour
         computerViewEnabledGameEvent.RaiseEvent(this);
         
         CameraController.SetActiveCinemachineCamera(computerCinemachineCamera);
+
+        wasChangedToInThisFrame = true;
     }
 
     private void ToggleComputerTrigger()

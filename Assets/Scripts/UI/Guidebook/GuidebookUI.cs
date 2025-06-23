@@ -5,15 +5,23 @@ public class GuidebookUI : MonoBehaviour
     private ScreenUI screenUI;
 
     [SerializeField]
-    private GameEventBoolSO guidebookViewToggledGameEvent;
+    private GameEventComputerSO guidebookViewEnabledGameEvent;
+
+    [SerializeField]
+    private GameEventSO guidebookViewDisabledGameEvent;
 
     private void Awake()
     {
         screenUI = GetComponent<ScreenUI>();
 
-        guidebookViewToggledGameEvent.EventRaised += (enabled) =>
+        guidebookViewEnabledGameEvent.EventRaised += (_) =>
         {
-            screenUI.SetScreenViewEnalbed(enabled);
+            screenUI.SetScreenViewEnalbed(true);
+        };
+
+        guidebookViewDisabledGameEvent.EventRaised += () =>
+        {
+            screenUI.SetScreenViewEnalbed(false);
         };
     }
 
