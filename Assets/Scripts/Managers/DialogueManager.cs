@@ -12,7 +12,7 @@ public class DialogueManager : MonoBehaviour
         public AudioClip SentenceAudioClip;
         public float SentenceTime;
     }
-    
+
     [Serializable]
     private class DialogueInvokeData
     {
@@ -92,17 +92,14 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentDialogueSO != null)
         {
-            if (debugDialogueSkipping)
+            currentSentenceIndex++;
+            if (currentSentenceIndex >= currentDialogueLength)
             {
-                currentSentenceIndex++;
-                if (currentSentenceIndex >= currentDialogueLength)
-                {
-                    EndDialogue();
-                }
-                else
-                {
-                    StartNewDialogueSentence(currentDialogueSO.DialogueSentences[currentSentenceIndex]);
-                }
+                EndDialogue();
+            }
+            else
+            {
+                StartNewDialogueSentence(currentDialogueSO.DialogueSentences[currentSentenceIndex]);
             }
         }
         else
