@@ -39,12 +39,14 @@ public class DoorAppUI : MonoBehaviour
         isDoorOpen = open;
         doorAppTextField.text = open ? DoorOpenText : DoorClosedText;
         doorButton.image.sprite = open ? doorOpenedSprite : doorClosedSprite;
-        if (open && onDoorOpenGameEvent != null)
+        if (open)
         {
-            onDoorOpenGameEvent.TryRaiseEvent();
-        }
-
+            if (onDoorOpenGameEvent != null)
+            {
+                onDoorOpenGameEvent.TryRaiseEvent();
+            }
         // May be temporary
         doorButton.interactable = false;
+        }
     }
 }
