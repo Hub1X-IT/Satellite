@@ -37,7 +37,15 @@ public static class GameManager
         IsGamePaused = paused;
         InteractionController.IsInteractionEnabled = !paused;
         SetTimeStarted(!paused);
-        SetCursorShown(paused);
+        // May be temporary
+        if (!IsInScreenView)
+        {
+            SetCursorShown(paused);
+        }
+        else
+        {
+            SetCursorShown(true);
+        }
     }
 
     public static void PauseGameToMenu(bool paused)
