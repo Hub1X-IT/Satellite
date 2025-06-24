@@ -43,5 +43,8 @@ public class DoorAppUI : MonoBehaviour
         {
             onDoorOpenGameEvent.TryRaiseEvent();
         }
+
+        // May be temporary
+        doorButton.interactable = false;
     }
 }
