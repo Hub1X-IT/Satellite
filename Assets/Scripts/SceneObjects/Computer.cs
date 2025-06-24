@@ -141,6 +141,14 @@ public class Computer : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        computerViewEnabledGameEvent.ResetGameEvent();
+        computerViewDisabledGameEvent.ResetGameEvent();
+        changeComputerLeftGameEvent.ResetGameEvent();
+        changeComputerRightGameEvent.ResetGameEvent();
+    }
+
     private void SetComputerViewActive(bool active)
     {
         isInComputerView = active;

@@ -44,6 +44,8 @@ public static class DetectionManager
         DetectionOccured = null;
         DetectionRemoved = null;
         ServerPowerEnabled = null;
+        onDetectionOccuredGameEvent.ResetGameEvent();
+        onDetectionRemovedGameEvent.ResetGameEvent();
     }
 
     public static void CheckDetection()

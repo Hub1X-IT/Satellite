@@ -23,6 +23,11 @@ public static class CommandPromptManager
         possibleCommandsSO = data.possibleCommandsSO;
     }
 
+    public static void OnSceneExit()
+    {
+        possibleCommandsSO.ResetCommandGameEvents();
+    }
+
     public static void SubmitCommand(string command)
     {
         previousCommandsQueue.Enqueue(command);

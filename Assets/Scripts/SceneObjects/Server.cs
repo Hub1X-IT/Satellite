@@ -66,6 +66,11 @@ public class Server : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        serverViewEnabledGameEvent.ResetGameEvent();
+    }
+
     private void SetServerViewActive(bool active)
     {
         isInServerView = active;

@@ -37,6 +37,11 @@ public class GameEventSO : ScriptableObject
         EventRaised?.Invoke();
         GameEventOrderManager.AddGameEvent(this);
     }
+
+    public void ResetGameEvent()
+    {
+        EventRaised = null;
+    }
 }
 
 public class GameEventSO<T> : ScriptableObject
@@ -54,4 +59,9 @@ public class GameEventSO<T> : ScriptableObject
     public void RaiseEvent() => EventRaised?.Invoke(overriddenData);
 
     public void RaiseEvent(T data) => EventRaised?.Invoke(data);
+
+    public void ResetGameEvent()
+    {
+        EventRaised = null;
+    }
 }

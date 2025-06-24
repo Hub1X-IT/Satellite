@@ -25,6 +25,22 @@ public class TimelineManager : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        ResetGameEvents();
+    }
+
+    private void ResetGameEvents()
+    {
+        foreach (var timelineTrigger in timelineTriggers)
+        {
+            foreach (var gameEvent in timelineTrigger.TriggerGameEvents)
+            {
+                gameEvent.ResetGameEvent();
+            }
+        }
+    }
+
     private void StartTimeline(PlayableDirector playableDirector)
     {
         playableDirector.Play();

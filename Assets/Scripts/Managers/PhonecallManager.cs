@@ -83,6 +83,8 @@ public class PhonecallManager : MonoBehaviour
         NewCallStarted = null;
         CurrentCallEnded = null;
         OnCanEndCall = null;
+        callAcceptedGameEventStatic.ResetGameEvent();
+        outgoingCallStartedGameEvent.ResetGameEvent();
     }
 
     public static void TempStartCall()

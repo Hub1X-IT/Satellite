@@ -40,6 +40,22 @@ public class ObjectivesManager : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        ResetGameEvents();
+    }
+
+    private void ResetGameEvents()
+    {
+        foreach (var objectiveData in objectivesData)
+        {
+            foreach (var gameEvent in objectiveData.GameEvents)
+            {
+                gameEvent.ResetGameEvent();
+            }
+        }
+    }
+
     private void SetChapterAndObjective(string chapter, string objective)
     {
         foreach (var objectivesUI in objectivesUIArray)

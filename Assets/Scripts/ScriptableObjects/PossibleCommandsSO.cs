@@ -9,4 +9,12 @@ public class PossibleCommandsSO : ScriptableObject
 
     public Dictionary<string, GameEventCommandDataSO> PossibleCommandsDictionary
         => possibleCommandsSerializableDictionary.Dictionary;
+
+    public void ResetCommandGameEvents()
+    {
+        foreach (var gameEvent in PossibleCommandsDictionary.Values)
+        {
+            gameEvent.ResetGameEvent();
+        }
+    }
 }

@@ -46,8 +46,9 @@ public class ScriptsInitializer : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameManager.OnSceneExit();
+        CommandPromptManager.OnSceneExit();
         DetectionManager.OnSceneExit();
+        GameManager.OnSceneExit();
 
         GameInput.RemoveInput();
 

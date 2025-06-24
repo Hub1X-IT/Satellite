@@ -74,6 +74,18 @@ public class DialogueManager : MonoBehaviour
     {
         NewDialogueSentenceStarted = null;
         DialogueEnded = null;
+        ResetGameEvents();
+    }
+
+    private void ResetGameEvents()
+    {
+        foreach (var dialogueInvokeData in dialoguesInvokeData)
+        {
+            foreach (var gameEvent in dialogueInvokeData.GameEvents)
+            {
+                gameEvent.ResetGameEvent();
+            }
+        }
     }
 
     private void StartNewDialogue(DialogueSO dialogueSO)
