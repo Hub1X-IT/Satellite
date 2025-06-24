@@ -10,16 +10,24 @@ public class NotepadAppUI : MonoBehaviour
 
     private string fileContent;
 
-    [SerializeField]
     private TMP_InputField contentInputField;
 
     [SerializeField]
-    private Button copyButton;
+    private NotepadAppContentFieldUI contentField;
+
+    [SerializeField]
+    private RectTransform copyMenu;
+
+    [SerializeField]
+    private NotepaddAppCopyButtonUI notepaddAppCopyButton;
+
+    private bool canDisableCopyMenu;
 
     public void InitializeNotepadAppUI(FileStringSO fileStringSO)
     {
         monitorApp = GetComponent<MonitorAppUI>();
-        
+        contentInputField = contentField.GetComponent<TMP_InputField>();
+
         string[] multilineFileContent = fileStringSO.MultilineFileContent;
         string multilineFileOutput = "";
         foreach (var line in multilineFileContent)
@@ -33,10 +41,45 @@ public class NotepadAppUI : MonoBehaviour
             multilineFileOutput += password;
         }
 
-        copyButton.onClick.AddListener(CopyText);
+        contentField.ContentFieldClicked += (position) =>
+        {
+            // MoveCopyMenu(position);
+            SetCopyMenuEnabled(true);
+        };
+
+        contentInputField.onDeselect.AddListener((_) =>
+        {
+            if (canDisableCopyMenu)
+            {
+                SetCopyMenuEnabled(false);
+            }
+        });
+        notepaddAppCopyButton.GetComponent<Button>().onClick.AddListener(() =>
+        {
+            CopyText();
+            SetCopyMenuEnabled(false);
+        });
+
+        notepaddAppCopyButton.OnMouseOverButton += (isOverButton) =>
+        {
+            canDisableCopyMenu = !isOverButton;
+        };
 
         contentInputField.text = fileContent = multilineFileOutput;
         monitorApp.SetAppName(BaseAppName + fileStringSO.SelfName);
+
+        SetCopyMenuEnabled(false);
+        canDisableCopyMenu = true;
+    }
+
+    private void SetCopyMenuEnabled(bool enabled)
+    {
+        copyMenu.gameObject.SetActive(enabled);
+    }
+
+    private void MoveCopyMenu(Vector2 newPosition)
+    {
+        copyMenu.anchoredPosition = newPosition;
     }
 
     private void CopyText()

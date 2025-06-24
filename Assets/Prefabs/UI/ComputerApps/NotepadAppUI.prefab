@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4399148972278581579}
   - component: {fileID: 1171578474340943792}
   - component: {fileID: 1396273632491013216}
+  - component: {fileID: 2912401047225551519}
   m_Layer: 5
   m_Name: NotepadTextField
   m_TagString: Untagged
@@ -191,6 +192,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98c6c8f5bb8e50d418a88f1a929bb512, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2912401047225551519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20808616059513769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a535bf44241aa14aaa71759b2834170, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &112240985917109283
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 391076473384178472}
+  m_Layer: 5
+  m_Name: CopyMenu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &391076473384178472
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112240985917109283}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 9001108836227605451}
+  m_Father: {fileID: 4093923644531906981}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 155.6, y: -40}
+  m_SizeDelta: {x: 415.70996, y: 79.71997}
+  m_Pivot: {x: 0, y: 1}
 --- !u!1 &1515123060433591163
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,7 +536,7 @@ RectTransform:
   - {fileID: 8992616101858633890}
   - {fileID: 7517861751966606044}
   - {fileID: 8459618127719146271}
-  - {fileID: 9001108836227605451}
+  - {fileID: 391076473384178472}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
@@ -520,8 +569,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f74f2a3449671f44bad24b07f3ab8b95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  contentInputField: {fileID: 1171578474340943792}
-  copyButton: {fileID: 3132282705712098725}
+  copyMenuPositionAddition: {x: 0, y: 0}
+  contentField: {fileID: 2912401047225551519}
+  copyMenu: {fileID: 391076473384178472}
+  notepaddAppCopyButton: {fileID: 1490680204352110151}
 --- !u!1 &4625382811518700558
 GameObject:
   m_ObjectHideFlags: 0
@@ -534,6 +585,7 @@ GameObject:
   - component: {fileID: 3045953956123425478}
   - component: {fileID: 778197583105092541}
   - component: {fileID: 3132282705712098725}
+  - component: {fileID: 1490680204352110151}
   m_Layer: 5
   m_Name: CopyButton
   m_TagString: Untagged
@@ -548,17 +600,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4625382811518700558}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 820237682166331807}
-  m_Father: {fileID: 4093923644531906981}
+  m_Father: {fileID: 391076473384178472}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -220, y: -40}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 100, y: 30}
   m_SizeDelta: {x: 190, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3045953956123425478
@@ -643,6 +695,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1490680204352110151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4625382811518700558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0bd9087299ae90419412c24e75f34ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6909332392711119072
 GameObject:
   m_ObjectHideFlags: 0
