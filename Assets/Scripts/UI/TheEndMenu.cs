@@ -8,6 +8,8 @@ public class TheEndMenu : MonoBehaviour
 
     void Start()
     {
+        GameManager.SetCursorShown(true);
+
         mainMenuButton.onClick.AddListener(() => SceneLoader.LoadScene(SceneLoader.Scene.MainMenu));
     }
 }
