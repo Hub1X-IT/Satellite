@@ -53,6 +53,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
     {
         monitorAppUI = GetComponent<MonitorAppUI>();
         monitorAppUI.SetAppName(appName);
+        monitorAppUI.DestroyOnClose = false;
 
         InitializePasswordCracking();
         SetDetectionChanceText();
@@ -65,6 +66,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
             wasDetected = true;
             if (monitorAppUI != null)
             {
+                monitorAppUI.DestroyOnClose = true;
                 monitorAppUI.CloseApp();
             }
         };

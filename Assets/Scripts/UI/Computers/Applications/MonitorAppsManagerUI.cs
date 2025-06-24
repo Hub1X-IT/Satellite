@@ -25,6 +25,9 @@ public class MonitorAppsManagerUI : MonoBehaviour
     [SerializeField]
     private PasswordCrackingAppUI passwordCrackingAppPrefab;
 
+    // Temporary
+    private PasswordCrackingAppUI currentPasswordCrackingApp;
+
     public MonitorAppUI OpenApplication(ApplicationType application)
     {
         MonitorAppUI instantiatedApp;
@@ -53,8 +56,16 @@ public class MonitorAppsManagerUI : MonoBehaviour
     public void OpenPasswordCracking()
     {
         // Method for temporary password cracking button - don't delete until the button is deleted!
-        PasswordCrackingAppUI passwordCrackingApp = OpenApplication(ApplicationType.PasswordCrackingApp).GetComponent<PasswordCrackingAppUI>();
-        passwordCrackingApp.InitializePasswordCrackingApp("Password cracking");
+        if (currentPasswordCrackingApp != null)
+        {
+            currentPasswordCrackingApp.gameObject.SetActive(true);
+        }
+        else
+        {
+            PasswordCrackingAppUI passwordCrackingApp = OpenApplication(ApplicationType.PasswordCrackingApp).GetComponent<PasswordCrackingAppUI>();
+            passwordCrackingApp.InitializePasswordCrackingApp("Password cracking");
+            currentPasswordCrackingApp = passwordCrackingApp;
+        }
     }
 
     public void OpenDoorApp()

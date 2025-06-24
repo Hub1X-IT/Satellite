@@ -9,10 +9,14 @@ public class MonitorAppUI : MonoBehaviour
 
     public MonitorAppsManagerUI CurrentMonitorAppManager => currentMonitorAppManager;
 
+    // Temporary
+    public bool DestroyOnClose { get; set; }
+
     public void InitializeApp(MonitorAppsManagerUI monitorAppManager)
     {
         currentMonitorAppManager = monitorAppManager;
         titleBar.AppCloseTriggered += CloseApp;
+        DestroyOnClose = true;
     }
 
     public void SetAppName(string appName)
@@ -25,6 +29,10 @@ public class MonitorAppUI : MonoBehaviour
     {
         Debug.Log($"Close app: {gameObject.name}");
         gameObject.SetActive(false);
-        Destroy(gameObject);
+
+        if (DestroyOnClose)
+        {
+            Destroy(gameObject);
+        }
     }
 }
