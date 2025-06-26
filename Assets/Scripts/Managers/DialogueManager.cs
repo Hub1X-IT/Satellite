@@ -38,7 +38,13 @@ public class DialogueManager : MonoBehaviour
 
     private void Awake()
     {
-        GameInput.OnNextDialogueSentenceAction += StartNextDialogueSentence;
+        GameInput.OnNextDialogueSentenceAction += () =>
+        {
+            if (debugDialogueSkipping)
+            {
+                StartNextDialogueSentence();
+            }
+        };
 
         foreach (var dialogueInvokeData in dialoguesInvokeData)
         {
