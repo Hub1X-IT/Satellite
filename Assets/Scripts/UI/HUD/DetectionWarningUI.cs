@@ -10,12 +10,25 @@ public class DetectionWarningUI : MonoBehaviour
     private const string Show = "Show";
     private const string Hide = "Hide";
 
+    private bool shouldShowWarningUI;
 
     private void Awake()
     {
-        DetectionManager.DetectionOccured += () => SetWarningUIEnabled(true);
+        DetectionManager.DetectionOccured += () =>
+        {
+            shouldShowWarningUI = true;
+        };
         DetectionManager.DetectionRemoved += () => SetWarningUIEnabled(false);
         //SetWarningUIEnabled(false);
+    }
+
+    private void LateUpdate()
+    {
+        if (shouldShowWarningUI)
+        {
+            SetWarningUIEnabled(true);
+            shouldShowWarningUI = false;
+        }
     }
 
     private void SetWarningUIEnabled(bool enabled)
