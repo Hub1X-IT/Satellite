@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class PasswordEncryption
 {
-    public enum Cipher
+    public enum CipherType
     {
         None,
         ASCII_Base2,
@@ -13,6 +13,13 @@ public static class PasswordEncryption
         ASCII_Base16,
         AtbashCipher,
         CaesarCipher,
+    }
+
+    public class EncryptionStep
+    {
+        public string PreviousPasswordState;
+        public string CurrentPasswordState;
+        public CipherType usedCipherType;
     }
 
     
@@ -38,7 +45,7 @@ public static class PasswordEncryption
     // private static readonly Cipher[] case3OutputCiphers = { Cipher.ASCII_Base2, Cipher.ASCII_Base8, Cipher.ASCII_Base10, Cipher.ASCII_Base16, Cipher.CaesarCipher };
     private static readonly Cipher[] case3OutputCiphers = { Cipher.ASCII_Base8, Cipher.ASCII_Base10, Cipher.ASCII_Base16, Cipher.CaesarCipher };
     */
-    
+
 
     /*
         Case:
@@ -48,67 +55,79 @@ public static class PasswordEncryption
     */
 
     // private static readonly Cipher[] case0OutputCiphers = { Cipher.ASCII_Base2, Cipher.ASCII_Base8, Cipher.ASCII_Base10, Cipher.ASCII_Base16, Cipher.AtbashCipher };
-    private static readonly Cipher[] case0OutputCiphers = { Cipher.ASCII_Base8, Cipher.ASCII_Base10, Cipher.ASCII_Base16, Cipher.AtbashCipher };
+    private static readonly CipherType[] case0OutputCiphers = { CipherType.ASCII_Base8, CipherType.ASCII_Base10, CipherType.ASCII_Base16, CipherType.AtbashCipher };
     // private static readonly Cipher[] case0OutputCiphers = { Cipher.CaesarCipher, Cipher.AtbashCipher };
-    private static readonly Cipher[] case1InputCiphers = { Cipher.ASCII_Base2, Cipher.ASCII_Base8, Cipher.ASCII_Base10, Cipher.ASCII_Base16 };
+    private static readonly CipherType[] case1InputCiphers = { CipherType.ASCII_Base2, CipherType.ASCII_Base8, CipherType.ASCII_Base10, CipherType.ASCII_Base16 };
     // private static readonly Cipher[] case1OutputCiphers = { Cipher.ASCII_Base2, Cipher.ASCII_Base8, Cipher.ASCII_Base10, Cipher.ASCII_Base16 };
-    private static readonly Cipher[] case1OutputCiphers = { Cipher.ASCII_Base8, Cipher.ASCII_Base10, Cipher.ASCII_Base16 };
-    private static readonly Cipher[] case2InputCiphers = { Cipher.AtbashCipher };
+    private static readonly CipherType[] case1OutputCiphers = { CipherType.ASCII_Base8, CipherType.ASCII_Base10, CipherType.ASCII_Base16 };
+    private static readonly CipherType[] case2InputCiphers = { CipherType.AtbashCipher };
     // private static readonly Cipher[] case2OutputCiphers = { Cipher.ASCII_Base2, Cipher.ASCII_Base8, Cipher.ASCII_Base10, Cipher.ASCII_Base16, Cipher.AtbashCipher };
-    private static readonly Cipher[] case2OutputCiphers = { Cipher.ASCII_Base8, Cipher.ASCII_Base10, Cipher.ASCII_Base16, Cipher.AtbashCipher };
+    private static readonly CipherType[] case2OutputCiphers = { CipherType.ASCII_Base8, CipherType.ASCII_Base10, CipherType.ASCII_Base16, CipherType.AtbashCipher };
 
 
     public static EncryptedPassword EncryptPassword(string password, int numberOfEncryptions)
     {
         string newPassword = password;
 
-        List<Cipher> usedCiphersList = new();
+        List<CipherType> usedCiphersList = new();
 
-        Cipher currentCipher = Cipher.None;
+        CipherType currentCipher = CipherType.None;
 
         int currentCase = 0;
+
+        List<EncryptionStep> encryptionSteps = new();
 
         for (int i = 0; i < numberOfEncryptions; i++)
         {
             currentCipher = GetRandomCipher(currentCase, out currentCase, currentCipher);
             usedCiphersList.Add(currentCipher);
 
+            EncryptionStep currentEncryptionStep = new()
+            {
+                PreviousPasswordState = newPassword,
+                usedCipherType = currentCipher
+            };
+
             switch (currentCipher)
             {
-                case Cipher.ASCII_Base2:
+                case CipherType.ASCII_Base2:
                     newPassword = ASCIIEncryption.Encode(newPassword, 2);
                     break;
-                case Cipher.ASCII_Base8:
+                case CipherType.ASCII_Base8:
                     newPassword = ASCIIEncryption.Encode(newPassword, 8);
                     break;
-                case Cipher.ASCII_Base10:
+                case CipherType.ASCII_Base10:
                     newPassword = ASCIIEncryption.Encode(newPassword, 10);
                     break;
-                case Cipher.ASCII_Base16:
+                case CipherType.ASCII_Base16:
                     newPassword = ASCIIEncryption.Encode(newPassword, 16);
                     break;
-                case Cipher.AtbashCipher:
+                case CipherType.AtbashCipher:
                     newPassword = AtbashCipher.DefaultEncode(newPassword);
                     break;
-                case Cipher.CaesarCipher:
+                case CipherType.CaesarCipher:
                     newPassword = CaesarCipher.DefaultEncode(newPassword);
                     break;
             }
+
+            currentEncryptionStep.CurrentPasswordState = newPassword;
+            encryptionSteps.Add(currentEncryptionStep);
         }
 
         EncryptedPassword encryptedPassword = new()
         {
             Password = newPassword,
             OriginalPassword = password,
-            UsedEncryptions = usedCiphersList.ToArray()
+            UsedEncryptions = usedCiphersList.ToArray(),
+            EncryptionSteps = encryptionSteps.ToArray()
         };
 
         return encryptedPassword;
     }
 
-    private static Cipher GetRandomCipher(int currentCase, out int newCase, Cipher previousCipher)
+    private static CipherType GetRandomCipher(int currentCase, out int newCase, CipherType previousCipher)
     {
-        Cipher[] allowedCiphers = new Cipher[0];
+        CipherType[] allowedCiphers = new CipherType[0];
 
         switch (currentCase)
         {
@@ -129,11 +148,11 @@ public static class PasswordEncryption
         }
 
         // May be better to just use a list
-        List<Cipher> allowedCiphersList = allowedCiphers.ToList();
+        List<CipherType> allowedCiphersList = allowedCiphers.ToList();
         allowedCiphersList.Remove(previousCipher);
         allowedCiphers = allowedCiphersList.ToArray();
 
-        Cipher randomCipher = allowedCiphers[Random.Range(0, allowedCiphers.Length)];
+        CipherType randomCipher = allowedCiphers[Random.Range(0, allowedCiphers.Length)];
 
         // If no case is selected, that means that an error occured.
         newCase = -1;
@@ -155,13 +174,4 @@ public static class PasswordEncryption
 
         return randomCipher;
     }
-}
-
-public class EncryptedPassword
-{
-    public string Password { get; set; }
-
-    public string OriginalPassword { get; set; }
-
-    public PasswordEncryption.Cipher[] UsedEncryptions { get; set; }
 }

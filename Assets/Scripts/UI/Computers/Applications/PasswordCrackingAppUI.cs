@@ -32,9 +32,12 @@ public class PasswordCrackingAppUI : MonoBehaviour
     [SerializeField]
     private TMP_InputField caesarParameterInputField;
 
-    private string currentPassword;
     private string originalPassword;
+    private string decompressedPassword;
     private Stack<ConvertedPasswordUI> previousConvertedPasswordUIStack;
+    private EncryptedPassword currentEncryptedPassword;
+    private PasswordEncryption.EncryptionStep[] passwordEncryptionSteps;
+    private int encryptionStepIndex;
 
     [SerializeField]
     private TMP_Text detectionChanceTextField;
@@ -83,7 +86,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
     {
         previousConvertedPasswordUIStack = new();
 
-        originalPassword = currentPassword = "";
+        originalPassword = "";
 
         if (!DetectionManager.WasDetected)
         {
@@ -126,7 +129,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
     private void ChangeOriginalPassword(string newPassword)
     {
         RemoveAllPasswordTextFields();
-        originalPassword = currentPassword = newPassword;
+        originalPassword = newPassword;
     }
     private void InputField_OnEndEdit(string inputText)
     {
@@ -134,10 +137,32 @@ public class PasswordCrackingAppUI : MonoBehaviour
     }
     private void DecompressPassword(string compressedPassword)
     {
-        if (TextCompressor.TryGetDecompressedText(compressedPassword, out string decompressedPassword))
+        if (TextCompressor.TryGetDecompressedText(compressedPassword, out decompressedPassword))
         {
             RemoveAllPasswordTextFields();
-            currentPassword = decompressedPassword;
+
+            List<EncryptedPassword> encryptedPasswordList = EncryptedPasswordsManager.EncryptedPasswords;
+            foreach (var encryptedPassword in encryptedPasswordList)
+            {
+                if (encryptedPassword.Password == decompressedPassword)
+                {
+                    currentEncryptedPassword = encryptedPassword;
+                    break;
+                }
+            }
+
+            if (currentEncryptedPassword == null)
+            {
+                Debug.LogWarning("No encrypted password object found corresponding to the current encrypted password!");
+                return;
+            }
+
+            Debug.Log("Current encrypted password: " + currentEncryptedPassword.Password + "\nOriginal password: " + currentEncryptedPassword.OriginalPassword);
+
+            passwordEncryptionSteps = currentEncryptedPassword.EncryptionSteps;
+            encryptionStepIndex = passwordEncryptionSteps.Length - 1;
+
+            // Will be changed, the decompressed field will be hard-coded
             CreateNewPasswordTextField(decompressedPassword);
         }
         else
@@ -151,52 +176,42 @@ public class PasswordCrackingAppUI : MonoBehaviour
         DecompressPassword(VirtualClipboard.GetClipboardText());
     }
 
-    private void BinDecode()
-    {
-        int decodeBase = 2;
-        currentPassword = ASCIIEncryption.Decode(currentPassword, decodeBase);
-        AddDecodedPassword();
-    }
-    private void OctDecode()
-    {
-        int decodeBase = 8;
-        currentPassword = ASCIIEncryption.Decode(currentPassword, decodeBase);
-        AddDecodedPassword();
-    }
-    private void DecDecode()
-    {
-        int decodeBase = 10;
-        currentPassword = ASCIIEncryption.Decode(currentPassword, decodeBase);
-        AddDecodedPassword();
-    }
-    private void HexDecode()
-    {
-        int decodeBase = 16;
-        currentPassword = ASCIIEncryption.Decode(currentPassword, decodeBase);
-        AddDecodedPassword();
-    }
-    private void AtbashDecode()
-    {
-        currentPassword = AtbashCipher.DefaultEncode(currentPassword);
-        AddDecodedPassword();
-    }
-    private void CaesarDecode()
-    {
-        int shift = Int32.Parse(caesarParameterInputField.text);
-        currentPassword = CaesarCipher.Encode(currentPassword, CaesarCipher.DefaultBase, shift);
-        AddDecodedPassword();
-    }
+    private void BinDecode() => TryAddDecodedPassword(PasswordEncryption.CipherType.ASCII_Base2);
+    private void OctDecode() => TryAddDecodedPassword(PasswordEncryption.CipherType.ASCII_Base8);
+    private void DecDecode() => TryAddDecodedPassword(PasswordEncryption.CipherType.ASCII_Base10);
+    private void HexDecode() => TryAddDecodedPassword(PasswordEncryption.CipherType.ASCII_Base16);
+    private void AtbashDecode() => TryAddDecodedPassword(PasswordEncryption.CipherType.AtbashCipher);
+    private void CaesarDecode() => TryAddDecodedPassword(PasswordEncryption.CipherType.CaesarCipher);
 
-    private void AddDecodedPassword()
+    private void TryAddDecodedPassword(PasswordEncryption.CipherType usedCipher)
     {
-        CreateNewPasswordTextField(currentPassword);
-
-        DetectionManager.CheckDetection();
-        SetDetectionChanceText();
-
-        if (!wasDetected)
+        if (encryptionStepIndex < 0)
         {
-            NewPasswordConverted?.Invoke(currentPassword);
+            Debug.LogWarning("Encryption step index below zero!");
+            return;
+        }
+
+        PasswordEncryption.EncryptionStep currentEncryptionStep = passwordEncryptionSteps[encryptionStepIndex];
+
+        if (usedCipher == currentEncryptionStep.usedCipherType)
+        {
+            Debug.Log("Decoding step was correct!");
+            encryptionStepIndex--;
+            string convertedPassword = currentEncryptionStep.PreviousPasswordState;
+            CreateNewPasswordTextField(convertedPassword);
+
+            if (!wasDetected)
+            {
+                NewPasswordConverted?.Invoke(convertedPassword);
+
+                // May be unnecessary when checking decoding steps is implemented
+            }
+        }
+        else
+        {
+            Debug.Log("Decoding step was incorrect!");
+            DetectionManager.CheckDetection();
+            SetDetectionChanceText();
         }
     }
 
@@ -229,7 +244,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
         }
 
         bool peeked = previousConvertedPasswordUIStack.TryPeek(out ConvertedPasswordUI convertedPasswordUI);
-        currentPassword = peeked ? convertedPasswordUI.PasswordString : originalPassword;
     }
 
     private void RemoveAllPasswordTextFields()
@@ -238,6 +252,5 @@ public class PasswordCrackingAppUI : MonoBehaviour
         {
             convertedPasswordUI.DestroySelf();
         }
-        currentPassword = originalPassword;
     }
 }
