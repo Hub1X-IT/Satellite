@@ -1,5 +1,3 @@
-using UnityEditor.Animations;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class DetectionWarningUI : MonoBehaviour
