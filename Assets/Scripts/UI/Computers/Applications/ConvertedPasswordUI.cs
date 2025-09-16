@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -6,15 +5,10 @@ using UnityEngine.UI;
 
 public class ConvertedPasswordUI : MonoBehaviour
 {
-    public event Action<ConvertedPasswordUI> DeletePasswordTriggered;
-
     [SerializeField]
     private int maxCharactersNumber;
 
     private const string SubstringDivisor = " | ";
-
-    [SerializeField]
-    private Button deletePasswordButton;
 
     [SerializeField]
     private Transform backgroundHolder;
@@ -30,6 +24,8 @@ public class ConvertedPasswordUI : MonoBehaviour
     [SerializeField]
     private Image threeLinePasswordBackground;
 
+    private List<TMP_Text> createdTextFieldsList;
+
     private RectTransform rectTransform;
 
     private Vector2 sizeToSet;
@@ -40,8 +36,8 @@ public class ConvertedPasswordUI : MonoBehaviour
 
     public void InitializeConvertedPasswordUI(string passwordToDisplay)
     {
-        deletePasswordButton.onClick.AddListener(() => DeletePasswordTriggered?.Invoke(this));
         rectTransform = GetComponent<RectTransform>();
+        ResetTextFields();
 
         passwordString = passwordToDisplay;
 
@@ -114,6 +110,7 @@ public class ConvertedPasswordUI : MonoBehaviour
     {
         TMP_Text textField = Instantiate(convertedPasswordTextFieldPrefab.gameObject, textFieldsHolder).GetComponent<TMP_Text>();
         textField.text = string.Empty;
+        createdTextFieldsList.Add(textField);
         return textField;
     }
 
@@ -146,5 +143,17 @@ public class ConvertedPasswordUI : MonoBehaviour
     {
         gameObject.SetActive(false);
         Destroy(gameObject);
+    }
+
+    public void ResetTextFields()
+    {
+        if (createdTextFieldsList != null)
+        {
+            foreach (var textField in createdTextFieldsList)
+            {
+                Destroy(textField.gameObject);
+            }
+        }
+        createdTextFieldsList = new();
     }
 }

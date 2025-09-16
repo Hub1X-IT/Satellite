@@ -13,9 +13,19 @@ public class PasswordCrackingAppUI : MonoBehaviour
     [SerializeField]
     private Transform convertedPasswordsHolder;
     [SerializeField]
+    private ConvertedPasswordUI decompressedPasswordUI;
+    [SerializeField]
     private TMP_InputField inputField;
+
+    [SerializeField]
+    private Button resetPasswordCrackingButton;
     [SerializeField]
     private Button pasteAndDecompressButton;
+
+    [SerializeField]
+    private Button undoAllStepsButton;
+    [SerializeField]
+    private Button undoLastStepButton;
 
     [SerializeField]
     private Button binButton;
@@ -32,7 +42,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
     [SerializeField]
     private TMP_InputField caesarParameterInputField;
 
-    private string originalPassword;
     private string decompressedPassword;
     private Stack<ConvertedPasswordUI> previousConvertedPasswordUIStack;
     private EncryptedPassword currentEncryptedPassword;
@@ -86,7 +95,8 @@ public class PasswordCrackingAppUI : MonoBehaviour
     {
         previousConvertedPasswordUIStack = new();
 
-        originalPassword = "";
+        decompressedPassword = string.Empty;
+        decompressedPasswordUI.gameObject.SetActive(false);
 
         if (!DetectionManager.WasDetected)
         {
@@ -101,8 +111,12 @@ public class PasswordCrackingAppUI : MonoBehaviour
     private void EnableApp()
     {
         // inputField.onEndEdit.AddListener(ChangeOriginalPassword);
+        resetPasswordCrackingButton.onClick.AddListener(ResetPasswordCracking);
         pasteAndDecompressButton.onClick.AddListener(PasteAndDecompress);
         inputField.onEndEdit.AddListener(InputField_OnEndEdit);
+
+        undoAllStepsButton.onClick.AddListener(UndoAllSteps);
+        undoLastStepButton.onClick.AddListener(UndoLastStep);
 
         binButton.onClick.AddListener(BinDecode);
         octButton.onClick.AddListener(OctDecode);
@@ -115,8 +129,12 @@ public class PasswordCrackingAppUI : MonoBehaviour
     private void DisableApp()
     {
         // inputField.onEndEdit.RemoveListener(ChangeOriginalPassword);
+        resetPasswordCrackingButton.onClick.RemoveListener(ResetPasswordCracking);
         pasteAndDecompressButton.onClick.RemoveListener(PasteAndDecompress);
         inputField.onEndEdit.RemoveListener(InputField_OnEndEdit);
+
+        undoAllStepsButton.onClick.RemoveListener(UndoAllSteps);
+        undoLastStepButton.onClick.RemoveListener(UndoLastStep);
 
         binButton.onClick.RemoveListener(BinDecode);
         octButton.onClick.RemoveListener(OctDecode);
@@ -126,11 +144,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
         caesarButton.onClick.RemoveListener(CaesarDecode);
     }
 
-    private void ChangeOriginalPassword(string newPassword)
-    {
-        RemoveAllPasswordTextFields();
-        originalPassword = newPassword;
-    }
     private void InputField_OnEndEdit(string inputText)
     {
         DecompressPassword(inputText);
@@ -159,21 +172,27 @@ public class PasswordCrackingAppUI : MonoBehaviour
 
             Debug.Log("Current encrypted password: " + currentEncryptedPassword.Password + "\nOriginal password: " + currentEncryptedPassword.OriginalPassword);
 
-            passwordEncryptionSteps = currentEncryptedPassword.EncryptionSteps;
-            encryptionStepIndex = passwordEncryptionSteps.Length - 1;
+            ResetPasswordEncryptionSteps();
 
-            // Will be changed, the decompressed field will be hard-coded
-            CreateNewPasswordTextField(decompressedPassword);
+            decompressedPasswordUI.InitializeConvertedPasswordUI(decompressedPassword);
+            decompressedPasswordUI.gameObject.SetActive(true);
         }
         else
         {
             Debug.Log("Decompression failed.");
+            decompressedPasswordUI.gameObject.SetActive(false);
         }
     }
     private void PasteAndDecompress()
     {
         inputField.text = VirtualClipboard.GetClipboardText();
         DecompressPassword(VirtualClipboard.GetClipboardText());
+    }
+
+    private void ResetPasswordEncryptionSteps()
+    {
+        passwordEncryptionSteps = currentEncryptedPassword.EncryptionSteps;
+        encryptionStepIndex = passwordEncryptionSteps.Length - 1;
     }
 
     private void BinDecode() => TryAddDecodedPassword(PasswordEncryption.CipherType.ASCII_Base2);
@@ -187,7 +206,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
     {
         if (encryptionStepIndex < 0)
         {
-            Debug.LogWarning("Encryption step index below zero!");
+            Debug.Log("Encryption step index below zero");
             return;
         }
 
@@ -195,7 +214,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
 
         if (usedCipher == currentEncryptionStep.usedCipherType)
         {
-            Debug.Log("Decoding step was correct!");
+            Debug.Log("Decoding step correct");
             encryptionStepIndex--;
             string convertedPassword = currentEncryptionStep.PreviousPasswordState;
             CreateNewPasswordTextField(convertedPassword);
@@ -206,10 +225,15 @@ public class PasswordCrackingAppUI : MonoBehaviour
 
                 // May be unnecessary when checking decoding steps is implemented
             }
+
+            if (encryptionStepIndex == 0)
+            {
+                // Player guessed the correct password.
+            }
         }
         else
         {
-            Debug.Log("Decoding step was incorrect!");
+            Debug.Log("Decoding step incorrect");
             DetectionManager.CheckDetection();
             SetDetectionChanceText();
         }
@@ -226,24 +250,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
             convertedPasswordsHolder).GetComponent<ConvertedPasswordUI>();
 
         convertedPasswordUI.InitializeConvertedPasswordUI(newPassword);
-        convertedPasswordUI.DeletePasswordTriggered += DeletePassword;
         previousConvertedPasswordUIStack.Push(convertedPasswordUI);
-    }
-
-    private void DeletePassword(ConvertedPasswordUI targetConvertedPasswordUI)
-    {
-        while (true)
-        {
-            ConvertedPasswordUI currentConvertedPasswordUI = previousConvertedPasswordUIStack.Pop();
-            Debug.Log(currentConvertedPasswordUI);
-            currentConvertedPasswordUI.DestroySelf();
-            if (currentConvertedPasswordUI == targetConvertedPasswordUI)
-            {
-                break;
-            }
-        }
-
-        bool peeked = previousConvertedPasswordUIStack.TryPeek(out ConvertedPasswordUI convertedPasswordUI);
     }
 
     private void RemoveAllPasswordTextFields()
@@ -251,6 +258,29 @@ public class PasswordCrackingAppUI : MonoBehaviour
         while (previousConvertedPasswordUIStack.TryPop(out ConvertedPasswordUI convertedPasswordUI))
         {
             convertedPasswordUI.DestroySelf();
+        }
+    }
+
+    private void ResetPasswordCracking()
+    {
+        inputField.text = string.Empty;
+        RemoveAllPasswordTextFields();
+        decompressedPasswordUI.gameObject.SetActive(false);
+    }
+
+    private void UndoAllSteps()
+    {
+        RemoveAllPasswordTextFields();
+        ResetPasswordEncryptionSteps();
+    }
+
+    private void UndoLastStep()
+    {
+        if (previousConvertedPasswordUIStack.TryPop(out ConvertedPasswordUI currentConvertedPasswordUI))
+        {
+            currentConvertedPasswordUI.DestroySelf();
+            Debug.Log("Destroyed: " + currentConvertedPasswordUI);
+            encryptionStepIndex++;
         }
     }
 }
