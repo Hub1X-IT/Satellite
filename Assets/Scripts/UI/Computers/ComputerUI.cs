@@ -16,9 +16,6 @@ public class ComputerUI : MonoBehaviour
     [SerializeField]
     private GameEventSO computerViewDisabledGameEvent;
 
-    [SerializeField]
-    private GameObject computerTurnedOffScreen;
-
     private ComputerUIDynamicInputField currentSelectedInputField;
 
     private void Awake()
@@ -41,13 +38,6 @@ public class ComputerUI : MonoBehaviour
             ComputerViewEnabled?.Invoke(false);
         };
 
-        DetectionManager.DetectionOccured += () =>
-        {
-            SetComputerEnabled(false);
-        };
-
-        ServerConnectionManager.ServerConnectionEnabled += SetComputerEnabled;
-
         TMP_InputField[] inputFields = GetComponentsInChildren<TMP_InputField>(true);
         foreach (var inputField in inputFields)
         {
@@ -57,8 +47,6 @@ public class ComputerUI : MonoBehaviour
                 inputField.onDeselect.AddListener((_) => SetCanExitComputerViewTrue());
             }
         }
-
-        computerTurnedOffScreen.SetActive(true);
     }
 
     private void Start()
@@ -99,10 +87,5 @@ public class ComputerUI : MonoBehaviour
             // computer.CanExitComputerView = true;
             currentSelectedInputField = null;
         }
-    }
-
-    private void SetComputerEnabled(bool enabled)
-    {
-        computerTurnedOffScreen.SetActive(!enabled);
     }
 }

@@ -10,7 +10,6 @@ public class Computer : MonoBehaviour
 
     [SerializeField]
     private GameEventComputerSO computerViewEnabledGameEvent;
-
     [SerializeField]
     private GameEventSO computerViewDisabledGameEvent;
 
@@ -22,7 +21,6 @@ public class Computer : MonoBehaviour
 
     [SerializeField]
     private Computer computerOnLeft;
-
     [SerializeField]
     private Computer computerOnRight;
 
@@ -30,10 +28,7 @@ public class Computer : MonoBehaviour
     public Computer ComputerOnRight => computerOnRight;
 
     [SerializeField]
-    private GameEventSO changeComputerLeftGameEvent;
-
-    [SerializeField]
-    private GameEventSO changeComputerRightGameEvent;
+    private GameEventComputerSO changeToComputerGameEvent;
 
     private Outline outline;
 
@@ -47,7 +42,7 @@ public class Computer : MonoBehaviour
 
     public bool CanExitComputerView { get; set; }
 
-    private bool isComputerEnabled;
+    public bool IsComputerEnabled { get; private set; }
 
     private bool wasChangedToInThisFrame;
 
@@ -69,54 +64,25 @@ public class Computer : MonoBehaviour
             }
         };
 
-        changeComputerLeftGameEvent.EventRaised += () =>
+        changeToComputerGameEvent.EventRaised += (targetComputer) =>
         {
-            if (isInComputerView && CanExitComputerView && !wasChangedToInThisFrame && computerOnLeft != null)
+            if (isInComputerView && CanExitComputerView && !wasChangedToInThisFrame && targetComputer != null)
             {
-                Debug.Log(gameObject + " l " + computerOnLeft);
-                ChangeCurrentComputer(computerOnLeft);
-            }
-        };
-
-        changeComputerRightGameEvent.EventRaised += () =>
-        {
-            if (isInComputerView && CanExitComputerView && !wasChangedToInThisFrame && computerOnRight != null)
-            {
-                Debug.Log(gameObject + " r " + computerOnRight);
-                ChangeCurrentComputer(computerOnRight);
-            }
-        };
-
-        DetectionManager.DetectionOccured += () =>
-        {
-            if (isInComputerView)
-            {
-                SetComputerViewActive(false);
-                outline.enabled = false;
+                Debug.Log(gameObject + " change to " + targetComputer);
+                ChangeCurrentComputer(targetComputer);
             }
         };
 
         computerCinemachineCamera.enabled = false;
 
         isInComputerView = false;
-
         CanExitComputerView = true;
-        isComputerEnabled = false;
 
         shouldEnablePlayerMovement = false;
 
         wasChangedToInThisFrame = false;
 
-        ToggleComputerTrigger();
-    }
-
-    private void Start()
-    {
-        ServerConnectionManager.ServerConnectionEnabled += (enabled) =>
-        {
-            isComputerEnabled = enabled;
-            ToggleComputerTrigger();
-        };
+        SetComputerEnabled(true);
     }
 
     private void Update()
@@ -145,8 +111,7 @@ public class Computer : MonoBehaviour
     {
         computerViewEnabledGameEvent.ResetGameEvent();
         computerViewDisabledGameEvent.ResetGameEvent();
-        changeComputerLeftGameEvent.ResetGameEvent();
-        changeComputerRightGameEvent.ResetGameEvent();
+        changeToComputerGameEvent.ResetGameEvent();
     }
 
     private void SetComputerViewActive(bool active)
@@ -213,15 +178,15 @@ public class Computer : MonoBehaviour
         ComputerViewEnabled?.Invoke(true);
 
         computerViewEnabledGameEvent.RaiseEvent(this);
-        
+
         CameraController.SetActiveCinemachineCamera(computerCinemachineCamera);
 
         wasChangedToInThisFrame = true;
     }
 
-    private void ToggleComputerTrigger()
+    public void ToggleComputerTrigger()
     {
-        computerTrigger.gameObject.SetActive(!isInComputerView && isComputerEnabled);
+        computerTrigger.gameObject.SetActive(!isInComputerView && IsComputerEnabled);
     }
 
     private void EnablePlayerMovement()
@@ -236,6 +201,13 @@ public class Computer : MonoBehaviour
         if (isInComputerView)
         {
             SetComputerViewActive(false);
+            outline.enabled = false;
         }
+    }
+
+    public void SetComputerEnabled(bool enabled)
+    {
+        IsComputerEnabled = enabled;
+        ToggleComputerTrigger();
     }
 }
