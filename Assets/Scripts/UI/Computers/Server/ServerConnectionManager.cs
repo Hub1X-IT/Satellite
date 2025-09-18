@@ -13,6 +13,7 @@ public class ServerConnectionManager : MonoBehaviour
     private ServerConnectionItemUI currentConnectedServer;
 
     public static bool IsConnectionActive { get; private set; }
+    public static bool WasEverConnected { get;  private set; }
 
     [SerializeField]
     private GameEventSO objectiveGameEvent;
@@ -33,6 +34,7 @@ public class ServerConnectionManager : MonoBehaviour
             serverConnectionItem.ConnectionDisabled += DisconnectCurrentServer;
         }
         IsConnectionActive = false;
+        WasEverConnected = false;
     }
 
     private void Start()
@@ -54,6 +56,7 @@ public class ServerConnectionManager : MonoBehaviour
     private void SetCurrentConnectedServer(ServerConnectionItemUI serverConnectionItem)
     {
         IsConnectionActive = true;
+        WasEverConnected = true;
         currentConnectedServer = serverConnectionItem;
         ServerConnectionEnabled?.Invoke(true);
         UpdateConnectionItems();
