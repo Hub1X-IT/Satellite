@@ -204,9 +204,14 @@ public class PasswordCrackingAppUI : MonoBehaviour
 
     private void TryAddDecodedPassword(PasswordEncryption.CipherType usedCipher)
     {
-        if (encryptionStepIndex < 0)
+        if (passwordEncryptionSteps == null)
         {
-            Debug.Log("Encryption step index below zero");
+            Debug.Log("No password loaded.");
+            return;
+        }
+        if (encryptionStepIndex < 0 || encryptionStepIndex >= passwordEncryptionSteps.Length)
+        {
+            Debug.Log("Invalid encryption step index.");
             return;
         }
 
@@ -223,7 +228,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
             {
                 NewPasswordConverted?.Invoke(convertedPassword);
 
-                // May be unnecessary when checking decoding steps is implemented
+                // May be unnecessary now when checking decoding steps is implemented
             }
 
             if (encryptionStepIndex == 0)
