@@ -3282,6 +3282,10 @@ MonoBehaviour:
     Chapter: 
     Objective: Connect to server in basement
   - GameEvents:
+    - {fileID: 11400000, guid: 640b2cf57b887ab4a9e33f262dbbfff8, type: 2}
+    Chapter: 
+    Objective: Start SputnikOS using "start sputnikos" in CMD
+  - GameEvents:
     - {fileID: 11400000, guid: 5e80baf39dd969542a5f7ef119303449, type: 2}
     Chapter: 
     Objective: Call Sp1k3
@@ -8832,7 +8836,7 @@ MonoBehaviour:
   startCommandPrograms:
   - ProgramName: sputnikos
     StartProgramGameEvent: {fileID: 11400000, guid: 1ba713aa4acd7353f9f0467d0d85ae1c, type: 2}
-    ObjectiveGameEvent: {fileID: 0}
+    ObjectiveGameEvent: {fileID: 11400000, guid: 5e80baf39dd969542a5f7ef119303449, type: 2}
 --- !u!1 &892759595
 GameObject:
   m_ObjectHideFlags: 0
@@ -10164,6 +10168,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 979979600}
+    - target: {fileID: 8801786242321746415, guid: 22ed4668142857b478011665371a7647, type: 3}
+      propertyPath: objectiveGameEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 640b2cf57b887ab4a9e33f262dbbfff8, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
