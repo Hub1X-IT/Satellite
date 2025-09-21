@@ -8,6 +8,7 @@ public class StartCommandManager : MonoBehaviour
     {
         public string ProgramName;
         public GameEventStartProgramDataSO StartProgramGameEvent;
+        public GameEventSO ObjectiveGameEvent;
     }
 
     [SerializeField]
@@ -41,6 +42,10 @@ public class StartCommandManager : MonoBehaviour
                 {
                     Response = (wasSuccessful, responseOutput) => commandData.Response?.Invoke(wasSuccessful, responseOutput),
                 });
+                if (startCommandProgram.ObjectiveGameEvent != null)
+                {
+                    startCommandProgram.ObjectiveGameEvent.TryRaiseEvent();
+                }
                 return;
             }
         }
