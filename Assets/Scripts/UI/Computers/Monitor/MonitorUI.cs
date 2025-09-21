@@ -14,6 +14,11 @@ public class MonitorUI : MonoBehaviour
     [SerializeField]
     private GameObject computerTurnedOffScreen;
 
+    [SerializeField]
+    private GameEventStartProgramDataSO startSputnikOSGameEvent;
+
+    private bool isSputnikOSStarted;
+
     public FileExplorerUI FileExplorer => fileExplorer;
 
     private void Awake()
@@ -25,18 +30,18 @@ public class MonitorUI : MonoBehaviour
         {
             monitorStartupScreenUI.gameObject.SetActive(true);
             monitorStartupScreenUI.StartStartupScreen(null);
+
+            isSputnikOSStarted = false;
         };
 
         ServerConnectionManager.ServerConnectionEnabled += (enabled) =>
         {
             monitorStartupScreenUI.gameObject.SetActive(true);
-            if (enabled)
+            monitorStartupScreenUI.StartStartupScreen(null);
+
+            if (!enabled)
             {
-                monitorStartupScreenUI.StartStartupScreen(() => monitorStartupScreenUI.gameObject.SetActive(false));
-            }
-            else
-            {
-                monitorStartupScreenUI.StartStartupScreen(null);
+                isSputnikOSStarted = false;
             }
         };
 
@@ -46,23 +51,39 @@ public class MonitorUI : MonoBehaviour
             {
                 SetMonitorEnabled(true);
                 monitorStartupScreenUI.gameObject.SetActive(true);
-                if (ServerConnectionManager.IsConnectionActive)
-                {
-                    monitorStartupScreenUI.StartStartupScreen(() => monitorStartupScreenUI.gameObject.SetActive(false));
-                }
-                else
-                {
-                    monitorStartupScreenUI.StartStartupScreen(null);
-                }
+                monitorStartupScreenUI.StartStartupScreen(null);
             }
             else
             {
                 SetMonitorEnabled(false);
-                monitorStartupScreenUI.gameObject.SetActive(false);
+                monitorStartupScreenUI.DisableStartupScreen();
+
+                isSputnikOSStarted = false;
             }
         };
 
+        startSputnikOSGameEvent.EventRaised += (startProgramEventData) =>
+        {
+            if (!isSputnikOSStarted)
+            {
+                isSputnikOSStarted = true;
+                monitorStartupScreenUI.StartSputnikOSStartupScreen(() => monitorStartupScreenUI.DisableStartupScreen());
+                startProgramEventData.Response?.Invoke(true, "Starting SputnikOS...");
+            }
+            else
+            {
+                startProgramEventData.Response?.Invoke(false, "SputnikOS is already started.");
+            }
+
+            // // This requires additional conditions in the event assignments above!
+            // if (!monitorStartupScreenUI.IsStartupScreenStarted)
+            // {
+            //     monitorStartupScreenUI.StartSputnikOSStartupScreen(() => monitorStartupScreenUI.DisableStartupScreen());
+            // }
+        };
+
         SetMonitorEnabled(true);
+        isSputnikOSStarted = false;
     }
 
     private void Start()

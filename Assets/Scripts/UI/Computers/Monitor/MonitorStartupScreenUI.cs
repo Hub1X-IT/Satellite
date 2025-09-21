@@ -12,9 +12,13 @@ public class MonitorStartupScreenUI : MonoBehaviour
     private GameObject[] case2StartupScreenElements;
 
     [SerializeField]
-    [Tooltip("Connected to server, but no command typed in (WIP)")]
+    [Tooltip("Connected to server")]
     // ^ Command to be added
     private GameObject[] case3StartupScreenElements;
+
+    [SerializeField]
+    [Tooltip("SputnikOS started after case32 executed")]
+    private GameObject[] case4StartupScreenElements;
 
     [SerializeField]
     private float objectsActivationInterval;
@@ -26,6 +30,8 @@ public class MonitorStartupScreenUI : MonoBehaviour
     private GameObject[] currentSelectedStartupScreenElements;
 
     private Action startupScreenFinishedCallback;
+
+    public bool IsStartupScreenStarted => shouldActivateObjects;
 
     void Awake()
     {
@@ -79,11 +85,24 @@ public class MonitorStartupScreenUI : MonoBehaviour
             Debug.Log("Selected case2");
         }
         else if (ServerConnectionManager.IsConnectionActive)
-        // ^ Needs adding more conditions based on typed commands
         {
             currentSelectedStartupScreenElements = case3StartupScreenElements;
             Debug.Log("Selected case3");
         }
+
+        objectsActivationTimer = objectsActivationInterval;
+        currentObjectIndex = 0;
+        shouldActivateObjects = true;
+    }
+
+    public void StartSputnikOSStartupScreen(Action onFinishedStartupCallback)
+    {
+        gameObject.SetActive(true);
+        startupScreenFinishedCallback = onFinishedStartupCallback;
+        DisableAllObjects();
+
+        currentSelectedStartupScreenElements = case4StartupScreenElements;
+        Debug.Log("Selected case4");
 
         objectsActivationTimer = objectsActivationInterval;
         currentObjectIndex = 0;
@@ -104,5 +123,14 @@ public class MonitorStartupScreenUI : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+        foreach (var gameObject in case4StartupScreenElements)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+    public void DisableStartupScreen()
+    {
+        gameObject.SetActive(false);
     }
 }
