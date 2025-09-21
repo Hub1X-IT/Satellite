@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using UnityEngine;
 
 public static class CommandPromptManager
 {
@@ -16,8 +14,6 @@ public static class CommandPromptManager
 
     private static string currentCommand;
 
-    private static Queue<string> previousCommandsQueue = new();
-
     public static void OnAwake(InitializationData data)
     {
         possibleCommandsSO = data.possibleCommandsSO;
@@ -30,8 +26,6 @@ public static class CommandPromptManager
 
     public static void SubmitCommand(string command)
     {
-        previousCommandsQueue.Enqueue(command);
-
         if (command.Length > 0)
         {
             string[] splitCommand = command.Split(' ');
@@ -50,6 +44,11 @@ public static class CommandPromptManager
 
     private static void ExecuteCommand(string command, string[] commandData)
     {
+        if (command == string.Empty)
+        {
+            return;
+        }
+
         if (possibleCommandsSO.PossibleCommandsDictionary.ContainsKey(command))
         {
             GameEventCommandDataSO gameEvent = possibleCommandsSO.PossibleCommandsDictionary[command];
@@ -65,6 +64,10 @@ public static class CommandPromptManager
                 CommandDataArray = commandData,
                 Response = RespondToCommand,
             });
+        }
+        else
+        {
+            RespondToCommand(false, command + ": command not found.");
         }
     }
 

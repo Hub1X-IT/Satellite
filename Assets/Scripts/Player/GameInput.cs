@@ -35,6 +35,8 @@ public static class GameInput
     public static event Action<char> OnKeyboardInputAction;
 
     public static event Action OnCommandSubmitAction;
+    public static event Action OnPreviousCommandAction;
+    public static event Action OnNextCommandAction;
 
 
     public static void InitializeInput()
@@ -67,6 +69,8 @@ public static class GameInput
         Keyboard.current.onTextInput += Keyboard_onTextInput;
 
         PlayerInputActions.CommandPrompt.CommandSubmit.performed += CommandSubmit_performed;
+        PlayerInputActions.CommandPrompt.PreviousCommand.performed += PreviousCommand_preformed;
+        PlayerInputActions.CommandPrompt.NextCommand.performed += NextCommand_preformed;
     }
 
     public static void RemoveInput()
@@ -89,6 +93,8 @@ public static class GameInput
         Keyboard.current.onTextInput -= Keyboard_onTextInput;
 
         PlayerInputActions.CommandPrompt.CommandSubmit.performed -= CommandSubmit_performed;
+        PlayerInputActions.CommandPrompt.PreviousCommand.performed -= PreviousCommand_preformed;
+        PlayerInputActions.CommandPrompt.NextCommand.performed -= NextCommand_preformed;
 
         PlayerInputActions.Dispose();
 
@@ -104,6 +110,8 @@ public static class GameInput
         OnKeyboardInputAction = null;
         OnReturnPerformedAction = null;
         OnCommandSubmitAction = null;
+        OnPreviousCommandAction = null;
+        OnNextCommandAction = null;
     }
 
     private static void Keyboard_onTextInput(char c)
@@ -131,6 +139,8 @@ public static class GameInput
     private static void Return_performed(InputAction.CallbackContext _) => OnReturnPerformedAction?.Invoke();
 
     private static void CommandSubmit_performed(InputAction.CallbackContext _) => OnCommandSubmitAction?.Invoke();
+    private static void PreviousCommand_preformed(InputAction.CallbackContext _) => OnPreviousCommandAction?.Invoke();
+    private static void NextCommand_preformed(InputAction.CallbackContext _) => OnNextCommandAction?.Invoke();
 
 
     public static void SetMousePosition(Vector2 position)

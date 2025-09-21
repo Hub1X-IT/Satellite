@@ -368,6 +368,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""PreviousCommand"",
+                    ""type"": ""Button"",
+                    ""id"": ""562bef8e-2c14-47a2-8f30-dbb594cab995"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NextCommand"",
+                    ""type"": ""Button"",
+                    ""id"": ""808f9513-ff3d-49cf-bb7f-f3af9733e04e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -403,6 +421,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""MouseScroll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bf3e2e19-2564-462f-9981-9b1263a62b36"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PreviousCommand"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7fc54722-9bfc-474b-a4e0-72863b9f9900"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextCommand"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -435,6 +475,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_CommandPrompt = asset.FindActionMap("CommandPrompt", throwIfNotFound: true);
         m_CommandPrompt_CommandSubmit = m_CommandPrompt.FindAction("CommandSubmit", throwIfNotFound: true);
         m_CommandPrompt_MouseScroll = m_CommandPrompt.FindAction("MouseScroll", throwIfNotFound: true);
+        m_CommandPrompt_PreviousCommand = m_CommandPrompt.FindAction("PreviousCommand", throwIfNotFound: true);
+        m_CommandPrompt_NextCommand = m_CommandPrompt.FindAction("NextCommand", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -794,12 +836,16 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private List<ICommandPromptActions> m_CommandPromptActionsCallbackInterfaces = new List<ICommandPromptActions>();
     private readonly InputAction m_CommandPrompt_CommandSubmit;
     private readonly InputAction m_CommandPrompt_MouseScroll;
+    private readonly InputAction m_CommandPrompt_PreviousCommand;
+    private readonly InputAction m_CommandPrompt_NextCommand;
     public struct CommandPromptActions
     {
         private @PlayerInputActions m_Wrapper;
         public CommandPromptActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @CommandSubmit => m_Wrapper.m_CommandPrompt_CommandSubmit;
         public InputAction @MouseScroll => m_Wrapper.m_CommandPrompt_MouseScroll;
+        public InputAction @PreviousCommand => m_Wrapper.m_CommandPrompt_PreviousCommand;
+        public InputAction @NextCommand => m_Wrapper.m_CommandPrompt_NextCommand;
         public InputActionMap Get() { return m_Wrapper.m_CommandPrompt; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -815,6 +861,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @MouseScroll.started += instance.OnMouseScroll;
             @MouseScroll.performed += instance.OnMouseScroll;
             @MouseScroll.canceled += instance.OnMouseScroll;
+            @PreviousCommand.started += instance.OnPreviousCommand;
+            @PreviousCommand.performed += instance.OnPreviousCommand;
+            @PreviousCommand.canceled += instance.OnPreviousCommand;
+            @NextCommand.started += instance.OnNextCommand;
+            @NextCommand.performed += instance.OnNextCommand;
+            @NextCommand.canceled += instance.OnNextCommand;
         }
 
         private void UnregisterCallbacks(ICommandPromptActions instance)
@@ -825,6 +877,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @MouseScroll.started -= instance.OnMouseScroll;
             @MouseScroll.performed -= instance.OnMouseScroll;
             @MouseScroll.canceled -= instance.OnMouseScroll;
+            @PreviousCommand.started -= instance.OnPreviousCommand;
+            @PreviousCommand.performed -= instance.OnPreviousCommand;
+            @PreviousCommand.canceled -= instance.OnPreviousCommand;
+            @NextCommand.started -= instance.OnNextCommand;
+            @NextCommand.performed -= instance.OnNextCommand;
+            @NextCommand.canceled -= instance.OnNextCommand;
         }
 
         public void RemoveCallbacks(ICommandPromptActions instance)
@@ -873,5 +931,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnCommandSubmit(InputAction.CallbackContext context);
         void OnMouseScroll(InputAction.CallbackContext context);
+        void OnPreviousCommand(InputAction.CallbackContext context);
+        void OnNextCommand(InputAction.CallbackContext context);
     }
 }
