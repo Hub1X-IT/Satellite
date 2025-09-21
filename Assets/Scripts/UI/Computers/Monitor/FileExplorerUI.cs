@@ -14,6 +14,11 @@ public class FileExplorerUI : MonoBehaviour
 
     [SerializeField]
     private Transform folderContentHolder;
+    [SerializeField]
+    private Transform sideFileExplorer;
+
+    [SerializeField]
+    private GameObject fileExplorerDisabledScreen;
 
     private FolderContentUI currentFolderContentUI;
 
@@ -36,7 +41,9 @@ public class FileExplorerUI : MonoBehaviour
     public void SetFileExplorerEnabled(bool enabled)
     {
         isFileExplorerEnabled = enabled;
-        gameObject.SetActive(enabled);
+        sideFileExplorer.gameObject.SetActive(enabled);
+        folderContentHolder.gameObject.SetActive(enabled);
+        fileExplorerDisabledScreen.SetActive(!enabled);
     }
 
     public void InitializeFileExplorer(MonitorFileSystemInitializer fileSystemManager)
