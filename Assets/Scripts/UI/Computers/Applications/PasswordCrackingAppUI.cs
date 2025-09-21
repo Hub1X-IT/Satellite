@@ -6,7 +6,16 @@ using UnityEngine.UI;
 
 public class PasswordCrackingAppUI : MonoBehaviour
 {
+    [Serializable]
+    public class GuidebookLookupButton
+    {
+        public Button LookupButton;
+        public int PageNumber;
+    }
+
     private MonitorAppUI monitorAppUI;
+
+    private Monitor monitor;
 
     [SerializeField]
     private ConvertedPasswordUI convertedPasswordPrefab;
@@ -42,6 +51,9 @@ public class PasswordCrackingAppUI : MonoBehaviour
     [SerializeField]
     private TMP_InputField caesarParameterInputField;
 
+    [SerializeField]
+    private GuidebookLookupButton[] guidebookLookupButtons;
+
     private string decompressedPassword;
     private Stack<ConvertedPasswordUI> previousConvertedPasswordUIStack;
     private EncryptedPassword currentEncryptedPassword;
@@ -66,6 +78,8 @@ public class PasswordCrackingAppUI : MonoBehaviour
         monitorAppUI = GetComponent<MonitorAppUI>();
         monitorAppUI.SetAppName(appName);
         monitorAppUI.DestroyOnClose = false;
+
+        monitor = GetComponentInParent<Monitor>();
 
         InitializePasswordCracking();
         SetDetectionChanceText();
@@ -124,6 +138,11 @@ public class PasswordCrackingAppUI : MonoBehaviour
         hexButton.onClick.AddListener(HexDecode);
         atbashButton.onClick.AddListener(AtbashDecode);
         caesarButton.onClick.AddListener(CaesarDecode);
+
+        foreach (var guidebookLookupButton in guidebookLookupButtons)
+        {
+            guidebookLookupButton.LookupButton.onClick.AddListener(() => LookupPageInGuidebook(guidebookLookupButton.PageNumber));
+        }
     }
 
     private void DisableApp()
@@ -142,6 +161,11 @@ public class PasswordCrackingAppUI : MonoBehaviour
         hexButton.onClick.RemoveListener(HexDecode);
         atbashButton.onClick.RemoveListener(AtbashDecode);
         caesarButton.onClick.RemoveListener(CaesarDecode);
+
+        foreach (var guidebookLookupButton in guidebookLookupButtons)
+        {
+            guidebookLookupButton.LookupButton.onClick.RemoveAllListeners();
+        }
     }
 
     private void InputField_OnEndEdit(string inputText)
@@ -287,5 +311,11 @@ public class PasswordCrackingAppUI : MonoBehaviour
             Debug.Log("Destroyed: " + currentConvertedPasswordUI);
             encryptionStepIndex++;
         }
+    }
+
+    private void LookupPageInGuidebook(int pageNumber)
+    {
+        monitor.ComputerComponent.ChangeCurrentComputer(monitor.ParentDesk.Guidebook.ComputerComponent);
+        monitor.ParentDesk.Guidebook.GuidebookInterface.ChangeToPage(pageNumber);
     }
 }

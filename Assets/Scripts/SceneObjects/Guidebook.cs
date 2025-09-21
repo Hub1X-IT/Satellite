@@ -1,9 +1,15 @@
-using Unity.Cinemachine;
 using UnityEngine;
 
 public class Guidebook : MonoBehaviour
 {
     private Computer computer;
+
+    [SerializeField]
+    private GuidebookInterfaceUI guidebookInterface;
+
+    public GuidebookInterfaceUI GuidebookInterface => guidebookInterface;
+
+    public Computer ComputerComponent => computer;
 
     private void Awake()
     {

@@ -27,12 +27,12 @@ public class GuidebookInterfaceUI : MonoBehaviour
     {
         GameInput.OnGuidebookChangePageLeftAction += () =>
         {
-            ChangePage(currentPageNumber + 2);
+            ChangeToPage(currentPageNumber + 2);
         };
 
         GameInput.OnGuidebookChangePageRightAction += () =>
         {
-            ChangePage(currentPageNumber - 2);
+            ChangeToPage(currentPageNumber - 2);
         };
 
         for (int i = 0; i < pageListButtons.Length; i++)
@@ -47,17 +47,17 @@ public class GuidebookInterfaceUI : MonoBehaviour
         {
             button.onClick.AddListener(() =>
             {
-                ChangePage(buttonToPageNumber[button]);
+                ChangeToPage(buttonToPageNumber[button]);
             });
         }
 
         nextPageButton.onClick.AddListener(() =>
         {
-            ChangePage(currentPageNumber + 2);
+            ChangeToPage(currentPageNumber + 2);
         });
         previousPageButton.onClick.AddListener(() =>
         {
-            ChangePage(currentPageNumber - 2);
+            ChangeToPage(currentPageNumber - 2);
         });
 
         currentPageNumber = 0;
@@ -73,7 +73,7 @@ public class GuidebookInterfaceUI : MonoBehaviour
         }
     }
 
-    private void ChangePage(int newPageNumber)
+    public void ChangeToPage(int newPageNumber)
     {
         SetPageActive(currentPageNumber, false);
         currentPageNumber = Mathf.Clamp(newPageNumber, 0, pages.Length - 1);

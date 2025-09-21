@@ -156,7 +156,7 @@ public class Computer : MonoBehaviour
         desk.PlayDeskSitSound();
     }
 
-    private void ChangeCurrentComputer(Computer newComputer)
+    public void ChangeCurrentComputer(Computer newComputer)
     {
         isInComputerView = false;
 
