@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -25,6 +26,19 @@ public class PasswordCrackingAppUI : MonoBehaviour
     private ConvertedPasswordUI decompressedPasswordUI;
     [SerializeField]
     private TMP_InputField inputField;
+
+    [SerializeField]
+    private GameObject decodingMessagePrefab;
+    [SerializeField]
+    private GameObject errorMessagePrefab;
+    private const float DecodingMessageShowTime = 1f;
+
+    private GameObject currentDecodingMessageObject;
+    private GameObject currentErrorMessageObject;
+
+    // private bool shouldShowDecodingMessage;
+    // private bool shouldShowErrorMessage;
+    // private float decodingMessageTimer;
 
     [SerializeField]
     private Button resetPasswordCrackingButton;
@@ -68,6 +82,11 @@ public class PasswordCrackingAppUI : MonoBehaviour
     public event Action<string> NewPasswordConverted;
     private bool wasDetected;
 
+    private void Update()
+    {
+        
+    }
+
     private void OnDestroy()
     {
         NewPasswordConverted = null;
@@ -103,6 +122,8 @@ public class PasswordCrackingAppUI : MonoBehaviour
         };
 
         wasDetected = false;
+        // shouldShowDecodingMessage = false;
+        // shouldShowErrorMessage = false;
     }
 
     private void InitializePasswordCracking()
@@ -241,12 +262,22 @@ public class PasswordCrackingAppUI : MonoBehaviour
 
         PasswordEncryption.EncryptionStep currentEncryptionStep = passwordEncryptionSteps[encryptionStepIndex];
 
+        TryDestroyErrorMessageObject();
+        TryDestroyDecodingMessageObject();
+
         if (usedCipher == currentEncryptionStep.usedCipherType)
         {
             Debug.Log("Decoding step correct");
             encryptionStepIndex--;
             string convertedPassword = currentEncryptionStep.PreviousPasswordState;
-            CreateNewPasswordTextField(convertedPassword);
+
+            StartCoroutine(ShowDecodingMessageAndConvertedPassword(false, convertedPassword));
+
+            // shouldShowDecodingMessage = true;
+            // shouldShowErrorMessage = true;
+            // decodingMessageTimer = DecodingMessageShowTime;
+
+            // CreateNewPasswordTextField(convertedPassword);
 
             if (!wasDetected)
             {
@@ -263,8 +294,33 @@ public class PasswordCrackingAppUI : MonoBehaviour
         else
         {
             Debug.Log("Decoding step incorrect");
+
+            // shouldShowDecodingMessage = true;
+            // shouldShowErrorMessage = true;
+            // decodingMessageTimer = DecodingMessageShowTime;
+
+            StartCoroutine(ShowDecodingMessageAndConvertedPassword(true, ""));
+
             DetectionManager.CheckDetection();
             SetDetectionChanceText();
+        }
+    }
+
+    // Probably temporary
+    private IEnumerator ShowDecodingMessageAndConvertedPassword(bool showErrorMessage, string convertedPassword)
+    {
+        currentDecodingMessageObject = Instantiate(decodingMessagePrefab, convertedPasswordsHolder);
+        yield return new WaitForSeconds(DecodingMessageShowTime);
+        if (TryDestroyDecodingMessageObject())
+        {
+            if (showErrorMessage)
+            {
+                currentErrorMessageObject = Instantiate(errorMessagePrefab, convertedPasswordsHolder);
+            }
+            else
+            {
+                CreateNewPasswordTextField(convertedPassword);
+            }
         }
     }
 
@@ -299,13 +355,17 @@ public class PasswordCrackingAppUI : MonoBehaviour
 
     private void UndoAllSteps()
     {
+        TryDestroyDecodingMessageObject();
+        TryDestroyErrorMessageObject();
         RemoveAllPasswordTextFields();
         ResetPasswordEncryptionSteps();
     }
 
     private void UndoLastStep()
     {
-        if (previousConvertedPasswordUIStack.TryPop(out ConvertedPasswordUI currentConvertedPasswordUI))
+        TryDestroyDecodingMessageObject();
+
+        if (!TryDestroyErrorMessageObject() && previousConvertedPasswordUIStack.TryPop(out ConvertedPasswordUI currentConvertedPasswordUI))
         {
             currentConvertedPasswordUI.DestroySelf();
             Debug.Log("Destroyed: " + currentConvertedPasswordUI);
@@ -317,5 +377,29 @@ public class PasswordCrackingAppUI : MonoBehaviour
     {
         monitor.ComputerComponent.ChangeCurrentComputer(monitor.ParentDesk.Guidebook.ComputerComponent);
         monitor.ParentDesk.Guidebook.GuidebookInterface.ChangeToPage(pageNumber);
+    }
+
+    private bool TryDestroyDecodingMessageObject()
+    {
+        if (currentDecodingMessageObject != null)
+        {
+            Debug.Log("t");
+            Destroy(currentDecodingMessageObject);
+            currentDecodingMessageObject = null;
+            return true;
+        }
+        return false;
+    }
+
+    private bool TryDestroyErrorMessageObject()
+    {
+        if (currentErrorMessageObject != null)
+        {
+            Debug.Log("t1");
+            Destroy(currentErrorMessageObject);
+            currentErrorMessageObject = null;
+            return true;
+        }
+        return false;
     }
 }
