@@ -26,4 +26,9 @@ public class InteractionVisual : MonoBehaviour
             outline.enabled = enabled;
         }
     }
+
+    public void SetInteractMessage(string newMessage)
+    {
+        interactMessage = newMessage;
+    }
 }

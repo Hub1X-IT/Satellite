@@ -46,6 +46,13 @@ public class Computer : MonoBehaviour
 
     private bool wasChangedToInThisFrame;
 
+    private bool isComputerTriggerEnabled;
+
+    [SerializeField]
+    private string computerEnabledInteractMessage;
+    [SerializeField]
+    private string computerDisabledInteractMessage;
+
 
     private void Awake()
     {
@@ -54,7 +61,13 @@ public class Computer : MonoBehaviour
 
         computerTrigger.InteractVisual = GetComponent<InteractionVisual>();
 
-        computerTrigger.InteractionTriggered += () => SetComputerViewActive(true);
+        computerTrigger.InteractionTriggered += () =>
+        {
+            if (isComputerTriggerEnabled)
+            {
+                SetComputerViewActive(true);
+            }
+        };
 
         GameInput.OnComputerExitAction += () =>
         {
@@ -81,6 +94,8 @@ public class Computer : MonoBehaviour
         shouldEnablePlayerMovement = false;
 
         wasChangedToInThisFrame = false;
+
+        isComputerTriggerEnabled = false;
 
         SetComputerEnabled(true);
     }
@@ -186,7 +201,10 @@ public class Computer : MonoBehaviour
 
     public void ToggleComputerTrigger()
     {
-        computerTrigger.gameObject.SetActive(!isInComputerView && IsComputerEnabled);
+        // computerTrigger.gameObject.SetActive(!isInComputerView && IsComputerEnabled);
+        isComputerTriggerEnabled = !isInComputerView && IsComputerEnabled;
+        computerTrigger.gameObject.SetActive(!isInComputerView);
+        computerTrigger.InteractVisual.SetInteractMessage(isComputerTriggerEnabled ? computerEnabledInteractMessage : computerDisabledInteractMessage);
     }
 
     private void EnablePlayerMovement()
