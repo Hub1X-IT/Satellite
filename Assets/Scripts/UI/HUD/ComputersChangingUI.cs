@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,11 @@ public class ComputersChangingUI : MonoBehaviour
     private Button changeComputerLeftButton;
     [SerializeField]
     private Button changeComputerRightButton;
+
+    [SerializeField]
+    private TMP_Text leftComputerText;
+    [SerializeField]
+    private TMP_Text rightComputerText;
 
     [SerializeField]
     private GameEventComputerSO changeToComputerGameEvent;
@@ -110,10 +116,12 @@ public class ComputersChangingUI : MonoBehaviour
         if (currentComputerOnLeft != null && currentComputerOnLeft.IsComputerEnabled)
         {
             changeComputerLeftButton.gameObject.SetActive(true);
+            leftComputerText.text = currentComputerOnLeft.ChangeToComputerText;
         }
         if (currentComputerOnRight != null && currentComputerOnRight.IsComputerEnabled)
         {
             changeComputerRightButton.gameObject.SetActive(true);
+            rightComputerText.text = currentComputerOnRight.ChangeToComputerText;
         }
     }
 

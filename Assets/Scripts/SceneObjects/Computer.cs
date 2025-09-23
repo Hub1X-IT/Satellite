@@ -53,6 +53,9 @@ public class Computer : MonoBehaviour
     [SerializeField]
     private string computerDisabledInteractMessage;
 
+    [SerializeField]
+    private string changeToComputerText;
+    public string ChangeToComputerText => changeToComputerText;
 
     private void Awake()
     {
