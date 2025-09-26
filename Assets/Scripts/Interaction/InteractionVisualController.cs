@@ -36,6 +36,8 @@ public class InteractionVisualController : MonoBehaviour
 
     private void ChangeInteractVisual(IInteractable interactableObject)
     {
+        // Debug.Log(interactableObject);
+
         SetInteractVisualEnabled(previousInteractVisual, false);
         previousInteractVisual = null;
 
