@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class TempPasswordChecker : MonoBehaviour
@@ -10,6 +11,9 @@ public class TempPasswordChecker : MonoBehaviour
     private static PasswordCrackingAppUI passwordCrackingApp;
 
     private static Action makeEventReference;
+
+    // very temporary
+    private const float DecodingMessageShowTime = 1f;
 
     private void Awake()
     {
@@ -35,8 +39,14 @@ public class TempPasswordChecker : MonoBehaviour
         if (password == CorrectPassword && correctPasswordGuessedGameEvent != null)
         {
             Debug.Log("correct password!");
-            correctPasswordGuessedGameEvent.TryRaiseEvent();
+            StartCoroutine(RaiseCorrectPasswordEvent());
         }
 
+    }
+
+    private IEnumerator RaiseCorrectPasswordEvent()
+    {
+        yield return new WaitForSeconds(DecodingMessageShowTime);
+        correctPasswordGuessedGameEvent.TryRaiseEvent();
     }
 }
