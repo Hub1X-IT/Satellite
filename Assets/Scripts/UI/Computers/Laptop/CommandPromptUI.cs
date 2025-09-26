@@ -84,6 +84,7 @@ public class CommandPromptUI : MonoBehaviour
         if (shouldFocusOnInputFieldNextFrame)
         {
             FocusOnInputField();
+            shouldFocusOnInputFieldNextFrame = false;
         }
     }
 
