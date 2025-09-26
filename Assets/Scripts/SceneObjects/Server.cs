@@ -24,13 +24,26 @@ public class Server : MonoBehaviour
 
     private bool wasToggledThisFrame;
 
+    [SerializeField]
+    private string serverEnabledInteractMessage;
+    [SerializeField]
+    private string serverDisabledInteractMessage;
+
+    private bool isServerEnabled;
+
     private void Awake()
     {
         outline = GetComponentInChildren<Outline>();
 
         serverTrigger.InteractVisual = GetComponent<InteractionVisual>();
 
-        serverTrigger.InteractionTriggered += () => SetServerViewActive(true);
+        serverTrigger.InteractionTriggered += () =>
+        {
+            if (isServerEnabled)
+            {
+                SetServerViewActive(true);
+            }
+        };
 
         // Action may be changed if a different key binding is preferred.
         GameInput.OnComputerExitAction += () =>
@@ -45,17 +58,23 @@ public class Server : MonoBehaviour
 
         isInServerView = false;
         wasToggledThisFrame = false;
+        SetServerEnabled(true);
+        SetServerTriggerEnabled(true);
     }
 
     private void Start()
     {
         DetectionManager.DetectionOccured += () =>
         {
-            SetServerTriggerEnabled(false);
+            SetServerEnabled(false);
             SetServerOnOffMaterial(false);
         };
-        DetectionManager.ServerPowerEnabled += SetServerTriggerEnabled;
-        DetectionManager.ServerPowerEnabled += SetServerOnOffMaterial;
+
+        DetectionManager.ServerPowerEnabled += (enabled) =>
+        {
+            SetServerEnabled(enabled);
+            SetServerOnOffMaterial(enabled);
+        };
     }
 
     private void LateUpdate()
@@ -105,6 +124,11 @@ public class Server : MonoBehaviour
     private void SetServerTriggerEnabled(bool enabled)
     {
         serverTrigger.gameObject.SetActive(enabled);
+    }
+    private void SetServerEnabled(bool enabled)
+    {
+        isServerEnabled = enabled;
+        serverTrigger.InteractVisual.SetInteractMessage(enabled ? serverEnabledInteractMessage : serverDisabledInteractMessage);
     }
     private void SetServerOnOffMaterial(bool enabled)
     {
