@@ -8,7 +8,7 @@ public static class SceneLoader
     public enum Scene
     {
         MainMenu,
-        PlayerHouse,
+        IntroLevel,
         TheEnd,
     }
 
