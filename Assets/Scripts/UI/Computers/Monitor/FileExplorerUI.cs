@@ -32,10 +32,12 @@ public class FileExplorerUI : MonoBehaviour
 
     private void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.V))
         {
             RefreshSideFolders();
         }
+        */
     }
 
     public void SetFileExplorerEnabled(bool enabled)
