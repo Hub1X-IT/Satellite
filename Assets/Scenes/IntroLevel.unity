@@ -10366,6 +10366,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1644690017}
   m_CullTransparentMesh: 1
+--- !u!1 &1720580459 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1479530267932271002, guid: 5a35d51f2fdf5434ebade9b5c9aa8898, type: 3}
+  m_PrefabInstance: {fileID: 803798540884770071}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1721912230
 GameObject:
   m_ObjectHideFlags: 0
@@ -13897,6 +13902,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 375421349}
     m_Modifications:
+    - target: {fileID: 1479530267932271002, guid: 5a35d51f2fdf5434ebade9b5c9aa8898, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2156510165858759038, guid: 5a35d51f2fdf5434ebade9b5c9aa8898, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.42651367
@@ -14227,6 +14236,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 375421349}
     m_Modifications:
+    - target: {fileID: 413231145215562612, guid: c360b6590fa787b4a955b4b8d2cf0ff8, type: 3}
+      propertyPath: lightSource
+      value: 
+      objectReference: {fileID: 1720580459}
     - target: {fileID: 3537205592837580568, guid: c360b6590fa787b4a955b4b8d2cf0ff8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.04663086

@@ -10,6 +10,12 @@ public class Lever : MonoBehaviour, IInteractable
     private Animator leverAnimator;
 
     [SerializeField]
+    private GameObject lightSource;
+
+    [SerializeField]
+    private Material lightbulbMaterial;
+
+    [SerializeField]
     private AudioSource leverToggleAudioSource;
 
     private const string LeverOnTrigger = "LeverOn";
@@ -32,6 +38,15 @@ public class Lever : MonoBehaviour, IInteractable
     {
         isLeverEnabled = enabled;
         leverAnimator.SetTrigger(enabled ? LeverOnTrigger : LeverOffTrigger);
+        lightSource.SetActive(enabled);
+        if (enabled)
+        {
+            lightbulbMaterial.EnableKeyword("_EMISSION");
+        }
+        else
+        {
+            lightbulbMaterial.DisableKeyword("_EMISSION");
+        }
         leverToggleAudioSource.Play();
 
         DetectionManager.SetServerPowerEnabled(enabled);
