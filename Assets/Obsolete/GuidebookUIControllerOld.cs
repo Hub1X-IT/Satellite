@@ -55,11 +55,11 @@ public class GuidebookUIControllerOld : MonoBehaviour
 
         if (enabled)
         {
-            GameInput.PlayerInputActions.Guidebook.Enable();
+            GameInput.CurrentInputActions.Guidebook.Enable();
         }
         else
         {
-            GameInput.PlayerInputActions.Guidebook.Disable();
+            GameInput.CurrentInputActions.Guidebook.Disable();
         }
     }
 }

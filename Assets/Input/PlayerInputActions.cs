@@ -148,6 +148,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""FlashlightToggle"",
+                    ""type"": ""Button"",
+                    ""id"": ""7f421106-607c-428c-8f19-2b18b3c4be6c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""SmartphoneToggle"",
                     ""type"": ""Button"",
                     ""id"": ""2313d576-ef07-4496-8ef9-e49ebd06663b"",
@@ -263,6 +272,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""GuidebookToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3a7af71c-ebcf-48a7-8078-2323f421e377"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FlashlightToggle"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -522,6 +542,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_PlayerWalking_Move = m_PlayerWalking.FindAction("Move", throwIfNotFound: true);
         m_PlayerWalking_Rotate = m_PlayerWalking.FindAction("Rotate", throwIfNotFound: true);
         m_PlayerWalking_Interact = m_PlayerWalking.FindAction("Interact", throwIfNotFound: true);
+        m_PlayerWalking_FlashlightToggle = m_PlayerWalking.FindAction("FlashlightToggle", throwIfNotFound: true);
         m_PlayerWalking_SmartphoneToggle = m_PlayerWalking.FindAction("SmartphoneToggle", throwIfNotFound: true);
         m_PlayerWalking_GuidebookToggle = m_PlayerWalking.FindAction("GuidebookToggle", throwIfNotFound: true);
         // Dialogue
@@ -726,6 +747,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerWalking_Move;
     private readonly InputAction m_PlayerWalking_Rotate;
     private readonly InputAction m_PlayerWalking_Interact;
+    private readonly InputAction m_PlayerWalking_FlashlightToggle;
     private readonly InputAction m_PlayerWalking_SmartphoneToggle;
     private readonly InputAction m_PlayerWalking_GuidebookToggle;
     /// <summary>
@@ -751,6 +773,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "PlayerWalking/Interact".
         /// </summary>
         public InputAction @Interact => m_Wrapper.m_PlayerWalking_Interact;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerWalking/FlashlightToggle".
+        /// </summary>
+        public InputAction @FlashlightToggle => m_Wrapper.m_PlayerWalking_FlashlightToggle;
         /// <summary>
         /// Provides access to the underlying input action "PlayerWalking/SmartphoneToggle".
         /// </summary>
@@ -794,6 +820,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @FlashlightToggle.started += instance.OnFlashlightToggle;
+            @FlashlightToggle.performed += instance.OnFlashlightToggle;
+            @FlashlightToggle.canceled += instance.OnFlashlightToggle;
             @SmartphoneToggle.started += instance.OnSmartphoneToggle;
             @SmartphoneToggle.performed += instance.OnSmartphoneToggle;
             @SmartphoneToggle.canceled += instance.OnSmartphoneToggle;
@@ -820,6 +849,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @FlashlightToggle.started -= instance.OnFlashlightToggle;
+            @FlashlightToggle.performed -= instance.OnFlashlightToggle;
+            @FlashlightToggle.canceled -= instance.OnFlashlightToggle;
             @SmartphoneToggle.started -= instance.OnSmartphoneToggle;
             @SmartphoneToggle.performed -= instance.OnSmartphoneToggle;
             @SmartphoneToggle.canceled -= instance.OnSmartphoneToggle;
@@ -1352,6 +1384,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnInteract(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "FlashlightToggle" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnFlashlightToggle(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "SmartphoneToggle" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

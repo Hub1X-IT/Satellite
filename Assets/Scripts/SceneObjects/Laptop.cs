@@ -12,11 +12,11 @@ public class Laptop : MonoBehaviour
         {
             if (enabled)
             {
-                GameInput.PlayerInputActions.CommandPrompt.Enable();
+                GameInput.CurrentInputActions.CommandPrompt.Enable();
             }
             else
             {
-                GameInput.PlayerInputActions.CommandPrompt.Disable();
+                GameInput.CurrentInputActions.CommandPrompt.Disable();
             }
         };
     }

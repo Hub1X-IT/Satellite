@@ -103,7 +103,7 @@ public class DialogueManager : MonoBehaviour
 
         StartNewDialogueSentence(dialogueSO.DialogueSentences[0]);
 
-        GameInput.PlayerInputActions.Dialogue.Enable();
+        GameInput.CurrentInputActions.Dialogue.Enable();
     }
 
     private void StartNextDialogueSentence()
@@ -128,7 +128,7 @@ public class DialogueManager : MonoBehaviour
 
     private void EndDialogue()
     {
-        GameInput.PlayerInputActions.Dialogue.Disable();
+        GameInput.CurrentInputActions.Dialogue.Disable();
         DialogueEnded?.Invoke();
         if (currentDialogueSO != null && currentDialogueSO.DialogueEndedGameEvent != null)
         {

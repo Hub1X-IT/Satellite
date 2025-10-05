@@ -67,12 +67,9 @@ public class ComputersChangingUI : MonoBehaviour
     // Can be made public if needed
     private void RefreshComputers()
     {
-        Debug.Log(currentComputer);
-        
         Computer computerOnLeft = currentComputer.ComputerOnLeft;
         while (true)
         {
-            Debug.Log(computerOnLeft);
             if (computerOnLeft == null)
             {
                 currentComputerOnLeft = null;
@@ -92,7 +89,6 @@ public class ComputersChangingUI : MonoBehaviour
         Computer computerOnRight = currentComputer.ComputerOnRight;
         while (true)
         {
-            Debug.Log(computerOnRight);
             if (computerOnRight == null)
             {
                 currentComputerOnRight = null;

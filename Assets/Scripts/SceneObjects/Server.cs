@@ -97,6 +97,7 @@ public class Server : MonoBehaviour
         GameManager.IsInScreenView = active;
 
         PlayerScriptsController.SetCanShowPlayerHUD(!active);
+        PlayerScriptsController.SetFlashlightEnabled(!active);
 
         PlayerScriptsController.SetPlayerMovementEnabled(!active);
 
@@ -111,12 +112,12 @@ public class Server : MonoBehaviour
 
         if (active)
         {
-            GameInput.PlayerInputActions.Computer.Enable();
+            GameInput.CurrentInputActions.Computer.Enable();
             CameraController.SetActiveCinemachineCamera(serverCinemachineCamera);
         }
         else
         {
-            GameInput.PlayerInputActions.Computer.Disable();
+            GameInput.CurrentInputActions.Computer.Disable();
             CameraController.SetActiveCinemachineCamera(CameraController.CinemachineMainCamera);
         }
     }

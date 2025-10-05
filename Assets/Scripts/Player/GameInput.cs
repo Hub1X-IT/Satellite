@@ -4,22 +4,23 @@ using UnityEngine.InputSystem;
 
 public static class GameInput
 {
-    public static PlayerInputActions PlayerInputActions { get; private set; }
+    public static PlayerInputActions CurrentInputActions { get; private set; }
 
 
-    public static Vector2 MovementVectorNormalized => PlayerInputActions.PlayerWalking.Move.ReadValue<Vector2>().normalized;
+    public static Vector2 MovementVectorNormalized => CurrentInputActions.PlayerWalking.Move.ReadValue<Vector2>().normalized;
 
-    public static Vector2 RotationVector => PlayerInputActions.PlayerWalking.Rotate.ReadValue<Vector2>();
+    public static Vector2 RotationVector => CurrentInputActions.PlayerWalking.Rotate.ReadValue<Vector2>();
 
     // public static Vector2 MouseDelta => PlayerInputActions.Computer.MouseDelta.ReadValue<Vector2>();
 
-    public static float MouseScroll => PlayerInputActions.CommandPrompt.MouseScroll.ReadValue<Vector2>().y;
+    public static float MouseScroll => CurrentInputActions.CommandPrompt.MouseScroll.ReadValue<Vector2>().y;
 
 
     public static event Action OnPauseAction;
 
     public static event Action OnInteractAction;
 
+    public static event Action OnFlashlightToggleAction;
     public static event Action OnSmartphoneToggleAction;
     public static event Action OnGuidebookToggleAction;
 
@@ -41,65 +42,69 @@ public static class GameInput
 
     public static void InitializeInput()
     {
-        PlayerInputActions = new();
+        CurrentInputActions = new();
 
-        PlayerInputActions.All.Enable();
-        PlayerInputActions.PlayerWalking.Enable();
-        PlayerInputActions.Dialogue.Disable();
-        PlayerInputActions.Guidebook.Disable();
-        PlayerInputActions.Computer.Disable();
-        PlayerInputActions.CommandPrompt.Disable();
+        CurrentInputActions.All.Enable();
+        CurrentInputActions.PlayerWalking.Enable();
+        CurrentInputActions.Dialogue.Disable();
+        CurrentInputActions.Guidebook.Disable();
+        CurrentInputActions.Computer.Disable();
+        CurrentInputActions.CommandPrompt.Disable();
 
-        PlayerInputActions.All.Pause.performed += Pause_performed;
+        CurrentInputActions.All.Pause.performed += Pause_performed;
 
-        PlayerInputActions.PlayerWalking.Interact.performed += Interact_performed;
+        CurrentInputActions.PlayerWalking.Interact.performed += Interact_performed;
 
-        PlayerInputActions.PlayerWalking.SmartphoneToggle.performed += SmartphoneToggle_performed;
-        PlayerInputActions.PlayerWalking.GuidebookToggle.performed += GuidebookToggle_performed;
+        CurrentInputActions.PlayerWalking.FlashlightToggle.performed += FlashlightToggle_performed;
+        CurrentInputActions.PlayerWalking.SmartphoneToggle.performed += SmartphoneToggle_performed;
+        CurrentInputActions.PlayerWalking.GuidebookToggle.performed += GuidebookToggle_performed;
 
-        PlayerInputActions.Dialogue.NextSentence.performed += NextDialogueSentence_performed;
+        CurrentInputActions.Dialogue.NextSentence.performed += NextDialogueSentence_performed;
 
-        PlayerInputActions.Guidebook.ChangePageRight.performed += GuidebookChangePageLeft_performed;
-        PlayerInputActions.Guidebook.ChangePageLeft.performed += GuidebookChangePageRight_performed;
+        CurrentInputActions.Guidebook.ChangePageRight.performed += GuidebookChangePageLeft_performed;
+        CurrentInputActions.Guidebook.ChangePageLeft.performed += GuidebookChangePageRight_performed;
 
-        PlayerInputActions.Computer.Exit.performed += ComputerExit_performed;
-        PlayerInputActions.Computer.LeftClick.performed += LeftClick_performed;
-        PlayerInputActions.Computer.Return.performed += Return_performed;
+        CurrentInputActions.Computer.Exit.performed += ComputerExit_performed;
+        CurrentInputActions.Computer.LeftClick.performed += LeftClick_performed;
+        CurrentInputActions.Computer.Return.performed += Return_performed;
 
         Keyboard.current.onTextInput += Keyboard_onTextInput;
 
-        PlayerInputActions.CommandPrompt.CommandSubmit.performed += CommandSubmit_performed;
-        PlayerInputActions.CommandPrompt.PreviousCommand.performed += PreviousCommand_preformed;
-        PlayerInputActions.CommandPrompt.NextCommand.performed += NextCommand_preformed;
+        CurrentInputActions.CommandPrompt.CommandSubmit.performed += CommandSubmit_performed;
+        CurrentInputActions.CommandPrompt.PreviousCommand.performed += PreviousCommand_preformed;
+        CurrentInputActions.CommandPrompt.NextCommand.performed += NextCommand_preformed;
     }
 
     public static void RemoveInput()
     {
-        PlayerInputActions.All.Pause.performed -= Pause_performed;
+        CurrentInputActions.All.Pause.performed -= Pause_performed;
 
-        PlayerInputActions.PlayerWalking.Interact.performed -= Interact_performed;
-        PlayerInputActions.PlayerWalking.SmartphoneToggle.performed -= SmartphoneToggle_performed;
-        PlayerInputActions.PlayerWalking.GuidebookToggle.performed -= GuidebookToggle_performed;
+        CurrentInputActions.PlayerWalking.Interact.performed -= Interact_performed;
 
-        PlayerInputActions.Dialogue.NextSentence.performed -= NextDialogueSentence_performed;
+        CurrentInputActions.PlayerWalking.FlashlightToggle.performed -= FlashlightToggle_performed;
+        CurrentInputActions.PlayerWalking.SmartphoneToggle.performed -= SmartphoneToggle_performed;
+        CurrentInputActions.PlayerWalking.GuidebookToggle.performed -= GuidebookToggle_performed;
 
-        PlayerInputActions.Guidebook.ChangePageRight.performed -= GuidebookChangePageLeft_performed;
-        PlayerInputActions.Guidebook.ChangePageLeft.performed -= GuidebookChangePageRight_performed;
+        CurrentInputActions.Dialogue.NextSentence.performed -= NextDialogueSentence_performed;
 
-        PlayerInputActions.Computer.Exit.performed -= ComputerExit_performed;
-        PlayerInputActions.Computer.LeftClick.performed -= LeftClick_performed;
-        PlayerInputActions.Computer.Return.performed -= Return_performed;
+        CurrentInputActions.Guidebook.ChangePageRight.performed -= GuidebookChangePageLeft_performed;
+        CurrentInputActions.Guidebook.ChangePageLeft.performed -= GuidebookChangePageRight_performed;
+
+        CurrentInputActions.Computer.Exit.performed -= ComputerExit_performed;
+        CurrentInputActions.Computer.LeftClick.performed -= LeftClick_performed;
+        CurrentInputActions.Computer.Return.performed -= Return_performed;
 
         Keyboard.current.onTextInput -= Keyboard_onTextInput;
 
-        PlayerInputActions.CommandPrompt.CommandSubmit.performed -= CommandSubmit_performed;
-        PlayerInputActions.CommandPrompt.PreviousCommand.performed -= PreviousCommand_preformed;
-        PlayerInputActions.CommandPrompt.NextCommand.performed -= NextCommand_preformed;
+        CurrentInputActions.CommandPrompt.CommandSubmit.performed -= CommandSubmit_performed;
+        CurrentInputActions.CommandPrompt.PreviousCommand.performed -= PreviousCommand_preformed;
+        CurrentInputActions.CommandPrompt.NextCommand.performed -= NextCommand_preformed;
 
-        PlayerInputActions.Dispose();
+        CurrentInputActions.Dispose();
 
         OnPauseAction = null;
         OnInteractAction = null;
+        OnFlashlightToggleAction = null;
         OnSmartphoneToggleAction = null;
         OnGuidebookToggleAction = null;
         OnNextDialogueSentenceAction = null;
@@ -116,7 +121,7 @@ public static class GameInput
 
     private static void Keyboard_onTextInput(char c)
     {
-        if (PlayerInputActions.CommandPrompt.enabled)
+        if (CurrentInputActions.CommandPrompt.enabled)
         {
             OnKeyboardInputAction?.Invoke(c);
         }
@@ -126,6 +131,7 @@ public static class GameInput
 
     private static void Interact_performed(InputAction.CallbackContext _) => OnInteractAction?.Invoke();
 
+    private static void FlashlightToggle_performed(InputAction.CallbackContext _) => OnFlashlightToggleAction?.Invoke();
     private static void SmartphoneToggle_performed(InputAction.CallbackContext _) => OnSmartphoneToggleAction?.Invoke();
     private static void GuidebookToggle_performed(InputAction.CallbackContext _) => OnGuidebookToggleAction?.Invoke();
 

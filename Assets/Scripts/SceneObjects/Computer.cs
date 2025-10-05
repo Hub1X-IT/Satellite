@@ -141,6 +141,7 @@ public class Computer : MonoBehaviour
         PlayerScriptsController.SetPlayerMovementEnabled(!active);
 
         PlayerScriptsController.SetCanShowPlayerHUD(!active);
+        PlayerScriptsController.SetFlashlightEnabled(!active);
 
         ToggleComputerTrigger();
 
@@ -155,14 +156,14 @@ public class Computer : MonoBehaviour
         // Change active Cinemachine camera.
         if (active)
         {
-            GameInput.PlayerInputActions.PlayerWalking.Disable();
-            GameInput.PlayerInputActions.Computer.Enable();
+            GameInput.CurrentInputActions.PlayerWalking.Disable();
+            GameInput.CurrentInputActions.Computer.Enable();
             CameraController.SetActiveCinemachineCamera(computerCinemachineCamera);
             computerViewEnabledGameEvent.RaiseEvent(this);
         }
         else
         {
-            GameInput.PlayerInputActions.Computer.Disable();
+            GameInput.CurrentInputActions.Computer.Disable();
             CameraController.SetActiveCinemachineCamera(CameraController.CinemachineMainCamera);
             computerViewDisabledGameEvent.TryRaiseEvent();
 
@@ -212,7 +213,7 @@ public class Computer : MonoBehaviour
 
     private void EnablePlayerMovement()
     {
-        GameInput.PlayerInputActions.PlayerWalking.Enable();
+        GameInput.CurrentInputActions.PlayerWalking.Enable();
     }
 
     public void ExitComputerView()
