@@ -42,7 +42,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -723764132433654463, guid: f19853364afa6214a962ddccd71ff23b, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 1fafa58dac9b44843a8006995759171a, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 1fafa58dac9b44843a8006995759171a, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -217,7 +217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outline: {fileID: 2707103873224511316}
-  interactMessage: Turn On/Off - Lever
+  interactMessage: Turn On/Off - Power Lever
 --- !u!65 &1479303073696460081
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -316,7 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 1
+  outlineMode: 0
   outlineColor: {r: 0, g: 1, b: 1, a: 1}
   outlineWidth: 5
   precomputeOutline: 1
