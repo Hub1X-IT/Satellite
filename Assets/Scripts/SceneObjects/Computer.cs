@@ -72,7 +72,7 @@ public class Computer : MonoBehaviour
             }
         };
 
-        GameInput.OnComputerExitAction += () =>
+        ComputersChangingUI.ComputerExitTriggered += () =>
         {
             if (isInComputerView && CanExitComputerView)
             {

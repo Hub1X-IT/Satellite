@@ -29,7 +29,6 @@ public static class GameInput
     public static event Action OnGuidebookChangePageLeftAction;
     public static event Action OnGuidebookChangePageRightAction;
 
-    public static event Action OnComputerExitAction;
     public static event Action OnLeftClickPerformedAction;
     public static event Action OnReturnPerformedAction;
 
@@ -64,7 +63,6 @@ public static class GameInput
         CurrentInputActions.Guidebook.ChangePageRight.performed += GuidebookChangePageLeft_performed;
         CurrentInputActions.Guidebook.ChangePageLeft.performed += GuidebookChangePageRight_performed;
 
-        CurrentInputActions.Computer.Exit.performed += ComputerExit_performed;
         CurrentInputActions.Computer.LeftClick.performed += LeftClick_performed;
         CurrentInputActions.Computer.Return.performed += Return_performed;
 
@@ -90,7 +88,6 @@ public static class GameInput
         CurrentInputActions.Guidebook.ChangePageRight.performed -= GuidebookChangePageLeft_performed;
         CurrentInputActions.Guidebook.ChangePageLeft.performed -= GuidebookChangePageRight_performed;
 
-        CurrentInputActions.Computer.Exit.performed -= ComputerExit_performed;
         CurrentInputActions.Computer.LeftClick.performed -= LeftClick_performed;
         CurrentInputActions.Computer.Return.performed -= Return_performed;
 
@@ -110,7 +107,6 @@ public static class GameInput
         OnNextDialogueSentenceAction = null;
         OnGuidebookChangePageLeftAction = null;
         OnGuidebookChangePageRightAction = null;
-        OnComputerExitAction = null;
         OnLeftClickPerformedAction = null;
         OnKeyboardInputAction = null;
         OnReturnPerformedAction = null;
@@ -140,7 +136,6 @@ public static class GameInput
     private static void GuidebookChangePageLeft_performed(InputAction.CallbackContext _) => OnGuidebookChangePageLeftAction?.Invoke();
     private static void GuidebookChangePageRight_performed(InputAction.CallbackContext _) => OnGuidebookChangePageRightAction?.Invoke();
 
-    private static void ComputerExit_performed(InputAction.CallbackContext _) => OnComputerExitAction?.Invoke();
     private static void LeftClick_performed(InputAction.CallbackContext _) => OnLeftClickPerformedAction?.Invoke();
     private static void Return_performed(InputAction.CallbackContext _) => OnReturnPerformedAction?.Invoke();
 

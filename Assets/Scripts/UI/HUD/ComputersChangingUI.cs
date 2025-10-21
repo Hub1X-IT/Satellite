@@ -1,11 +1,11 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ComputersChangingUI : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject computerExitHint;
+    public static event Action ComputerExitTriggered;
 
     [SerializeField]
     private Button changeComputerLeftButton;
@@ -29,6 +29,9 @@ public class ComputersChangingUI : MonoBehaviour
     [SerializeField]
     private GameEventBoolSO serverViewEnabledGameEvent;
 
+    [SerializeField]
+    private Button exitComputerViewButton;
+
     private Computer currentComputer;
     private Computer currentComputerOnLeft;
     private Computer currentComputerOnRight;
@@ -38,6 +41,8 @@ public class ComputersChangingUI : MonoBehaviour
     {
         changeComputerLeftButton.onClick.AddListener(() => TryChangeToComputer(currentComputerOnLeft));
         changeComputerRightButton.onClick.AddListener(() => TryChangeToComputer(currentComputerOnRight));
+
+        exitComputerViewButton.onClick.AddListener(() => ComputerExitTriggered?.Invoke());
 
         foreach (var gameEvent in computerViewEnabledGameEvents)
         {
@@ -50,15 +55,20 @@ public class ComputersChangingUI : MonoBehaviour
 
         serverViewEnabledGameEvent.EventRaised += (enabled) =>
         {
-            computerExitHint.SetActive(enabled);
+            exitComputerViewButton.gameObject.SetActive(enabled);
         };
 
         Disable();
     }
 
+    private void Oestroy()
+    {
+        ComputerExitTriggered = null;
+    }
+
     private void Enable(Computer computer)
     {
-        computerExitHint.SetActive(true);
+        exitComputerViewButton.gameObject.SetActive(true);
         currentComputer = computer;
         RefreshComputers();
         RefreshComputerChangeButtons();
@@ -123,9 +133,9 @@ public class ComputersChangingUI : MonoBehaviour
 
     private void Disable()
     {
-        computerExitHint.SetActive(false);
         changeComputerLeftButton.gameObject.SetActive(false);
         changeComputerRightButton.gameObject.SetActive(false);
+        exitComputerViewButton.gameObject.SetActive(false);
 
         currentComputer = null;
     }

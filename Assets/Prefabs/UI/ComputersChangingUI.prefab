@@ -279,6 +279,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: af253edeca4497444b4bcf7931247593, type: 2}
   - {fileID: 11400000, guid: 8e786de4307f8424fb603bd1646428dc, type: 2}
   serverViewEnabledGameEvent: {fileID: 11400000, guid: afbe7a2755a5fa24fa1c116d787af9db, type: 2}
+  exitComputerViewButton: {fileID: 6920270982263306}
 --- !u!1 &1883231500713881710
 GameObject:
   m_ObjectHideFlags: 0
@@ -955,7 +956,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 299591340029007482, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
       propertyPath: m_Name
-      value: MenuButton
+      value: ComputerViewExitButton
       objectReference: {fileID: 0}
     - target: {fileID: 658824687137753323, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
       propertyPath: m_text
@@ -1054,6 +1055,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
+--- !u!114 &6920270982263306 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9013936892826856397, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
+  m_PrefabInstance: {fileID: 9011555707599591879}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1809141946545007963 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7211431957573203100, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}

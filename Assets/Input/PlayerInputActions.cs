@@ -369,15 +369,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ""id"": ""e78e4f17-246c-4115-8ccc-6fb6703ab68a"",
             ""actions"": [
                 {
-                    ""name"": ""Exit"",
-                    ""type"": ""Button"",
-                    ""id"": ""0ae32724-6d25-45e3-93bf-86c4d5056b46"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""LeftClick"",
                     ""type"": ""Button"",
                     ""id"": ""c8a9728f-435c-4ac1-b75e-5285ba0933df"",
@@ -397,17 +388,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""a31fc6a1-5db2-4c27-b45b-fc4248275547"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Exit"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": """",
                     ""id"": ""f1ca9be9-0766-44d9-b556-6aeaedd293d3"",
@@ -554,7 +534,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Guidebook_ChangePageRight = m_Guidebook.FindAction("ChangePageRight", throwIfNotFound: true);
         // Computer
         m_Computer = asset.FindActionMap("Computer", throwIfNotFound: true);
-        m_Computer_Exit = m_Computer.FindAction("Exit", throwIfNotFound: true);
         m_Computer_LeftClick = m_Computer.FindAction("LeftClick", throwIfNotFound: true);
         m_Computer_Return = m_Computer.FindAction("Return", throwIfNotFound: true);
         // CommandPrompt
@@ -1098,7 +1077,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     // Computer
     private readonly InputActionMap m_Computer;
     private List<IComputerActions> m_ComputerActionsCallbackInterfaces = new List<IComputerActions>();
-    private readonly InputAction m_Computer_Exit;
     private readonly InputAction m_Computer_LeftClick;
     private readonly InputAction m_Computer_Return;
     /// <summary>
@@ -1112,10 +1090,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
         public ComputerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        /// <summary>
-        /// Provides access to the underlying input action "Computer/Exit".
-        /// </summary>
-        public InputAction @Exit => m_Wrapper.m_Computer_Exit;
         /// <summary>
         /// Provides access to the underlying input action "Computer/LeftClick".
         /// </summary>
@@ -1150,9 +1124,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_ComputerActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_ComputerActionsCallbackInterfaces.Add(instance);
-            @Exit.started += instance.OnExit;
-            @Exit.performed += instance.OnExit;
-            @Exit.canceled += instance.OnExit;
             @LeftClick.started += instance.OnLeftClick;
             @LeftClick.performed += instance.OnLeftClick;
             @LeftClick.canceled += instance.OnLeftClick;
@@ -1170,9 +1141,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="ComputerActions" />
         private void UnregisterCallbacks(IComputerActions instance)
         {
-            @Exit.started -= instance.OnExit;
-            @Exit.performed -= instance.OnExit;
-            @Exit.canceled -= instance.OnExit;
             @LeftClick.started -= instance.OnLeftClick;
             @LeftClick.performed -= instance.OnLeftClick;
             @LeftClick.canceled -= instance.OnLeftClick;
@@ -1450,13 +1418,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     /// <seealso cref="ComputerActions.RemoveCallbacks(IComputerActions)" />
     public interface IComputerActions
     {
-        /// <summary>
-        /// Method invoked when associated input action "Exit" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnExit(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "LeftClick" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

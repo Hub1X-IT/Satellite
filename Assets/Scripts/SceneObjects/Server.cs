@@ -46,7 +46,7 @@ public class Server : MonoBehaviour
         };
 
         // Action may be changed if a different key binding is preferred.
-        GameInput.OnComputerExitAction += () =>
+        ComputersChangingUI.ComputerExitTriggered += () =>
         {
             if (isInServerView && !wasToggledThisFrame)
             {
