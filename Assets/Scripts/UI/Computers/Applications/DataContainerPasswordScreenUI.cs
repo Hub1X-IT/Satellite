@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DataContainerPasswordScreenUI : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class DataContainerPasswordScreenUI : MonoBehaviour
 
     [SerializeField]
     private TMP_InputField passwordInputField;
+
+    [SerializeField]
+    private Button submitPasswordButton;
 
     [SerializeField]
     private EnterableUIObject incorrectPasswordScreen;
@@ -33,7 +37,7 @@ public class DataContainerPasswordScreenUI : MonoBehaviour
         string baseAppName = dataContainerSO is FolderSO _ ? BaseAppName_Folder : BaseAppName_File;
         monitorApp.SetAppName(baseAppName + dataContainerSO.SelfName);
 
-        GameInput.OnReturnPerformedAction += CheckPassword;
+        submitPasswordButton.onClick.AddListener(CheckPassword);
 
         incorrectPasswordScreen.Disable();
     }
@@ -41,8 +45,8 @@ public class DataContainerPasswordScreenUI : MonoBehaviour
     private void OnDestroy()
     {
         PasswordGuessed = null;
-        GameInput.OnReturnPerformedAction -= CheckPassword;
     }
+
 
     private void CheckPassword()
     {
@@ -61,6 +65,7 @@ public class DataContainerPasswordScreenUI : MonoBehaviour
 
     private void ResetInputField()
     {
-        passwordInputField.text = string.Empty;
+        // passwordInputField.text = string.Empty;
+        passwordInputField.ActivateInputField();
     }
 }
