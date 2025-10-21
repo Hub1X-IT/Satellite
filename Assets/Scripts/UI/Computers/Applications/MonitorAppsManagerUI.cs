@@ -59,6 +59,7 @@ public class MonitorAppsManagerUI : MonoBehaviour
         if (currentPasswordCrackingApp != null)
         {
             currentPasswordCrackingApp.gameObject.SetActive(true);
+            currentPasswordCrackingApp.transform.SetAsLastSibling();
         }
         else
         {
