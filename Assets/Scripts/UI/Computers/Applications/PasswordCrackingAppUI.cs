@@ -41,9 +41,12 @@ public class PasswordCrackingAppUI : MonoBehaviour
     // private float decodingMessageTimer;
 
     [SerializeField]
+    private CopyPasteMenuUI pasteMenuUI;
+
+    [SerializeField]
     private Button resetPasswordCrackingButton;
     [SerializeField]
-    private Button pasteAndDecompressButton;
+    private Button decompressButton;
 
     [SerializeField]
     private Button undoAllStepsButton;
@@ -82,11 +85,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
     public event Action<string> NewPasswordConverted;
     private bool wasDetected;
 
-    private void Update()
-    {
-        
-    }
-
     private void OnDestroy()
     {
         NewPasswordConverted = null;
@@ -104,6 +102,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
         SetDetectionChanceText();
 
         TempPasswordChecker.SetPasswordCrackingAppReference(this);
+        pasteMenuUI.InitializeCopyPasteMenuUI(CopyPasteMenuUI.MenuFunction.PasteMenu, inputField);
 
         DetectionManager.DetectionOccured += () =>
         {
@@ -124,6 +123,8 @@ public class PasswordCrackingAppUI : MonoBehaviour
         wasDetected = false;
         // shouldShowDecodingMessage = false;
         // shouldShowErrorMessage = false;
+
+        pasteMenuUI.SetCopyPasteMenuEnabled(false);
     }
 
     private void InitializePasswordCracking()
@@ -147,8 +148,8 @@ public class PasswordCrackingAppUI : MonoBehaviour
     {
         // inputField.onEndEdit.AddListener(ChangeOriginalPassword);
         resetPasswordCrackingButton.onClick.AddListener(ResetPasswordCracking);
-        pasteAndDecompressButton.onClick.AddListener(PasteAndDecompress);
-        inputField.onEndEdit.AddListener(InputField_OnEndEdit);
+        decompressButton.onClick.AddListener(DecompressCurrentPassword);
+        inputField.onSelect.AddListener(InputField_OnSelect);
 
         undoAllStepsButton.onClick.AddListener(UndoAllSteps);
         undoLastStepButton.onClick.AddListener(UndoLastStep);
@@ -170,8 +171,8 @@ public class PasswordCrackingAppUI : MonoBehaviour
     {
         // inputField.onEndEdit.RemoveListener(ChangeOriginalPassword);
         resetPasswordCrackingButton.onClick.RemoveListener(ResetPasswordCracking);
-        pasteAndDecompressButton.onClick.RemoveListener(PasteAndDecompress);
-        inputField.onEndEdit.RemoveListener(InputField_OnEndEdit);
+        decompressButton.onClick.RemoveListener(DecompressCurrentPassword);
+        inputField.onSelect.RemoveListener(InputField_OnSelect);
 
         undoAllStepsButton.onClick.RemoveListener(UndoAllSteps);
         undoLastStepButton.onClick.RemoveListener(UndoLastStep);
@@ -189,10 +190,11 @@ public class PasswordCrackingAppUI : MonoBehaviour
         }
     }
 
-    private void InputField_OnEndEdit(string inputText)
+    private void InputField_OnSelect(string _)
     {
-        DecompressPassword(inputText);
+        pasteMenuUI.SetCopyPasteMenuEnabled(true);
     }
+
     private void DecompressPassword(string compressedPassword)
     {
         if (TextCompressor.TryGetDecompressedText(compressedPassword, out decompressedPassword))
@@ -228,10 +230,9 @@ public class PasswordCrackingAppUI : MonoBehaviour
             decompressedPasswordUI.gameObject.SetActive(false);
         }
     }
-    private void PasteAndDecompress()
+    private void DecompressCurrentPassword()
     {
-        inputField.text = VirtualClipboard.GetClipboardText();
-        DecompressPassword(VirtualClipboard.GetClipboardText());
+        DecompressPassword(inputField.text);
     }
 
     private void ResetPasswordEncryptionSteps()

@@ -213,6 +213,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 391076473384178472}
+  - component: {fileID: 1199387431987229460}
+  - component: {fileID: 6919267104045011394}
+  - component: {fileID: 262233816771275357}
   m_Layer: 5
   m_Name: CopyMenu
   m_TagString: Untagged
@@ -237,9 +240,60 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 155.6, y: -40}
-  m_SizeDelta: {x: 415.70996, y: 79.71997}
+  m_AnchoredPosition: {x: 155.6, y: -52.68}
+  m_SizeDelta: {x: 201.43, y: 67.04}
   m_Pivot: {x: 0, y: 1}
+--- !u!222 &1199387431987229460
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112240985917109283}
+  m_CullTransparentMesh: 1
+--- !u!114 &6919267104045011394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112240985917109283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &262233816771275357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112240985917109283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88fb544a64b0415088f197529434390e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  copyPasteButton: {fileID: 3132282705712098725}
 --- !u!1 &1515123060433591163
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,10 +623,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f74f2a3449671f44bad24b07f3ab8b95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  copyMenuPositionAddition: {x: 0, y: 0}
   contentField: {fileID: 2912401047225551519}
-  copyMenu: {fileID: 391076473384178472}
-  notepaddAppCopyButton: {fileID: 1490680204352110151}
+  copyMenuUI: {fileID: 262233816771275357}
 --- !u!1 &4625382811518700558
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,7 +637,6 @@ GameObject:
   - component: {fileID: 3045953956123425478}
   - component: {fileID: 778197583105092541}
   - component: {fileID: 3132282705712098725}
-  - component: {fileID: 1490680204352110151}
   m_Layer: 5
   m_Name: CopyButton
   m_TagString: Untagged
@@ -695,18 +746,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1490680204352110151
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4625382811518700558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0bd9087299ae90419412c24e75f34ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6909332392711119072
 GameObject:
   m_ObjectHideFlags: 0

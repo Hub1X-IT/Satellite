@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class NotepadAppUI : MonoBehaviour
 {
@@ -16,12 +15,7 @@ public class NotepadAppUI : MonoBehaviour
     private NotepadAppContentFieldUI contentField;
 
     [SerializeField]
-    private RectTransform copyMenu;
-
-    [SerializeField]
-    private NotepaddAppCopyButtonUI notepaddAppCopyButton;
-
-    private bool canDisableCopyMenu;
+    private CopyPasteMenuUI copyMenuUI;
 
     public void InitializeNotepadAppUI(FileStringSO fileStringSO)
     {
@@ -44,46 +38,13 @@ public class NotepadAppUI : MonoBehaviour
         contentField.ContentFieldClicked += (position) =>
         {
             // MoveCopyMenu(position);
-            SetCopyMenuEnabled(true);
-        };
-
-        contentInputField.onDeselect.AddListener((_) =>
-        {
-            if (canDisableCopyMenu)
-            {
-                SetCopyMenuEnabled(false);
-            }
-        });
-        notepaddAppCopyButton.GetComponent<Button>().onClick.AddListener(() =>
-        {
-            CopyText();
-            SetCopyMenuEnabled(false);
-        });
-
-        notepaddAppCopyButton.OnMouseOverButton += (isOverButton) =>
-        {
-            canDisableCopyMenu = !isOverButton;
+            copyMenuUI.SetCopyPasteMenuEnabled(true);
         };
 
         contentInputField.text = fileContent = multilineFileOutput;
         monitorApp.SetAppName(BaseAppName + fileStringSO.SelfName);
 
-        SetCopyMenuEnabled(false);
-        canDisableCopyMenu = true;
-    }
-
-    private void SetCopyMenuEnabled(bool enabled)
-    {
-        copyMenu.gameObject.SetActive(enabled);
-    }
-
-    private void MoveCopyMenu(Vector2 newPosition)
-    {
-        copyMenu.anchoredPosition = newPosition;
-    }
-
-    private void CopyText()
-    {
-        VirtualClipboard.SetClipboardText(fileContent);
+        copyMenuUI.InitializeCopyPasteMenuUI(CopyPasteMenuUI.MenuFunction.CopyMenu, contentInputField);
+        copyMenuUI.SetCopyPasteMenuEnabled(false);
     }
 }
