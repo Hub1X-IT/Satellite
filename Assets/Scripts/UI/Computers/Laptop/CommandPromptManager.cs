@@ -73,7 +73,7 @@ public static class CommandPromptManager
 
     private static void RespondToCommand(bool wasSuccessful, string response)
     {
-        string responseString = wasSuccessful ? "" : "Command failed: ";
+        string responseString = wasSuccessful ? "" : "Command failed. ";
         responseString += response;
 
         CommandResponse?.Invoke(responseString);

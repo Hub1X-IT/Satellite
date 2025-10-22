@@ -52,10 +52,16 @@ public class MonitorFileSystemInitializer : MonoBehaviour
 
     private void OnConnectCommand(CommandData commandData)
     {
+        if (!monitorUI.IsSputnikOSStarted)
+        {
+            commandData.Response?.Invoke(false, "Cannot connect to target - SputnikOS is not started.");
+            return;
+        }
+
         string ipAddress = commandData.CommandDataArray[0];
         if (rootFolderSO != null)
         {
-            commandData.Response?.Invoke(false, $"Already connected to {currentIPAddress}. Disconnect first.");
+            commandData.Response?.Invoke(false, $"Already connected to target: {currentIPAddress}. Disconnect first.");
         }
         else if (ipAndFolderDictionary.ContainsKey(ipAddress))
         {
@@ -63,7 +69,7 @@ public class MonitorFileSystemInitializer : MonoBehaviour
             monitorUI.FileExplorer.SetFileExplorerEnabled(true);
             monitorUI.FileExplorer.InitializeFileExplorer(this);
             currentIPAddress = ipAddress;
-            commandData.Response?.Invoke(true, $"Connected to: {ipAddress}");
+            commandData.Response?.Invoke(true, $"Connected to target: {ipAddress}");
             objective = ipAndObjectiveDictionary[ipAddress];
             objective?.TryRaiseEvent();
         }

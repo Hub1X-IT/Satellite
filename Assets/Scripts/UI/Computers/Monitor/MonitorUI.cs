@@ -17,7 +17,7 @@ public class MonitorUI : MonoBehaviour
     [SerializeField]
     private GameEventStartProgramDataSO startSputnikOSGameEvent;
 
-    private bool isSputnikOSStarted;
+    public bool IsSputnikOSStarted { get; private set; }
 
     public FileExplorerUI FileExplorer => fileExplorer;
 
@@ -31,7 +31,7 @@ public class MonitorUI : MonoBehaviour
             monitorStartupScreenUI.gameObject.SetActive(true);
             monitorStartupScreenUI.StartStartupScreen(null);
 
-            isSputnikOSStarted = false;
+            IsSputnikOSStarted = false;
         };
 
         ServerConnectionManager.ServerConnectionEnabled += (enabled) =>
@@ -41,7 +41,7 @@ public class MonitorUI : MonoBehaviour
 
             if (!enabled)
             {
-                isSputnikOSStarted = false;
+                IsSputnikOSStarted = false;
             }
         };
 
@@ -58,21 +58,25 @@ public class MonitorUI : MonoBehaviour
                 SetMonitorEnabled(false);
                 monitorStartupScreenUI.DisableStartupScreen();
 
-                isSputnikOSStarted = false;
+                IsSputnikOSStarted = false;
             }
         };
 
         startSputnikOSGameEvent.EventRaised += (startProgramEventData) =>
         {
-            if (!isSputnikOSStarted)
+            if (!ServerConnectionManager.IsConnectionActive)
             {
-                isSputnikOSStarted = true;
-                monitorStartupScreenUI.StartSputnikOSStartupScreen(() => monitorStartupScreenUI.DisableStartupScreen());
-                startProgramEventData.Response?.Invoke(true, "Starting SputnikOS...");
+                startProgramEventData.Response?.Invoke(false, "No server connection.");
+            }
+            else if (IsSputnikOSStarted)
+            {
+                startProgramEventData.Response?.Invoke(false, "SputnikOS is already started.");
             }
             else
             {
-                startProgramEventData.Response?.Invoke(false, "SputnikOS is already started.");
+                IsSputnikOSStarted = true;
+                monitorStartupScreenUI.StartSputnikOSStartupScreen(() => monitorStartupScreenUI.DisableStartupScreen());
+                startProgramEventData.Response?.Invoke(true, "Starting SputnikOS...");
             }
 
             // // This requires additional conditions in the event assignments above!
@@ -83,7 +87,7 @@ public class MonitorUI : MonoBehaviour
         };
 
         SetMonitorEnabled(true);
-        isSputnikOSStarted = false;
+        IsSputnikOSStarted = false;
     }
 
     private void Start()
