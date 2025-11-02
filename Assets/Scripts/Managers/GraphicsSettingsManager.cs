@@ -7,7 +7,7 @@ public static class GraphicsSettingsManager
 
     public static List<string> ResolutionDropdownOptions { get; private set; }
 
-    public static float currentRefreshRate;
+    public static double currentRefreshRate;
 
     public static void OnAwake()
     {
@@ -53,7 +53,7 @@ public static class GraphicsSettingsManager
     private static void SetupResolutionSettings()
     {
         Resolution[] screenResolutions = Screen.resolutions;
-        currentRefreshRate = (float)Screen.currentResolution.refreshRateRatio.value;
+        currentRefreshRate = Screen.currentResolution.refreshRateRatio.value;
 
         List<string> dropdownOptions = new();
         List<Resolution> validResolutionsList = new();
@@ -61,19 +61,26 @@ public static class GraphicsSettingsManager
         for (int i = 0; i < screenResolutions.Length; i++)
         {
             Resolution resolution = screenResolutions[i];
+            Debug.Log(resolution.refreshRateRatio.value + " " + currentRefreshRate);
             if (resolution.refreshRateRatio.value == currentRefreshRate)
             {
+                Debug.Log("aaaa" + resolution);
                 validResolutionsList.Add(resolution);
                 dropdownOptions.Add($"{resolution.width} x {resolution.height}");
             }
+        }
 
+        availableResolutions = validResolutionsList.ToArray();
+
+        for (int i = 0; i < availableResolutions.Length; i++)
+        {
+            Resolution resolution = availableResolutions[i];
             if (resolution.width == Screen.currentResolution.width && resolution.height == Screen.currentResolution.height)
             {
                 GameSettingsManager.SetResolutionIndex(i);
             }
         }
 
-        availableResolutions = validResolutionsList.ToArray();
         ResolutionDropdownOptions = dropdownOptions;
     }
 }
