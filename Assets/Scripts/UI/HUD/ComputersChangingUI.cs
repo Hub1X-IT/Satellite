@@ -61,7 +61,7 @@ public class ComputersChangingUI : MonoBehaviour
         Disable();
     }
 
-    private void Oestroy()
+    private void OnDestroy()
     {
         ComputerExitTriggered = null;
     }
