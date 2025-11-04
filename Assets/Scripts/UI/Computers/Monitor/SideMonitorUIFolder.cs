@@ -16,10 +16,10 @@ public class SideMonitorUIFolder : FileExplorerUIDataContainer
     private Sprite lockedFolderIcon;
 
     [SerializeField]
-    private Sprite childFoldersHiddenSprite;
+    private RectTransform childFoldersHiddenSprite;
 
-    [SerializeField]
-    private Sprite childFoldersShownSprite;
+    private Quaternion childFoldersHidden = Quaternion.Euler(0, 0, 0);
+    private Quaternion childFoldersShown = Quaternion.Euler(0, 0, -90);
 
     private FolderSO selfFolderSO;
 
@@ -61,8 +61,7 @@ public class SideMonitorUIFolder : FileExplorerUIDataContainer
         LockedDataContainerIcon = lockedFolderIcon;
 
         childFoldersButton.gameObject.SetActive(gameObject.activeSelf && selfFolderSO.HasChildFolders());
-        childFoldersButton.image.sprite = selfFolderSO.ShouldShowChildFolders ? childFoldersShownSprite : childFoldersHiddenSprite;
-        childFoldersButton.image.rectTransform.sizeDelta = selfFolderSO.ShouldShowChildFolders ? new Vector2(40, 25) : new Vector2(25, 40);
+        childFoldersButton.image.rectTransform.localRotation = selfFolderSO.ShouldShowChildFolders ? childFoldersShown : childFoldersHidden;
     }
 
     private void ToggleChildFolders()
