@@ -10,7 +10,7 @@ public class MonitorMainMenuUIObsolete : MonoBehaviour
     [SerializeField]
     private ApplicationsMenuUI applicationsMenu;
     [SerializeField]
-    private FilesMenuUI filesMenu;
+    private FilesMenuUIObsolete filesMenu;
 
     private bool isApplicationsMenuEnabled;
     private bool isFilesMenuEnabled;

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class NotepadAppUIObsolete : MonoBehaviour
 {
     [SerializeField]
-    private FilesMenuUI filesMenu;
+    private FilesMenuUIObsolete filesMenu;
 
     [SerializeField]
     private NotepadTextSO textInput;

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FilesMenuUI : MonoBehaviour
+public class FilesMenuUIObsolete : MonoBehaviour
 {
     [SerializeField]
     private Button notepadAppButton;
