@@ -254,7 +254,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
 
             ResetPasswordEncryptionSteps();
 
-            decompressedPasswordUI.InitializeConvertedPasswordUI(decompressedPassword);
+            decompressedPasswordUI.InitializeConvertedPasswordUI(decompressedPassword, false);
             decompressedPasswordUI.gameObject.SetActive(true);
         }
         else
@@ -301,7 +301,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
             encryptionStepIndex--;
             string convertedPassword = currentEncryptionStep.PreviousPasswordState;
 
-            StartCoroutine(ShowDecodingMessageAndConvertedPassword(false, convertedPassword));
+            StartCoroutine(ShowDecodingMessageAndConvertedPassword(false, convertedPassword, encryptionStepIndex == -1));
 
             // shouldShowDecodingMessage = true;
             // shouldShowErrorMessage = true;
@@ -316,7 +316,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
                 // May be unnecessary now when checking decoding steps is implemented
             }
 
-            if (encryptionStepIndex == 0)
+            if (encryptionStepIndex == -1)
             {
                 // Player guessed the correct password.
             }
@@ -329,7 +329,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
             // shouldShowErrorMessage = true;
             // decodingMessageTimer = DecodingMessageShowTime;
 
-            StartCoroutine(ShowDecodingMessageAndConvertedPassword(true, ""));
+            StartCoroutine(ShowDecodingMessageAndConvertedPassword(true, "", false));
 
             DetectionManager.CheckDetection();
             SetDetectionChanceText();
@@ -337,7 +337,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
     }
 
     // Probably temporary
-    private IEnumerator ShowDecodingMessageAndConvertedPassword(bool showErrorMessage, string convertedPassword)
+    private IEnumerator ShowDecodingMessageAndConvertedPassword(bool showErrorMessage, string convertedPassword, bool isFinalStep)
     {
         currentDecodingMessageObject = Instantiate(decodingMessagePrefab, convertedPasswordsHolder);
         SetButtonsEnabled(false);
@@ -350,7 +350,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
             }
             else
             {
-                CreateNewPasswordTextField(convertedPassword);
+                CreateNewPasswordTextField(convertedPassword, isFinalStep);
             }
         }
         SetButtonsEnabled(true);
@@ -361,12 +361,12 @@ public class PasswordCrackingAppUI : MonoBehaviour
         detectionChanceTextField.text = DetectionChanceText + DetectionManager.CurrentDetectionChance + "%";
     }
 
-    private void CreateNewPasswordTextField(string newPassword)
+    private void CreateNewPasswordTextField(string newPassword, bool isCorrectPassword)
     {
         ConvertedPasswordUI convertedPasswordUI = Instantiate(convertedPasswordPrefab.gameObject,
             convertedPasswordsHolder).GetComponent<ConvertedPasswordUI>();
 
-        convertedPasswordUI.InitializeConvertedPasswordUI(newPassword);
+        convertedPasswordUI.InitializeConvertedPasswordUI(newPassword, isCorrectPassword);
         previousConvertedPasswordUIStack.Push(convertedPasswordUI);
     }
 

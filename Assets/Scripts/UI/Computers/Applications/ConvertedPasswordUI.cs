@@ -11,6 +11,9 @@ public class ConvertedPasswordUI : MonoBehaviour
     private const string SubstringDivisor = " | ";
 
     [SerializeField]
+    private Color correctPasswordTextColor;
+
+    [SerializeField]
     private Transform backgroundHolder;
     [SerializeField]
     private Transform textFieldsHolder;
@@ -34,12 +37,18 @@ public class ConvertedPasswordUI : MonoBehaviour
 
     public string PasswordString => passwordString;
 
-    public void InitializeConvertedPasswordUI(string passwordToDisplay)
+    public void InitializeConvertedPasswordUI(string passwordToDisplay, bool isCorrectPassword)
     {
         rectTransform = GetComponent<RectTransform>();
         ResetTextFields();
 
         passwordString = passwordToDisplay;
+
+        if (isCorrectPassword)
+        {
+            DisplayCorrectPassword(passwordToDisplay);
+            return;
+        }
 
         if (passwordToDisplay.Length == 0)
         {
@@ -103,6 +112,16 @@ public class ConvertedPasswordUI : MonoBehaviour
         }
 
         SetBackground(textFieldsNumber);
+        SetSize();
+    }
+
+    public void DisplayCorrectPassword(string passwordToDisplay)
+    {
+        TMP_Text currentTextField = CreateNewTextField();
+        currentTextField.text = passwordToDisplay + " - correct password";
+        currentTextField.color = correctPasswordTextColor;
+
+        SetBackground(1);
         SetSize();
     }
 
