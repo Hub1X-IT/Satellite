@@ -45,8 +45,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
 
     [SerializeField]
     private Button resetPasswordCrackingButton;
-    [SerializeField]
-    private Button decompressButton;
 
     [SerializeField]
     private Button undoAllStepsButton;
@@ -148,8 +146,8 @@ public class PasswordCrackingAppUI : MonoBehaviour
     {
         // inputField.onEndEdit.AddListener(ChangeOriginalPassword);
         resetPasswordCrackingButton.onClick.AddListener(ResetPasswordCracking);
-        decompressButton.onClick.AddListener(DecompressCurrentPassword);
         inputField.onSelect.AddListener(InputField_OnSelect);
+        inputField.onValueChanged.AddListener(InputField_OnValueChanged);
 
         undoAllStepsButton.onClick.AddListener(UndoAllSteps);
         undoLastStepButton.onClick.AddListener(UndoLastStep);
@@ -171,8 +169,8 @@ public class PasswordCrackingAppUI : MonoBehaviour
     {
         // inputField.onEndEdit.RemoveListener(ChangeOriginalPassword);
         resetPasswordCrackingButton.onClick.RemoveListener(ResetPasswordCracking);
-        decompressButton.onClick.RemoveListener(DecompressCurrentPassword);
         inputField.onSelect.RemoveListener(InputField_OnSelect);
+        inputField.onValueChanged.RemoveListener(InputField_OnValueChanged);
 
         undoAllStepsButton.onClick.RemoveListener(UndoAllSteps);
         undoLastStepButton.onClick.RemoveListener(UndoLastStep);
@@ -193,7 +191,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
     private void SetButtonsEnabled(bool enabled)
     {
         resetPasswordCrackingButton.interactable = enabled;
-        decompressButton.interactable = enabled;
         undoAllStepsButton.interactable = enabled;
         undoLastStepButton.interactable = enabled;
 
@@ -208,6 +205,17 @@ public class PasswordCrackingAppUI : MonoBehaviour
     private void InputField_OnSelect(string _)
     {
         pasteMenuUI.SetCopyPasteMenuEnabled(true);
+    }
+    private void InputField_OnValueChanged(string newValue)
+    {
+        if (newValue.Length == TextCompressor.CompressedTextLength)
+        {
+            DecompressPassword(newValue);
+        }
+        else
+        {
+            decompressedPasswordUI.gameObject.SetActive(false);
+        }
     }
 
     private void DecompressPassword(string compressedPassword)
@@ -244,10 +252,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
             Debug.Log("Decompression failed.");
             decompressedPasswordUI.gameObject.SetActive(false);
         }
-    }
-    private void DecompressCurrentPassword()
-    {
-        DecompressPassword(inputField.text);
     }
 
     private void ResetPasswordEncryptionSteps()

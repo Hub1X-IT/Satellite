@@ -7,7 +7,7 @@ public static class TextCompressor
     private static Dictionary<string, string> compressedTextDictionary = new();
 
     private const string AllowedKeyChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private const int CompressedTextLength = 8;
+    public const int CompressedTextLength = 8;
 
     public static void InitializeTextCompressor()
     {
