@@ -64,7 +64,7 @@ public class MonitorAppsManagerUI : MonoBehaviour
         else
         {
             PasswordCrackingAppUI passwordCrackingApp = OpenApplication(ApplicationType.PasswordCrackingApp).GetComponent<PasswordCrackingAppUI>();
-            passwordCrackingApp.InitializePasswordCrackingApp("Password cracking");
+            passwordCrackingApp.InitializePasswordCrackingApp("Password Cracking Software");
             currentPasswordCrackingApp = passwordCrackingApp;
         }
     }
