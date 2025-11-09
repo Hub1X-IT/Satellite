@@ -148,6 +148,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
         resetPasswordCrackingButton.onClick.AddListener(ResetPasswordCracking);
         inputField.onSelect.AddListener(InputField_OnSelect);
         inputField.onValueChanged.AddListener(InputField_OnValueChanged);
+        inputField.onValidateInput += InputField_OnValidateInput;
 
         undoAllStepsButton.onClick.AddListener(UndoAllSteps);
         undoLastStepButton.onClick.AddListener(UndoLastStep);
@@ -171,6 +172,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
         resetPasswordCrackingButton.onClick.RemoveListener(ResetPasswordCracking);
         inputField.onSelect.RemoveListener(InputField_OnSelect);
         inputField.onValueChanged.RemoveListener(InputField_OnValueChanged);
+        inputField.onValidateInput -= InputField_OnValidateInput;
 
         undoAllStepsButton.onClick.RemoveListener(UndoAllSteps);
         undoLastStepButton.onClick.RemoveListener(UndoLastStep);
@@ -216,6 +218,14 @@ public class PasswordCrackingAppUI : MonoBehaviour
         {
             decompressedPasswordUI.gameObject.SetActive(false);
         }
+    }
+    private char InputField_OnValidateInput(string text, int charIndex, char addedChar)
+    {
+        if (!char.IsLetter(addedChar))
+        {
+            return '\0';
+        }
+        return char.ToUpper(addedChar);
     }
 
     private void DecompressPassword(string compressedPassword)

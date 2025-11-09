@@ -37,6 +37,7 @@ public class DataContainerPasswordScreenUI : MonoBehaviour
         string baseAppName = dataContainerSO is FolderSO _ ? BaseAppName_Folder : BaseAppName_File;
         monitorApp.SetAppName(baseAppName + dataContainerSO.SelfName);
 
+        passwordInputField.onValidateInput += PasswordInputField_OnValidateInput;
         submitPasswordButton.onClick.AddListener(CheckPassword);
 
         incorrectPasswordScreen.Disable();
@@ -45,6 +46,15 @@ public class DataContainerPasswordScreenUI : MonoBehaviour
     private void OnDestroy()
     {
         PasswordGuessed = null;
+    }
+
+    private char PasswordInputField_OnValidateInput(string text, int charIndex, char addedChar)
+    {
+        if (!char.IsLetter(addedChar))
+        {
+            return '\0';
+        }
+        return char.ToUpper(addedChar);
     }
 
 
