@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class FolderContentUIFolder : FileExplorerUIDataContainer
 {
     [SerializeField]
-    private Button openButton;
+    private DoubleClickButtonUI openButton;
 
     [SerializeField]
     private Sprite baseFolderIcon;
@@ -25,7 +25,7 @@ public class FolderContentUIFolder : FileExplorerUIDataContainer
         BaseDataContainerIcon = baseFolderIcon;
         LockedDataContainerIcon = lockedFolderIcon;
 
-        openButton.onClick.AddListener(OpenFolderContent);
+        openButton.OnDoubleClick += OpenFolderContent;
     }
 
     private void OpenFolderContent()

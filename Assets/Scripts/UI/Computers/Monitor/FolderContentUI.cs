@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class FolderContentUI : MonoBehaviour
 {
     [SerializeField]
-    private Button parentFolderButton;
+    private DoubleClickButtonUI parentFolderButton;
 
     [SerializeField]
     private Transform childObjectsHolder;
@@ -24,7 +24,7 @@ public class FolderContentUI : MonoBehaviour
 
     private void Awake()
     {
-        parentFolderButton.onClick.AddListener(() => CurrentFileExplorer.TryOpenFolderContent(selfFolderSO.ParentFolderSO, null, previousFolderSOList));
+        parentFolderButton.OnDoubleClick += () => CurrentFileExplorer.TryOpenFolderContent(selfFolderSO.ParentFolderSO, null, previousFolderSOList);
     }
 
     public void InitializeFolderContentUI(FolderSO folderSO, FileExplorerUI currentFileExplorer, List<FolderSO> previousFolderSOList)

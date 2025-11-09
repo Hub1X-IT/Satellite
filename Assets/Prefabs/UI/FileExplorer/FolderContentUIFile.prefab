@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4929131173683540456}
   - component: {fileID: 6733758107771853913}
   - component: {fileID: 859433680072280964}
+  - component: {fileID: 6299601557165689791}
   - component: {fileID: 3308740882889692349}
   m_Layer: 5
   m_Name: FolderContentUIFile
@@ -122,6 +123,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6299601557165689791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217379296086088943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 272e2114dc266645695ae945878933c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetButton: {fileID: 859433680072280964}
 --- !u!114 &3308740882889692349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameTextField: {fileID: 4578127312660323086}
   dataContainerIconImage: {fileID: 6733758107771853913}
-  openButton: {fileID: 859433680072280964}
+  openButton: {fileID: 6299601557165689791}
   baseUnknownFileIcon: {fileID: 21300000, guid: c5aa743d7008ffd40a4906480fb0d1b0, type: 3}
   lockedUnknownFileIcon: {fileID: 21300000, guid: 39a0eee1aa2cdbc408ea46a4b4de29c3, type: 3}
   baseTextFileIcon: {fileID: 21300000, guid: 20e6a90c66ce8b14dbc046ae841731d9, type: 3}

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6751237117678171268}
   - component: {fileID: 8641321554386428667}
   - component: {fileID: 6050337965681182524}
+  - component: {fileID: 743013154687542266}
   - component: {fileID: 5271231937168533665}
   m_Layer: 5
   m_Name: FolderContentUIFolder
@@ -122,6 +123,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &743013154687542266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2679912636101322502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 272e2114dc266645695ae945878933c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetButton: {fileID: 6050337965681182524}
 --- !u!114 &5271231937168533665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameTextField: {fileID: 5939845726625510496}
   dataContainerIconImage: {fileID: 8641321554386428667}
-  openButton: {fileID: 6050337965681182524}
+  openButton: {fileID: 743013154687542266}
   baseFolderIcon: {fileID: 21300000, guid: 74d8e4dcbc11c0449b3aacfa6e394de2, type: 3}
   lockedFolderIcon: {fileID: 21300000, guid: 4cab6b8e11250df43b452ac5dcd38f10, type: 3}
 --- !u!1 &3202476660239588443
