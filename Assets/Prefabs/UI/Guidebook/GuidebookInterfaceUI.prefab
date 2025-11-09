@@ -2596,22 +2596,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e2cf5c09e04dd3428eff1e61463f4bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pages:
-  - {fileID: 7489760783673098850}
-  - {fileID: 7469127454339879096}
-  - {fileID: 7943294484768471217}
-  - {fileID: 1147987559126469183}
-  - {fileID: 8114328195326494872}
-  - {fileID: 7352946522880219233}
-  - {fileID: 0}
-  pageListButtons:
-  - {fileID: 0}
-  - {fileID: 1094714969347777197}
-  - {fileID: 9099868910892707765}
-  - {fileID: 4436621413575316982}
-  - {fileID: 5997318858999591240}
-  - {fileID: 2365481455578036403}
-  - {fileID: 2911370055220776903}
+  pagesAndButtons:
+  - Page: {fileID: 7489760783673098850}
+    Buttons: []
+  - Page: {fileID: 7469127454339879096}
+    Buttons:
+    - {fileID: 1094714969347777197}
+  - Page: {fileID: 7943294484768471217}
+    Buttons:
+    - {fileID: 9099868910892707765}
+    - {fileID: 5997318858999591240}
+  - Page: {fileID: 1147987559126469183}
+    Buttons:
+    - {fileID: 4436621413575316982}
+    - {fileID: 2365481455578036403}
+  - Page: {fileID: 8114328195326494872}
+    Buttons:
+    - {fileID: 2911370055220776903}
   nextPageButton: {fileID: 9010841731676475348}
   previousPageButton: {fileID: 4866906192157539084}
 --- !u!1 &6937052099717343151
@@ -3188,7 +3189,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4331222697555057227}
   m_Layer: 5
-  m_Name: HexadecimalPage
+  m_Name: AtbashCaesarPage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3512,7 +3513,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8491833529717210808}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

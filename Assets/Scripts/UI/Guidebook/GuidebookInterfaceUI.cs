@@ -1,18 +1,22 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GuidebookInterfaceUI : MonoBehaviour
 {
+    [Serializable]
+    private class PageAndButtons
+    {
+        public GameObject Page;
+        public Button[] Buttons;
+    }
+
     // Left - even number (starting from 0)
     // Right - odd number (starting from 1)
 
     [SerializeField]
-    private GameObject[] pages;
-
-    // Button index must match the corresponding page index
-    [SerializeField]
-    private Button[] pageListButtons;
+    private PageAndButtons[] pagesAndButtons;
 
     [SerializeField]
     private Button nextPageButton;
@@ -35,6 +39,15 @@ public class GuidebookInterfaceUI : MonoBehaviour
             ChangeToPage(currentPageNumber - 2);
         };
 
+        for (int i = 0; i < pagesAndButtons.Length; i++)
+        {
+            foreach (var button in pagesAndButtons[i].Buttons)
+            {
+                buttonToPageNumber.Add(button, i);
+            }
+        }
+
+        /*
         for (int i = 0; i < pageListButtons.Length; i++)
         {
             if (pageListButtons[i] != null)
@@ -42,6 +55,7 @@ public class GuidebookInterfaceUI : MonoBehaviour
                 buttonToPageNumber.Add(pageListButtons[i], i);
             }
         }
+        */
 
         foreach (var button in buttonToPageNumber.Keys)
         {
@@ -67,29 +81,29 @@ public class GuidebookInterfaceUI : MonoBehaviour
 
     private void DisableAllPages()
     {
-        foreach (var page in pages)
+        foreach (var pageAndButton in pagesAndButtons)
         {
-            page.SetActive(false);
+            pageAndButton.Page.SetActive(false);
         }
     }
 
     public void ChangeToPage(int newPageNumber)
     {
         SetPageActive(currentPageNumber, false);
-        currentPageNumber = Mathf.Clamp(newPageNumber, 0, pages.Length - 1);
+        currentPageNumber = Mathf.Clamp(newPageNumber, 0, pagesAndButtons.Length - 1);
         SetPageActive(currentPageNumber, true);
     }
 
     private void SetPageActive(int pageNumber, bool active)
     {
-        pages[pageNumber].SetActive(active);
-        if (pageNumber % 2 == 0 && pageNumber + 1 < pages.Length)
+        pagesAndButtons[pageNumber].Page.SetActive(active);
+        if (pageNumber % 2 == 0 && pageNumber + 1 < pagesAndButtons.Length)
         {
-            pages[pageNumber + 1].SetActive(active);
+            pagesAndButtons[pageNumber + 1].Page.SetActive(active);
         }
         else if (pageNumber % 2 != 0 && pageNumber - 1 >= 0)
         {
-            pages[pageNumber - 1].SetActive(active);
+            pagesAndButtons[pageNumber - 1].Page.SetActive(active);
         }
     }
 }
