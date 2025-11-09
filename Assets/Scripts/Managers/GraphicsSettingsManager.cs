@@ -61,10 +61,8 @@ public static class GraphicsSettingsManager
         for (int i = 0; i < screenResolutions.Length; i++)
         {
             Resolution resolution = screenResolutions[i];
-            Debug.Log(resolution.refreshRateRatio.value + " " + currentRefreshRate);
             if (resolution.refreshRateRatio.value == currentRefreshRate)
             {
-                Debug.Log("aaaa" + resolution);
                 validResolutionsList.Add(resolution);
                 dropdownOptions.Add($"{resolution.width} x {resolution.height}");
             }

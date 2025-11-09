@@ -76,18 +76,18 @@ public class MonitorStartupScreenUI : MonoBehaviour
         if (!ServerConnectionManager.WasEverConnected && !ServerConnectionManager.IsConnectionActive)
         {
             currentSelectedStartupScreenElements = case1StartupScreenElements;
-            Debug.Log("Selected case1");
+            // Debug.Log("Selected case1");
         }
         else if (!ServerConnectionManager.IsConnectionActive || DetectionManager.WasDetected)
         // ^ Second condition may not be necessary
         {
             currentSelectedStartupScreenElements = case2StartupScreenElements;
-            Debug.Log("Selected case2");
+            // Debug.Log("Selected case2");
         }
         else if (ServerConnectionManager.IsConnectionActive)
         {
             currentSelectedStartupScreenElements = case3StartupScreenElements;
-            Debug.Log("Selected case3");
+            // Debug.Log("Selected case3");
         }
 
         objectsActivationTimer = objectsActivationInterval;
@@ -102,7 +102,7 @@ public class MonitorStartupScreenUI : MonoBehaviour
         DisableAllObjects();
 
         currentSelectedStartupScreenElements = case4StartupScreenElements;
-        Debug.Log("Selected case4");
+        // Debug.Log("Selected case4");
 
         objectsActivationTimer = objectsActivationInterval;
         currentObjectIndex = 0;
