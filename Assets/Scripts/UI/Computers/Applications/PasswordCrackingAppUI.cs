@@ -190,6 +190,21 @@ public class PasswordCrackingAppUI : MonoBehaviour
         }
     }
 
+    private void SetButtonsEnabled(bool enabled)
+    {
+        resetPasswordCrackingButton.interactable = enabled;
+        decompressButton.interactable = enabled;
+        undoAllStepsButton.interactable = enabled;
+        undoLastStepButton.interactable = enabled;
+
+        binButton.interactable = enabled;
+        octButton.interactable = enabled;
+        decButton.interactable = enabled;
+        hexButton.interactable = enabled;
+        atbashButton.interactable = enabled;
+        caesarButton.interactable = enabled;
+    }
+
     private void InputField_OnSelect(string _)
     {
         pasteMenuUI.SetCopyPasteMenuEnabled(true);
@@ -311,6 +326,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
     private IEnumerator ShowDecodingMessageAndConvertedPassword(bool showErrorMessage, string convertedPassword)
     {
         currentDecodingMessageObject = Instantiate(decodingMessagePrefab, convertedPasswordsHolder);
+        SetButtonsEnabled(false);
         yield return new WaitForSeconds(DecodingMessageShowTime);
         if (TryDestroyDecodingMessageObject())
         {
@@ -323,6 +339,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
                 CreateNewPasswordTextField(convertedPassword);
             }
         }
+        SetButtonsEnabled(true);
     }
 
     private void SetDetectionChanceText()
