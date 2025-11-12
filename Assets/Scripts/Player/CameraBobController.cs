@@ -7,8 +7,6 @@ public class CameraBobController : MonoBehaviour
     [Serializable]
     private class CinemachineBasicMultiChannelPerlinSettings
     {
-        public NoiseSettings NoiseProfile;
-        public Vector3 PivotOffset;
         public float AmplitudeGain;
         public float FrequencyGain;
     }
@@ -22,18 +20,29 @@ public class CameraBobController : MonoBehaviour
     private PlayerMovementController playerMovementController;
 
     [SerializeField]
+    private float lerpSpeed;
+
+    [SerializeField]
     private CinemachineBasicMultiChannelPerlinSettings playerNotMovingSettings;
 
     [SerializeField]
     private CinemachineBasicMultiChannelPerlinSettings playerMovingSettings;
 
-
+    private CinemachineBasicMultiChannelPerlinSettings currentSettings;
 
     private void Awake()
     {
         playerMovementController.StartedMoving += OnPlayerStartedMoving;
 
         cinemachineBasicMultiChannelPerlin = playerCinemachineCamera.GetComponent<CinemachineBasicMultiChannelPerlin>();
+
+        currentSettings = playerNotMovingSettings;
+    }
+
+    private void Update()
+    {
+        cinemachineBasicMultiChannelPerlin.AmplitudeGain = Mathf.Lerp(cinemachineBasicMultiChannelPerlin.AmplitudeGain, currentSettings.AmplitudeGain, Time.deltaTime * lerpSpeed);
+        cinemachineBasicMultiChannelPerlin.FrequencyGain = Mathf.Lerp(cinemachineBasicMultiChannelPerlin.FrequencyGain, currentSettings.FrequencyGain, Time.deltaTime * lerpSpeed);
     }
 
     private void OnDestroy()
@@ -43,19 +52,6 @@ public class CameraBobController : MonoBehaviour
 
     public void OnPlayerStartedMoving(bool isMoving)
     {
-        if (isMoving)
-        {
-            cinemachineBasicMultiChannelPerlin.NoiseProfile = playerMovingSettings.NoiseProfile;
-            cinemachineBasicMultiChannelPerlin.PivotOffset = playerMovingSettings.PivotOffset;
-            cinemachineBasicMultiChannelPerlin.AmplitudeGain = playerMovingSettings.AmplitudeGain;
-            cinemachineBasicMultiChannelPerlin.FrequencyGain = playerMovingSettings.FrequencyGain;
-        }
-        else
-        {
-            cinemachineBasicMultiChannelPerlin.NoiseProfile = playerNotMovingSettings.NoiseProfile;
-            cinemachineBasicMultiChannelPerlin.PivotOffset = playerNotMovingSettings.PivotOffset;
-            cinemachineBasicMultiChannelPerlin.AmplitudeGain = playerNotMovingSettings.AmplitudeGain;
-            cinemachineBasicMultiChannelPerlin.FrequencyGain = playerNotMovingSettings.FrequencyGain;
-        }
+        currentSettings = isMoving ? playerMovingSettings : playerNotMovingSettings;
     }
 }
