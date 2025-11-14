@@ -2587,13 +2587,9 @@ MonoBehaviour:
   playerMovementController: {fileID: 1583305512}
   lerpSpeed: 10
   playerNotMovingSettings:
-    NoiseProfile: {fileID: 11400000, guid: 46965f9cbaf525742a6da4c2172a99cd, type: 2}
-    PivotOffset: {x: 0, y: 0, z: 0}
     AmplitudeGain: 0.6
     FrequencyGain: 0.3
   playerMovingSettings:
-    NoiseProfile: {fileID: 11400000, guid: b241f91b9ccf8ff489abf204b30d3112, type: 2}
-    PivotOffset: {x: 0, y: 0, z: 0}
     AmplitudeGain: 1
     FrequencyGain: 0.8
 --- !u!1 &441456611
@@ -6928,6 +6924,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 979979600}
+    - target: {fileID: 8295782187248086010, guid: ffa1e613c48388f42aaf064733a34462, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8975780131838843673, guid: ffa1e613c48388f42aaf064733a34462, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
