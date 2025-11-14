@@ -3,7 +3,7 @@ using UnityEngine;
 public class InteractionVisual : MonoBehaviour
 {
     [SerializeField]
-    private Outline outline;
+    private OutlineNew outline;
 
     [SerializeField]
     private string interactMessage;
@@ -23,7 +23,7 @@ public class InteractionVisual : MonoBehaviour
         IsEnabled = enabled;
         if (outline != null)
         {
-            outline.enabled = enabled;
+            outline.SetOutlineEnabled(enabled);
         }
     }
 
