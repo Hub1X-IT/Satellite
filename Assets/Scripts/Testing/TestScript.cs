@@ -1,12 +1,31 @@
+using System.Collections;
+using DialogSystem.Runtime.Core;
+using DialogSystem.Runtime.Models;
+using DialogSystem.Runtime.Models.Nodes;
 using UnityEngine;
 
 public class TestScript : MonoBehaviour
 {
     // Script for testing whatever is needed
+    [SerializeField]
+    private DialogManager dialogManager;
+    [SerializeField]
+    private DialogGraph dialogGraph;
+    [SerializeField]
+    private ActionNode actionNode;
+    [SerializeField]
+    private DialogActionRunner dialogActionRunner;
   
     private void Awake()
     {
+        StartCoroutine(TestDialog());
+    }
 
+    private IEnumerator TestDialog()
+    {
+        yield return new WaitForSeconds(2f);
+        dialogManager.StartDialog(dialogGraph);
+        
     }
 
     private void Update()
