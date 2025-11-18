@@ -19,7 +19,7 @@ public class SMSMessage
     }
 
     [SerializeField] private string title;
-    [SerializeField, TextArea(3, 5)] private string content;
+    [SerializeField, TextArea(3, 10)] private string content;
     [SerializeField] private string sender;
     [SerializeField] private string date;
     [SerializeField] private string description;

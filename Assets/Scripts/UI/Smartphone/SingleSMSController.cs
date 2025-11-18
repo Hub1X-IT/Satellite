@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,11 +21,13 @@ public class SingleSMSController : MonoBehaviour
 
     private bool wasOpened = false;
 
+    public static Action OnFirstOpen;
+
     private void Awake()
     {
         SmsButton.onClick.AddListener(() =>
         {
-            if(objectiveEvent != null)
+            if (objectiveEvent != null)
             {
                 objectiveEvent.TryRaiseEvent();
                 objectiveEvent = null;
@@ -34,15 +37,22 @@ public class SingleSMSController : MonoBehaviour
             {
                 SmsButton.image.sprite = readSmsSprite;
                 wasOpened = true;
+                OnFirstOpen?.Invoke();
             }
             SmsContent.Enable(EnableSmsObject);
         });
+    }
+
+    private void OnDestroy()
+    {
+        OnFirstOpen = null;
     }
 
     private void EnableSmsObject()
     {
         SmsRectTransform.gameObject.SetActive(true);
     }
+    
     private void DisableSmsObject()
     {
         SmsRectTransform.gameObject.SetActive(false);

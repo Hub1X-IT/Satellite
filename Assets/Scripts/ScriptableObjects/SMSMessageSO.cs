@@ -5,4 +5,9 @@ public class SMSMessageSO : ScriptableObject
 {
     [SerializeField]
     private SMSMessage message;
+
+    public SMSMessage GetMessage()
+    {
+        return message.Copy();
+    }
 }

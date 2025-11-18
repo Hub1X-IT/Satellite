@@ -1,37 +1,31 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SMSUI : MonoBehaviour
 {
-    /*
+    [Serializable]
+    public class PingCircle
+    {
+        public GameObject Object;
+        public TMP_Text UnreadCount;
+    }
+    
     [SerializeField]
-    private Button smsExitButton;
-    */
+    private PingCircle ping;
 
-    private Action smsOverviewClosed;
+    private int unreadCount = 1;
 
+    private void RefreshUnreadCount()
+    {
+        ping.Object.SetActive(unreadCount != 0);
+        ping.UnreadCount.text = unreadCount.ToString();
+    }
 
     private void Awake()
     {
-        /*
-        smsExitButton.onClick.AddListener(() =>
-        {
-            smsOverviewClosed();
-            Disable();
-        });
-        */
-    }
-
-    public void Enable(Action onCloseAction)
-    {
-        smsOverviewClosed = onCloseAction;
-
-        gameObject.SetActive(true);
-    }
-
-    public void Disable()
-    {
-        gameObject.SetActive(false);
+        RefreshUnreadCount();
+        SingleSMSController.OnFirstOpen += () => { unreadCount--; RefreshUnreadCount(); };
     }
 }
