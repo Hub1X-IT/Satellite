@@ -18,7 +18,7 @@ public class Server : MonoBehaviour
     [SerializeField]
     private Material serverOffMaterial;
 
-    private Outline outline;
+    private OutlineNew outline;
 
     private bool isInServerView;
 
@@ -33,7 +33,7 @@ public class Server : MonoBehaviour
 
     private void Awake()
     {
-        outline = GetComponentInChildren<Outline>();
+        outline = GetComponentInChildren<OutlineNew>();
 
         serverTrigger.InteractVisual = GetComponent<InteractionVisual>();
 
@@ -104,7 +104,7 @@ public class Server : MonoBehaviour
         SetServerTriggerEnabled(!active);
 
         // Probably a temporary solution
-        outline.enabled = !active;
+        outline.SetOutlineEnabled(!active);
 
         serverViewEnabledGameEvent.RaiseEvent(active);
 
