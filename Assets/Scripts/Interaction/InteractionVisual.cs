@@ -3,7 +3,7 @@ using UnityEngine;
 public class InteractionVisual : MonoBehaviour
 {
     [SerializeField]
-    private OutlineNew outline;
+    private Outline outline;
 
     [SerializeField]
     private string interactMessage;

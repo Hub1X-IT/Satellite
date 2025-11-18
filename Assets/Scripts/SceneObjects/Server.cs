@@ -18,7 +18,7 @@ public class Server : MonoBehaviour
     [SerializeField]
     private Material serverOffMaterial;
 
-    private OutlineNew outline;
+    private Outline outline;
 
     private bool isInServerView;
 
@@ -33,7 +33,7 @@ public class Server : MonoBehaviour
 
     private void Awake()
     {
-        outline = GetComponentInChildren<OutlineNew>();
+        outline = GetComponentInChildren<Outline>();
 
         serverTrigger.InteractVisual = GetComponent<InteractionVisual>();
 

@@ -30,7 +30,7 @@ public class Computer : MonoBehaviour
     [SerializeField]
     private GameEventComputerSO changeToComputerGameEvent;
 
-    private OutlineNew outline;
+    private Outline outline;
 
     private bool isInComputerView;
 
@@ -60,7 +60,7 @@ public class Computer : MonoBehaviour
     private void Awake()
     {
         desk = GetComponentInParent<Desk>();
-        outline = GetComponent<OutlineNew>();
+        outline = GetComponent<Outline>();
 
         computerTrigger.InteractVisual = GetComponent<InteractionVisual>();
 

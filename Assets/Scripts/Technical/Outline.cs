@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OutlineNew : MonoBehaviour
+public class Outline : MonoBehaviour
 {
     private const int OutlineRenderingLayerIndex = 2;
 
