@@ -15,6 +15,9 @@ public class SmartphoneMenuUI : MonoBehaviour
     [SerializeField]
     private Button contactsButton;
 
+    [SerializeField]
+    private SMSMessage smsMessage;
+
 
     private void Awake()
     {
