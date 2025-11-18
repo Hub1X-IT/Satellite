@@ -18,6 +18,7 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField]
     private Slider loadingSlider;
 
+    [Header("Buttons")]
     [SerializeField]
     private Button playButton;
 
@@ -30,12 +31,17 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField]
     private Button quitButton;
 
+    [Header("Media Buttons")]
+    [SerializeField]
+    private Button discordButton;
+
     private void Awake()
     {
-        playButton.onClick.AddListener(() => { 
+        playButton.onClick.AddListener(() =>
+        {
             DisableMainMenu();
             loadingScreen.gameObject.SetActive(true);
-            StartCoroutine(SceneLoader.LoadSceneAsync(SceneLoader.Scene.IntroLevel, loadingSlider)); 
+            StartCoroutine(SceneLoader.LoadSceneAsync(SceneLoader.Scene.IntroLevel, loadingSlider));
         });
 
         playButton.onClick.AddListener(() => GameManager.PauseGameToMenu(false));
@@ -51,6 +57,11 @@ public class MainMenuUI : MonoBehaviour
             creditsMenu.Enable(EnableMainMenu);
         });
         quitButton.onClick.AddListener(Application.Quit);
+
+        discordButton.onClick.AddListener(() =>
+        {
+            Application.OpenURL("https://discord.gg/BVk96xqx6m");
+        });
     }
 
     private void EnableMainMenu()
