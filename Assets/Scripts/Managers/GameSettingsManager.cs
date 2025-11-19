@@ -17,6 +17,7 @@ public static class GameSettingsManager
     private const int DefaultVSyncIndex = 1;
     private const int DefaultFPSMax = 0;
     private const int DefaultFPSDisplayIndex = 0;
+    private const int DefaultHeadBobEnabled = 1;
 
     private const string PlayerPrefs_MouseSensitivity = "MouseSensitivity";
 
@@ -31,6 +32,7 @@ public static class GameSettingsManager
     private const string PlayerPrefs_VSyncIndex = "VSyncIndex";
     private const string PlayerPrefs_FPSMax = "FPSMax";
     private const string PlayerPrefs_FPSDisplayIndex = "FPSDisplayIndex";
+    private const string PlayerPrefs_HeadBobEnabled = "HeadBobEnabled";
 
     public static float MouseSensitivity { get; private set; }
 
@@ -47,6 +49,7 @@ public static class GameSettingsManager
 
     public static bool Fullscreen { get; private set; }
     public static bool VSync { get; private set; }
+    public static bool HeadBobEnabled { get; private set; }
 
     public static void LoadSettings()
     {
@@ -63,6 +66,7 @@ public static class GameSettingsManager
         VSync = PlayerPrefs.GetInt(PlayerPrefs_VSyncIndex, DefaultVSyncIndex) == 1;
         FPSMax = PlayerPrefs.GetInt(PlayerPrefs_FPSMax, DefaultFPSMax);
         FPSDisplay = PlayerPrefs.GetInt(PlayerPrefs_FPSDisplayIndex, DefaultFPSDisplayIndex) == 1;
+        HeadBobEnabled = PlayerPrefs.GetInt(PlayerPrefs_HeadBobEnabled, DefaultHeadBobEnabled) == 1;
     }
 
 
@@ -124,10 +128,16 @@ public static class GameSettingsManager
         FPSMax = value;
         PlayerPrefs.SetInt(PlayerPrefs_FPSMax, FPSMax);
     }
-    
+
     public static void SetFPSDisplay(bool display)
     {
         FPSDisplay = display;
         PlayerPrefs.SetInt(PlayerPrefs_FPSDisplayIndex, FPSDisplay ? 1 : 0);
+    }
+
+    public static void SetHeadBobEnabled(bool enabled)
+    {
+        HeadBobEnabled = enabled;
+        PlayerPrefs.SetInt(PlayerPrefs_HeadBobEnabled, HeadBobEnabled ? 1 : 0);
     }
 }

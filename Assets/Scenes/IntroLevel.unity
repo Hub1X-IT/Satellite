@@ -6777,7 +6777,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8295782187248086010, guid: ffa1e613c48388f42aaf064733a34462, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.016540527
+      value: 0.024841309
       objectReference: {fileID: 0}
     - target: {fileID: 8975780131838843673, guid: ffa1e613c48388f42aaf064733a34462, type: 3}
       propertyPath: m_AnchorMax.y
@@ -7780,51 +7780,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2120693372210763740, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
   m_PrefabInstance: {fileID: 1316903337}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1335828819
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1335828820}
-  - component: {fileID: 1335828821}
-  m_Layer: 0
-  m_Name: FPSController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1335828820
+--- !u!4 &1335828820 stripped
 Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 940988029633042700, guid: eab4f895923b2094c95eaa91c53d0fc4, type: 3}
+  m_PrefabInstance: {fileID: 1624683404515341624}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1335828819}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 894.66113, y: 512.1829, z: 6.129662}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 710156001}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1335828821
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1335828819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01b8deccce1f0fa4f9425e7ba01a7999, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fpsCounterText: {fileID: 1422935267}
 --- !u!1 &1340616608
 GameObject:
   m_ObjectHideFlags: 0
@@ -14042,6 +14002,67 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a35d51f2fdf5434ebade9b5c9aa8898, type: 3}
+--- !u!1001 &1624683404515341624
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 710156001}
+    m_Modifications:
+    - target: {fileID: 940988029633042700, guid: eab4f895923b2094c95eaa91c53d0fc4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 894.66113
+      objectReference: {fileID: 0}
+    - target: {fileID: 940988029633042700, guid: eab4f895923b2094c95eaa91c53d0fc4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 512.1829
+      objectReference: {fileID: 0}
+    - target: {fileID: 940988029633042700, guid: eab4f895923b2094c95eaa91c53d0fc4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 6.129662
+      objectReference: {fileID: 0}
+    - target: {fileID: 940988029633042700, guid: eab4f895923b2094c95eaa91c53d0fc4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 940988029633042700, guid: eab4f895923b2094c95eaa91c53d0fc4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 940988029633042700, guid: eab4f895923b2094c95eaa91c53d0fc4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 940988029633042700, guid: eab4f895923b2094c95eaa91c53d0fc4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 940988029633042700, guid: eab4f895923b2094c95eaa91c53d0fc4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 940988029633042700, guid: eab4f895923b2094c95eaa91c53d0fc4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 940988029633042700, guid: eab4f895923b2094c95eaa91c53d0fc4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2310671415670621116, guid: eab4f895923b2094c95eaa91c53d0fc4, type: 3}
+      propertyPath: m_Name
+      value: FPSController
+      objectReference: {fileID: 0}
+    - target: {fileID: 3832360452473052476, guid: eab4f895923b2094c95eaa91c53d0fc4, type: 3}
+      propertyPath: fpsCounterText
+      value: 
+      objectReference: {fileID: 1422935267}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: eab4f895923b2094c95eaa91c53d0fc4, type: 3}
 --- !u!1001 &2384808044949163297
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14191,10 +14212,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2026644935038210986, guid: 4b4536b5382a4a849bfc9c02d3ee8cff, type: 3}
-      propertyPath: m_isRightToLeft
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3893426347950695796, guid: 4b4536b5382a4a849bfc9c02d3ee8cff, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -14233,10 +14250,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6446982571227615370, guid: 4b4536b5382a4a849bfc9c02d3ee8cff, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6709706245758573521, guid: 4b4536b5382a4a849bfc9c02d3ee8cff, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7983850856351646940, guid: 4b4536b5382a4a849bfc9c02d3ee8cff, type: 3}

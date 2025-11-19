@@ -65,5 +65,11 @@ public class GraphicSettingsUI : MonoBehaviour
         resolutionDropdown.AddOptions(GraphicsSettingsManager.ResolutionDropdownOptions);
         resolutionDropdown.value = GameSettingsManager.ResolutionIndex;
         resolutionDropdown.RefreshShownValue();
+
+        fullscreenToggle.isOn = GameSettingsManager.Fullscreen;
+        vsyncToggle.isOn = GameSettingsManager.VSync;
+        fpsMaxInputField.text = GameSettingsManager.FPSMax.ToString();
+        fpsDisplayToggle.isOn = GameSettingsManager.FPSDisplay;
+        headBobToggle.isOn = GameSettingsManager.HeadBobEnabled;
     }
 }
