@@ -53,7 +53,11 @@ public class GraphicSettingsUI : MonoBehaviour
 
         headBobToggle.onValueChanged.AddListener((bool enabled) =>
         {
-            headBob.AmplitudeGain = enabled ? 0.6f : 0f;
+            if (headBob != null)
+            {
+                headBob.AmplitudeGain = enabled ? 0.6f : 0f;
+            }
+            GameSettingsManager.SetHeadBobEnabled(enabled);
         });
     }
 
