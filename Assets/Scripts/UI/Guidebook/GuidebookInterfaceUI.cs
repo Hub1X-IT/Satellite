@@ -10,6 +10,7 @@ public class GuidebookInterfaceUI : MonoBehaviour
     {
         public GameObject Page;
         public Button[] Buttons;
+        public Button Bookmarks;
     }
 
     // Left - even number (starting from 0)
@@ -23,9 +24,15 @@ public class GuidebookInterfaceUI : MonoBehaviour
     [SerializeField]
     private Button previousPageButton;
 
+    [SerializeField]
+    private Sprite bookmarkSpriteActive;
+    [SerializeField]
+    private Sprite bookmarkSpriteInactive;
+
     private int currentPageNumber;
 
     private Dictionary<Button, int> buttonToPageNumber = new();
+    private Dictionary<Button, int> bookmarkButtonToPageNumber = new();
 
     private void Awake()
     {
@@ -65,6 +72,19 @@ public class GuidebookInterfaceUI : MonoBehaviour
             });
         }
 
+        for (int i = 0; i < pagesAndButtons.Length; i++)
+        {
+            bookmarkButtonToPageNumber.Add(pagesAndButtons[i].Bookmarks, i);
+        }
+
+        foreach (var bookmark in bookmarkButtonToPageNumber.Keys)
+        {
+            bookmark.onClick.AddListener(() =>
+            {
+                ChangeToPage(bookmarkButtonToPageNumber[bookmark]);
+            });
+        }
+
         nextPageButton.onClick.AddListener(() =>
         {
             ChangeToPage(currentPageNumber + 2);
@@ -97,6 +117,7 @@ public class GuidebookInterfaceUI : MonoBehaviour
     private void SetPageActive(int pageNumber, bool active)
     {
         pagesAndButtons[pageNumber].Page.SetActive(active);
+        pagesAndButtons[pageNumber].Bookmarks.image.sprite = active ? bookmarkSpriteActive : bookmarkSpriteInactive;
         if (pageNumber % 2 == 0 && pageNumber + 1 < pagesAndButtons.Length)
         {
             pagesAndButtons[pageNumber + 1].Page.SetActive(active);
