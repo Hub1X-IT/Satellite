@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,48 +14,63 @@ public class SingleSMSController : MonoBehaviour
     [SerializeField]
     private Sprite readSmsSprite;
 
-    [SerializeField]
-    private EnterableUIObject SmsContent;
-
-    [SerializeField]
-    private GameEventSO objectiveEvent;
-
     private bool wasOpened = false;
 
-    public static Action OnFirstOpen;
+    [Serializable]
+    public class UIElements
+    {
+        public TMP_Text Name;
+        public TMP_Text Time;
+        public TMP_Text Title;
+        public TMP_Text Description;
+    }
+
+    [SerializeField]
+    private UIElements elements;
+
+    // Requiring initialization
+    private SMSMessage message;
+    private Action onFirstOpen;
+    private SMSUI smsUI;
+    private bool initialized = false;
 
     private void Awake()
     {
         SmsButton.onClick.AddListener(() =>
         {
-            if (objectiveEvent != null)
+            if (!initialized)
             {
-                objectiveEvent.TryRaiseEvent();
-                objectiveEvent = null;
+                Debug.LogWarning("Message wasn't initialized");
+                return;
             }
-            DisableSmsObject();
             if (wasOpened == false)
             {
                 SmsButton.image.sprite = readSmsSprite;
                 wasOpened = true;
-                OnFirstOpen?.Invoke();
+                onFirstOpen?.Invoke();
             }
-            SmsContent.Enable(EnableSmsObject);
+
+            smsUI.OpenMessage(message);
         });
     }
 
-    private void OnDestroy()
+    public void Initialize(SMSUI smsUI, SMSMessage message, Action onFirstOpen = null)
     {
-        OnFirstOpen = null;
-    }
+        if (initialized)
+        {
+            Debug.LogWarning("Attempted initializing already initialized message");
+            return;
+        }
 
-    private void EnableSmsObject()
-    {
-        SmsRectTransform.gameObject.SetActive(true);
-    }
-    
-    private void DisableSmsObject()
-    {
-        SmsRectTransform.gameObject.SetActive(false);
+        this.smsUI = smsUI;
+        this.message = message;
+        this.onFirstOpen = onFirstOpen;
+        
+        elements.Name.text = message.Sender;
+        elements.Time.text = message.Date;
+        elements.Title.text = message.Title;
+        elements.Description.text = message.Description;
+
+        initialized = true;
     }
 }

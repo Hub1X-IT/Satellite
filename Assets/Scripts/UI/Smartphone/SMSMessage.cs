@@ -4,7 +4,7 @@ using UnityEngine;
 [Serializable]
 public class SMSMessage
 {
-    public SMSMessage(string content, string title = null, string sender = "<Unknown>", string date = "--:--", string description = null)
+    public SMSMessage(string title = null, string content = "...", string sender = "<Unknown>", string date = "--:--", string description = null)
     {
         this.title = title ?? ShortenedText(content, 20);
         this.content = content;

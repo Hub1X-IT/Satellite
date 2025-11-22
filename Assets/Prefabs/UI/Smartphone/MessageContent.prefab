@@ -130,13 +130,14 @@ GameObject:
   m_Component:
   - component: {fileID: 4551191995288109830}
   - component: {fileID: 5511316009588266069}
+  - component: {fileID: 519421914229764259}
   m_Layer: 5
   m_Name: MessageContent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4551191995288109830
 RectTransform:
   m_ObjectHideFlags: 0
@@ -177,6 +178,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backButton: {fileID: 7956123237881503357}
+--- !u!114 &519421914229764259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458475609861891610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52f0a113c25899549a5c14932340d99b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: {fileID: 5792712908708325341}
+  time: {fileID: 1472200524485535478}
+  text: {fileID: 1746236436042982983}
+  sender: {fileID: 669517459648901830}
 --- !u!1 &1206729698048581175
 GameObject:
   m_ObjectHideFlags: 0
