@@ -235,6 +235,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5150131616126687271}
   - component: {fileID: 3277894726338142525}
+  - component: {fileID: 9218360761547750718}
   m_Layer: 5
   m_Name: MessagesOverview
   m_TagString: Untagged
@@ -278,6 +279,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backButton: {fileID: 4869887892218077511}
+--- !u!114 &9218360761547750718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540711689064200992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26e5697c6d66a8c489a1c482ae090e4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ping:
+    Object: {fileID: 2894701687806463774}
+    UnreadCount: {fileID: 3600668715048527220}
+  messageView: {fileID: 5701097955960065283}
+  messagesList: {fileID: 2125485161494388386}
+  messagesListContent: {fileID: 4475394209723265712}
+  smsPrefab: {fileID: 4505530213566707760, guid: c877256f30328d845865d80b996e19dc, type: 3}
 --- !u!1 &760350071585109771
 GameObject:
   m_ObjectHideFlags: 0
@@ -959,7 +979,6 @@ GameObject:
   m_Component:
   - component: {fileID: 287545110374412093}
   - component: {fileID: 1412839251652242542}
-  - component: {fileID: 8577604411697584751}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -1000,29 +1019,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc076518a870b9e4eaee5164294c2385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smsUI: {fileID: 3277894726338142525}
-  contactsUI: {fileID: 786183759832881432}
-  smsButton: {fileID: 4225724104848752541}
-  contactsButton: {fileID: 5688194914495447932}
---- !u!114 &8577604411697584751
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2791420484566379779}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26e5697c6d66a8c489a1c482ae090e4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ping:
-    Object: {fileID: 2894701687806463774}
-    UnreadCount: {fileID: 3600668715048527220}
-  messageView: {fileID: 5701097955960065283}
-  messagesList: {fileID: 2125485161494388386}
-  messagesListContent: {fileID: 4475394209723265712}
-  smsPrefab: {fileID: 4505530213566707760, guid: c877256f30328d845865d80b996e19dc, type: 3}
+  apps:
+    items:
+    - key: messages
+      value:
+        ui: {fileID: 3277894726338142525}
+        button: {fileID: 4225724104848752541}
+        notificationCircle: {fileID: 2894701687806463774}
+        notificationCount: {fileID: 3600668715048527220}
+    - key: contacts
+      value:
+        ui: {fileID: 786183759832881432}
+        button: {fileID: 5688194914495447932}
+        notificationCircle: {fileID: 0}
+        notificationCount: {fileID: 0}
 --- !u!1 &2894701687806463774
 GameObject:
   m_ObjectHideFlags: 0

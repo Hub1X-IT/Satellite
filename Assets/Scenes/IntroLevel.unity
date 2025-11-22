@@ -3385,6 +3385,17 @@ MonoBehaviour:
   atbashButton: {fileID: 1188560480}
   previousPasswordButton: {fileID: 2070564939}
   detectionChance: {fileID: 0}
+--- !u!114 &523410125 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5261961372040662175, guid: 4b4536b5382a4a849bfc9c02d3ee8cff, type: 3}
+  m_PrefabInstance: {fileID: 3636573079593337719}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc076518a870b9e4eaee5164294c2385, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &593088589
 GameObject:
   m_ObjectHideFlags: 0
@@ -11620,6 +11631,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf92733c54c587c408590eb9deea2e4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  smsUI: {fileID: 3636573079593337720}
+  menu: {fileID: 523410125}
+  messages:
+  - activationEvent: {fileID: 11400000, guid: 5ba6531333a3d33469c99836913a23f2, type: 2}
+    message: {fileID: 11400000, guid: 851636cf9a018764fb13f67ba11b564e, type: 2}
+    openedEvent: {fileID: 11400000, guid: aaa77a2a19e0f1c4c95acb8c133b72ad, type: 2}
 --- !u!1 &1897677228
 GameObject:
   m_ObjectHideFlags: 0
@@ -14564,6 +14581,17 @@ PrefabInstance:
       addedObject: {fileID: 1613564725}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b4536b5382a4a849bfc9c02d3ee8cff, type: 3}
+--- !u!114 &3636573079593337720 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2698613202853928399, guid: 4b4536b5382a4a849bfc9c02d3ee8cff, type: 3}
+  m_PrefabInstance: {fileID: 3636573079593337719}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26e5697c6d66a8c489a1c482ae090e4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3772388227603850553
 PrefabInstance:
   m_ObjectHideFlags: 0
