@@ -4,7 +4,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GraphicSettingsUI : MonoBehaviour
+public class GraphicsSettingsUI : MonoBehaviour
 {
     [SerializeField]
     private TMP_Dropdown resolutionDropdown;
@@ -25,13 +25,12 @@ public class GraphicSettingsUI : MonoBehaviour
     private Toggle fpsDisplayToggle;
 
     [SerializeField]
-    private TMP_Text fpsDisplay;
-
-    [SerializeField]
     private Toggle headBobToggle;
 
     [SerializeField]
     private CinemachineBasicMultiChannelPerlin headBob;
+
+    public event Action<bool> OnFPSDisplayToggled;
 
     private void Awake()
     {
@@ -47,7 +46,7 @@ public class GraphicSettingsUI : MonoBehaviour
 
         fpsDisplayToggle.onValueChanged.AddListener((bool enabled) =>
         {
-            fpsDisplay.gameObject.SetActive(enabled);
+            OnFPSDisplayToggled?.Invoke(enabled);
             GameSettingsManager.SetFPSDisplay(enabled);
         });
 
@@ -74,6 +73,7 @@ public class GraphicSettingsUI : MonoBehaviour
         vsyncToggle.isOn = GameSettingsManager.VSync;
         fpsMaxInputField.text = GameSettingsManager.FPSMax.ToString();
         fpsDisplayToggle.isOn = GameSettingsManager.FPSDisplay;
+
         headBobToggle.isOn = GameSettingsManager.HeadBobEnabled;
     }
 }
