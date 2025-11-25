@@ -10,7 +10,8 @@ public class GuidebookInterfaceUI : MonoBehaviour
     {
         public GameObject Page;
         public Button[] Buttons;
-        public Button Bookmarks;
+        public Button[] Bookmarks;
+        public RectTransform[] BookmarksTransforms;
     }
 
     // Left - even number (starting from 0)
@@ -33,6 +34,7 @@ public class GuidebookInterfaceUI : MonoBehaviour
 
     private Dictionary<Button, int> buttonToPageNumber = new();
     private Dictionary<Button, int> bookmarkButtonToPageNumber = new();
+    private Dictionary<RectTransform, int> bookmarkTransformToPageNumber = new();
 
     private void Awake()
     {
@@ -41,6 +43,14 @@ public class GuidebookInterfaceUI : MonoBehaviour
             foreach (var button in pagesAndButtons[i].Buttons)
             {
                 buttonToPageNumber.Add(button, i);
+            }
+            foreach (var bookmark in pagesAndButtons[i].Bookmarks)
+            {
+                bookmarkButtonToPageNumber.TryAdd(bookmark, i);
+            }
+            foreach (var bookmarkTransform in pagesAndButtons[i].BookmarksTransforms)
+            {
+                bookmarkTransformToPageNumber.TryAdd(bookmarkTransform, i);
             }
         }
 
@@ -54,11 +64,6 @@ public class GuidebookInterfaceUI : MonoBehaviour
         }
         */
 
-        for (int i = 0; i < pagesAndButtons.Length; i++)
-        {
-            bookmarkButtonToPageNumber.Add(pagesAndButtons[i].Bookmarks, i);
-        }
-        
         currentPageNumber = 0;
     }
 
@@ -101,6 +106,7 @@ public class GuidebookInterfaceUI : MonoBehaviour
 
         DisableAllPages();
         SetPageActive(currentPageNumber, true);
+        UpdateBookmarkVisuals(true);
     }
 
     private void DisableAllPages()
@@ -114,14 +120,15 @@ public class GuidebookInterfaceUI : MonoBehaviour
     public void ChangeToPage(int newPageNumber)
     {
         SetPageActive(currentPageNumber, false);
+        UpdateBookmarkVisuals(false);
         currentPageNumber = Mathf.Clamp(newPageNumber, 0, pagesAndButtons.Length - 1);
         SetPageActive(currentPageNumber, true);
+        UpdateBookmarkVisuals(true);
     }
 
     private void SetPageActive(int pageNumber, bool active)
     {
         pagesAndButtons[pageNumber].Page.SetActive(active);
-        pagesAndButtons[pageNumber].Bookmarks.image.sprite = active ? bookmarkSpriteActive : bookmarkSpriteInactive;
         if (pageNumber % 2 == 0 && pageNumber + 1 < pagesAndButtons.Length)
         {
             pagesAndButtons[pageNumber + 1].Page.SetActive(active);
@@ -130,5 +137,20 @@ public class GuidebookInterfaceUI : MonoBehaviour
         {
             pagesAndButtons[pageNumber - 1].Page.SetActive(active);
         }
+    }
+
+    private void UpdateBookmarkVisuals(bool active)
+    {
+        foreach (var bookmark in pagesAndButtons[currentPageNumber].Bookmarks)
+        {
+            bookmark.image.sprite = active ? bookmarkSpriteActive : bookmarkSpriteInactive;
+        }
+        /*
+        foreach (var bookmarkTransform in pagesAndButtons[currentPageNumber].BookmarksTransforms)
+        {
+            bookmarkTransform.localRotation = active ? Quaternion.Euler(0, 180, 0) : Quaternion.Euler(0, 0, 0);
+            bookmarkTransform.localPosition = new Vector3(bookmarkTransform.localPosition.x, -bookmarkTransform.localPosition.y, bookmarkTransform.localPosition.z);
+        }
+        */
     }
 }
