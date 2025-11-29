@@ -7,16 +7,19 @@ public class Laptop : MonoBehaviour
     private void Awake()
     {
         computer = GetComponent<Computer>();
+    }
 
+    private void Start()
+    {
         computer.ComputerViewEnabled += (enabled) =>
         {
             if (enabled)
             {
-                GameInput.CurrentInputActions.CommandPrompt.Enable();
+                GameInput.Instance.CurrentInputActions.CommandPrompt.Enable();
             }
             else
             {
-                GameInput.CurrentInputActions.CommandPrompt.Disable();
+                GameInput.Instance.CurrentInputActions.CommandPrompt.Disable();
             }
         };
     }

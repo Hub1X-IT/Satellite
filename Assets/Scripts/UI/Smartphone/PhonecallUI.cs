@@ -42,15 +42,13 @@ public class PhonecallUI : MonoBehaviour
 
     private void Start()
     {
-        acceptCallButton.onClick.AddListener(PhonecallManager.AcceptCall);
-        endCallButton.onClick.AddListener(PhonecallManager.EndCall);
-        stopCallingButton.onClick.AddListener(PhonecallManager.StopCalling);
+        acceptCallButton.onClick.AddListener(PhonecallManager.Instance.AcceptIncomingCall);
+        endCallButton.onClick.AddListener(PhonecallManager.Instance.EndCall);
+        stopCallingButton.onClick.AddListener(PhonecallManager.Instance.StopCalling);
 
-        PhonecallManager.NewCallStarted += OnNewCallStarted;
-        PhonecallManager.CurrentCallEnded += StopCall;
-        PhonecallManager.OnCanEndCall += OnCanEndCall;
-
-        PhonecallManager.TempStartCall();
+        PhonecallManager.Instance.NewCallStarted += OnNewCallStarted;
+        PhonecallManager.Instance.CurrentCallEnded += StopCall;
+        PhonecallManager.Instance.OnCanEndCall += OnCanEndCall;
     }
 
     private void Update()

@@ -49,6 +49,6 @@ public class Lever : MonoBehaviour, IInteractable
         }
         leverToggleAudioSource.Play();
 
-        DetectionManager.SetServerPowerEnabled(enabled);
+        DetectionManager.Instance.SetServerPowerEnabled(enabled);
     }
 }

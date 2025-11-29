@@ -31,20 +31,20 @@ public class CameraRotationController : MonoBehaviour {
 
 
     private void Update() {
-        if (!GameManager.IsGamePaused)
+        if (!GameManager.Instance.IsGamePaused)
         {
             HandleRotation();
         }
     }
 
     private void HandleRotation() {
-        Vector2 rotationInput = GameInput.RotationVector;
+        Vector2 rotationInput = GameInput.Instance.RotationVector;
 
 
         Vector3 xAxisRotationObjectRotation = xAxisRotationObject.rotation.eulerAngles;
 
         if (xAxisRotationObjectRotation.x > 180f) xAxisRotationObjectRotation.x -= 360f;
-        xAxisRotationObjectRotation.x += -rotationInput.y * GameSettingsManager.MouseSensitivity;
+        xAxisRotationObjectRotation.x += -rotationInput.y * GameSettingsManager.Instance.MouseSensitivity;
         if (clampXRotation) xAxisRotationObjectRotation.x = Mathf.Clamp(xAxisRotationObjectRotation.x, minXRotation, maxXRotation);
 
         xAxisRotationObject.rotation = Quaternion.Euler(xAxisRotationObjectRotation);
@@ -53,7 +53,7 @@ public class CameraRotationController : MonoBehaviour {
         Vector3 yAxisRotationObjectRotation = yAxisRotationObject.rotation.eulerAngles;
 
         if (yAxisRotationObjectRotation.y > 180f) yAxisRotationObjectRotation.y -= 360f;
-        yAxisRotationObjectRotation.y += rotationInput.x * GameSettingsManager.MouseSensitivity;
+        yAxisRotationObjectRotation.y += rotationInput.x * GameSettingsManager.Instance.MouseSensitivity;
         if (clampYRotation) yAxisRotationObjectRotation.y = Mathf.Clamp(yAxisRotationObjectRotation.y, minYRotation, maxYRotation);
 
         yAxisRotationObject.rotation = Quaternion.Euler(yAxisRotationObjectRotation);

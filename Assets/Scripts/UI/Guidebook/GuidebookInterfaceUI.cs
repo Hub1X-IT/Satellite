@@ -36,16 +36,6 @@ public class GuidebookInterfaceUI : MonoBehaviour
 
     private void Awake()
     {
-        GameInput.OnGuidebookChangePageLeftAction += () =>
-        {
-            ChangeToPage(currentPageNumber + 2);
-        };
-
-        GameInput.OnGuidebookChangePageRightAction += () =>
-        {
-            ChangeToPage(currentPageNumber - 2);
-        };
-
         for (int i = 0; i < pagesAndButtons.Length; i++)
         {
             foreach (var button in pagesAndButtons[i].Buttons)
@@ -64,17 +54,32 @@ public class GuidebookInterfaceUI : MonoBehaviour
         }
         */
 
+        for (int i = 0; i < pagesAndButtons.Length; i++)
+        {
+            bookmarkButtonToPageNumber.Add(pagesAndButtons[i].Bookmarks, i);
+        }
+        
+        currentPageNumber = 0;
+    }
+
+    private void Start()
+    {
+        GameInput.Instance.OnGuidebookChangePageLeftAction += () =>
+        {
+            ChangeToPage(currentPageNumber + 2);
+        };
+
+        GameInput.Instance.OnGuidebookChangePageRightAction += () =>
+        {
+            ChangeToPage(currentPageNumber - 2);
+        };
+
         foreach (var button in buttonToPageNumber.Keys)
         {
             button.onClick.AddListener(() =>
             {
                 ChangeToPage(buttonToPageNumber[button]);
             });
-        }
-
-        for (int i = 0; i < pagesAndButtons.Length; i++)
-        {
-            bookmarkButtonToPageNumber.Add(pagesAndButtons[i].Bookmarks, i);
         }
 
         foreach (var bookmark in bookmarkButtonToPageNumber.Keys)
@@ -94,7 +99,6 @@ public class GuidebookInterfaceUI : MonoBehaviour
             ChangeToPage(currentPageNumber - 2);
         });
 
-        currentPageNumber = 0;
         DisableAllPages();
         SetPageActive(currentPageNumber, true);
     }

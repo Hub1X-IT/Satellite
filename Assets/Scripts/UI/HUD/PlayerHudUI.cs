@@ -4,9 +4,11 @@ public class PlayerHudUI : MonoBehaviour
 {
     public bool CanShowPlayerHUD { get; set; }
 
-    private void Awake()
+    private void Start()
     {
-        GameManager.GamePausedUnpaused += (gamePaused) => SetPlayerHUDEnabled(!gamePaused);
+        GameManager.Instance.GamePausedUnpaused += (gamePaused) => SetPlayerHUDEnabled(!gamePaused);
+
+        SetPlayerHUDEnabled(!GameManager.Instance.IsGamePaused);
     }
 
     public void SetPlayerHUDEnabled(bool enabled)

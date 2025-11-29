@@ -14,16 +14,19 @@ public class Guidebook : MonoBehaviour
     private void Awake()
     {
         computer = GetComponent<Computer>();
+    }
 
+    private void Start()
+    {
         computer.ComputerViewEnabled += (enabled) =>
         {
             if (enabled)
             {
-                GameInput.CurrentInputActions.Guidebook.Enable();
+                GameInput.Instance.CurrentInputActions.Guidebook.Enable();
             }
             else
             {
-                GameInput.CurrentInputActions.Guidebook.Disable();
+                GameInput.Instance.CurrentInputActions.Guidebook.Disable();
             }
         };
     }

@@ -18,8 +18,11 @@ public class FlashlightController : MonoBehaviour
 
         lightSource.enabled = false;
         isFlashlightEnabled = false;
+    }
 
-        GameInput.OnFlashlightToggleAction += ToggleFlashlight;
+    private void Start()
+    {
+        GameInput.Instance.OnFlashlightToggleAction += ToggleFlashlight;
     }
 
     private void Update()

@@ -14,14 +14,14 @@ public class GameEventSO : ScriptableObject
 
     public void TryRaiseEvent()
     {
-        if (oneTimeTrigger && GameEventOrderManager.WasGameEventRaised(this))
+        if (oneTimeTrigger && GameEventOrderManager.Instance.WasGameEventRaised(this))
         {
             return;
         }
 
         foreach (var previousGameEvent in previousGameEvents)
         {
-            if (!GameEventOrderManager.WasGameEventRaised(previousGameEvent))
+            if (!GameEventOrderManager.Instance.WasGameEventRaised(previousGameEvent))
             {
                 return;
             }
@@ -29,13 +29,13 @@ public class GameEventSO : ScriptableObject
 
         EventRaised?.Invoke();
 
-        GameEventOrderManager.AddGameEvent(this);
+        GameEventOrderManager.Instance.AddGameEvent(this);
     }
 
     public void ForceRaiseEvent()
     {
         EventRaised?.Invoke();
-        GameEventOrderManager.AddGameEvent(this);
+        GameEventOrderManager.Instance.AddGameEvent(this);
     }
 
     public void ResetGameEvent()

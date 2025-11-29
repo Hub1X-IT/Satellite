@@ -25,16 +25,20 @@ public class MonitorUI : MonoBehaviour
     {
         fileExplorer.CurrentMonitorAppsManager = appsManager;
 
+        IsSputnikOSStarted = false;
+    }
 
-        DetectionManager.DetectionOccured += () =>
-        {
-            monitorStartupScreenUI.gameObject.SetActive(true);
-            monitorStartupScreenUI.StartStartupScreen(null);
+    private void Start()
+    {
+        DetectionManager.Instance.DetectionOccured += () =>
+                {
+                    monitorStartupScreenUI.gameObject.SetActive(true);
+                    monitorStartupScreenUI.StartStartupScreen(null);
 
-            IsSputnikOSStarted = false;
-        };
+                    IsSputnikOSStarted = false;
+                };
 
-        ServerConnectionManager.ServerConnectionEnabled += (enabled) =>
+        ServerConnectionManager.Instance.ServerConnectionEnabled += (enabled) =>
         {
             monitorStartupScreenUI.gameObject.SetActive(true);
             monitorStartupScreenUI.StartStartupScreen(null);
@@ -45,7 +49,7 @@ public class MonitorUI : MonoBehaviour
             }
         };
 
-        DetectionManager.ServerPowerEnabled += (enabled) =>
+        DetectionManager.Instance.ServerPowerEnabled += (enabled) =>
         {
             if (enabled)
             {
@@ -64,7 +68,7 @@ public class MonitorUI : MonoBehaviour
 
         startSputnikOSGameEvent.EventRaised += (startProgramEventData) =>
         {
-            if (!ServerConnectionManager.IsConnectionActive)
+            if (!ServerConnectionManager.Instance.IsConnectionActive)
             {
                 startProgramEventData.Response?.Invoke(false, "No server connection.");
             }
@@ -87,11 +91,6 @@ public class MonitorUI : MonoBehaviour
         };
 
         SetMonitorEnabled(true);
-        IsSputnikOSStarted = false;
-    }
-
-    private void Start()
-    {
         monitorStartupScreenUI.StartStartupScreen(null);
     }
 

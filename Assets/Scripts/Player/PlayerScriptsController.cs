@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerScriptsController : MonoBehaviour
 {
+    public static PlayerScriptsController Instance { get; private set; }
+
     [SerializeField]
     private PlayerMovementController playerMovementController;
     [SerializeField]
@@ -12,48 +14,53 @@ public class PlayerScriptsController : MonoBehaviour
     private SmartphoneUI smartphoneController;
     [SerializeField]
     private FlashlightController flashlightController;
+    [SerializeField]
+    private InteractionController playerInteractionController;
 
-    private static PlayerMovementController playerMovementControllerStatic;
-    private static CameraRotationController playerCameraRotationControllerStatic;
-
-    private static PlayerHudUI playerHudUIStatic;
-
-    private static SmartphoneUI smartphoneControllerStatic;
-
-    private static FlashlightController flashlightControllerStatic;
+    public bool IsInteractionEnabled => playerInteractionController.IsInteractionEnabled;
 
     private void Awake()
     {
-        playerMovementControllerStatic = playerMovementController;
-        playerCameraRotationControllerStatic = playerCameraRotationController;
-        playerHudUIStatic = playerHudUI;
-        smartphoneControllerStatic = smartphoneController;
-        flashlightControllerStatic = flashlightController;
+        if (Instance != null && Instance != this)
+        {
+            Debug.LogWarning($"Multiple Instances of {nameof(PlayerScriptsController)} detected! Destroying duplicate.");
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
 
+    private void Start()
+    {
         SetPlayerMovementEnabled(true);
         SetCanShowPlayerHUD(true);
         SetCanShowSmartphoneUI(false);
     }
 
-    public static void SetPlayerMovementEnabled(bool enabled)
+    public void SetPlayerMovementEnabled(bool enabled)
     {
-        playerMovementControllerStatic.enabled = enabled;
-        playerCameraRotationControllerStatic.enabled = enabled;
+        playerMovementController.enabled = enabled;
+        playerCameraRotationController.enabled = enabled;
     }
 
-    public static void SetCanShowPlayerHUD(bool canShow)
+    public void SetCanShowPlayerHUD(bool canShow)
     {
-        playerHudUIStatic.CanShowPlayerHUD = canShow;
-        playerHudUIStatic.SetPlayerHUDEnabled(!GameManager.IsGamePaused);
+        playerHudUI.CanShowPlayerHUD = canShow;
+        playerHudUI.SetPlayerHUDEnabled(!GameManager.Instance.IsGamePaused);
     }
 
-    public static void SetCanShowSmartphoneUI(bool canShow)
+    public void SetCanShowSmartphoneUI(bool canShow)
     {
-        smartphoneControllerStatic.SetCanShowSmartphone(canShow);
+        smartphoneController.SetCanShowSmartphone(canShow);
     }
 
-    public static void SetFlashlightEnabled(bool enabled)
+    public void SetFlashlightEnabled(bool enabled)
     {
-        flashlightControllerStatic.gameObject.SetActive(enabled);
+        flashlightController.gameObject.SetActive(enabled);
+    }
+
+    public void SetInteractionEnabled(bool enabled)
+    {
+        playerInteractionController.SetInteractionEnabled(enabled);
     }
 }

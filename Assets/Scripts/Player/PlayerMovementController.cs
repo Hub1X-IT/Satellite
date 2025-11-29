@@ -30,7 +30,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Update()
     {
-        if (!GameManager.IsGamePaused)
+        if (!GameManager.Instance.IsGamePaused)
         {
             HandleGravity();
             HandleMovement();
@@ -44,7 +44,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void HandleMovement()
     {
-        Vector2 inputVector = GameInput.MovementVectorNormalized;
+        Vector2 inputVector = GameInput.Instance.MovementVectorNormalized;
         Vector3 movementInput = new(inputVector.x, 0f, inputVector.y);
 
         moveDirection = transform.right * movementInput.x + transform.forward * movementInput.z;

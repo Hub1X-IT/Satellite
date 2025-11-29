@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PhonecallManager : MonoBehaviour
 {
+    public static PhonecallManager Instance { get; private set; }
+
     public enum CallType
     {
         IncomingCall,
@@ -15,41 +17,43 @@ public class PhonecallManager : MonoBehaviour
         public CallType CallType;
         public ContactSO ContactSO;
         public GameEventSO[] CanEndCallGameEvents;
+
+        public Action OnIncomingCallAnswered;
+        public Action OnCallStopped;
+        public Action OnStoppedCalling;
     }
 
-    public static event Action<Call> NewCallStarted;
-    public static event Action CurrentCallEnded;
-    public static event Action<bool> OnCanEndCall;
+    public event Action<Call> NewCallStarted;
+    public event Action CurrentCallEnded;
+    public event Action<bool> OnCanEndCall;
 
-    private static Call currentCall;
+    private Call currentCall;
 
     [SerializeField]
     private float outgoingCallTime;
-
-    private static float outgoingCallTimeStatic;
 
     [SerializeField]
     private GameEventContactSO callAcceptedGameEvent;
     [SerializeField]
     private GameEventContactSO outgoingCallStartedGameEvent;
 
-    private static GameEventContactSO callAcceptedGameEventStatic;
-    private static GameEventContactSO outgoingCallStartedGameEventStatic;
-
     [SerializeField]
     private ContactSO[] contactList;
 
-    private static bool isOutgoingCallActive;
-    private static float outgoingCallTimer;
+    private bool isOutgoingCallActive;
+    private float outgoingCallTimer;
 
-    public static ContactSO[] ContactList { get; private set; }
+    public ContactSO[] ContactList => contactList;
 
     private void Awake()
     {
-        outgoingCallTimeStatic = outgoingCallTime;
-        callAcceptedGameEventStatic = callAcceptedGameEvent;
-        outgoingCallStartedGameEventStatic = outgoingCallStartedGameEvent;
-        ContactList = contactList;
+        if (Instance != null && Instance != this)
+        {
+            Debug.LogWarning($"Multiple Instances of {nameof(PhonecallManager)} detected! Destroying duplicate.");
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
 
         foreach (var contactSO in ContactList)
         {
@@ -83,21 +87,42 @@ public class PhonecallManager : MonoBehaviour
         NewCallStarted = null;
         CurrentCallEnded = null;
         OnCanEndCall = null;
-        callAcceptedGameEventStatic.ResetGameEvent();
+        callAcceptedGameEvent.ResetGameEvent();
         outgoingCallStartedGameEvent.ResetGameEvent();
     }
 
-    public static void TempStartCall()
+    private Call StartCall(Call call)
     {
-        StartCall(new Call()
+        currentCall = call;
+        NewCallStarted?.Invoke(call);
+
+        if (call.CanEndCallGameEvents != null)
         {
-            CallType = CallType.IncomingCall,
-            ContactSO = ContactList[0],
-            CanEndCallGameEvents = ContactList[0].CanEndCallGameEvents,
+            OnCanEndCall?.Invoke(false);
+            foreach (var gameEvent in call.CanEndCallGameEvents)
+            {
+                gameEvent.EventRaised += SetCanEndCall;
+            }
+        }
+        else
+        {
+            OnCanEndCall?.Invoke(true);
+        }
+
+        return call;
+    }
+
+    private Call StartCall(CallType callType, ContactSO contactSO)
+    {
+        return StartCall(new Call()
+        {
+            CallType = callType,
+            ContactSO = contactSO,
+            CanEndCallGameEvents = contactSO.CanEndCallGameEvents
         });
     }
 
-    public static void AcceptCall()
+    public void AcceptIncomingCall()
     {
         if (currentCall != null && currentCall.CallType == CallType.IncomingCall)
         {
@@ -105,7 +130,8 @@ public class PhonecallManager : MonoBehaviour
             newCall.CallType = CallType.OngoingCall;
             StopCurrentCall();
             StartCall(newCall);
-            callAcceptedGameEventStatic.RaiseEvent(newCall.ContactSO);
+            newCall.OnIncomingCallAnswered?.Invoke();
+            callAcceptedGameEvent.RaiseEvent(newCall.ContactSO);
             newCall.ContactSO.InvokePhoneAnsweredGameEvents();
         }
         else
@@ -114,7 +140,7 @@ public class PhonecallManager : MonoBehaviour
         }
     }
 
-    public static void EndCall()
+    public void EndCall()
     {
         if (currentCall != null && currentCall.CallType == CallType.OngoingCall)
         {
@@ -128,10 +154,11 @@ public class PhonecallManager : MonoBehaviour
         }
     }
 
-    public static void StopCalling()
+    public void StopCalling()
     {
         if (currentCall != null && currentCall.CallType == CallType.OutgoingCall)
         {
+            currentCall.OnStoppedCalling?.Invoke();
             StopCurrentCall();
         }
         else
@@ -140,7 +167,7 @@ public class PhonecallManager : MonoBehaviour
         }
     }
 
-    private static void AnswerOutgoingCall()
+    private void AnswerOutgoingCall()
     {
         isOutgoingCallActive = false;
 
@@ -161,32 +188,14 @@ public class PhonecallManager : MonoBehaviour
         }
     }
 
-    private static void StopCurrentCall()
+    private void StopCurrentCall()
     {
+        currentCall.OnCallStopped?.Invoke();
         CurrentCallEnded?.Invoke();
         currentCall = null;
     }
 
-    private static void StartCall(Call call)
-    {
-        currentCall = call;
-        NewCallStarted?.Invoke(call);
-
-        if (call.CanEndCallGameEvents != null)
-        {
-            OnCanEndCall?.Invoke(false);
-            foreach (var gameEvent in call.CanEndCallGameEvents)
-            {
-                gameEvent.EventRaised += SetCanEndCall;
-            }
-        }
-        else
-        {
-            OnCanEndCall?.Invoke(true);
-        }
-    }
-
-    private static void SetCanEndCall()
+    private void SetCanEndCall()
     {
         OnCanEndCall?.Invoke(true);
         foreach (var gameEvent in currentCall.CanEndCallGameEvents)
@@ -195,29 +204,33 @@ public class PhonecallManager : MonoBehaviour
         }
     }
 
-    private static void StartCall(CallType callType, ContactSO contactSO, GameEventSO[] canEndCallGameEvents)
+    public Call StartIncomingCall(ContactSO contactSO)
     {
-        StartCall(new Call()
-        {
-            CallType = callType,
-            ContactSO = contactSO,
-            CanEndCallGameEvents = canEndCallGameEvents
-        });
+        return StartCall(CallType.IncomingCall, contactSO);
     }
 
-    public static void StartOutcomingCall(ContactSO contactSO)
+    public Call StartOutcomingCall(ContactSO contactSO)
     {
         if (currentCall == null)
         {
-            StartCall(CallType.OutgoingCall, contactSO, contactSO.CanEndCallGameEvents);
-            outgoingCallStartedGameEventStatic.RaiseEvent(contactSO);
+            Call newCall = StartCall(CallType.OutgoingCall, contactSO);
+            outgoingCallStartedGameEvent.RaiseEvent(contactSO);
             contactSO.InvokeOutgoingCallGameEvents();
             isOutgoingCallActive = true;
-            outgoingCallTimer = outgoingCallTimeStatic;
+            outgoingCallTimer = outgoingCallTime;
+
+            return newCall;
         }
         else
         {
             Debug.Log("Can't start outcoming call - a call is already started");
+            return null;
         }
     }
+
+    public Call TempStartCall()
+    {
+        return StartIncomingCall(ContactList[0]);
+    }
+
 }

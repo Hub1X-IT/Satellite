@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class CommandPromptUI : MonoBehaviour
 {
     [SerializeField]
+    private CommandPromptManager commandPromptManager;
+
+    [SerializeField]
     private TMP_InputField inputTextField;
 
     [SerializeField]
@@ -43,17 +46,29 @@ public class CommandPromptUI : MonoBehaviour
 
         previousCommandsList = new();
 
-        GameInput.OnCommandSubmitAction += () =>
+        //SetStartupText(cmdStartText.text + "\n");
+
+        currentCommandCache = "";
+        currentCommandIndex = -1;
+        isOnCurrentCommand = true;
+        canGetPreviousCommand = false;
+
+        shouldFocusOnInputFieldNextFrame = false;
+    }
+
+    private void Start()
+    {
+        GameInput.Instance.OnCommandSubmitAction += () =>
         {
             string command = GetCurrentCommand();
             SubmitCommand(command);
-            CommandPromptManager.SubmitCommand(command);
+            commandPromptManager.SubmitCommand(command);
         };
 
-        GameInput.OnPreviousCommandAction += TrySetPreviousCommand;
-        GameInput.OnNextCommandAction += TrySetNextCommand;
+        GameInput.Instance.OnPreviousCommandAction += TrySetPreviousCommand;
+        GameInput.Instance.OnNextCommandAction += TrySetNextCommand;
 
-        CommandPromptManager.CommandResponse += (responseString) =>
+        commandPromptManager.OnCommandResponse += (responseString) =>
         {
             SubmitResponse(responseString);
         };
@@ -68,15 +83,6 @@ public class CommandPromptUI : MonoBehaviour
         {
             cmdAudioSource.Play();
         });
-
-        //SetStartupText(cmdStartText.text + "\n");
-
-        currentCommandCache = "";
-        currentCommandIndex = -1;
-        isOnCurrentCommand = true;
-        canGetPreviousCommand = false;
-
-        shouldFocusOnInputFieldNextFrame = false;
     }
 
     private void LateUpdate()

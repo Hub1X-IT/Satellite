@@ -1,70 +1,67 @@
-using System;
 using Unity.Cinemachine;
 using UnityEngine;
 
-public static class CameraController
+public class CameraController : MonoBehaviour
 {
-    [Serializable]
-    public struct InitializationData
+    public static CameraController Instance { get; private set; }
+
+    [SerializeField]
+    private Camera mainCamera;
+    [SerializeField]
+    private CinemachineCamera cinemachineMainCamera;
+
+    private Camera activeCamera;
+    private CinemachineCamera activeCinemachineCamera;
+
+    public Camera MainCamera => mainCamera;
+
+    private void Awake()
     {
-        public Camera MainCamera;
-        public CinemachineCamera CinemachineMainCamera;
-    }
-
-    public static Camera ActiveCamera { get; private set; }
-
-    public static CinemachineCamera ActiveCinemachineCamera { get; private set; }
-
-
-    public static Camera MainCamera { get; private set; }
-
-    public static CinemachineCamera CinemachineMainCamera { get; private set; }
-
-
-    public static void OnAwake(InitializationData data)
-    {
-        MainCamera = data.MainCamera;
-        CinemachineMainCamera = data.CinemachineMainCamera;
-
-        ActiveCamera = MainCamera;
-        SetActiveCamera(MainCamera);
-
-        ActiveCinemachineCamera = CinemachineMainCamera;
-        SetActiveCinemachineCamera(CinemachineMainCamera);
-    }
-
-    public static void SetActiveCamera(Camera camera)
-    {
-        /*
-        ActiveCamera.gameObject.SetActive(false);
-        ActiveCamera = camera;
-        ActiveCamera.gameObject.SetActive(true);
-        */
-        if (ActiveCamera != null)
+        if (Instance != null && Instance != this)
         {
-            ActiveCamera.enabled = false;
+            Debug.LogWarning($"Multiple {nameof(CameraController)} instances detected! Destroying duplicate.");
+            Destroy(gameObject);
+            return;
         }
-        ActiveCamera = camera;
-        ActiveCamera.enabled = true;
+        Instance = this;
+
+        activeCamera = mainCamera;
+        activeCinemachineCamera = cinemachineMainCamera;
     }
 
-    public static void SetActiveCinemachineCamera(CinemachineCamera cinemachineCamera)
+    private void Start()
     {
-        /*
-        ActiveCinemachineCamera.gameObject.SetActive(false);
-        ActiveCinemachineCamera = cinemachineCamera;
-        ActiveCinemachineCamera.gameObject.SetActive(true);
-        */
-        if (ActiveCinemachineCamera != null)
+        ChangeToMainCamera();
+        ChangeToMainCinemachineCamera();
+    }
+
+    public void SetActiveCamera(Camera camera)
+    {
+        if (activeCamera != null)
         {
-            ActiveCinemachineCamera.enabled = false;
+            activeCamera.enabled = false;
         }
-        ActiveCinemachineCamera = cinemachineCamera;
-        ActiveCinemachineCamera.enabled = true;
+        activeCamera = camera;
+        activeCamera.enabled = true;
     }
 
-    public static void SetCameraRenderTexture(Camera camera, RenderTexture renderTexture)
+    public void SetActiveCinemachineCamera(CinemachineCamera cinemachineCamera)
     {
-        camera.targetTexture = renderTexture;
+        if (activeCinemachineCamera != null)
+        {
+            activeCinemachineCamera.enabled = false;
+        }
+        activeCinemachineCamera = cinemachineCamera;
+        activeCinemachineCamera.enabled = true;
+    }
+
+    public void ChangeToMainCamera()
+    {
+        SetActiveCamera(mainCamera);
+    }
+
+    public void ChangeToMainCinemachineCamera()
+    {
+        SetActiveCinemachineCamera(cinemachineMainCamera);
     }
 }

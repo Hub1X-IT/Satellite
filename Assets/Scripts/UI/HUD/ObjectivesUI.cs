@@ -15,12 +15,6 @@ public class ObjectivesUI : MonoBehaviour
         ObjectivesManager.Instance.OnObjectiveChanged += SetObjective;
     }
 
-    void OnDestroy()
-    {
-        ObjectivesManager.Instance.OnChapterChanged -= SetChapter;
-        ObjectivesManager.Instance.OnObjectiveChanged -= SetObjective;
-    }
-
     public void SetChapter(string chapter)
     {
         chapterTextField.text = chapter;

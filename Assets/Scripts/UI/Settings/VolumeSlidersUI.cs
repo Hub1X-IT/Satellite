@@ -30,24 +30,24 @@ public class VolumeSlidersUI : MonoBehaviour
         musicVolumeSlider.maxValue = maxSliderValue;
         soundVolumeSlider.maxValue = maxSliderValue;
         dialogueVolumeSlider.maxValue = maxSliderValue;
-
-        mainVolumeSlider.onValueChanged.AddListener((value) => SetVolume(VolumeController.Volume.MasterVolume, value));
-        musicVolumeSlider.onValueChanged.AddListener((value) => SetVolume(VolumeController.Volume.MusicVolume, value));
-        soundVolumeSlider.onValueChanged.AddListener((value) => SetVolume(VolumeController.Volume.SoundVolume, value));
-        dialogueVolumeSlider.onValueChanged.AddListener((value) => SetVolume(VolumeController.Volume.DialogueVolume, value));
     }
 
     private void Start()
     {
-        mainVolumeSlider.value = GameSettingsManager.MainVolume;
-        musicVolumeSlider.value = GameSettingsManager.MusicVolume;
-        soundVolumeSlider.value = GameSettingsManager.SoundVolume;
-        dialogueVolumeSlider.value = GameSettingsManager.DialogueVolume;
+        mainVolumeSlider.onValueChanged.AddListener((value) => SetVolume(SoundManager.Volume.MasterVolume, value));
+        musicVolumeSlider.onValueChanged.AddListener((value) => SetVolume(SoundManager.Volume.MusicVolume, value));
+        soundVolumeSlider.onValueChanged.AddListener((value) => SetVolume(SoundManager.Volume.SoundVolume, value));
+        dialogueVolumeSlider.onValueChanged.AddListener((value) => SetVolume(SoundManager.Volume.DialogueVolume, value));
+
+        mainVolumeSlider.value = GameSettingsManager.Instance.MainVolume;
+        musicVolumeSlider.value = GameSettingsManager.Instance.MusicVolume;
+        soundVolumeSlider.value = GameSettingsManager.Instance.SoundVolume;
+        dialogueVolumeSlider.value = GameSettingsManager.Instance.DialogueVolume;
     }
 
-    private void SetVolume(VolumeController.Volume volumeType, float value)
+    private void SetVolume(SoundManager.Volume volumeType, float value)
     {
-        GameSettingsManager.SetVolume(volumeType, value);
-        VolumeController.UpdateVolume();
+        GameSettingsManager.Instance.SetVolume(volumeType, value);
+        SoundManager.Instance.UpdateVolume();
     }
 }

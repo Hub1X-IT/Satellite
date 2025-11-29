@@ -2,44 +2,63 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public static class GameInput
+public class GameInput : MonoBehaviour
 {
-    public static PlayerInputActions CurrentInputActions { get; private set; }
+    public static GameInput Instance { get; private set; }
+
+    public PlayerInputActions CurrentInputActions { get; private set; }
 
 
-    public static Vector2 MovementVectorNormalized => CurrentInputActions.PlayerWalking.Move.ReadValue<Vector2>().normalized;
+    public Vector2 MovementVectorNormalized => CurrentInputActions.PlayerWalking.Move.ReadValue<Vector2>().normalized;
 
-    public static Vector2 RotationVector => CurrentInputActions.PlayerWalking.Rotate.ReadValue<Vector2>();
+    public Vector2 RotationVector => CurrentInputActions.PlayerWalking.Rotate.ReadValue<Vector2>();
 
     // public static Vector2 MouseDelta => PlayerInputActions.Computer.MouseDelta.ReadValue<Vector2>();
 
-    public static float MouseScroll => CurrentInputActions.CommandPrompt.MouseScroll.ReadValue<Vector2>().y;
+    public float MouseScroll => CurrentInputActions.CommandPrompt.MouseScroll.ReadValue<Vector2>().y;
 
 
-    public static event Action OnPauseAction;
+    public event Action OnPauseAction;
 
-    public static event Action OnInteractAction;
+    public event Action OnInteractAction;
 
-    public static event Action OnFlashlightToggleAction;
-    public static event Action OnSmartphoneToggleAction;
-    public static event Action OnGuidebookToggleAction;
+    public event Action OnFlashlightToggleAction;
+    public event Action OnSmartphoneToggleAction;
+    public event Action OnGuidebookToggleAction;
 
-    public static event Action OnNextDialogueSentenceAction;
+    public event Action OnNextDialogueSentenceAction;
 
-    public static event Action OnGuidebookChangePageLeftAction;
-    public static event Action OnGuidebookChangePageRightAction;
+    public event Action OnGuidebookChangePageLeftAction;
+    public event Action OnGuidebookChangePageRightAction;
 
-    public static event Action OnLeftClickPerformedAction;
-    public static event Action OnReturnPerformedAction;
+    public event Action OnLeftClickPerformedAction;
+    public event Action OnReturnPerformedAction;
 
-    public static event Action<char> OnKeyboardInputAction;
+    public event Action<char> OnKeyboardInputAction;
 
-    public static event Action OnCommandSubmitAction;
-    public static event Action OnPreviousCommandAction;
-    public static event Action OnNextCommandAction;
+    public event Action OnCommandSubmitAction;
+    public event Action OnPreviousCommandAction;
+    public event Action OnNextCommandAction;
 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Debug.LogWarning($"Multiple {nameof(GameInput)} instances detected! Destroying duplicate.");
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
 
-    public static void InitializeInput()
+        InitializeInput();
+    }
+
+    private void OnDestroy()
+    {
+        RemoveInput();
+    }
+
+    private void InitializeInput()
     {
         CurrentInputActions = new();
 
@@ -73,7 +92,7 @@ public static class GameInput
         CurrentInputActions.CommandPrompt.NextCommand.performed += NextCommand_preformed;
     }
 
-    public static void RemoveInput()
+    private void RemoveInput()
     {
         CurrentInputActions.All.Pause.performed -= Pause_performed;
 
@@ -98,24 +117,9 @@ public static class GameInput
         CurrentInputActions.CommandPrompt.NextCommand.performed -= NextCommand_preformed;
 
         CurrentInputActions.Dispose();
-
-        OnPauseAction = null;
-        OnInteractAction = null;
-        OnFlashlightToggleAction = null;
-        OnSmartphoneToggleAction = null;
-        OnGuidebookToggleAction = null;
-        OnNextDialogueSentenceAction = null;
-        OnGuidebookChangePageLeftAction = null;
-        OnGuidebookChangePageRightAction = null;
-        OnLeftClickPerformedAction = null;
-        OnKeyboardInputAction = null;
-        OnReturnPerformedAction = null;
-        OnCommandSubmitAction = null;
-        OnPreviousCommandAction = null;
-        OnNextCommandAction = null;
     }
 
-    private static void Keyboard_onTextInput(char c)
+    private void Keyboard_onTextInput(char c)
     {
         if (CurrentInputActions.CommandPrompt.enabled)
         {
@@ -123,28 +127,28 @@ public static class GameInput
         }
     }
 
-    private static void Pause_performed(InputAction.CallbackContext _) => OnPauseAction?.Invoke();
+    private void Pause_performed(InputAction.CallbackContext _) => OnPauseAction?.Invoke();
 
-    private static void Interact_performed(InputAction.CallbackContext _) => OnInteractAction?.Invoke();
+    private void Interact_performed(InputAction.CallbackContext _) => OnInteractAction?.Invoke();
 
-    private static void FlashlightToggle_performed(InputAction.CallbackContext _) => OnFlashlightToggleAction?.Invoke();
-    private static void SmartphoneToggle_performed(InputAction.CallbackContext _) => OnSmartphoneToggleAction?.Invoke();
-    private static void GuidebookToggle_performed(InputAction.CallbackContext _) => OnGuidebookToggleAction?.Invoke();
+    private void FlashlightToggle_performed(InputAction.CallbackContext _) => OnFlashlightToggleAction?.Invoke();
+    private void SmartphoneToggle_performed(InputAction.CallbackContext _) => OnSmartphoneToggleAction?.Invoke();
+    private void GuidebookToggle_performed(InputAction.CallbackContext _) => OnGuidebookToggleAction?.Invoke();
 
-    private static void NextDialogueSentence_performed(InputAction.CallbackContext _) => OnNextDialogueSentenceAction?.Invoke();
+    private void NextDialogueSentence_performed(InputAction.CallbackContext _) => OnNextDialogueSentenceAction?.Invoke();
 
-    private static void GuidebookChangePageLeft_performed(InputAction.CallbackContext _) => OnGuidebookChangePageLeftAction?.Invoke();
-    private static void GuidebookChangePageRight_performed(InputAction.CallbackContext _) => OnGuidebookChangePageRightAction?.Invoke();
+    private void GuidebookChangePageLeft_performed(InputAction.CallbackContext _) => OnGuidebookChangePageLeftAction?.Invoke();
+    private void GuidebookChangePageRight_performed(InputAction.CallbackContext _) => OnGuidebookChangePageRightAction?.Invoke();
 
-    private static void LeftClick_performed(InputAction.CallbackContext _) => OnLeftClickPerformedAction?.Invoke();
-    private static void Return_performed(InputAction.CallbackContext _) => OnReturnPerformedAction?.Invoke();
+    private void LeftClick_performed(InputAction.CallbackContext _) => OnLeftClickPerformedAction?.Invoke();
+    private void Return_performed(InputAction.CallbackContext _) => OnReturnPerformedAction?.Invoke();
 
-    private static void CommandSubmit_performed(InputAction.CallbackContext _) => OnCommandSubmitAction?.Invoke();
-    private static void PreviousCommand_preformed(InputAction.CallbackContext _) => OnPreviousCommandAction?.Invoke();
-    private static void NextCommand_preformed(InputAction.CallbackContext _) => OnNextCommandAction?.Invoke();
+    private void CommandSubmit_performed(InputAction.CallbackContext _) => OnCommandSubmitAction?.Invoke();
+    private void PreviousCommand_preformed(InputAction.CallbackContext _) => OnPreviousCommandAction?.Invoke();
+    private void NextCommand_preformed(InputAction.CallbackContext _) => OnNextCommandAction?.Invoke();
 
 
-    public static void SetMousePosition(Vector2 position)
+    public void SetMousePosition(Vector2 position)
     {
         Mouse.current.WarpCursorPosition(position);
     }

@@ -32,22 +32,22 @@ public class GraphicsSettingsUI : MonoBehaviour
 
     public event Action<bool> OnFPSDisplayToggled;
 
-    private void Awake()
+    private void Start()
     {
-        graphicsDropdown.onValueChanged.AddListener(GraphicsSettingsManager.SetGraphics);
+        graphicsDropdown.onValueChanged.AddListener(GraphicsSettingsManager.Instance.SetGraphics);
 
-        resolutionDropdown.onValueChanged.AddListener(GraphicsSettingsManager.SetResolution);
+        resolutionDropdown.onValueChanged.AddListener(GraphicsSettingsManager.Instance.SetResolution);
 
-        fullscreenToggle.onValueChanged.AddListener(GraphicsSettingsManager.SetFullscreen);
+        fullscreenToggle.onValueChanged.AddListener(GraphicsSettingsManager.Instance.SetFullscreen);
 
-        vsyncToggle.onValueChanged.AddListener(GraphicsSettingsManager.SetVSync);
+        vsyncToggle.onValueChanged.AddListener(GraphicsSettingsManager.Instance.SetVSync);
 
-        fpsMaxInputField.onSubmit.AddListener((string value) => GraphicsSettingsManager.SetFPSMax(Int32.Parse(value)));
+        fpsMaxInputField.onSubmit.AddListener((string value) => GraphicsSettingsManager.Instance.SetFPSMax(Int32.Parse(value)));
 
         fpsDisplayToggle.onValueChanged.AddListener((bool enabled) =>
         {
             OnFPSDisplayToggled?.Invoke(enabled);
-            GameSettingsManager.SetFPSDisplay(enabled);
+            GameSettingsManager.Instance.SetFPSDisplay(enabled);
         });
 
         headBobToggle.onValueChanged.AddListener((bool enabled) =>
@@ -56,24 +56,21 @@ public class GraphicsSettingsUI : MonoBehaviour
             {
                 headBob.AmplitudeGain = enabled ? 0.6f : 0f;
             }
-            GameSettingsManager.SetHeadBobEnabled(enabled);
+            GameSettingsManager.Instance.SetHeadBobEnabled(enabled);
         });
-    }
 
-    private void Start()
-    {
-        graphicsDropdown.value = GameSettingsManager.GraphicsIndex;
+        graphicsDropdown.value = GameSettingsManager.Instance.GraphicsIndex;
 
         resolutionDropdown.ClearOptions();
-        resolutionDropdown.AddOptions(GraphicsSettingsManager.ResolutionDropdownOptions);
-        resolutionDropdown.value = GameSettingsManager.ResolutionIndex;
+        resolutionDropdown.AddOptions(GraphicsSettingsManager.Instance.ResolutionDropdownOptions);
+        resolutionDropdown.value = GameSettingsManager.Instance.ResolutionIndex;
         resolutionDropdown.RefreshShownValue();
 
-        fullscreenToggle.isOn = GameSettingsManager.Fullscreen;
-        vsyncToggle.isOn = GameSettingsManager.VSync;
-        fpsMaxInputField.text = GameSettingsManager.FPSMax.ToString();
-        fpsDisplayToggle.isOn = GameSettingsManager.FPSDisplay;
+        fullscreenToggle.isOn = GameSettingsManager.Instance.Fullscreen;
+        vsyncToggle.isOn = GameSettingsManager.Instance.VSync;
+        fpsMaxInputField.text = GameSettingsManager.Instance.FPSMax.ToString();
+        fpsDisplayToggle.isOn = GameSettingsManager.Instance.FPSDisplay;
 
-        headBobToggle.isOn = GameSettingsManager.HeadBobEnabled;
+        headBobToggle.isOn = GameSettingsManager.Instance.HeadBobEnabled;
     }
 }

@@ -15,10 +15,20 @@ public class TestScript : MonoBehaviour
     private ActionNode actionNode;
     [SerializeField]
     private DialogActionRunner dialogActionRunner;
+
+    [SerializeField]
+    private GameEventSO gameEventToRaise;
+
+    [SerializeField]
+    private bool shouldRaise;
+
+    [SerializeField]
+    private GameEventSO gameEventToListen;
   
     private void Awake()
     {
         StartCoroutine(TestDialog());
+        gameEventToListen.EventRaised += () => Debug.Log("GameEvent Raised!");
     }
 
     private IEnumerator TestDialog()
@@ -30,7 +40,11 @@ public class TestScript : MonoBehaviour
 
     private void Update()
     {
-
+        if (shouldRaise)
+        {
+            shouldRaise = false;
+            gameEventToRaise.TryRaiseEvent();
+        }
     }
 
     private void TestTextCompressor()

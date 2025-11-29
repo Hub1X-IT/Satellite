@@ -102,7 +102,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
         TempPasswordChecker.SetPasswordCrackingAppReference(this);
         pasteMenuUI.InitializeCopyPasteMenuUI(CopyPasteMenuUI.MenuFunction.PasteMenu, inputField);
 
-        DetectionManager.DetectionOccured += () =>
+        DetectionManager.Instance.DetectionOccured += () =>
         {
             // DisableApp();
             wasDetected = true;
@@ -112,7 +112,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
                 monitorAppUI.CloseApp();
             }
         };
-        DetectionManager.DetectionRemoved += () =>
+        DetectionManager.Instance.DetectionRemoved += () =>
         {
             // EnableApp();
             SetDetectionChanceText();
@@ -132,7 +132,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
         decompressedPassword = string.Empty;
         decompressedPasswordUI.gameObject.SetActive(false);
 
-        if (!DetectionManager.WasDetected)
+        if (!DetectionManager.Instance.WasDetected)
         {
             EnableApp();
         }
@@ -331,7 +331,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
 
             StartCoroutine(ShowDecodingMessageAndConvertedPassword(true, "", false));
 
-            DetectionManager.CheckDetection();
+            DetectionManager.Instance.CheckDetection();
             SetDetectionChanceText();
         }
     }
@@ -358,7 +358,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
 
     private void SetDetectionChanceText()
     {
-        detectionChanceTextField.text = DetectionChanceText + DetectionManager.CurrentDetectionChance + "%";
+        detectionChanceTextField.text = DetectionChanceText + DetectionManager.Instance.CurrentDetectionChance + "%";
     }
 
     private void CreateNewPasswordTextField(string newPassword, bool isCorrectPassword)

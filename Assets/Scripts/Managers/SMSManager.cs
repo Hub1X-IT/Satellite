@@ -4,13 +4,7 @@ using UnityEngine;
 
 public class SMSManager : MonoBehaviour
 {
-    [Serializable]
-    private class EventBoundMessage
-    {
-        public GameEventSO activationEvent;
-        public SMSMessageSO message;
-        public GameEventSO openedEvent;
-    }
+    public static SMSManager Instance { get; private set; }
 
     [SerializeField]
     private SMSUI smsUI;
@@ -18,21 +12,21 @@ public class SMSManager : MonoBehaviour
     [SerializeField]
     private SmartphoneMenuUI menu;
 
-    [SerializeField]
-    private List<EventBoundMessage> messages;
+    private List<SMSMessage> currentMessages;
 
     private int unreadCount;
 
     private void Awake()
     {
-        foreach (var item in messages)
+        if (Instance != null && Instance != this)
         {
-            item.activationEvent.EventRaised += () => {
-                SendMessage(item.message.GetMessage(), () => {
-                    item.openedEvent?.TryRaiseEvent();
-                });
-            };
+            Debug.LogWarning($"Multiple {nameof(SMSManager)} instances detected! Destroying duplicate.");
+            Destroy(gameObject);
+            return;
         }
+        Instance = this;
+
+        currentMessages = new();
     }
 
     private void DecreaseCount()
@@ -46,5 +40,14 @@ public class SMSManager : MonoBehaviour
         unreadCount++;
         menu.SetNotificationCount("messages", unreadCount);
         smsUI.SendMessage(message, onFirstOpen + DecreaseCount);
+        currentMessages.Add(message);
+    }
+
+    public void SendMessageSO(SMSMessageSO messageSO)
+    {
+        SendMessage(messageSO.GetMessage(), () =>
+        {
+            messageSO.OnFirstOpenedGameEvent?.TryRaiseEvent();
+        });
     }
 }

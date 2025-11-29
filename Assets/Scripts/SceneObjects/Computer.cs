@@ -64,6 +64,20 @@ public class Computer : MonoBehaviour
 
         computerTrigger.InteractVisual = GetComponent<InteractionVisual>();
 
+        computerCinemachineCamera.enabled = false;
+
+        isInComputerView = false;
+        CanExitComputerView = true;
+
+        shouldEnablePlayerMovement = false;
+
+        wasChangedToInThisFrame = false;
+
+        isComputerTriggerEnabled = false;
+    }
+
+    private void Start()
+    {
         computerTrigger.InteractionTriggered += () =>
         {
             if (isComputerTriggerEnabled)
@@ -88,17 +102,6 @@ public class Computer : MonoBehaviour
                 ChangeCurrentComputer(targetComputer);
             }
         };
-
-        computerCinemachineCamera.enabled = false;
-
-        isInComputerView = false;
-        CanExitComputerView = true;
-
-        shouldEnablePlayerMovement = false;
-
-        wasChangedToInThisFrame = false;
-
-        isComputerTriggerEnabled = false;
 
         SetComputerEnabled(true);
     }
@@ -135,13 +138,13 @@ public class Computer : MonoBehaviour
     private void SetComputerViewActive(bool active)
     {
         isInComputerView = active;
-        GameManager.IsInScreenView = active;
+        GameManager.Instance.IsInScreenView = active;
 
         // Disable or enable player movement.
-        PlayerScriptsController.SetPlayerMovementEnabled(!active);
+        PlayerScriptsController.Instance.SetPlayerMovementEnabled(!active);
 
-        PlayerScriptsController.SetCanShowPlayerHUD(!active);
-        PlayerScriptsController.SetFlashlightEnabled(!active);
+        PlayerScriptsController.Instance.SetCanShowPlayerHUD(!active);
+        PlayerScriptsController.Instance.SetFlashlightEnabled(!active);
 
         ToggleComputerTrigger();
 
@@ -150,21 +153,21 @@ public class Computer : MonoBehaviour
 
         ComputerViewEnabled?.Invoke(active);
 
-        GameManager.SetCursorShown(active);
+        GameManager.Instance.SetCursorShown(active);
 
         // Disable/enable specific input actions.
         // Change active Cinemachine camera.
         if (active)
         {
-            GameInput.CurrentInputActions.PlayerWalking.Disable();
-            GameInput.CurrentInputActions.Computer.Enable();
-            CameraController.SetActiveCinemachineCamera(computerCinemachineCamera);
+            GameInput.Instance.CurrentInputActions.PlayerWalking.Disable();
+            GameInput.Instance.CurrentInputActions.Computer.Enable();
+            CameraController.Instance.SetActiveCinemachineCamera(computerCinemachineCamera);
             computerViewEnabledGameEvent.RaiseEvent(this);
         }
         else
         {
-            GameInput.CurrentInputActions.Computer.Disable();
-            CameraController.SetActiveCinemachineCamera(CameraController.CinemachineMainCamera);
+            GameInput.Instance.CurrentInputActions.Computer.Disable();
+            CameraController.Instance.ChangeToMainCinemachineCamera();
             computerViewDisabledGameEvent.TryRaiseEvent();
 
             // Set timer to enable player movement
@@ -198,7 +201,7 @@ public class Computer : MonoBehaviour
 
         computerViewEnabledGameEvent.RaiseEvent(this);
 
-        CameraController.SetActiveCinemachineCamera(computerCinemachineCamera);
+        CameraController.Instance.SetActiveCinemachineCamera(computerCinemachineCamera);
 
         wasChangedToInThisFrame = true;
     }
@@ -213,7 +216,7 @@ public class Computer : MonoBehaviour
 
     private void EnablePlayerMovement()
     {
-        GameInput.CurrentInputActions.PlayerWalking.Enable();
+        GameInput.Instance.CurrentInputActions.PlayerWalking.Enable();
     }
 
     public void ExitComputerView()

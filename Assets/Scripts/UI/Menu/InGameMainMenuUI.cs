@@ -15,16 +15,15 @@ public class InGameMainMenuUI : MonoBehaviour
     [SerializeField]
     private Button mainMenuButton;
 
-
-    private void Awake()
+    private void Start()
     {
-        GameManager.GamePausedUnpaused += (paused) =>
+        GameManager.Instance.GamePausedUnpaused += (paused) =>
         {
             SetEnabled(paused);
             inGameOptions.Disable();
         };
 
-        resumeButton.onClick.AddListener(() => GameManager.PauseGameToMenu(false));
+        resumeButton.onClick.AddListener(() => GameManager.Instance.PauseGameToMenu(false));
 
         optionsButton.onClick.AddListener(() =>
         {
@@ -33,6 +32,9 @@ public class InGameMainMenuUI : MonoBehaviour
         });
 
         mainMenuButton.onClick.AddListener(() => SceneLoader.LoadScene(SceneLoader.Scene.MainMenu));
+
+        SetEnabled(GameManager.Instance.IsGamePaused);
+        inGameOptions.Disable();
     }
 
     private void SetEnabled(bool enabled)

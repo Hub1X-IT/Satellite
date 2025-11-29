@@ -21,7 +21,7 @@ public class FPSCounter : MonoBehaviour
 
     private void Start()
     {
-        SetFPSCounterActive(GameSettingsManager.FPSDisplay);
+        SetFPSCounterActive(GameSettingsManager.Instance.FPSDisplay);
         
         InvokeRepeating(nameof(GetFPS), 1, 1);
     }

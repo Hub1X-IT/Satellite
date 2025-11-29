@@ -1,7 +1,9 @@
 using UnityEngine;
 
-public static class GameSettingsManager
+public class GameSettingsManager : MonoBehaviour
 {
+    public static GameSettingsManager Instance { get; private set; }
+
     [Range(MinMouseSensitivity, MaxMouseSensitivity)]
     private const float DefaultMouseSensitivity = 0.15f;
 
@@ -21,10 +23,10 @@ public static class GameSettingsManager
 
     private const string PlayerPrefs_MouseSensitivity = "MouseSensitivity";
 
-    private const string PlayerPrefs_MainVolume = VolumeController.MasterVolume;
-    private const string PlayerPrefs_MusicVolume = VolumeController.MusicVolume;
-    private const string PlayerPrefs_SoundFXVolume = VolumeController.SoundFXVolume;
-    private const string PlayerPrefs_DialogueVolume = VolumeController.DialogueVolume;
+    private const string PlayerPrefs_MainVolume = SoundManager.MasterVolume;
+    private const string PlayerPrefs_MusicVolume = SoundManager.MusicVolume;
+    private const string PlayerPrefs_SoundFXVolume = SoundManager.SoundFXVolume;
+    private const string PlayerPrefs_DialogueVolume = SoundManager.DialogueVolume;
 
     private const string PlayerPrefs_GraphicsIndex = "GraphicsIndex";
     private const string PlayerPrefs_ResolutionIndex = "ResolutionIndex";
@@ -34,24 +36,37 @@ public static class GameSettingsManager
     private const string PlayerPrefs_FPSDisplayIndex = "FPSDisplayIndex";
     private const string PlayerPrefs_HeadBobEnabled = "HeadBobEnabled";
 
-    public static float MouseSensitivity { get; private set; }
+    public float MouseSensitivity { get; private set; }
 
-    public static float MainVolume { get; private set; }
-    public static float MusicVolume { get; private set; }
-    public static float SoundVolume { get; private set; }
-    public static float DialogueVolume { get; private set; }
+    public float MainVolume { get; private set; }
+    public float MusicVolume { get; private set; }
+    public float SoundVolume { get; private set; }
+    public float DialogueVolume { get; private set; }
 
-    public static int GraphicsIndex { get; private set; }
-    public static int ResolutionIndex { get; private set; }
+    public int GraphicsIndex { get; private set; }
+    public int ResolutionIndex { get; private set; }
 
-    public static int FPSMax { get; private set; }
-    public static bool FPSDisplay { get; private set; }
+    public int FPSMax { get; private set; }
+    public bool FPSDisplay { get; private set; }
 
-    public static bool Fullscreen { get; private set; }
-    public static bool VSync { get; private set; }
-    public static bool HeadBobEnabled { get; private set; }
+    public bool Fullscreen { get; private set; }
+    public bool VSync { get; private set; }
+    public bool HeadBobEnabled { get; private set; }
 
-    public static void LoadSettings()
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Debug.LogWarning($"Multiple {nameof(GameSettingsManager)} instances detected! Destroying duplicate.");
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
+        LoadSettings();
+    }
+
+    private void LoadSettings()
     {
         MouseSensitivity = PlayerPrefs.GetFloat(PlayerPrefs_MouseSensitivity, DefaultMouseSensitivity);
 
@@ -70,72 +85,72 @@ public static class GameSettingsManager
     }
 
 
-    public static void SetMouseSensitivity(float value)
+    public void SetMouseSensitivity(float value)
     {
         MouseSensitivity = value;
         PlayerPrefs.SetFloat(PlayerPrefs_MouseSensitivity, MouseSensitivity);
     }
 
-    public static void SetVolume(VolumeController.Volume volumeType, float value)
+    public void SetVolume(SoundManager.Volume volumeType, float value)
     {
         switch (volumeType)
         {
-            case VolumeController.Volume.MasterVolume:
+            case SoundManager.Volume.MasterVolume:
                 MainVolume = value;
                 PlayerPrefs.SetFloat(PlayerPrefs_MainVolume, MainVolume);
                 break;
-            case VolumeController.Volume.MusicVolume:
+            case SoundManager.Volume.MusicVolume:
                 MusicVolume = value;
                 PlayerPrefs.SetFloat(PlayerPrefs_MusicVolume, MusicVolume);
                 break;
-            case VolumeController.Volume.SoundVolume:
+            case SoundManager.Volume.SoundVolume:
                 SoundVolume = value;
                 PlayerPrefs.SetFloat(PlayerPrefs_SoundFXVolume, SoundVolume);
                 break;
-            case VolumeController.Volume.DialogueVolume:
+            case SoundManager.Volume.DialogueVolume:
                 DialogueVolume = value;
                 PlayerPrefs.SetFloat(PlayerPrefs_DialogueVolume, DialogueVolume);
                 break;
         }
     }
 
-    public static void SetGraphicsIndex(int index)
+    public void SetGraphicsIndex(int index)
     {
         GraphicsIndex = index;
         PlayerPrefs.SetInt(PlayerPrefs_GraphicsIndex, GraphicsIndex);
     }
 
-    public static void SetResolutionIndex(int index)
+    public void SetResolutionIndex(int index)
     {
         ResolutionIndex = index;
         PlayerPrefs.SetInt(PlayerPrefs_ResolutionIndex, ResolutionIndex);
     }
 
-    public static void SetFullscreen(bool fullscreen)
+    public void SetFullscreen(bool fullscreen)
     {
         Fullscreen = fullscreen;
         PlayerPrefs.SetInt(PlayerPrefs_FullscreenIndex, Fullscreen ? 1 : 0);
     }
 
-    public static void SetVSync(bool vsync)
+    public void SetVSync(bool vsync)
     {
         VSync = vsync;
         PlayerPrefs.SetInt(PlayerPrefs_VSyncIndex, VSync ? 1 : 0);
     }
 
-    public static void SetFPSMax(int value)
+    public void SetFPSMax(int value)
     {
         FPSMax = value;
         PlayerPrefs.SetInt(PlayerPrefs_FPSMax, FPSMax);
     }
 
-    public static void SetFPSDisplay(bool display)
+    public void SetFPSDisplay(bool display)
     {
         FPSDisplay = display;
         PlayerPrefs.SetInt(PlayerPrefs_FPSDisplayIndex, FPSDisplay ? 1 : 0);
     }
 
-    public static void SetHeadBobEnabled(bool enabled)
+    public void SetHeadBobEnabled(bool enabled)
     {
         HeadBobEnabled = enabled;
         PlayerPrefs.SetInt(PlayerPrefs_HeadBobEnabled, HeadBobEnabled ? 1 : 0);

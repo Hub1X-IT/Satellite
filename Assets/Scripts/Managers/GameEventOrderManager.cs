@@ -2,19 +2,25 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class GameEventOrderManager
+public class GameEventOrderManager : MonoBehaviour
 {
-    [Serializable]
-    public struct InitializationData
-    {
-        [Tooltip("Game events to preserve from the previous scene when loading this scene.")]
-        public GameEventSO[] gameEventsToPreserve;
-    }
+    public static GameEventOrderManager Instance { get; private set; }
 
-    private static HashSet<GameEventSO> raisedGameEvents;
+    [SerializeField]
+    private GameEventSO[] gameEventsToPreserve;
 
-    public static void OnAwake(InitializationData data)
+    private HashSet<GameEventSO> raisedGameEvents;
+
+    private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Debug.LogWarning($"Multiple {nameof(GameEventOrderManager)} instances detected! Destroying duplicate.");
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
         if (raisedGameEvents == null)
         {
             raisedGameEvents = new();
@@ -22,7 +28,7 @@ public static class GameEventOrderManager
         }
 
         List<GameEventSO> gameEventsToAdd = new();
-        foreach (var gameEventToPreserve in data.gameEventsToPreserve)
+        foreach (var gameEventToPreserve in gameEventsToPreserve)
         {
             if (raisedGameEvents.Contains(gameEventToPreserve))
             {
@@ -38,12 +44,12 @@ public static class GameEventOrderManager
         }
     }
 
-    public static void AddGameEvent(GameEventSO gameEvent)
+    public void AddGameEvent(GameEventSO gameEvent)
     {
         raisedGameEvents.Add(gameEvent);
     }
 
-    public static bool WasGameEventRaised(GameEventSO gameEvent)
+    public bool WasGameEventRaised(GameEventSO gameEvent)
     {
         return raisedGameEvents.Contains(gameEvent);
     }

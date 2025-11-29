@@ -16,7 +16,7 @@ public class Monitor : MonoBehaviour
         // DetectionManager.DetectionOccured += computer.ExitComputerView;
 
         // ServerConnectionManager.ServerConnectionEnabled += computer.SetComputerEnabled;
-        DetectionManager.ServerPowerEnabled += ComputerComponent.SetComputerEnabled;
+        DetectionManager.Instance.ServerPowerEnabled += ComputerComponent.SetComputerEnabled;
 
         // SetComputerEnabled(true) is called in Awake() in Computer, so this has to be called in Start() in order to disable it
         ComputerComponent.SetComputerEnabled(true);

@@ -1,40 +1,30 @@
-using System;
 using UnityEngine;
 
-public static class InteractionController
+public class InteractionController : MonoBehaviour
 {
-    [Serializable]
-    public struct InitializationData
-    {
-        public float InteractRange;
-        [Tooltip("Only one should be selected!")]
-        public LayerMask DefaultInteractableLayerMask;
-        public LayerMask InteractableLayerMasks;
-        public LayerMask InteractionBlockingLayerMasks;
-    }
+    public bool IsInteractionEnabled { get; private set; }
 
-    public static bool IsInteractionEnabled { get; set; }
-
-    private static float interactRange;
-
-    private static LayerMask defaultInteractableLayerMask;
+    [SerializeField]
+    private float interactRange;
+    [SerializeField]
+    private LayerMask defaultInteractableLayerMask;
 
     public static int DefaultInteractableLayerIndex { get; private set; }
+    [SerializeField]
+    private LayerMask interactableLayerMasks;
+    [SerializeField]
+    private LayerMask interactionBlockingLayerMasks;
 
-    private static LayerMask interactableLayerMasks;
-
-    private static LayerMask interactionBlockingLayerMasks;
-
-    public static void OnAwake(InitializationData data)
+    private void Awake()
     {
-        interactRange = data.InteractRange;
-        defaultInteractableLayerMask = data.DefaultInteractableLayerMask;
-        interactableLayerMasks = data.InteractableLayerMasks;
-        interactionBlockingLayerMasks = data.InteractionBlockingLayerMasks;
-
         DefaultInteractableLayerIndex = GetLayerIndex(defaultInteractableLayerMask.value);
 
-        GameInput.OnInteractAction += () =>
+        IsInteractionEnabled = true;
+    }
+
+    private void Start()
+    {
+        GameInput.Instance.OnInteractAction += () =>
         {
             if (IsInteractionEnabled && TryGetInteractableObject(out IInteractable interactableObject))
             {
@@ -42,10 +32,13 @@ public static class InteractionController
             }
         };
 
-        IsInteractionEnabled = true;
+        GameManager.Instance.GamePausedUnpaused += (paused) =>
+        {
+            SetInteractionEnabled(!paused);
+        };
     }
 
-    public static bool TryGetInteractableObject(out IInteractable interactableObject)
+    public bool TryGetInteractableObject(out IInteractable interactableObject)
     {
         interactableObject = null;
         /*
@@ -55,7 +48,7 @@ public static class InteractionController
             return false;
         }
         */
-        if (Physics.Raycast(CameraController.MainCamera.transform.position, CameraController.MainCamera.transform.forward,
+        if (Physics.Raycast(CameraController.Instance.MainCamera.transform.position, CameraController.Instance.MainCamera.transform.forward,
         out RaycastHit hit, interactRange, interactableLayerMasks | interactionBlockingLayerMasks))
         {
             interactableObject = hit.transform.GetComponent<IInteractable>();
@@ -71,5 +64,10 @@ public static class InteractionController
     {
         /// Works properly only when just one layerMask is selected!
         return (int)Mathf.Log(layerMask.value, 2);
+    }
+
+    public void SetInteractionEnabled(bool enabled)
+    {
+        IsInteractionEnabled = enabled;
     }
 }

@@ -64,13 +64,13 @@ public class Server : MonoBehaviour
 
     private void Start()
     {
-        DetectionManager.DetectionOccured += () =>
+        DetectionManager.Instance.DetectionOccured += () =>
         {
             SetServerEnabled(false);
             SetServerOnOffMaterial(false);
         };
 
-        DetectionManager.ServerPowerEnabled += (enabled) =>
+        DetectionManager.Instance.ServerPowerEnabled += (enabled) =>
         {
             SetServerEnabled(enabled);
             SetServerOnOffMaterial(enabled);
@@ -94,12 +94,12 @@ public class Server : MonoBehaviour
     {
         isInServerView = active;
         wasToggledThisFrame = true;
-        GameManager.IsInScreenView = active;
+        GameManager.Instance.IsInScreenView = active;
 
-        PlayerScriptsController.SetCanShowPlayerHUD(!active);
-        PlayerScriptsController.SetFlashlightEnabled(!active);
+        PlayerScriptsController.Instance.SetCanShowPlayerHUD(!active);
+        PlayerScriptsController.Instance.SetFlashlightEnabled(!active);
 
-        PlayerScriptsController.SetPlayerMovementEnabled(!active);
+        PlayerScriptsController.Instance.SetPlayerMovementEnabled(!active);
 
         SetServerTriggerEnabled(!active);
 
@@ -108,17 +108,17 @@ public class Server : MonoBehaviour
 
         serverViewEnabledGameEvent.RaiseEvent(active);
 
-        GameManager.SetCursorShown(active);
+        GameManager.Instance.SetCursorShown(active);
 
         if (active)
         {
-            GameInput.CurrentInputActions.Computer.Enable();
-            CameraController.SetActiveCinemachineCamera(serverCinemachineCamera);
+            GameInput.Instance.CurrentInputActions.Computer.Enable();
+            CameraController.Instance.SetActiveCinemachineCamera(serverCinemachineCamera);
         }
         else
         {
-            GameInput.CurrentInputActions.Computer.Disable();
-            CameraController.SetActiveCinemachineCamera(CameraController.CinemachineMainCamera);
+            GameInput.Instance.CurrentInputActions.Computer.Disable();
+            CameraController.Instance.ChangeToMainCinemachineCamera();
         }
     }
 

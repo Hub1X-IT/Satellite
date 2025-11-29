@@ -215,6 +215,7 @@ MonoBehaviour:
   playerHudUI: {fileID: 8955375075856656415}
   smartphoneController: {fileID: 929847845683625464}
   flashlightController: {fileID: 4618585579998559672}
+  playerInteractionController: {fileID: 709347872929936019}
 --- !u!1001 &7791932128628527924
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -329,6 +330,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7950827217174508885, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
   m_PrefabInstance: {fileID: 7791932128628527924}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &709347872929936019 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7348358215093035431, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}
+  m_PrefabInstance: {fileID: 7791932128628527924}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fd0349fa6a301a47bd0c512522225cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &929847845683625464 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6973255905009282764, guid: c2cdf6213f4f50e47984d3e47d5d7349, type: 3}

@@ -1,54 +1,53 @@
 using System;
 using UnityEngine;
 
-public static class DetectionManager
+public class DetectionManager : MonoBehaviour
 {
-    [Serializable]
-    public struct InitializationData
-    {
-        // Probably a temporary solution; only for demo level / level 1
-        public GameEventSO onDetectionOccuredGameEvent;
-        public GameEventSO onDetectionRemovedGameEvent;
-    }
+    public static DetectionManager Instance { get; private set; }
 
-    public static event Action DetectionOccured;
-    public static event Action DetectionRemoved;
+    public event Action DetectionOccured;
+    public event Action DetectionRemoved;
 
-    public static event Action<bool> ServerPowerEnabled;
+    public event Action<bool> ServerPowerEnabled;
 
-    private static GameEventSO onDetectionOccuredGameEvent;
-    private static GameEventSO onDetectionRemovedGameEvent;
+    [SerializeField]
+    private GameEventSO onDetectionOccuredGameEvent;
+    [SerializeField]
+    private GameEventSO onDetectionRemovedGameEvent;
 
-    public static int CurrentDetectionChance { get; private set; }
+    public int CurrentDetectionChance { get; private set; }
 
-    private static int currentDetectionLevel;
+    private int currentDetectionLevel;
     private const int DefaultDetectionLevel = 0;
 
-    private static readonly int[] detectionLevels = { 2, 5, 10, 25, 40, 70, 98, 100 };
+    private readonly int[] detectionLevels = { 2, 5, 10, 25, 40, 70, 98, 100 };
     // Debug detection level:
     // private static readonly int[] detectionLevels = { -1 };
 
-    public static bool WasDetected { get; private set; }
+    public bool WasDetected { get; private set; }
 
-    public static void InitializeDetectionManager(InitializationData data)
+    private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Debug.LogWarning($"Multiple {nameof(DetectionManager)} instances detected! Destroying duplicate.");
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
         currentDetectionLevel = DefaultDetectionLevel;
-        onDetectionOccuredGameEvent = data.onDetectionOccuredGameEvent;
-        onDetectionRemovedGameEvent = data.onDetectionRemovedGameEvent;
         WasDetected = false;
         SetDetectionChance();
     }
 
-    public static void OnSceneExit()
+    private void OnDestroy()
     {
-        DetectionOccured = null;
-        DetectionRemoved = null;
-        ServerPowerEnabled = null;
         onDetectionOccuredGameEvent.ResetGameEvent();
         onDetectionRemovedGameEvent.ResetGameEvent();
     }
 
-    public static void CheckDetection()
+    public void CheckDetection()
     {
         int randomDetectionChance = UnityEngine.Random.Range(0, 100);
 
@@ -69,7 +68,7 @@ public static class DetectionManager
         // Debug.Log($"{(WasDetected ? "" : "Not ")}Detected");
     }
 
-    public static void SetServerPowerEnabled(bool enabled)
+    public void SetServerPowerEnabled(bool enabled)
     {
         ServerPowerEnabled?.Invoke(enabled);
         if (enabled && WasDetected)
@@ -78,7 +77,7 @@ public static class DetectionManager
         }
     }
 
-    private static void ResetDetection()
+    private void ResetDetection()
     {
         WasDetected = false;
         currentDetectionLevel = DefaultDetectionLevel;
@@ -90,7 +89,7 @@ public static class DetectionManager
         }
     }
 
-    private static void IncreaseDetectionLevel()
+    private void IncreaseDetectionLevel()
     {
         if (currentDetectionLevel < detectionLevels.Length - 1)
         {
@@ -99,7 +98,7 @@ public static class DetectionManager
         }
     }
 
-    private static void SetDetectionChance()
+    private void SetDetectionChance()
     {
         CurrentDetectionChance = detectionLevels[currentDetectionLevel];
     }

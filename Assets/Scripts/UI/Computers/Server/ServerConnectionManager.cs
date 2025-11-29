@@ -1,19 +1,20 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class ServerConnectionManager : MonoBehaviour
 {
-    public static event Action<bool> ServerConnectionEnabled;
+    public static ServerConnectionManager Instance { get; private set; }
+
+    public event Action<bool> ServerConnectionEnabled;
 
     [SerializeField]
     private List<ServerConnectionItemUI> possibleConnectionItems;
 
     private ServerConnectionItemUI currentConnectedServer;
 
-    public static bool IsConnectionActive { get; private set; }
-    public static bool WasEverConnected { get;  private set; }
+    public bool IsConnectionActive { get; private set; }
+    public bool WasEverConnected { get; private set; }
 
     [SerializeField]
     private GameEventSO objectiveGameEvent;
@@ -27,7 +28,14 @@ public class ServerConnectionManager : MonoBehaviour
 
     private void Awake()
     {
-        // possibleConnectionItems = GetComponentsInChildren<ServerConnectionItem>().ToList();
+        if (Instance != null && Instance != this)
+        {
+            Debug.LogWarning($"Multiple {nameof(ServerConnectionManager)} instances detected! Destroying duplicate.");
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
         foreach (var serverConnectionItem in possibleConnectionItems)
         {
             serverConnectionItem.ConnectionEnabled += SetCurrentConnectedServer;
@@ -39,7 +47,7 @@ public class ServerConnectionManager : MonoBehaviour
 
     private void Start()
     {
-        DetectionManager.DetectionOccured += () =>
+        DetectionManager.Instance.DetectionOccured += () =>
         {
             if (currentConnectedServer != null)
             {

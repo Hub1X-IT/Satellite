@@ -1,62 +1,78 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class GraphicsSettingsManager
+public class GraphicsSettingsManager : MonoBehaviour
 {
-    private static Resolution[] availableResolutions;
+    public static GraphicsSettingsManager Instance { get; private set; }
 
-    public static List<string> ResolutionDropdownOptions { get; private set; }
+    private Resolution[] availableResolutions;
 
-    public static double currentRefreshRate;
+    public List<string> ResolutionDropdownOptions { get; private set; }
 
-    public static void OnAwake()
+    private double currentRefreshRate;
+
+    private int startResolutionIndex;
+
+    private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Debug.LogWarning($"Multiple {nameof(GraphicsSettingsManager)} instances detected! Destroying duplicate.");
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
         SetupResolutionSettings();
     }
 
-    public static void OnStart()
+    private void Start()
     {
-        SetGraphics(GameSettingsManager.GraphicsIndex);
-        SetResolution(GameSettingsManager.ResolutionIndex);
+        GameSettingsManager.Instance.SetResolutionIndex(startResolutionIndex);
+
+        SetGraphics(GameSettingsManager.Instance.GraphicsIndex);
+        SetResolution(GameSettingsManager.Instance.ResolutionIndex);
     }
 
-    public static void SetGraphics(int index)
+    public void SetGraphics(int index)
     {
         QualitySettings.SetQualityLevel(index);
-        GameSettingsManager.SetGraphicsIndex(index);
+        GameSettingsManager.Instance.SetGraphicsIndex(index);
     }
 
-    public static void SetResolution(int index)
+    public void SetResolution(int index)
     {
         Screen.SetResolution(availableResolutions[index].width, availableResolutions[index].height, Screen.fullScreen);
-        GameSettingsManager.SetResolutionIndex(index);
+        GameSettingsManager.Instance.SetResolutionIndex(index);
     }
 
-    public static void SetFullscreen(bool fullscreen)
+    public void SetFullscreen(bool fullscreen)
     {
         Screen.fullScreen = fullscreen;
-        GameSettingsManager.SetFullscreen(fullscreen);
+        GameSettingsManager.Instance.SetFullscreen(fullscreen);
     }
 
-    public static void SetVSync(bool vsync)
+    public void SetVSync(bool vsync)
     {
         QualitySettings.vSyncCount = vsync ? 1 : 0;
-        GameSettingsManager.SetVSync(vsync);
+        GameSettingsManager.Instance.SetVSync(vsync);
     }
 
-    public static void SetFPSMax(int value)
+    public void SetFPSMax(int value)
     {
         Application.targetFrameRate = value;
-        GameSettingsManager.SetFPSMax(value);
+        GameSettingsManager.Instance.SetFPSMax(value);
     }
 
-    private static void SetupResolutionSettings()
+    private void SetupResolutionSettings()
     {
         Resolution[] screenResolutions = Screen.resolutions;
         currentRefreshRate = Screen.currentResolution.refreshRateRatio.value;
 
         List<string> dropdownOptions = new();
         List<Resolution> validResolutionsList = new();
+
+        startResolutionIndex = 0;
 
         for (int i = 0; i < screenResolutions.Length; i++)
         {
@@ -75,7 +91,7 @@ public static class GraphicsSettingsManager
             Resolution resolution = availableResolutions[i];
             if (resolution.width == Screen.currentResolution.width && resolution.height == Screen.currentResolution.height)
             {
-                GameSettingsManager.SetResolutionIndex(i);
+                startResolutionIndex = i;
             }
         }
 

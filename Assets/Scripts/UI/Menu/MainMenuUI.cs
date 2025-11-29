@@ -35,7 +35,7 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField]
     private Button discordButton;
 
-    private void Awake()
+    private void Start()
     {
         playButton.onClick.AddListener(() =>
         {
@@ -44,7 +44,7 @@ public class MainMenuUI : MonoBehaviour
             StartCoroutine(SceneLoader.LoadSceneAsync(SceneLoader.Scene.IntroLevel, loadingSlider));
         });
 
-        playButton.onClick.AddListener(() => GameManager.PauseGameToMenu(false));
+        playButton.onClick.AddListener(() => GameManager.Instance.PauseGameToMenu(false));
 
         settingsButton.onClick.AddListener(() =>
         {

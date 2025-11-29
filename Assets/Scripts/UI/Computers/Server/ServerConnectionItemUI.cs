@@ -30,7 +30,7 @@ public class ServerConnectionItemUI : MonoBehaviour
 
     private void TryToggleConnection()
     {
-        if (isConnected || !ServerConnectionManager.IsConnectionActive)
+        if (isConnected || !ServerConnectionManager.Instance.IsConnectionActive)
         {
             SetConnectionEnabled(!isConnected);
         }

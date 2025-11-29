@@ -10,13 +10,13 @@ public class DetectionWarningUI : MonoBehaviour
 
     private bool shouldShowWarningUI;
 
-    private void Awake()
+    private void Start()
     {
-        DetectionManager.DetectionOccured += () =>
+        DetectionManager.Instance.DetectionOccured += () =>
         {
             shouldShowWarningUI = true;
         };
-        DetectionManager.DetectionRemoved += () => SetWarningUIEnabled(false);
+        DetectionManager.Instance.DetectionRemoved += () => SetWarningUIEnabled(false);
         //SetWarningUIEnabled(false);
     }
 

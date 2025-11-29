@@ -25,7 +25,11 @@ public class ObjectivesManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        Instance = this;
+    }
 
+    private void Start()
+    {
         SetChapter(defaultChapter);
         SetObjective(defaultObjective);
     }

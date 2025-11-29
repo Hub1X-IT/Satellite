@@ -73,18 +73,18 @@ public class MonitorStartupScreenUI : MonoBehaviour
         startupScreenFinishedCallback = onFinishedStartupCallback;
         DisableAllObjects();
 
-        if (!ServerConnectionManager.WasEverConnected && !ServerConnectionManager.IsConnectionActive)
+        if (!ServerConnectionManager.Instance.WasEverConnected && !ServerConnectionManager.Instance.IsConnectionActive)
         {
             currentSelectedStartupScreenElements = case1StartupScreenElements;
             // Debug.Log("Selected case1");
         }
-        else if (!ServerConnectionManager.IsConnectionActive || DetectionManager.WasDetected)
+        else if (!ServerConnectionManager.Instance.IsConnectionActive || DetectionManager.Instance.WasDetected)
         // ^ Second condition may not be necessary
         {
             currentSelectedStartupScreenElements = case2StartupScreenElements;
             // Debug.Log("Selected case2");
         }
-        else if (ServerConnectionManager.IsConnectionActive)
+        else if (ServerConnectionManager.Instance.IsConnectionActive)
         {
             currentSelectedStartupScreenElements = case3StartupScreenElements;
             // Debug.Log("Selected case3");

@@ -288,6 +288,7 @@ GameObject:
   - component: {fileID: 6481753855220561565}
   - component: {fileID: 1861445443321875357}
   - component: {fileID: 3586738301585459168}
+  - component: {fileID: 7348358215093035431}
   - component: {fileID: 6890582359040437573}
   - component: {fileID: 3422941349860105764}
   m_Layer: 0
@@ -377,6 +378,28 @@ MonoBehaviour:
   clampYRotation: 0
   minYRotation: 0
   maxYRotation: 0
+--- !u!114 &7348358215093035431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4948149093367096019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fd0349fa6a301a47bd0c512522225cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactRange: 2
+  defaultInteractableLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  interactableLayerMasks:
+    serializedVersion: 2
+    m_Bits: 8
+  interactionBlockingLayerMasks:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!82 &6890582359040437573
 AudioSource:
   m_ObjectHideFlags: 0
@@ -834,6 +857,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2166850582726935569, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
+      propertyPath: interactionController
+      value: 
+      objectReference: {fileID: 7348358215093035431}
     - target: {fileID: 2789146544322516887, guid: fda520c49f608084ca9a0cfefdbcfcd4, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

@@ -9,7 +9,7 @@ public class CommandPromptScroll : MonoBehaviour
 
     private void Update()
     {
-        float scrollValue = GameInput.MouseScroll;
+        float scrollValue = GameInput.Instance.MouseScroll;
         content.anchoredPosition -= new Vector2(0, scrollValue * ScrollSpeed);
     }
 }

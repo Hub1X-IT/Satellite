@@ -26,21 +26,22 @@ public class SmartphoneUI : MonoBehaviour
     {
         smartphoneRectTransform = smartphoneAnimator.GetComponent<RectTransform>();
 
-        mainMenuButton.onClick.AddListener(() => mainMenu.GoToMainMenu());
-
         smartphoneRectTransform.localPosition = defaultSmartphonePosition;
 
         isSmartphoneEnabled = false;
     }
 
-    private void OnEnable()
+    private void Start()
     {
-        GameInput.OnSmartphoneToggleAction += TryToggleSmartphone;
-    }
-
-    private void OnDisable()
-    {
-        GameInput.OnSmartphoneToggleAction -= TryToggleSmartphone;
+        GameInput.Instance.OnSmartphoneToggleAction += () =>
+        {
+            Debug.Log($"Smartphone enabled: {isSmartphoneEnabled}");
+            if (gameObject.activeInHierarchy)
+            {
+                TryToggleSmartphone();
+            }
+        };
+        mainMenuButton.onClick.AddListener(() => mainMenu.GoToMainMenu());
     }
 
     private void TryToggleSmartphone()
@@ -49,7 +50,7 @@ public class SmartphoneUI : MonoBehaviour
         {
             SetSmartphoneEnabled(false);
         }
-        else if (!isSmartphoneEnabled && !GameManager.IsInScreenView && !GameManager.IsGuidebookOrSmartphoneEnabled)
+        else if (!isSmartphoneEnabled && !GameManager.Instance.IsInScreenView && !GameManager.Instance.IsGuidebookOrSmartphoneEnabled)
         {
             SetSmartphoneEnabled(true);
         }
@@ -59,12 +60,12 @@ public class SmartphoneUI : MonoBehaviour
     {
         isSmartphoneEnabled = enabled;
 
-        GameManager.IsGuidebookOrSmartphoneEnabled = enabled;
+        GameManager.Instance.IsGuidebookOrSmartphoneEnabled = enabled;
+        
+        PlayerScriptsController.Instance.SetPlayerMovementEnabled(!enabled);
+        PlayerScriptsController.Instance.SetInteractionEnabled(!enabled);
 
-        PlayerScriptsController.SetPlayerMovementEnabled(!enabled);
-        InteractionController.IsInteractionEnabled = !enabled;
-
-        GameManager.SetCursorShown(enabled);
+        GameManager.Instance.SetCursorShown(enabled);
 
         if (enabled)
         {

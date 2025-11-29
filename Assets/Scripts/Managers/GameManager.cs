@@ -1,41 +1,47 @@
 using System;
 using UnityEngine;
 
-public static class GameManager
+public class GameManager : MonoBehaviour
 {
-    public static event Action<bool> GamePausedUnpaused;
+    public static GameManager Instance { get; private set; }
 
-    public static bool IsGamePaused { get; private set; }
+    public event Action<bool> GamePausedUnpaused;
 
-    public static bool IsInScreenView { get; set; }
+    public bool IsGamePaused { get; private set; }
 
-    public static bool IsGuidebookOrSmartphoneEnabled { get; set; }
+    public bool IsInScreenView { get; set; }
 
-    public static CursorLockMode HiddenCursorLockMode { get; set; }
-    private static CursorLockMode ShownCursorLockMode { get; set; } = CursorLockMode.None;
+    public bool IsGuidebookOrSmartphoneEnabled { get; set; }
 
-    public static void OnAwake()
+    public CursorLockMode HiddenCursorLockMode { get; set; }
+    private CursorLockMode ShownCursorLockMode { get; set; } = CursorLockMode.None;
+
+    private void Awake()
     {
-        GameInput.OnPauseAction += () => PauseGameToMenu(!IsGamePaused);
+        if (Instance != null && Instance != this)
+        {
+            Debug.LogWarning($"Multiple {nameof(GameManager)} instances detected! Destroying duplicate.");
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
         HiddenCursorLockMode = CursorLockMode.Locked;
         IsInScreenView = false;
         IsGuidebookOrSmartphoneEnabled = false;
     }
 
-    public static void OnStart()
+    private void Start()
     {
+        VirtualClipboard.InitializeVirtualClipboard();
+
+        GameInput.Instance.OnPauseAction += () => PauseGameToMenu(!IsGamePaused);
         PauseGameToMenu(false);
     }
 
-    public static void OnSceneExit()
-    {
-        GamePausedUnpaused = null;
-    }
-
-    public static void SetGamePaused(bool paused)
+    public void SetGamePaused(bool paused)
     {
         IsGamePaused = paused;
-        InteractionController.IsInteractionEnabled = !paused;
         SetTimeStarted(!paused);
         // May be temporary
         if (!IsInScreenView)
@@ -48,24 +54,24 @@ public static class GameManager
         }
     }
 
-    public static void PauseGameToMenu(bool paused)
+    public void PauseGameToMenu(bool paused)
     {
         GamePausedUnpaused?.Invoke(paused);
         SetGamePaused(paused);
     }
 
-    public static void SetCursorShown(bool shown)
+    public void SetCursorShown(bool shown)
     {
         Cursor.lockState = shown ? ShownCursorLockMode : HiddenCursorLockMode;
         Cursor.visible = shown;
     }
 
-    public static void SetTimeStarted(bool started)
+    public void SetTimeStarted(bool started)
     {
         SetTimeScale(started ? 1f : 0f);
     }
 
-    public static void SetTimeScale(float timeScale)
+    public void SetTimeScale(float timeScale)
     {
         Time.timeScale = timeScale;
     }

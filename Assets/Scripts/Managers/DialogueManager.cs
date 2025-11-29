@@ -36,9 +36,9 @@ public class DialogueManager : MonoBehaviour
     private bool isSentenceTimeTimerActive;
     private float sentenceTimeTimer;
 
-    private void Awake()
+    private void Start()
     {
-        GameInput.OnNextDialogueSentenceAction += () =>
+        GameInput.Instance.OnNextDialogueSentenceAction += () =>
         {
             if (debugDialogueSkipping)
             {
@@ -103,7 +103,7 @@ public class DialogueManager : MonoBehaviour
 
         StartNewDialogueSentence(dialogueSO.DialogueSentences[0]);
 
-        GameInput.CurrentInputActions.Dialogue.Enable();
+        GameInput.Instance.CurrentInputActions.Dialogue.Enable();
     }
 
     private void StartNextDialogueSentence()
@@ -128,7 +128,7 @@ public class DialogueManager : MonoBehaviour
 
     private void EndDialogue()
     {
-        GameInput.CurrentInputActions.Dialogue.Disable();
+        GameInput.Instance.CurrentInputActions.Dialogue.Disable();
         DialogueEnded?.Invoke();
         if (currentDialogueSO != null && currentDialogueSO.DialogueEndedGameEvent != null)
         {

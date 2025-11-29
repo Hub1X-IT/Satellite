@@ -21,13 +21,13 @@ public class SensitivitySliderUI : MonoBehaviour
 
     private void Start()
     {
-        SetSensitivity(GameSettingsManager.MouseSensitivity);
-        sensitivitySlider.value = GameSettingsManager.MouseSensitivity;
+        SetSensitivity(GameSettingsManager.Instance.MouseSensitivity);
+        sensitivitySlider.value = GameSettingsManager.Instance.MouseSensitivity;
     }
 
     private void SetSensitivity(float value)
     {
-        GameSettingsManager.SetMouseSensitivity(value);
+        GameSettingsManager.Instance.SetMouseSensitivity(value);
         sliderValueTextField.text = (Mathf.Round(sensitivitySlider.value / sensitivitySlider.maxValue * 100)).ToString() + "%";
     }
 }

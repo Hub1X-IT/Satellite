@@ -44,7 +44,7 @@ public class ContactsOverviewUI : MonoBehaviour
 
     private void RefreshContactsList()
     {
-        foreach (var contactSO in PhonecallManager.ContactList)
+        foreach (var contactSO in PhonecallManager.Instance.ContactList)
         {
             ContactUI contactUI = Instantiate(contactUIPrefab.gameObject, contactListHolder).GetComponent<ContactUI>();
             contactUI.InitializeContactUI(contactSO);

@@ -4,6 +4,8 @@ public class InteractionVisualController : MonoBehaviour
 {
     [SerializeField]
     private InteractionUI interactionUI;
+    [SerializeField]
+    private InteractionController interactionController;
 
     private InteractionVisual previousInteractVisual;
 
@@ -16,7 +18,7 @@ public class InteractionVisualController : MonoBehaviour
 
     private void CheckForInteraction()
     {
-        if (InteractionController.TryGetInteractableObject(out IInteractable interactableObject))
+        if (interactionController.TryGetInteractableObject(out IInteractable interactableObject))
         {
             if (interactableObject != previousInteractableObject)
             {

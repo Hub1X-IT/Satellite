@@ -7,7 +7,7 @@ public class MouseClickSoundController : MonoBehaviour
 
     private void Start()
     {
-        GameInput.OnLeftClickPerformedAction += () =>
+        GameInput.Instance.OnLeftClickPerformedAction += () =>
         {
             mouseClickSoundAudioSource.Play();
         };

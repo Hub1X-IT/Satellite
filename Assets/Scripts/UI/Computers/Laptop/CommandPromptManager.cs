@@ -1,30 +1,21 @@
 using System;
+using UnityEngine;
 
-public static class CommandPromptManager
+public class CommandPromptManager : MonoBehaviour
 {
-    [Serializable]
-    public struct InitializationData
-    {
-        public PossibleCommandsSO possibleCommandsSO;
-    }
+    public Action<string> OnCommandResponse;
 
-    public static Action<string> CommandResponse;
+    [SerializeField]
+    private PossibleCommandsSO possibleCommandsSO;
 
-    private static PossibleCommandsSO possibleCommandsSO;
+    private string currentCommand;
 
-    private static string currentCommand;
-
-    public static void OnAwake(InitializationData data)
-    {
-        possibleCommandsSO = data.possibleCommandsSO;
-    }
-
-    public static void OnSceneExit()
+    private void OnDestroy()
     {
         possibleCommandsSO.ResetCommandGameEvents();
     }
 
-    public static void SubmitCommand(string command)
+    public void SubmitCommand(string command)
     {
         if (command.Length > 0)
         {
@@ -42,7 +33,7 @@ public static class CommandPromptManager
         }
     }
 
-    private static void ExecuteCommand(string command, string[] commandData)
+    private void ExecuteCommand(string command, string[] commandData)
     {
         if (command == string.Empty)
         {
@@ -71,11 +62,11 @@ public static class CommandPromptManager
         }
     }
 
-    private static void RespondToCommand(bool wasSuccessful, string response)
+    private void RespondToCommand(bool wasSuccessful, string response)
     {
         string responseString = wasSuccessful ? "" : "Command failed. ";
         responseString += response;
 
-        CommandResponse?.Invoke(responseString);
+        OnCommandResponse?.Invoke(responseString);
     }
 }

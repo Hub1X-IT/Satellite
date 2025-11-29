@@ -21,7 +21,7 @@ public class ServerUI : MonoBehaviour
 
     private void Start()
     {
-        DetectionManager.ServerPowerEnabled += (enabled) =>
+        DetectionManager.Instance.ServerPowerEnabled += (enabled) =>
         {
             serverTurnedOffScreen.SetActive(!enabled);
         };

@@ -8,7 +8,7 @@ public class TheEndMenu : MonoBehaviour
 
     void Start()
     {
-        GameManager.SetCursorShown(true);
+        GameManager.Instance.SetCursorShown(true);
 
         mainMenuButton.onClick.AddListener(() => SceneLoader.LoadScene(SceneLoader.Scene.MainMenu));
     }
