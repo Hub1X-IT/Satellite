@@ -9,23 +9,25 @@ public class ObjectivesUI : MonoBehaviour
     [SerializeField]
     private TMP_Text objectiveTextField;
 
+    private void Start()
+    {
+        ObjectivesManager.Instance.OnChapterChanged += SetChapter;
+        ObjectivesManager.Instance.OnObjectiveChanged += SetObjective;
+    }
+
+    void OnDestroy()
+    {
+        ObjectivesManager.Instance.OnChapterChanged -= SetChapter;
+        ObjectivesManager.Instance.OnObjectiveChanged -= SetObjective;
+    }
+
     public void SetChapter(string chapter)
     {
         chapterTextField.text = chapter;
     }
 
-    public void SetChapter(ChapterSO chapter)
-    {
-        chapterTextField.text = chapter.Title;
-    }
-
-    public void SetObjective(string objective)
+    private void SetObjective(string objective)
     {
         objectiveTextField.text = objective;
-    }
-
-    public void SetObjective(ObjectiveSO objective)
-    {
-        objectiveTextField.text = objective.Objective;
     }
 }

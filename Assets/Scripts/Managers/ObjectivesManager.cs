@@ -3,17 +3,10 @@ using UnityEngine;
 
 public class ObjectivesManager : MonoBehaviour
 {
-    [Serializable]
-    private class ObjectiveData
-    {
-        public GameEventSO[] GameEvents;
-        public string Chapter;
-        [TextArea(3, 6)]
-        public string Objective;
-    }
+    public static ObjectivesManager Instance { get; private set; }
 
-    [SerializeField]
-    private ObjectivesUI[] objectivesUIArray;
+    public event Action<string> OnObjectiveChanged;
+    public event Action<string> OnChapterChanged;
 
     [SerializeField]
     private string defaultChapter;
@@ -21,53 +14,31 @@ public class ObjectivesManager : MonoBehaviour
     [SerializeField]
     private string defaultObjective;
 
-    [SerializeField]
-    private ObjectiveData[] objectivesData;
+    private string currentChapter;
+    private string currentObjective;
 
     private void Awake()
     {
-        SetChapterAndObjective(defaultChapter, defaultObjective);
-
-        foreach (var objectiveData in objectivesData)
+        if (Instance != null && Instance != this)
         {
-            foreach (var gameEvent in objectiveData.GameEvents)
-            {
-                gameEvent.EventRaised += () =>
-                {
-                    SetChapterAndObjective(objectiveData.Chapter, objectiveData.Objective);
-                };
-            }
+            Debug.LogWarning($"Multiple Instances of {nameof(ObjectivesManager)} detected! Destroying duplicate.");
+            Destroy(gameObject);
+            return;
         }
+
+        SetChapter(defaultChapter);
+        SetObjective(defaultObjective);
     }
 
-    private void OnDestroy()
+    public void SetChapter(string chapter)
     {
-        ResetGameEvents();
+        currentChapter = chapter;
+        OnChapterChanged?.Invoke(chapter);
     }
 
-    private void ResetGameEvents()
+    public void SetObjective(string objective)
     {
-        foreach (var objectiveData in objectivesData)
-        {
-            foreach (var gameEvent in objectiveData.GameEvents)
-            {
-                gameEvent.ResetGameEvent();
-            }
-        }
-    }
-
-    private void SetChapterAndObjective(string chapter, string objective)
-    {
-        foreach (var objectivesUI in objectivesUIArray)
-        {
-            if (chapter.Length > 0)
-            {
-                objectivesUI.SetChapter(chapter);
-            }
-            if (objective.Length > 0)
-            {
-                objectivesUI.SetObjective(objective);
-            }
-        }
+        currentObjective = objective;
+        OnObjectiveChanged?.Invoke(objective);
     }
 }
