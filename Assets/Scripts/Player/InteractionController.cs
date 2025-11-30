@@ -26,7 +26,7 @@ public class InteractionController : MonoBehaviour
     {
         GameInput.Instance.OnInteractAction += () =>
         {
-            if (IsInteractionEnabled && TryGetInteractableObject(out IInteractable interactableObject))
+            if (IsInteractionEnabled && TryGetInteractableObject(out Interactable interactableObject))
             {
                 interactableObject.Interact();
             }
@@ -38,7 +38,7 @@ public class InteractionController : MonoBehaviour
         };
     }
 
-    public bool TryGetInteractableObject(out IInteractable interactableObject)
+    public bool TryGetInteractableObject(out Interactable interactableObject)
     {
         interactableObject = null;
         /*
@@ -51,8 +51,8 @@ public class InteractionController : MonoBehaviour
         if (Physics.Raycast(CameraController.Instance.MainCamera.transform.position, CameraController.Instance.MainCamera.transform.forward,
         out RaycastHit hit, interactRange, interactableLayerMasks | interactionBlockingLayerMasks))
         {
-            interactableObject = hit.transform.GetComponent<IInteractable>();
-            if (interactableObject != null)
+            interactableObject = hit.transform.GetComponent<Interactable>();
+            if (interactableObject != null && interactableObject.IsInteractable)
             {
                 return true;
             }

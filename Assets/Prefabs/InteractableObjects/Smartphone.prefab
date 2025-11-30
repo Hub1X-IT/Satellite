@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7092364002541042754}
   - component: {fileID: 6642535908381065731}
   - component: {fileID: 8477297318290213025}
+  - component: {fileID: 1266632659651581000}
   - component: {fileID: 2243465711891912054}
   - component: {fileID: 5625889036506898079}
   - component: {fileID: 4207094392451378697}
@@ -52,7 +53,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -70,8 +71,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 715b804c9593f9441bef254101272874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionVisual: {fileID: 2243465711891912054}
+  interactionTrigger: {fileID: 1266632659651581000}
   phonePickupGameEvent: {fileID: 11400000, guid: 7c48cc39630902dfb8aa58ddcd222b59, type: 2}
+--- !u!114 &1266632659651581000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7027097216350311808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1b8064c4a1e24648b1943277474990c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoSetLayerOnStart: 1
+  interactionVisual: {fileID: 2243465711891912054}
 --- !u!114 &2243465711891912054
 MonoBehaviour:
   m_ObjectHideFlags: 0

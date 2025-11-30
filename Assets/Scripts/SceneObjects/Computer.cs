@@ -14,7 +14,7 @@ public class Computer : MonoBehaviour
     private GameEventSO computerViewDisabledGameEvent;
 
     [SerializeField]
-    private InteractionTrigger computerTrigger;
+    private Interactable computerTrigger;
 
     [SerializeField]
     private CinemachineCamera computerCinemachineCamera;
@@ -62,8 +62,6 @@ public class Computer : MonoBehaviour
         desk = GetComponentInParent<Desk>();
         outline = GetComponent<Outline>();
 
-        computerTrigger.InteractVisual = GetComponent<InteractionVisual>();
-
         computerCinemachineCamera.enabled = false;
 
         isInComputerView = false;
@@ -78,7 +76,7 @@ public class Computer : MonoBehaviour
 
     private void Start()
     {
-        computerTrigger.InteractionTriggered += () =>
+        computerTrigger.OnInteractionTriggered += () =>
         {
             if (isComputerTriggerEnabled)
             {

@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: 3537205592837580568}
   - component: {fileID: 7511270490951311859}
   - component: {fileID: 413231145215562612}
+  - component: {fileID: 3707001865257860140}
   - component: {fileID: 5123834820588521321}
   - component: {fileID: 3883373262939116973}
   - component: {fileID: 1479303073696460081}
@@ -201,10 +202,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa40499c529e694485431dae1859f55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionTrigger: {fileID: 3707001865257860140}
   leverAnimator: {fileID: 7511270490951311859}
   lightSource: {fileID: 0}
   lightbulbMaterial: {fileID: 2100000, guid: bbb288ebc7e78da4ab18c14fa7cb2651, type: 2}
   leverToggleAudioSource: {fileID: 5813698034812260104}
+--- !u!114 &3707001865257860140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7072700541097949337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1b8064c4a1e24648b1943277474990c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoSetLayerOnStart: 1
+  interactionVisual: {fileID: 5123834820588521321}
 --- !u!114 &5123834820588521321
 MonoBehaviour:
   m_ObjectHideFlags: 0

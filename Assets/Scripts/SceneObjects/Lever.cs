@@ -1,10 +1,9 @@
 using UnityEngine;
 
-public class Lever : MonoBehaviour, IInteractable
+public class Lever : MonoBehaviour
 {
-    public InteractionVisual InteractVisual { get; private set; }
-
-    public Transform SelfTransform { get; private set; }
+    [SerializeField]
+    private Interactable interactionTrigger;
 
     [SerializeField]
     private Animator leverAnimator;
@@ -22,16 +21,11 @@ public class Lever : MonoBehaviour, IInteractable
     private const string LeverOffTrigger = "LeverOff";
 
     private bool isLeverEnabled = true;
-    
 
-    private void Awake()
-    {
-        InteractVisual = GetComponent<InteractionVisual>();
-    }
 
-    public void Interact()
+    private void Start()
     {
-        SetLeverEnabled(!isLeverEnabled);
+        interactionTrigger.OnInteractionTriggered += () => SetLeverEnabled(!isLeverEnabled);
     }
 
     private void SetLeverEnabled(bool enabled)

@@ -9,7 +9,7 @@ public class InteractionVisualController : MonoBehaviour
 
     private InteractionVisual previousInteractVisual;
 
-    private IInteractable previousInteractableObject;
+    private Interactable previousInteractableObject;
 
     private void Update()
     {
@@ -18,7 +18,7 @@ public class InteractionVisualController : MonoBehaviour
 
     private void CheckForInteraction()
     {
-        if (interactionController.TryGetInteractableObject(out IInteractable interactableObject))
+        if (interactionController.TryGetInteractableObject(out Interactable interactableObject))
         {
             if (interactableObject != previousInteractableObject)
             {
@@ -36,7 +36,7 @@ public class InteractionVisualController : MonoBehaviour
         }
     }
 
-    private void ChangeInteractVisual(IInteractable interactableObject)
+    private void ChangeInteractVisual(Interactable interactableObject)
     {
         // Debug.Log(interactableObject);
 

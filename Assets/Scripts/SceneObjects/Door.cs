@@ -3,7 +3,7 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     [SerializeField]
-    private InteractionTrigger doorTrigger;
+    private Interactable doorTrigger;
 
     [SerializeField]
     private Animator doorAnimator;
@@ -23,14 +23,10 @@ public class Door : MonoBehaviour
 
     private bool isDoorOpen;
 
-
-    private void Awake()
+    private void Start()
     {
         doorAnimator.SetBool(IS_INVERTED_BOOL, isInverted);
-
-        doorTrigger.InteractVisual = GetComponent<InteractionVisual>();
-
-        doorTrigger.InteractionTriggered += () => SetDoorOpen(!isDoorOpen, true);
+        doorTrigger.OnInteractionTriggered += () => SetDoorOpen(!isDoorOpen, true);        
     }
 
     private void OnEnable()

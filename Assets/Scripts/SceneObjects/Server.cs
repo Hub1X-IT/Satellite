@@ -6,7 +6,7 @@ public class Server : MonoBehaviour
     [SerializeField]
     private GameEventBoolSO serverViewEnabledGameEvent;
 
-    public InteractionTrigger serverTrigger;
+    public Interactable serverTrigger;
 
     [SerializeField]
     private CinemachineCamera serverCinemachineCamera;
@@ -35,9 +35,7 @@ public class Server : MonoBehaviour
     {
         outline = GetComponentInChildren<Outline>();
 
-        serverTrigger.InteractVisual = GetComponent<InteractionVisual>();
-
-        serverTrigger.InteractionTriggered += () =>
+        serverTrigger.OnInteractionTriggered += () =>
         {
             if (isServerEnabled)
             {
