@@ -43,6 +43,14 @@ public class PlayerPrefsEditorWindow : EditorWindow
     // Track last updated date and time for each PlayerPref
     [SerializeField] private Dictionary<string, string> lastUpdatedTimes = new Dictionary<string, string>();
     private HashSet<string> currentPlayerPrefs = new HashSet<string>();
+    
+    // Track update counts for Pin Tab (resets on Play Mode)
+    private Dictionary<string, int> updateCounts = new Dictionary<string, int>();
+    private Dictionary<string, string> lastKnownValuesForCounting = new Dictionary<string, string>();
+    
+    // Track change history for each PlayerPref (last 30 changes)
+    private Dictionary<string, List<(string value, string timestamp)>> changeHistory = new Dictionary<string, List<(string, string)>>();
+    private const int MAX_HISTORY_ENTRIES = 30;
 
     [MenuItem("Tools/Notorious Creations/PlayerPrefs Editor")]
     public static void ShowWindow()
@@ -57,6 +65,9 @@ public class PlayerPrefsEditorWindow : EditorWindow
     {
         // Initialize notification system
         PlayerPrefChangeNotifier.Initialize();
+        
+        // Subscribe to Play Mode state changes to reset update counts
+        EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
 
         // Tabs UI (should be at the top)
         var tabs = new Toolbar();
@@ -637,7 +648,7 @@ typeFilterDropdown.RegisterValueChangedCallback(evt => {
             if (!aPinned && bPinned) return 1;
             return string.Compare(a, b, StringComparison.OrdinalIgnoreCase);
         });
-        var items = new List<(string key, string type, string value, bool pinned)>();
+        var items = new List<(string key, string type, string value, bool pinned, int updateCount)>();
         foreach (var k in allKeys)
         {
             string type = "";
@@ -651,8 +662,15 @@ typeFilterDropdown.RegisterValueChangedCallback(evt => {
                 else if (f != float.MinValue) { type = "float"; value = f.ToString(); }
                 else if (s != "__NULL__") { type = "string"; value = s; }
             }
-            items.Add((k, type, value, pinnedKeys.Contains(k)));
+            
+            // Get update count for this key
+            int count = updateCounts.ContainsKey(k) ? updateCounts[k] : 0;
+            
+            items.Add((k, type, value, pinnedKeys.Contains(k), count));
         }
+        
+        // Pass change history to PinTabView
+        pinTabView.SetChangeHistory(changeHistory);
         pinTabView.Refresh(items);
     }
 
@@ -828,9 +846,28 @@ typeFilterDropdown.RegisterValueChangedCallback(evt => {
             }
         }
     }
+    
+    private void OnPlayModeStateChanged(PlayModeStateChange state)
+    {
+        // Reset update counts when entering Play Mode
+        if (state == PlayModeStateChange.EnteredPlayMode || state == PlayModeStateChange.ExitingEditMode)
+        {
+            updateCounts.Clear();
+            lastKnownValuesForCounting.Clear();
+            changeHistory.Clear(); // Clear change history on Play Mode
+            
+            // Refresh Pin tab if it's currently active
+            if (currentTabIndex == 1)
+            {
+                RefreshTab2ListView();
+            }
+        }
+    }
+    
     private void OnDisable()
     {
         EditorApplication.update -= PollPrefs;
+        EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
         PlayerPrefChangeNotifier.Cleanup();
         SaveChanges();
     }
@@ -890,6 +927,11 @@ typeFilterDropdown.RegisterValueChangedCallback(evt => {
                     lastKnownValues[key] = value;
                     lastUpdatedTimes[key] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                     anyValueChanged = true;
+                    
+                    // Initialize tracking for update count
+                    lastKnownValuesForCounting[key] = value;
+                    if (!updateCounts.ContainsKey(key))
+                        updateCounts[key] = 0;
                 }
                 else if (lastKnownValues[key] != value)
                 {
@@ -897,6 +939,27 @@ typeFilterDropdown.RegisterValueChangedCallback(evt => {
                     lastKnownValues[key] = value;
                     lastUpdatedTimes[key] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                     anyValueChanged = true;
+                    
+                    // Increment update count if value actually changed
+                    if (!lastKnownValuesForCounting.ContainsKey(key) || lastKnownValuesForCounting[key] != value)
+                    {
+                        lastKnownValuesForCounting[key] = value;
+                        if (updateCounts.ContainsKey(key))
+                            updateCounts[key]++;
+                        else
+                            updateCounts[key] = 1;
+                        
+                        // Add to change history
+                        if (!changeHistory.ContainsKey(key))
+                            changeHistory[key] = new List<(string, string)>();
+                        
+                        string timestamp = DateTime.Now.ToString("HH:mm:ss");
+                        changeHistory[key].Add((value, timestamp));
+                        
+                        // Keep only last 30 entries
+                        if (changeHistory[key].Count > MAX_HISTORY_ENTRIES)
+                            changeHistory[key].RemoveAt(0);
+                    }
                 }
             }
 

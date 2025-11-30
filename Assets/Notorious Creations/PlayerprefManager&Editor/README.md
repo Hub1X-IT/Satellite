@@ -1,3 +1,10 @@
+## Installation
+
+1. Copy the `Notorious Creations` folder into your Unity project's `Assets` directory
+2. The tool will automatically appear in Unity's menu system
+3. Access via **Tools → Notorious Creations → PlayerPrefs Editor**
+
+
 # PlayerPrefs Editor & Manager
 
 A comprehensive Unity Editor tool for managing, monitoring, and organizing PlayerPrefs with advanced features including real-time notifications, filtering, and data export/import capabilities.
