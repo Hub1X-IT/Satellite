@@ -17,7 +17,7 @@ public class ServerConnectionManager : MonoBehaviour
     public bool WasEverConnected { get; private set; }
 
     [SerializeField]
-    private GameEventSO objectiveGameEvent;
+    private GameEventSO connectionEnabledGameEvent;
 
     [SerializeField]
     private Color connectionInactiveColor = Color.red;
@@ -68,9 +68,9 @@ public class ServerConnectionManager : MonoBehaviour
         currentConnectedServer = serverConnectionItem;
         ServerConnectionEnabled?.Invoke(true);
         UpdateConnectionItems();
-        if (objectiveGameEvent != null)
+        if (connectionEnabledGameEvent != null)
         {
-            objectiveGameEvent.TryRaiseEvent();
+            connectionEnabledGameEvent.TryRaiseEvent();
         }
     }
 

@@ -16,7 +16,7 @@ public class PhonecallManager : MonoBehaviour
     {
         public CallType CallType;
         public ContactSO ContactSO;
-        public GameEventSO[] CanEndCallGameEvents;
+        public bool CanBeEnded;
 
         public Action OnIncomingCallAnswered;
         public Action OnCallStopped;
@@ -44,6 +44,7 @@ public class PhonecallManager : MonoBehaviour
     private float outgoingCallTimer;
 
     public ContactSO[] ContactList => contactList;
+    public Call CurrentCall => currentCall;
 
     private void Awake()
     {
@@ -62,8 +63,6 @@ public class PhonecallManager : MonoBehaviour
 
         isOutgoingCallActive = false;
         outgoingCallTimer = 0;
-
-        TempStartCall();
     }
 
     private void Update()
@@ -74,6 +73,7 @@ public class PhonecallManager : MonoBehaviour
             if (outgoingCallTimer <= 0)
             {
                 AnswerOutgoingCall();
+                Debug.Log("sdfsdf");
             }
             else
             {
@@ -96,29 +96,18 @@ public class PhonecallManager : MonoBehaviour
         currentCall = call;
         NewCallStarted?.Invoke(call);
 
-        if (call.CanEndCallGameEvents != null)
-        {
-            OnCanEndCall?.Invoke(false);
-            foreach (var gameEvent in call.CanEndCallGameEvents)
-            {
-                gameEvent.EventRaised += SetCanEndCall;
-            }
-        }
-        else
-        {
-            OnCanEndCall?.Invoke(true);
-        }
+        OnCanEndCall?.Invoke(call.CanBeEnded);
 
         return call;
     }
 
-    private Call StartCall(CallType callType, ContactSO contactSO)
+    private Call StartCall(CallType callType, ContactSO contactSO, bool canBeEnded)
     {
         return StartCall(new Call()
         {
             CallType = callType,
             ContactSO = contactSO,
-            CanEndCallGameEvents = contactSO.CanEndCallGameEvents
+            CanBeEnded = canBeEnded
         });
     }
 
@@ -195,25 +184,21 @@ public class PhonecallManager : MonoBehaviour
         currentCall = null;
     }
 
-    private void SetCanEndCall()
+    public void SetCanEndCall()
     {
         OnCanEndCall?.Invoke(true);
-        foreach (var gameEvent in currentCall.CanEndCallGameEvents)
-        {
-            gameEvent.EventRaised -= SetCanEndCall;
-        }
     }
 
-    public Call StartIncomingCall(ContactSO contactSO)
+    public Call StartIncomingCall(ContactSO contactSO, bool canBeEnded)
     {
-        return StartCall(CallType.IncomingCall, contactSO);
+        return StartCall(CallType.IncomingCall, contactSO, canBeEnded);
     }
 
     public Call StartOutcomingCall(ContactSO contactSO)
     {
         if (currentCall == null)
         {
-            Call newCall = StartCall(CallType.OutgoingCall, contactSO);
+            Call newCall = StartCall(CallType.OutgoingCall, contactSO, true);
             outgoingCallStartedGameEvent.RaiseEvent(contactSO);
             contactSO.InvokeOutgoingCallGameEvents();
             isOutgoingCallActive = true;
@@ -227,10 +212,4 @@ public class PhonecallManager : MonoBehaviour
             return null;
         }
     }
-
-    public Call TempStartCall()
-    {
-        return StartIncomingCall(ContactList[0]);
-    }
-
 }

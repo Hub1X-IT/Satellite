@@ -22,10 +22,6 @@ public class ContactSO : ScriptableObject
     [SerializeField]
     private GameEventSO[] callEndedGameEvents;
 
-    // Probably temporary
-    [Tooltip("Game events that trigger the ability to end the call; when left empty, the call can be ended from the beginning")]
-    public GameEventSO[] CanEndCallGameEvents;
-
     [Tooltip("Default value for the receiver's ability to answer the phone when the player is calling")]
     [SerializeField]
     private bool phoneCanBeAnsweredDefault;

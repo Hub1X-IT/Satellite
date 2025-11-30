@@ -9,6 +9,7 @@ using Unity.Properties;
 public partial class StartIncomingCallAction : Action
 {
     [SerializeReference] public BlackboardVariable<ContactSO> Contact;
+    [SerializeReference] public BlackboardVariable<bool> CanBeEnded = new(true);
     [SerializeReference] public BlackboardVariable<bool> WaitForCallToBeAnswered = new(false);
 
     private PhonecallManager.Call call;
@@ -20,7 +21,7 @@ public partial class StartIncomingCallAction : Action
             return Status.Failure;
         }
 
-        call = PhonecallManager.Instance.StartIncomingCall(Contact.Value);
+        call = PhonecallManager.Instance.StartIncomingCall(Contact.Value, CanBeEnded.Value);
 
         if (call == null)
         {
