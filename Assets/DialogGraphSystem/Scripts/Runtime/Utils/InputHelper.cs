@@ -11,6 +11,10 @@ namespace DialogSystem.Runtime.Utils
     public static class InputHelper
     {
         public static bool doDebug = false;
+        // When true, keyboard keys are ignored for dialog advance/skip/choice input.
+        public static bool IgnoreKeyboardInput = false;
+    // When true, all player input (keyboard/mouse/gamepad/touch/XR) is ignored.
+    public static bool IgnoreAllPlayerInput = false;
 
         private static float _lastAdvanceTime;
         private const float ADVANCE_COOLDOWN = 0.15f;
@@ -28,13 +32,17 @@ namespace DialogSystem.Runtime.Utils
         // ------------------------------------------------------------------------------------
         public static bool CheckGenericAdvanceInput()
         {
+            if (IgnoreAllPlayerInput) return false;
             if (Time.time - _lastAdvanceTime < ADVANCE_COOLDOWN) return false;
             EnsureNewInputReflectionInitialized();
 
 #if ENABLE_INPUT_SYSTEM
             try
             {
-                if (WasPressedThisFrameOnControl(_keyboardType, "current", "anyKey")) return RegisterAdvance();
+                if (!IgnoreKeyboardInput)
+                {
+                    if (WasPressedThisFrameOnControl(_keyboardType, "current", "anyKey")) return RegisterAdvance();
+                }
                 if (WasPressedThisFrameOnControl(_mouseType, "current", "leftButton")) return RegisterAdvance();
                 if (WasPressedThisFrameOnNestedControl(_touchType, "current", "primaryTouch", "press")) return RegisterAdvance();
 
@@ -71,6 +79,11 @@ namespace DialogSystem.Runtime.Utils
         /// <summary>True if the configured letter/digit was pressed this frame.</summary>
         public static bool WasLetterPressedThisFrame(char letterOrDigit)
         {
+            if (IgnoreAllPlayerInput) return false;
+    #if ENABLE_INPUT_SYSTEM
+            // If keyboard-only ignoring is enabled, never report letter presses.
+            if (IgnoreKeyboardInput) return false;
+    #endif
             char c = char.ToUpperInvariant(letterOrDigit);
 #if ENABLE_LEGACY_INPUT_MANAGER
             if (IsAlphaPressedLegacy(c) || IsDigitPressedLegacy(c)) return true;
@@ -97,9 +110,13 @@ namespace DialogSystem.Runtime.Utils
         /// <summary>Return/Enter/Space.</summary>
         public static bool WasSubmitPressedThisFrame()
         {
+            if (IgnoreAllPlayerInput) return false;
 #if ENABLE_LEGACY_INPUT_MANAGER
-            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Space))
-                return true;
+            if (!IgnoreKeyboardInput)
+            {
+                if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Space))
+                    return true;
+            }
             if (Input.GetButtonDown("Submit")) return true;
 #endif
 #if ENABLE_INPUT_SYSTEM
@@ -120,6 +137,7 @@ namespace DialogSystem.Runtime.Utils
         /// <summary>Gamepad South/East/Start.</summary>
         public static bool WasGamepadConfirmPressedThisFrame()
         {
+            if (IgnoreAllPlayerInput) return false;
 #if ENABLE_INPUT_SYSTEM
             try
             {
@@ -150,18 +168,23 @@ namespace DialogSystem.Runtime.Utils
         {
             EnsureNewInputReflectionInitialized();
 
+            if (IgnoreAllPlayerInput) return false;
+
 #if ENABLE_INPUT_SYSTEM
             try
             {
                 if (IsPressedOnControl(_mouseType, "current", "leftButton")) return true;
                 if (IsPressedOnNestedControl(_touchType, "current", "primaryTouch", "press")) return true;
 
-                var kb = _keyboardType?.GetProperty("current")?.GetValue(null);
-                if (kb != null)
+                if (!IgnoreKeyboardInput)
                 {
-                    if (IsPressedOnProperty(kb, "spaceKey")) return true;
-                    if (IsPressedOnProperty(kb, "enterKey")) return true;
-                    if (IsPressedOnProperty(kb, "numpadEnterKey")) return true;
+                    var kb = _keyboardType?.GetProperty("current")?.GetValue(null);
+                    if (kb != null)
+                    {
+                        if (IsPressedOnProperty(kb, "spaceKey")) return true;
+                        if (IsPressedOnProperty(kb, "enterKey")) return true;
+                        if (IsPressedOnProperty(kb, "numpadEnterKey")) return true;
+                    }
                 }
 
                 var pad = _gamepadType?.GetProperty("current")?.GetValue(null);
@@ -187,7 +210,10 @@ namespace DialogSystem.Runtime.Utils
                     return true;
             }
 
-            if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Return)) return true;
+            if (!IgnoreKeyboardInput)
+            {
+                if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Return)) return true;
+            }
             if (Input.GetButton("Submit") || Input.GetButton("Fire1") || Input.GetButton("Jump")) return true;
 #endif
             return false;
@@ -198,6 +224,10 @@ namespace DialogSystem.Runtime.Utils
         // ------------------------------------------------------------------------------------
         public static bool WasNumberKeyPressedThisFrame(int n)
         {
+            if (IgnoreAllPlayerInput) return false;
+    #if ENABLE_INPUT_SYSTEM
+            if (IgnoreKeyboardInput) return false;
+    #endif
 #if ENABLE_LEGACY_INPUT_MANAGER
             if (n >= 0 && n <= 9)
             {
@@ -223,8 +253,12 @@ namespace DialogSystem.Runtime.Utils
 
         public static bool WasMoveUpPressedThisFrame()
         {
+            if (IgnoreAllPlayerInput) return false;
 #if ENABLE_LEGACY_INPUT_MANAGER
-            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) return true;
+            if (!IgnoreKeyboardInput)
+            {
+                if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) return true;
+            }
 #endif
 #if ENABLE_INPUT_SYSTEM
             try
@@ -232,8 +266,11 @@ namespace DialogSystem.Runtime.Utils
                 var kb = _keyboardType?.GetProperty("current")?.GetValue(null);
                 if (kb != null)
                 {
-                    if (WasPressedThisFrameOnProperty(kb, "upArrowKey")) return true;
-                    if (WasPressedThisFrameOnProperty(kb, "wKey")) return true;
+                    if (!IgnoreKeyboardInput)
+                    {
+                        if (WasPressedThisFrameOnProperty(kb, "upArrowKey")) return true;
+                        if (WasPressedThisFrameOnProperty(kb, "wKey")) return true;
+                    }
                 }
             } catch { }
 #endif
@@ -242,8 +279,12 @@ namespace DialogSystem.Runtime.Utils
 
         public static bool WasMoveDownPressedThisFrame()
         {
+            if (IgnoreAllPlayerInput) return false;
 #if ENABLE_LEGACY_INPUT_MANAGER
-            if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S)) return true;
+            if (!IgnoreKeyboardInput)
+            {
+                if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S)) return true;
+            }
 #endif
 #if ENABLE_INPUT_SYSTEM
             try
@@ -251,8 +292,11 @@ namespace DialogSystem.Runtime.Utils
                 var kb = _keyboardType?.GetProperty("current")?.GetValue(null);
                 if (kb != null)
                 {
-                    if (WasPressedThisFrameOnProperty(kb, "downArrowKey")) return true;
-                    if (WasPressedThisFrameOnProperty(kb, "sKey")) return true;
+                    if (!IgnoreKeyboardInput)
+                    {
+                        if (WasPressedThisFrameOnProperty(kb, "downArrowKey")) return true;
+                        if (WasPressedThisFrameOnProperty(kb, "sKey")) return true;
+                    }
                 }
             } catch { }
 #endif

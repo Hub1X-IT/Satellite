@@ -47,6 +47,10 @@ namespace DialogSystem.Runtime.Core
         [Header("Overrides (Optional)")]
         [SerializeField] private DialogTextSettings localTextSettings;
         [SerializeField] private DialogAudioSettings localAudioSettings;
+
+        [Header("Input")]
+        [Tooltip("If set, all player input (keyboard/mouse/gamepad/touch/XR) will be ignored while a dialog is active. Auto-advance still functions.")]
+        public bool disablePlayerInputDuringDialog = false;
         #endregion
 
         #region ---------------- Events ----------------
@@ -215,6 +219,9 @@ namespace DialogSystem.Runtime.Core
             uiPanel.skipButton?.SetActive(CanSkipAll());
 
             conversationActive = true;
+            // Optionally disable player input while dialog is active (blocks keyboard/mouse/gamepad/touch/XR).
+            if (disablePlayerInputDuringDialog)
+                InputHelper.IgnoreAllPlayerInput = true;
             OnDialogEndedCallback = onDialogEnded;
 
             OnConversationReset?.Invoke();
@@ -648,6 +655,9 @@ namespace DialogSystem.Runtime.Core
         {
             conversationActive = false;
 
+            // Re-enable player input when dialog ends.
+            InputHelper.IgnoreAllPlayerInput = false;
+
             CancelAutoAdvance();
             SafeStopTyping();
             StopAudio(ShouldFadeOutOnStop());
@@ -760,6 +770,8 @@ namespace DialogSystem.Runtime.Core
             StopAudioImmediate();
             pendingChoiceFromDialog = null;
             pendingNextGuidAfterDialog = null;
+            // Ensure player input is restored during cleanup
+            InputHelper.IgnoreAllPlayerInput = false;
         }
         #endregion
 
