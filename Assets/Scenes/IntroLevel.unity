@@ -372,6 +372,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d204022a59e2014ba4a6d647f002159, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &96976411 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9021286452948080392, guid: ffa1e613c48388f42aaf064733a34462, type: 3}
+  m_PrefabInstance: {fileID: 1140843862}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1b8064c4a1e24648b1943277474990c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &133324308
 GameObject:
   m_ObjectHideFlags: 0
@@ -2409,6 +2420,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 979979600}
     - target: {fileID: 8295782187248086010, guid: ffa1e613c48388f42aaf064733a34462, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8295782187248086010, guid: ffa1e613c48388f42aaf064733a34462, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0.02557373
       objectReference: {fileID: 0}
@@ -2593,7 +2608,7 @@ MonoBehaviour:
   m_Graph: {fileID: 36955999125407004, guid: 595bdc0c3ca4b4a32954a8b7801bf29d, type: 2}
   m_BlackboardVariableOverridesList:
   - rid: 8423081083816903107
-  - rid: 8423081083816903108
+  - rid: 8423081097232909310
   - rid: 8423081083816903404
   m_OriginalGraph: {fileID: 0}
   m_IsInitialised: 0
@@ -2609,14 +2624,6 @@ MonoBehaviour:
           m_Value1: 0
         Name: Self
         m_Value: {fileID: 1198099349}
-    - rid: 8423081083816903108
-      type: {class: 'BlackboardVariable`1[[UnityEngine.Playables.PlayableDirector, UnityEngine.DirectorModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 4635912483066292730
-          m_Value1: 17195084529719317900
-        Name: EscapeCutscene
-        m_Value: {fileID: 489091049}
     - rid: 8423081083816903404
       type: {class: 'BlackboardVariable`1[[UnityEngine.Playables.PlayableDirector, UnityEngine.DirectorModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -2625,6 +2632,14 @@ MonoBehaviour:
           m_Value1: 16963580325008456966
         Name: IntroCutscene
         m_Value: {fileID: 2146558231}
+    - rid: 8423081097232909310
+      type: {class: 'BlackboardVariable`1[[Interactable, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 16132014912764879636
+          m_Value1: 6001264178443321417
+        Name: MonitorInteractable
+        m_Value: {fileID: 96976411}
 --- !u!1001 &1251215948
 PrefabInstance:
   m_ObjectHideFlags: 0
