@@ -8,12 +8,6 @@ public class ObjectivesManager : MonoBehaviour
     public event Action<string> OnObjectiveChanged;
     public event Action<string> OnChapterChanged;
 
-    [SerializeField]
-    private string defaultChapter;
-
-    [SerializeField]
-    private string defaultObjective;
-
     private string currentChapter;
     private string currentObjective;
 
@@ -26,12 +20,6 @@ public class ObjectivesManager : MonoBehaviour
             return;
         }
         Instance = this;
-    }
-
-    private void Start()
-    {
-        SetChapter(defaultChapter);
-        SetObjective(defaultObjective);
     }
 
     public void SetChapter(string chapter)
