@@ -194,8 +194,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a66628471fc2f4c8d34864fb6dfb7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultChapter: 
-  defaultObjective: 
 --- !u!1 &2190563738922611775
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,21 +666,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e165103cf726a4e83e90a3ba7d9c71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doDebugLog: 0
-  dialogGraphs:
-  - dialogGraph: {fileID: 0}
-    dialogID: 
+  doDebug: 0
+  dialogGraphs: []
   uiPanel: {fileID: 0}
-  typingSpeed: 0.01
-  delayBeforeAutoNext: 1
-  allowSkipLine: 0
-  allowSkipAll: 0
-  autoPlay: 0
   audioSource: {fileID: 0}
-  stopAudioOnSkipLine: 1
-  stopAudioOnSkipAll: 1
-  fadeOutAudioOnStop: 1
-  audioFadeOutTime: 0.08
+  localTextSettings: {fileID: 0}
+  localAudioSettings: {fileID: 0}
+  disablePlayerInputDuringDialog: 1
   actionRunner: {fileID: 5525984971406606873}
 --- !u!114 &5525984971406606873
 MonoBehaviour:

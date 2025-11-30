@@ -1304,6 +1304,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4940343725290271655, guid: 521f4f33850a94934b739a08a383275d, type: 3}
   m_PrefabInstance: {fileID: 1529821643}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &573505916
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 573505917}
+  - component: {fileID: 573505918}
+  m_Layer: 0
+  m_Name: TempGameEnd
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &573505917
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573505916}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 710156001}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &573505918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573505916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d607330be81d42f24808c58dc0f05874, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEndTrigger: {fileID: 0}
+  onDemandSceneChange: {fileID: 1473525579}
 --- !u!1 &617131693
 GameObject:
   m_ObjectHideFlags: 0
@@ -1523,6 +1569,7 @@ Transform:
   - {fileID: 538899896}
   - {fileID: 938275799}
   - {fileID: 648160405}
+  - {fileID: 573505917}
   - {fileID: 1135550205}
   - {fileID: 133324309}
   - {fileID: 1251215949}
@@ -2374,14 +2421,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 979979600}
-    - target: {fileID: 8295782187248086010, guid: ffa1e613c48388f42aaf064733a34462, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8295782187248086010, guid: ffa1e613c48388f42aaf064733a34462, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.024841309
-      objectReference: {fileID: 0}
     - target: {fileID: 8975780131838843673, guid: ffa1e613c48388f42aaf064733a34462, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2737,26 +2776,6 @@ PrefabInstance:
     - target: {fileID: 2120693372210763740, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3590736367100869470, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4495773547002825661, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4495773547002825661, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4495773547002825661, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 925
-      objectReference: {fileID: 0}
-    - target: {fileID: 4495773547002825661, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -365
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3386,14 +3405,6 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 1613564726}
-    - target: {fileID: 6330661084763740754, guid: 521f4f33850a94934b739a08a383275d, type: 3}
-      propertyPath: dialogGraphs.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6330661084763740754, guid: 521f4f33850a94934b739a08a383275d, type: 3}
-      propertyPath: disablePlayerInputDuringDialog
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7359877122897950271, guid: 521f4f33850a94934b739a08a383275d, type: 3}
       propertyPath: startCommandPrograms.Array.data[0].ObjectiveGameEvent
       value: 
