@@ -1,0 +1,143 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7351163723451944705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55265cca116f3b342880f5f5267e3a6c, type: 3}
+  m_Name: Node_Sp1k3_3
+  m_EditorClassIdentifier: 
+  GUID: 7c712f0ae2634574b14ea99fd87da3aa
+  nodePosition: {x: 2655, y: 17}
+  speakerName: Samantha 'Sp1k3' Sanders
+  speakerPortrait: {fileID: 1404054415, guid: 1411c556917327a4f89be15b7d4149f2, type: 3}
+  questionText: And, you're good to go. The doors in the back are remotely controlled.
+    You can access them through the security chief's computer.
+  dialogAudio: {fileID: 8300000, guid: 7b90bce02884699409a869a93b281fac, type: 3}
+  displayTime: 7.9
+--- !u!114 &-500589758289497767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55265cca116f3b342880f5f5267e3a6c, type: 3}
+  m_Name: Node_Sp1k3_2
+  m_EditorClassIdentifier: 
+  GUID: 0c78c7b265b846d8aed0136c3576c254
+  nodePosition: {x: 2186, y: 33}
+  speakerName: Samantha 'Sp1k3' Sanders
+  speakerPortrait: {fileID: 1404054415, guid: 1411c556917327a4f89be15b7d4149f2, type: 3}
+  questionText: Good, we're going in. Engine is gonna plug you into the mainframe.
+  dialogAudio: {fileID: 8300000, guid: e03edbe1a4df05f459a960b146669da6, type: 3}
+  displayTime: 4.8
+--- !u!114 &-105502349875470562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55265cca116f3b342880f5f5267e3a6c, type: 3}
+  m_Name: Node_Sp1k3_1
+  m_EditorClassIdentifier: 
+  GUID: 140baa22d33d478fbcaf69d4ae6bea54
+  nodePosition: {x: 1232, y: 40}
+  speakerName: Samantha 'Sp1k3' Sanders
+  speakerPortrait: {fileID: 1404054415, guid: 1411c556917327a4f89be15b7d4149f2, type: 3}
+  questionText: Me and the boys are ready near the bank, how 'bout you?
+  dialogAudio: {fileID: 8300000, guid: 79821a53392862a4f91c03b929cdbc33, type: 3}
+  displayTime: 2.7
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c45c6e4622be54698e67e4868db7e5, type: 3}
+  m_Name: Intro2ndCall
+  m_EditorClassIdentifier: 
+  links:
+  - fromGuid: fdf2d666ddb943049a9cb532615bf747
+    toGuid: 140baa22d33d478fbcaf69d4ae6bea54
+    fromPortIndex: 0
+  - fromGuid: 140baa22d33d478fbcaf69d4ae6bea54
+    toGuid: 4532dcb0098a4e66b4e2174da638c6db
+    fromPortIndex: 0
+  - fromGuid: 4532dcb0098a4e66b4e2174da638c6db
+    toGuid: 0c78c7b265b846d8aed0136c3576c254
+    fromPortIndex: 0
+  - fromGuid: 0c78c7b265b846d8aed0136c3576c254
+    toGuid: 7c712f0ae2634574b14ea99fd87da3aa
+    fromPortIndex: 0
+  - fromGuid: 7c712f0ae2634574b14ea99fd87da3aa
+    toGuid: dd8af45843e945e7806c6604d9962fa3
+    fromPortIndex: 0
+  - fromGuid: dd8af45843e945e7806c6604d9962fa3
+    toGuid: bcdee634e4db4c299880ba897e5d197a
+    fromPortIndex: 0
+  nodes:
+  - {fileID: 3552390385413164178}
+  - {fileID: -105502349875470562}
+  - {fileID: 4189188126734088521}
+  - {fileID: -500589758289497767}
+  - {fileID: -7351163723451944705}
+  choiceNodes: []
+  actionNodes: []
+  startGuid: fdf2d666ddb943049a9cb532615bf747
+  startPosition: {x: 1031, y: 120}
+  startInitialized: 1
+  endGuid: bcdee634e4db4c299880ba897e5d197a
+  endPosition: {x: 3707, y: 114}
+  endInitialized: 1
+--- !u!114 &3552390385413164178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55265cca116f3b342880f5f5267e3a6c, type: 3}
+  m_Name: Node_Lucas_1
+  m_EditorClassIdentifier: 
+  GUID: 4532dcb0098a4e66b4e2174da638c6db
+  nodePosition: {x: 1697, y: 30}
+  speakerName: Lucas Miller
+  speakerPortrait: {fileID: 1496524356, guid: b24d71c447cbe7c48a76dec10dda424c, type: 3}
+  questionText: Same here.
+  dialogAudio: {fileID: 8300000, guid: 394022d1a7e5e7b468f06611a2776d2c, type: 3}
+  displayTime: 1
+--- !u!114 &4189188126734088521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55265cca116f3b342880f5f5267e3a6c, type: 3}
+  m_Name: Node_Lucas_2
+  m_EditorClassIdentifier: 
+  GUID: dd8af45843e945e7806c6604d9962fa3
+  nodePosition: {x: 3186, y: 7}
+  speakerName: Lucas Miller
+  speakerPortrait: {fileID: 1496524356, guid: b24d71c447cbe7c48a76dec10dda424c, type: 3}
+  questionText: Give me a sec.
+  dialogAudio: {fileID: 8300000, guid: 43aefcdfecc9b3e47870291d23161ed1, type: 3}
+  displayTime: 1

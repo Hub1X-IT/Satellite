@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-500589758289497767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55265cca116f3b342880f5f5267e3a6c, type: 3}
+  m_Name: Node_Samantha_1
+  m_EditorClassIdentifier: 
+  GUID: 0c78c7b265b846d8aed0136c3576c254
+  nodePosition: {x: 1802, y: 35}
+  speakerName: Samantha 'Sp1k3' Sanders
+  speakerPortrait: {fileID: 1404054415, guid: 1411c556917327a4f89be15b7d4149f2, type: 3}
+  questionText: I knew you had it!
+  dialogAudio: {fileID: 8300000, guid: 0af84224ac690df4d8fc2af6b9e9022a, type: 3}
+  displayTime: 1.2
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c45c6e4622be54698e67e4868db7e5, type: 3}
+  m_Name: Intro2ndCallPart3
+  m_EditorClassIdentifier: 
+  links:
+  - fromGuid: 4532dcb0098a4e66b4e2174da638c6db
+    toGuid: 0c78c7b265b846d8aed0136c3576c254
+    fromPortIndex: 0
+  - fromGuid: fdf2d666ddb943049a9cb532615bf747
+    toGuid: 4532dcb0098a4e66b4e2174da638c6db
+    fromPortIndex: 0
+  - fromGuid: 0c78c7b265b846d8aed0136c3576c254
+    toGuid: bcdee634e4db4c299880ba897e5d197a
+    fromPortIndex: 0
+  nodes:
+  - {fileID: 3552390385413164178}
+  - {fileID: -500589758289497767}
+  choiceNodes: []
+  actionNodes: []
+  startGuid: fdf2d666ddb943049a9cb532615bf747
+  startPosition: {x: 1031, y: 120}
+  startInitialized: 1
+  endGuid: bcdee634e4db4c299880ba897e5d197a
+  endPosition: {x: 2307, y: 114}
+  endInitialized: 1
+--- !u!114 &3552390385413164178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55265cca116f3b342880f5f5267e3a6c, type: 3}
+  m_Name: Node_Lucas_1
+  m_EditorClassIdentifier: 
+  GUID: 4532dcb0098a4e66b4e2174da638c6db
+  nodePosition: {x: 1266, y: 41}
+  speakerName: Lucas Miller
+  speakerPortrait: {fileID: 1496524356, guid: b24d71c447cbe7c48a76dec10dda424c, type: 3}
+  questionText: Okay, I got the password. All I need is to type it in and open the
+    damn doors.
+  dialogAudio: {fileID: 8300000, guid: d26a74f2a31cfe046820d234a6a9ad45, type: 3}
+  displayTime: 5

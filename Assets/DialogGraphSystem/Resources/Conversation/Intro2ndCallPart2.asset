@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7351163723451944705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55265cca116f3b342880f5f5267e3a6c, type: 3}
+  m_Name: Node_Samantha_2
+  m_EditorClassIdentifier: 
+  GUID: 7c712f0ae2634574b14ea99fd87da3aa
+  nodePosition: {x: 2905, y: 10}
+  speakerName: Samantha 'Sp1k3' Sanders
+  speakerPortrait: {fileID: 1404054415, guid: 1411c556917327a4f89be15b7d4149f2, type: 3}
+  questionText: Good, go get it for us.
+  dialogAudio: {fileID: 8300000, guid: 2539e271a4a1ff74298270c6fc19a750, type: 3}
+  displayTime: 2
+--- !u!114 &-500589758289497767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55265cca116f3b342880f5f5267e3a6c, type: 3}
+  m_Name: Node_Samantha_1
+  m_EditorClassIdentifier: 
+  GUID: 0c78c7b265b846d8aed0136c3576c254
+  nodePosition: {x: 1802, y: 35}
+  speakerName: Samantha 'Sp1k3' Sanders
+  speakerPortrait: {fileID: 1404054415, guid: 1411c556917327a4f89be15b7d4149f2, type: 3}
+  questionText: That was expectable, you still know how to do it right? You mentioned
+    finding the code, then you have to decompress it, right? And decode, I guess?
+  dialogAudio: {fileID: 8300000, guid: 26261217ed300d34a9211f753e25aad9, type: 3}
+  displayTime: 10.6
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c45c6e4622be54698e67e4868db7e5, type: 3}
+  m_Name: Intro2ndCallPart2
+  m_EditorClassIdentifier: 
+  links:
+  - fromGuid: 4532dcb0098a4e66b4e2174da638c6db
+    toGuid: 0c78c7b265b846d8aed0136c3576c254
+    fromPortIndex: 0
+  - fromGuid: fdf2d666ddb943049a9cb532615bf747
+    toGuid: 4532dcb0098a4e66b4e2174da638c6db
+    fromPortIndex: 0
+  - fromGuid: 0c78c7b265b846d8aed0136c3576c254
+    toGuid: dd8af45843e945e7806c6604d9962fa3
+    fromPortIndex: 0
+  - fromGuid: dd8af45843e945e7806c6604d9962fa3
+    toGuid: 7c712f0ae2634574b14ea99fd87da3aa
+    fromPortIndex: 0
+  - fromGuid: 7c712f0ae2634574b14ea99fd87da3aa
+    toGuid: bcdee634e4db4c299880ba897e5d197a
+    fromPortIndex: 0
+  nodes:
+  - {fileID: 3552390385413164178}
+  - {fileID: 4189188126734088521}
+  - {fileID: -500589758289497767}
+  - {fileID: -7351163723451944705}
+  choiceNodes: []
+  actionNodes: []
+  startGuid: fdf2d666ddb943049a9cb532615bf747
+  startPosition: {x: 1031, y: 120}
+  startInitialized: 1
+  endGuid: bcdee634e4db4c299880ba897e5d197a
+  endPosition: {x: 3707, y: 114}
+  endInitialized: 1
+--- !u!114 &3552390385413164178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55265cca116f3b342880f5f5267e3a6c, type: 3}
+  m_Name: Node_Lucas_1
+  m_EditorClassIdentifier: 
+  GUID: 4532dcb0098a4e66b4e2174da638c6db
+  nodePosition: {x: 1266, y: 41}
+  speakerName: Lucas Miller
+  speakerPortrait: {fileID: 1496524356, guid: b24d71c447cbe7c48a76dec10dda424c, type: 3}
+  questionText: Found it! It's password-protected.
+  dialogAudio: {fileID: 8300000, guid: 7595cf36984f71540946f96a324a272b, type: 3}
+  displayTime: 2.5
+--- !u!114 &4189188126734088521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55265cca116f3b342880f5f5267e3a6c, type: 3}
+  m_Name: Node_Lucas_2
+  m_EditorClassIdentifier: 
+  GUID: dd8af45843e945e7806c6604d9962fa3
+  nodePosition: {x: 2336, y: 15}
+  speakerName: Lucas Miller
+  speakerPortrait: {fileID: 1496524356, guid: b24d71c447cbe7c48a76dec10dda424c, type: 3}
+  questionText: You're kinda right actually, also I have my guidebook ready just
+    in case.
+  dialogAudio: {fileID: 8300000, guid: 643188773bb180d419c51e7ba8c8e4c5, type: 3}
+  displayTime: 4.6
