@@ -14,50 +14,52 @@ namespace DialogSystem.EditorTools.Windows
 {
     public class DialogGraphEditorWindow : EditorWindow
     {
-        #region -------------------- MENU --------------------
-
-        [MenuItem("Tools/Dialog/Dialog Graph")]
-        public static void Open()
-        {
-            var window = GetWindow<DialogGraphEditorWindow>();
-            window.titleContent = new GUIContent("Dialog Graph Editor");
-        }
-
-        #endregion
-
         #region -------------------- SETTINGS --------------------
+        [SerializeField] private bool doDebug = true;
 
         [SerializeField, Tooltip("Initial width of the Sidebar when shown.")]
         private float initialSidebarWidth = 340f;
 
+        private const string LastGraphPrefKey = "DialogGraph_LastGraphName";
         #endregion
 
         #region -------------------- STATE --------------------
-
         // Graph + layout
-        private DialogGraphView graphView;
-        private VisualElement toolbarWrapper;
-        private TwoPaneSplitView split;          // graph (left) | sidebar (right)
-        private VisualElement graphHost;         // container to keep GraphView sizing stable
-        private VisualElement rightSidebarRoot;  // sidebar container
-        private VisualElement soloHost;          // used when sidebar is collapsed
+        private DialogGraphView _graphView;
+        private VisualElement _toolbarWrapper;
+        private TwoPaneSplitView _split;          // graph (left) | sidebar (right)
+        private VisualElement _graphHost;         // container to keep GraphView sizing stable
+        private VisualElement _rightSidebarRoot;  // sidebar container
+        private VisualElement _soloHost;          // used when sidebar is collapsed
 
         // Toolbar widgets
-        private PopupField<string> graphPopup;
-        private Button addNodeBtn, loadBtn, saveBtn, clearBtn, toggleSidebarBtn;
+        private PopupField<string> _graphPopup;
+        private Button _addNodeBtn, _loadBtn, _saveBtn, _clearBtn, _toggleSidebarBtn;
 
         // Sidebar (separate class)
-        private EditorSidbarWindow editorSidebar;
+        private EditorSidbarWindow _editorSidebar;
 
         // Runtime
-        private string loadedGraphName;
-        private bool sidebarVisible = true;
-        private float sidebarWidthMemo = 440f;
+        private string _loadedGraphName;
+        private bool _sidebarVisible = true;
+        private float _sidebarWidthMemo = 440f;
+        #endregion
 
+        #region -------------------- STATIC API (Launcher entry) --------------------
+        /// <summary>
+        /// Called from DialogGraphLauncherWindow. Opens the editor and loads the given graph.
+        /// </summary>
+        public static void OpenWithGraph(string graphName)
+        {
+            var window = GetWindow<DialogGraphEditorWindow>();
+            window.titleContent = new GUIContent($"Dialog Graph - {graphName}");
+            window.Show();
+            window.Focus();
+            window.LoadGraphExternal(graphName);
+        }
         #endregion
 
         #region -------------------- UNITY --------------------
-
         private void OnEnable()
         {
             Undo.undoRedoPerformed += OnUndoRedoPerformed;
@@ -73,9 +75,12 @@ namespace DialogSystem.EditorTools.Windows
             Undo.undoRedoPerformed -= OnUndoRedoPerformed;
 
             // Auto-save if there’s a loaded graph
-            if (!string.IsNullOrEmpty(loadedGraphName) && graphView != null)
+            if (!string.IsNullOrEmpty(_loadedGraphName) && _graphView != null)
             {
-                graphView.SaveGraph(loadedGraphName);
+                _graphView.SaveGraph(_loadedGraphName);
+
+                PlayerPrefs.SetString(LastGraphPrefKey, _loadedGraphName);
+                PlayerPrefs.Save();
             }
 
             rootVisualElement.Clear();
@@ -83,94 +88,101 @@ namespace DialogSystem.EditorTools.Windows
 
         private void OnUndoRedoPerformed()
         {
-            if (!string.IsNullOrEmpty(loadedGraphName))
-            {
-                LoadGraph(loadedGraphName);
-                Repaint();
-            }
+            if (_graphView == null || string.IsNullOrEmpty(_loadedGraphName))
+                return;
+
+            // Cache current pan/zoom of the GraphView before we rebuild it.
+            var cachedPosition = _graphView.contentViewContainer.transform.position;
+            var cachedScale = _graphView.contentViewContainer.transform.scale;
+
+            // Reload the graph data (nodes, edges, etc.) so the view matches Undo state.
+            LoadGraph(_loadedGraphName, true);
+
+            // Restore camera (pan/zoom) so Undo does *not* jump back to the Start node.
+            _graphView.contentViewContainer.transform.position = cachedPosition;
+            _graphView.contentViewContainer.transform.scale = cachedScale;
+
+            Repaint();
         }
 
         #endregion
 
         #region -------------------- UI BUILD --------------------
-
         private void BuildUI()
         {
             rootVisualElement.Clear();
 
             // Top toolbar
-            toolbarWrapper = new VisualElement();
-            toolbarWrapper.AddToClassList("dlg-toolbar");
-            rootVisualElement.Add(toolbarWrapper);
+            _toolbarWrapper = new VisualElement();
+            _toolbarWrapper.AddToClassList("dlg-toolbar");
+            rootVisualElement.Add(_toolbarWrapper);
             GenerateToolbar();
 
             CreateGraphAndSidebar();
             CreateSplit();
 
-            sidebarWidthMemo = Mathf.Max(240f, initialSidebarWidth);
+            _sidebarWidthMemo = Mathf.Max(240f, initialSidebarWidth);
             UpdateSidebarToggleText();
         }
 
         private void CreateGraphAndSidebar()
         {
             // Graph
-            graphView = new DialogGraphView { name = "Dialog Graph" };
-            graphHost = new VisualElement();
-            graphHost.AddToClassList("dlg-graph-host");
-            graphHost.style.flexGrow = 1;
-            graphHost.Add(graphView);
-            graphView.StretchToParentSize();
+            _graphView = new DialogGraphView { name = "Dialog Graph" };
+            _graphHost = new VisualElement();
+            _graphHost.AddToClassList("dlg-graph-host");
+            _graphHost.style.flexGrow = 1;
+            _graphHost.Add(_graphView);
+            _graphView.StretchToParentSize();
 
             // Sidebar
-            rightSidebarRoot = new VisualElement();
-            rightSidebarRoot.AddToClassList("dlg-sidebar");
+            _rightSidebarRoot = new VisualElement();
+            _rightSidebarRoot.AddToClassList("dlg-sidebar");
 
-            editorSidebar = new EditorSidbarWindow(this);
-            rightSidebarRoot.Add(editorSidebar);
+            _editorSidebar = new EditorSidbarWindow(this);
+            _rightSidebarRoot.Add(_editorSidebar);
 
-            graphView?.EnsureStartEndNodes();
+            _graphView?.EnsureStartEndNodes();
         }
 
         private void CreateSplit()
         {
-            split = new TwoPaneSplitView(1, sidebarWidthMemo, TwoPaneSplitViewOrientation.Horizontal);
-            split.AddToClassList("dlg-split");
-            split.style.flexGrow = 1;
+            _split = new TwoPaneSplitView(1, _sidebarWidthMemo, TwoPaneSplitViewOrientation.Horizontal);
+            _split.AddToClassList("dlg-split");
+            _split.style.flexGrow = 1;
 
-            split.Add(graphHost);
-            split.Add(rightSidebarRoot);
+            _split.Add(_graphHost);
+            _split.Add(_rightSidebarRoot);
 
-            rootVisualElement.Add(split);
+            rootVisualElement.Add(_split);
         }
-
         #endregion
 
         #region -------------------- TOOLBAR --------------------
-
         private void GenerateToolbar()
         {
-            loadedGraphName = null;
+            _loadedGraphName = null;
 
-            graphPopup = CreateGraphPopup();
-            toolbarWrapper.Add(graphPopup);
+            _graphPopup = CreateGraphPopup();
+            _toolbarWrapper.Add(_graphPopup);
 
-            loadBtn = CreateButton("Load", TextResources.ICON_LOAD, "Load graph", OnClickLoad, "secondary");
-            toolbarWrapper.Add(loadBtn);
+            _loadBtn = CreateButton("Load", TextResources.ICON_LOAD, "Load graph", OnClickLoad, "secondary");
+            _toolbarWrapper.Add(_loadBtn);
 
-            toolbarWrapper.Add(MakeSpacer());
+            _toolbarWrapper.Add(MakeSpacer());
 
-            addNodeBtn = CreateButton("Add Node", TextResources.ICON_ADD, "Create a new node", OnClickAddNode, "success");
-            toolbarWrapper.Add(addNodeBtn);
+            _addNodeBtn = CreateButton("Add Node", TextResources.ICON_ADD, "Create a new node", OnClickAddNode, "success");
+            _toolbarWrapper.Add(_addNodeBtn);
 
-            saveBtn = CreateButton("Save", TextResources.ICON_SAVE, "Save graph", OnClickSave, "primary");
-            toolbarWrapper.Add(saveBtn);
+            _saveBtn = CreateButton("Save", TextResources.ICON_SAVE, "Save graph", OnClickSave, "primary");
+            _toolbarWrapper.Add(_saveBtn);
 
-            clearBtn = CreateButton("Clear", TextResources.ICON_CLEAR, "Clear current graph", OnClickClear, "danger");
-            toolbarWrapper.Add(clearBtn);
+            _clearBtn = CreateButton("Clear", TextResources.ICON_CLEAR, "Clear current graph", OnClickClear, "danger");
+            _toolbarWrapper.Add(_clearBtn);
 
-            toggleSidebarBtn = CreateButton("Hide Sidebar", TextResources.ICON_SIDEBAR, "Show/Hide Sidebar", ToggleSidebar, "secondary");
-            toggleSidebarBtn.style.marginLeft = 10;
-            toolbarWrapper.Add(toggleSidebarBtn);
+            _toggleSidebarBtn = CreateButton("Hide Sidebar", TextResources.ICON_SIDEBAR, "Show/Hide Sidebar", ToggleSidebar, "secondary");
+            _toggleSidebarBtn.style.marginLeft = 10;
+            _toolbarWrapper.Add(_toggleSidebarBtn);
         }
 
         private PopupField<string> CreateGraphPopup()
@@ -240,40 +252,94 @@ namespace DialogSystem.EditorTools.Windows
 
             return btn;
         }
-
         #endregion
 
         #region -------------------- TOOLBAR HANDLERS --------------------
-
         private void OnClickAddNode() => ShowCreateNodeMenu();
 
         private void OnClickLoad()
         {
-            var selected = graphPopup != null ? graphPopup.value : null;
+            var selected = _graphPopup != null ? _graphPopup.value : null;
             if (string.IsNullOrEmpty(selected))
             {
                 EditorUtility.DisplayDialog("No graph selected", "Please choose a graph from the popup.", "OK");
                 return;
             }
-            LoadGraph(selected);
+            LoadGraph(selected, false);
+            _loadedGraphName = selected;
+
+            if (doDebug)
+                Debug.Log($"[DialogGraphEditorWindow] Loaded graph '{selected}' via toolbar Load.");
+
+            _editorSidebar?.RebuildFromGraph();
+            PlayerPrefs.SetString(LastGraphPrefKey, selected);
+            PlayerPrefs.Save();
         }
 
         private void OnClickSave() => OpenSavePopup();
         private void OnClickClear() => ClearLoadedGraph();
-
         #endregion
 
         #region -------------------- SAVE / LOAD / CLEAR --------------------
+        /// <summary>
+        /// Entry used by the launcher to load/switch graphs.
+        /// Ensures UI, loads graph, updates popup, updates last-graph pref.
+        /// </summary>
+        internal void LoadGraphExternal(string graphName)
+        {
+            // Ensure UI exists
+            if (_graphView == null || _toolbarWrapper == null)
+            {
+                BuildUI();
+            }
+
+            // Auto-save currently loaded graph if switching
+            if (!string.IsNullOrEmpty(_loadedGraphName) &&
+                _loadedGraphName != graphName &&
+                _graphView != null)
+            {
+                _graphView.SaveGraph(_loadedGraphName);
+            }
+
+            LoadGraph(graphName, false);
+            _loadedGraphName = graphName;
+
+            // Refresh popup choices and select the requested graph
+            var names = GetAllGraphAssetNamesFallback();
+            if (!names.Contains(graphName))
+            {
+                names.Add(graphName);
+                names = names.Distinct().OrderBy(n => n).ToList();
+            }
+
+            if (_graphPopup != null)
+            {
+                _graphPopup.choices.Clear();
+                foreach (var n in names)
+                    _graphPopup.choices.Add(n);
+
+                if (_graphPopup.choices.Contains(graphName))
+                    _graphPopup.SetValueWithoutNotify(graphName);
+            }
+
+            _editorSidebar?.RebuildFromGraph();
+
+            PlayerPrefs.SetString(LastGraphPrefKey, graphName);
+            PlayerPrefs.Save();
+
+            if (doDebug)
+                Debug.Log($"[DialogGraphEditorWindow] Loaded graph '{graphName}' via launcher.");
+        }
 
         private void OpenSavePopup()
         {
             var existing = GetAllGraphAssetNamesFallback();
-            var suggestion = string.IsNullOrEmpty(loadedGraphName) ? "NewDialogGraph" : loadedGraphName;
-            bool isEmpty = graphView != null && graphView.IsGraphEmptyForSave();
+            var suggestion = string.IsNullOrEmpty(_loadedGraphName) ? "NewDialogGraph" : _loadedGraphName;
+            bool isEmpty = _graphView != null && _graphView.IsGraphEmptyForSave();
 
             SaveGraphPromptWindow.Open(
                 currentName: suggestion,
-                loadedGraphName: loadedGraphName,
+                loadedGraphName: _loadedGraphName,
                 existingNames: existing,
                 isGraphEmpty: isEmpty,
                 onConfirm: finalName =>
@@ -284,46 +350,64 @@ namespace DialogSystem.EditorTools.Windows
                     var namesAfter = GetAllGraphAssetNamesFallback();
                     if (namesAfter.Contains(finalName))
                     {
-                        var newPopup = CreateGraphPopup();
-                        toolbarWrapper.Insert(0, newPopup);
-                        toolbarWrapper.Remove(graphPopup);
-                        graphPopup = newPopup;
+                        _graphPopup.choices.Clear();
+                        foreach (var n in namesAfter)
+                            _graphPopup.choices.Add(n);
 
-                        var idx = namesAfter.IndexOf(finalName);
-                        if (idx >= 0 && graphPopup.choices.Count > idx)
-                            graphPopup.SetValueWithoutNotify(finalName);
+                        _graphPopup.SetValueWithoutNotify(finalName);
                     }
 
-                    loadedGraphName = finalName;
+                    _loadedGraphName = finalName;
+
+                    PlayerPrefs.SetString(LastGraphPrefKey, finalName);
+                    PlayerPrefs.Save();
+
+                    if (doDebug)
+                        Debug.Log($"[DialogGraphEditorWindow] Saved graph as '{finalName}'.");
                 }
             );
         }
 
-        private void SaveAsset(string fileName) => graphView.SaveGraph(fileName);
+        private void SaveAsset(string fileName) => _graphView.SaveGraph(fileName);
 
-        private void LoadGraph(string fileName)
+        private void LoadGraph(string fileName, bool onUndo)
         {
-            graphView.LoadGraph(fileName);
-            loadedGraphName = fileName;
-
-            editorSidebar.RebuildFromGraph();
+            _graphView.LoadGraph(fileName, onUndo);
+            _loadedGraphName = fileName;
+            _editorSidebar.RebuildFromGraph();
         }
 
         private void ClearLoadedGraph()
         {
-            graphView.ClearGraph();
-            loadedGraphName = null;
-            editorSidebar.ClearAll();
+            _graphView.ClearGraphWithConfirmation();
+            _editorSidebar.ClearAll();
         }
 
         private List<string> GetAllGraphAssetNamesFallback()
         {
-            if (!Directory.Exists(TextResources.GRAPHS_FOLDER)) return new List<string>();
+            if (!Directory.Exists(TextResources.GRAPHS_FOLDER) &&
+                !Directory.Exists(TextResources.CONVERSATION_FOLDER))
+                return new List<string>();
 
-            var assetPaths = Directory.GetFiles(TextResources.GRAPHS_FOLDER, "*.asset", SearchOption.AllDirectories)
-                .Where(path => !path.EndsWith(".meta"))
-                .Select(path => path.Replace('\\', '/'))
-                .ToList();
+            var assetPaths = new List<string>();
+
+            if (Directory.Exists(TextResources.GRAPHS_FOLDER))
+            {
+                assetPaths.AddRange(
+                    Directory.GetFiles(TextResources.GRAPHS_FOLDER, "*.asset", SearchOption.AllDirectories)
+                        .Where(path => !path.EndsWith(".meta"))
+                        .Select(path => path.Replace('\\', '/'))
+                );
+            }
+
+            if (Directory.Exists(TextResources.CONVERSATION_FOLDER))
+            {
+                assetPaths.AddRange(
+                    Directory.GetFiles(TextResources.CONVERSATION_FOLDER, "*.asset", SearchOption.AllDirectories)
+                        .Where(path => !path.EndsWith(".meta"))
+                        .Select(path => path.Replace('\\', '/'))
+                );
+            }
 
             List<string> validNames = new();
 
@@ -336,47 +420,45 @@ namespace DialogSystem.EditorTools.Windows
 
             return validNames.Distinct().OrderBy(n => n).ToList();
         }
-
         #endregion
 
         #region -------------------- SIDEBAR SHOW/HIDE --------------------
-
         public void ToggleSidebar()
         {
-            if (sidebarVisible) CollapseSidebar();
+            if (_sidebarVisible) CollapseSidebar();
             else ExpandSidebar();
         }
 
         private void CollapseSidebar()
         {
-            if (!sidebarVisible) return;
-            sidebarVisible = false;
+            if (!_sidebarVisible) return;
+            _sidebarVisible = false;
 
-            sidebarWidthMemo = Mathf.Max(240f, rightSidebarRoot.resolvedStyle.width);
+            _sidebarWidthMemo = Mathf.Max(240f, _rightSidebarRoot.resolvedStyle.width);
 
-            rootVisualElement.Remove(split);
+            rootVisualElement.Remove(_split);
 
-            if (soloHost == null)
+            if (_soloHost == null)
             {
-                soloHost = new VisualElement();
-                soloHost.AddToClassList("dlg-graph-host");
-                soloHost.style.flexGrow = 1;
+                _soloHost = new VisualElement();
+                _soloHost.AddToClassList("dlg-graph-host");
+                _soloHost.style.flexGrow = 1;
             }
 
-            graphHost.RemoveFromHierarchy();
-            soloHost.Add(graphHost);
-            rootVisualElement.Add(soloHost);
+            _graphHost.RemoveFromHierarchy();
+            _soloHost.Add(_graphHost);
+            rootVisualElement.Add(_soloHost);
 
             UpdateSidebarToggleText();
         }
 
         private void ExpandSidebar()
         {
-            if (sidebarVisible) return;
-            sidebarVisible = true;
+            if (_sidebarVisible) return;
+            _sidebarVisible = true;
 
-            if (soloHost != null && soloHost.parent != null)
-                rootVisualElement.Remove(soloHost);
+            if (_soloHost != null && _soloHost.parent != null)
+                rootVisualElement.Remove(_soloHost);
 
             CreateSplit();
             UpdateSidebarToggleText();
@@ -384,28 +466,26 @@ namespace DialogSystem.EditorTools.Windows
 
         private void UpdateSidebarToggleText()
         {
-            if (toggleSidebarBtn == null) return;
+            if (_toggleSidebarBtn == null) return;
 
-            toggleSidebarBtn.text = string.Empty;
-            var label = toggleSidebarBtn.Q<Label>();
+            _toggleSidebarBtn.text = string.Empty;
+            var label = _toggleSidebarBtn.Q<Label>();
             if (label != null)
-                label.text = sidebarVisible ? "Hide Sidebar" : "Show Sidebar";
+                label.text = _sidebarVisible ? "Hide Sidebar" : "Show Sidebar";
         }
-
         #endregion
 
         #region -------------------- HELPERS (exposed to sidebar) --------------------
-
-        internal DialogGraphView GetGraphView() => graphView;
+        internal DialogGraphView GetGraphView() => _graphView;
 
         internal IEnumerable<string> CollectSpeakersFromNodes()
         {
-            if (graphView == null) yield break;
+            if (_graphView == null) yield break;
 
-            foreach (var ge in graphView.nodes.ToList())
+            foreach (var ge in _graphView.nodes.ToList())
             {
                 if (ge is not DialogNodeView dnv) continue;
-                var speaker = dnv.SpeakerName;
+                var speaker = dnv.speakerName;
                 if (!string.IsNullOrWhiteSpace(speaker))
                     yield return speaker.Trim();
             }
@@ -413,16 +493,16 @@ namespace DialogSystem.EditorTools.Windows
 
         internal Sprite FindFirstSpriteForSpeaker(string speaker)
         {
-            if (graphView == null || string.IsNullOrWhiteSpace(speaker)) return null;
+            if (_graphView == null || string.IsNullOrWhiteSpace(speaker)) return null;
             var key = speaker.Trim();
 
-            foreach (var ge in graphView.nodes.ToList())
+            foreach (var ge in _graphView.nodes.ToList())
             {
                 if (ge is not DialogNodeView dnv) continue;
-                var s = dnv.SpeakerName;
+                var s = dnv.speakerName;
                 if (string.Equals(s?.Trim(), key, StringComparison.Ordinal))
                 {
-                    var spr = dnv.PortraitSprite;
+                    var spr = dnv.portraitSprite;
                     if (spr != null) return spr;
                 }
             }
@@ -437,12 +517,12 @@ namespace DialogSystem.EditorTools.Windows
 
         internal void ApplySpritesToNodes(List<CharacterBinding> bindings)
         {
-            if (graphView == null || bindings == null || bindings.Count == 0) return;
+            if (_graphView == null || bindings == null || bindings.Count == 0) return;
 
-            foreach (var ge in graphView.nodes.ToList())
+            foreach (var ge in _graphView.nodes.ToList())
             {
                 if (ge is not DialogNodeView dnv) continue;
-                var speaker = dnv.SpeakerName?.Trim();
+                var speaker = dnv.speakerName?.Trim();
                 if (string.IsNullOrEmpty(speaker)) continue;
 
                 var bind = bindings.FirstOrDefault(b =>
@@ -455,27 +535,27 @@ namespace DialogSystem.EditorTools.Windows
                 if (!string.IsNullOrEmpty(newName) && !string.Equals(newName, speaker, StringComparison.Ordinal))
                     dnv.SetSpeakerName(newName);
 
-                if (bind.sprite != null && bind.sprite != dnv.PortraitSprite)
+                if (bind.sprite != null && bind.sprite != dnv.portraitSprite)
                     dnv.SetPortraitSprite(bind.sprite);
 
                 dnv.MarkDirtyRepaint();
             }
 
-            graphView.schedule.Execute(() =>
+            _graphView.schedule.Execute(() =>
             {
-                foreach (var n in graphView.nodes.ToList()) n.MarkDirtyRepaint();
+                foreach (var n in _graphView.nodes.ToList()) n.MarkDirtyRepaint();
             }).ExecuteLater(16);
         }
 
         internal IEnumerable<ActionNodeView> CollectActionNodes()
         {
-            if (graphView == null) return Enumerable.Empty<ActionNodeView>();
-            return graphView.nodes.ToList().OfType<ActionNodeView>();
+            if (_graphView == null) return Enumerable.Empty<ActionNodeView>();
+            return _graphView.nodes.ToList().OfType<ActionNodeView>();
         }
 
         internal void ApplyActionsToNodes(List<ActionBinding> bindings)
         {
-            if (graphView == null || bindings == null || bindings.Count == 0) return;
+            if (_graphView == null || bindings == null || bindings.Count == 0) return;
 
             var actionViews = CollectActionNodes().ToList();
 
@@ -484,7 +564,7 @@ namespace DialogSystem.EditorTools.Windows
                 var originalKey = bind.originalActionId ?? "";
                 foreach (var av in actionViews)
                 {
-                    var curId = av.ActionId ?? "";
+                    var curId = av.actionId ?? "";
                     if (!string.Equals(curId, originalKey, StringComparison.Ordinal)) continue;
 
                     av.LoadNodeData(
@@ -498,7 +578,7 @@ namespace DialogSystem.EditorTools.Windows
                 }
             }
 
-            graphView.schedule.Execute(() =>
+            _graphView.schedule.Execute(() =>
             {
                 foreach (var n in actionViews) n.MarkDirtyRepaint();
             }).ExecuteLater(16);
@@ -507,7 +587,6 @@ namespace DialogSystem.EditorTools.Windows
         #endregion
 
         #region -------------------- DATA TYPES --------------------
-
         [Serializable]
         public class CharacterBinding
         {
@@ -525,46 +604,46 @@ namespace DialogSystem.EditorTools.Windows
             public bool waitForCompletion;
             public float waitSeconds;
         }
-
         #endregion
 
         #region -------------------- CREATE NODE MENU --------------------
-
         private void ShowCreateNodeMenu()
         {
             var menu = new GenericMenu();
 
             menu.AddItem(new GUIContent("Dialog"), false, () =>
             {
-                graphView?.CreateDialogNode("New Dialog", true);
+                _graphView?.CreateDialogNode("New Dialog", true);
             });
 
             menu.AddItem(new GUIContent("Choice"), false, () =>
             {
-                graphView?.CreateChoiceNode("Choice", true);
+                _graphView?.CreateChoiceNode("Choice", true);
             });
 
             menu.AddItem(new GUIContent("Action"), false, () =>
             {
-                graphView?.CreateActionNode("Action", true);
+                _graphView?.CreateActionNode("Action", true);
             });
 
             try
             {
-                if (addNodeBtn != null)
+                if (_addNodeBtn != null)
                 {
-                    var btnWorld = addNodeBtn.worldBound;
+                    var btnWorld = _addNodeBtn.worldBound;
                     var screenPos = new Vector2(position.x + btnWorld.x, position.y + btnWorld.y + btnWorld.height);
                     var anchor = new Rect(screenPos, new Vector2(1f, 1f));
                     menu.DropDown(anchor);
                     return;
                 }
             }
-            catch { /* fallback */ }
+            catch
+            {
+                // fallback
+            }
 
             menu.ShowAsContext();
         }
-
         #endregion
     }
 }

@@ -7,7 +7,7 @@ namespace DialogSystem.Runtime.Models.Nodes
     /// <summary>
     /// Presents a line of text and a list of selectable answers (choices).
     /// </summary>
-    [CreateAssetMenu(fileName = "ChoiceNode", menuName = "Dialog System/Choice Node")]
+    [CreateAssetMenu(fileName = "ChoiceNode", menuName = "Dialog System/Graph/Choice Node")]
     public class ChoiceNode : BaseNode
     {
         #region -------- Data --------
@@ -30,5 +30,6 @@ namespace DialogSystem.Runtime.Models.Nodes
 
         [Tooltip("Optional UnityEvent fired when this choice is selected.")]
         public UnityEvent onSelected = new UnityEvent();
+        public string tooltipOrSubLabel;
     }
 }

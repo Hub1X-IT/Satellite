@@ -6,6 +6,7 @@ namespace DialogSystem.Runtime.Models.Nodes
     /// Action node that triggers a runner action by <see cref="actionId"/>.
     /// Can optionally wait for completion and/or apply a pre-delay.
     /// </summary>
+    [CreateAssetMenu(fileName = "ActionNode", menuName = "Dialog System/Graph/Choice Node")]
     public class ActionNode : BaseNode
     {
         #region -------- Action --------

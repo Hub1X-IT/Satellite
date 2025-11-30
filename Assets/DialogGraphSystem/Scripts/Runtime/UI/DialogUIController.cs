@@ -1,118 +1,109 @@
+using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.UI;
 using DialogSystem.Runtime.Core;
+using DialogSystem.Runtime.Models.Nodes;
+using DialogSystem.Runtime.Settings.Panels;
 
 namespace DialogSystem.Runtime.UI
 {
-    /// <summary>
-    /// Lightweight UI bridge used by DialogManager to show/hide and bind dialog content.
-    /// </summary>
+    /// <summary>Bridge between DialogManager and concrete UI. Simple choice container (vertical).</summary>
     [DisallowMultipleComponent]
     public class DialogUIController : MonoBehaviour
     {
-        #region ---------------- Inspector - Main UI Elements ----------------
+        #region ---------------- Inspector ----------------
         [Header("Main UI Elements")]
         public GameObject panelRoot;
         public TextMeshProUGUI speakerName;
         public TextMeshProUGUI dialogText;
         public Image portraitImage;
-        #endregion
 
-        #region ---------------- Inspector - Choices UI ----------------
-        [Header("Choices UI")]
-        public Transform choicesContainer;
-        public GameObject choiceButtonPrefab;
-        #endregion
+        [Header("Choices UI (Vertical Container)")]
+        [SerializeField] private bool doDebug = true;
+        public Transform choicesContainer;     // Must have VerticalLayoutGroup + ContentSizeFitter
+        public GameObject choiceButtonPrefab;  // Prefab with Button + ChoiceButtonView on root
 
-        #region ---------------- Inspector - Skip Button ----------------
         [Header("Skip Button")]
         public GameObject skipButton;
-        #endregion
 
-        #region ---------------- Inspector - Panel Button ----------------
         [Header("Dialog Panel Btn")]
         public Button dialogPanelButton;
-        #endregion
 
-        #region ---------------- Inspector - AutoPlay ----------------
         [Header("AutoPlay Button Config")]
         public Button autoPlayButton;
         public GameObject pauseIcon;
         public GameObject playIcon;
         #endregion
 
-        #region ---------------- API - AutoPlay ----------------
-        /// <summary>
-        /// Toggles the manager's autoplay state and updates the play/pause icon.
-        /// Wire this to the autoplay button's onClick.
-        /// </summary>
+        #region ---------------- Public API ----------------
+        public void UpdateAutoPlayIcon(bool isAutoPlay)
+        { if (pauseIcon && playIcon) { pauseIcon.SetActive(isAutoPlay); playIcon.SetActive(!isAutoPlay); } }
+
         public void ToggleAutoPlayIcon()
         {
-            if (autoPlayButton == null || pauseIcon == null || playIcon == null) return;
-
             var mgr = DialogManager.Instance;
-            if (mgr == null) return;
-
-            bool isAutoPlay = mgr.ToggleAutoPlay();
-            UpdateAutoPlayIcon(isAutoPlay);
+            if (!mgr) return;
+            UpdateAutoPlayIcon(mgr.ToggleAutoPlay());
         }
 
-        /// <summary>
-        /// External sync for autoplay icon (e.g., on awake or when changed elsewhere).
-        /// </summary>
-        public void UpdateAutoPlayIcon(bool isAutoPlay)
-        {
-            if (autoPlayButton == null || pauseIcon == null || playIcon == null) return;
-            SafeSetActive(pauseIcon, isAutoPlay);
-            SafeSetActive(playIcon, !isAutoPlay);
-        }
-        #endregion
-
-        #region ---------------- API - Listeners ----------------
-        /// <summary>
-        /// Assigns the main panel click to reveal/advance dialog.
-        /// </summary>
         public void SetDialogPanelBtnListener(UnityAction action)
         {
-            if (dialogPanelButton == null || action == null) return;
+            if (!dialogPanelButton || action == null) return;
             dialogPanelButton.onClick.RemoveAllListeners();
             dialogPanelButton.onClick.AddListener(action);
         }
+
+        public void SetPanelVisible(bool v) => Safe(panelRoot, v);
+        public void SetSkipVisible(bool v) => Safe(skipButton, v);
+        public void SetChoicesVisible(bool v)
+        { if (choicesContainer) choicesContainer.gameObject.SetActive(v); }
+
+        public void SetSpeaker(string name) { if (speakerName) speakerName.text = name ?? string.Empty; }
+        public void SetText(string text) { if (dialogText) dialogText.text = text ?? string.Empty; }
+        public void SetPortrait(Sprite s) { if (portraitImage) portraitImage.sprite = s; }
         #endregion
 
-        #region ---------------- API - Convenience ----------------
-        public void SetPanelVisible(bool visible) => SafeSetActive(panelRoot, visible);
-        public void SetSkipVisible(bool visible) => SafeSetActive(skipButton, visible);
-
-        public void SetChoicesVisible(bool visible)
+        #region ---------------- Choices (simple build) ----------------
+        /// <summary>Destroys existing children and rebuilds one prefab per choice. No pooling.</summary>
+        public void BuildChoices(ChoiceNode node, DialogChoiceSettings settings, Action<int> onPick)
         {
-            if (choicesContainer != null)
-                choicesContainer.gameObject.SetActive(visible);
+            if (!choicesContainer || !choiceButtonPrefab)
+            {
+                if (doDebug) Debug.LogError("[DialogUIController] Choices UI not assigned.");
+                return;
+            }
+
+            // Clear
+            for (int i = choicesContainer.childCount - 1; i >= 0; i--)
+                Destroy(choicesContainer.GetChild(i).gameObject);
+
+            // Build
+            for (int i = 0; i < node.choices.Count; i++)
+            {
+                int idx = i;
+                var ch = node.choices[i];
+
+                var go = Instantiate(choiceButtonPrefab, choicesContainer);
+                var view = go.GetComponent<ChoiceButtonView>() ?? go.AddComponent<ChoiceButtonView>();
+                view.Init(DialogManager.Instance, idx, settings);
+                view.SetHotkey(string.Empty);
+                view.SetContent(ch.answerText, string.Empty, /*interactable*/ true, () => onPick?.Invoke(idx));
+            }
+
+            SetChoicesVisible(true);
         }
 
-        public void SetSpeaker(string name)
+        public void ClearChoices()
         {
-            if (speakerName != null) speakerName.text = name ?? string.Empty;
-        }
-
-        public void SetText(string text)
-        {
-            if (dialogText != null) dialogText.text = text ?? string.Empty;
-        }
-
-        public void SetPortrait(Sprite sprite)
-        {
-            if (portraitImage != null) portraitImage.sprite = sprite;
+            if (!choicesContainer) return;
+            for (int i = choicesContainer.childCount - 1; i >= 0; i--)
+                Destroy(choicesContainer.GetChild(i).gameObject);
+            SetChoicesVisible(false);
         }
         #endregion
 
-        #region ---------------- Helpers ----------------
-        private static void SafeSetActive(GameObject go, bool state)
-        {
-            if (go != null) go.SetActive(state);
-        }
-        #endregion
+        private static void Safe(GameObject go, bool v) { if (go) go.SetActive(v); }
     }
 }

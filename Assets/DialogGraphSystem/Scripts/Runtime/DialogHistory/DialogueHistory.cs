@@ -61,12 +61,12 @@ namespace DialogSystem.Runtime.DialogHistory
         #endregion
 
         #region -------- State --------
-        private readonly List<HistoryEntry> entries = new();
-        private bool isOpen;
-        private bool lastAutoPlayState;
+        private readonly List<HistoryEntry> _entries = new();
+        private bool _isOpen;
+        private bool _lastAutoPlayState;
 
         /// <summary>Current in-memory history buffer.</summary>
-        public IReadOnlyList<HistoryEntry> Entries => entries;
+        public IReadOnlyList<HistoryEntry> Entries => _entries;
         #endregion
 
         #region -------- Unity Lifecycle --------
@@ -110,16 +110,16 @@ namespace DialogSystem.Runtime.DialogHistory
         /// <summary>Adds a history entry, trimming the buffer if needed, and updates the view if open.</summary>
         private void Add(HistoryEntry e)
         {
-            entries.Add(e);
-            if (entries.Count > maxEntries) entries.RemoveAt(0);
-            if (isOpen && view != null) view.AppendItem(e);
+            _entries.Add(e);
+            if (_entries.Count > maxEntries) _entries.RemoveAt(0);
+            if (_isOpen && view != null) view.AppendItem(e);
         }
 
         /// <summary>Clears all history and refreshes the view if open.</summary>
         public void ClearAll()
         {
-            entries.Clear();
-            if (isOpen && view != null) view.Refresh(entries);
+            _entries.Clear();
+            if (_isOpen && view != null) view.Refresh(_entries);
         }
         #endregion
 
@@ -127,33 +127,33 @@ namespace DialogSystem.Runtime.DialogHistory
         /// <summary>Toggles the history panel open/closed.</summary>
         public void Toggle()
         {
-            if (isOpen) Close(); else Open();
+            if (_isOpen) Close(); else Open();
         }
 
         /// <summary>Opens the history panel and pauses dialog playback.</summary>
         public void Open()
         {
-            if (isOpen) return;
-            isOpen = true;
+            if (_isOpen) return;
+            _isOpen = true;
 
             if (manager != null)
             {
-                lastAutoPlayState = manager.autoPlay;
+                _lastAutoPlayState = manager.GetAutoPlayState();
                 manager.PauseForHistory();
             }
 
             if (view != null)
             {
                 view.Show();
-                view.Refresh(entries);
+                view.Refresh(_entries);
             }
         }
 
         /// <summary>Closes the history panel and resumes dialog (optionally restoring autoplay).</summary>
         public void Close()
         {
-            if (!isOpen) return;
-            isOpen = false;
+            if (!_isOpen) return;
+            _isOpen = false;
 
             if (view != null) view.Hide();
 
@@ -162,7 +162,7 @@ namespace DialogSystem.Runtime.DialogHistory
                 manager.ResumeAfterHistory();
 
                 // Resume autoplay only if opted in and it was on before opening.
-                if (resumeAutoplayOnClose && lastAutoPlayState && !manager.autoPlay)
+                if (resumeAutoplayOnClose && _lastAutoPlayState && !manager.GetAutoPlayState())
                     manager.ToggleAutoPlay();
             }
         }

@@ -9,7 +9,7 @@ namespace DialogSystem.Runtime.Models
     /// node collections (dialog/choice/action) and directed links between them.
     /// Start/End data is editor-facing for layout and entry/exit markers.
     /// </summary>
-    [CreateAssetMenu(fileName = "DialogGraph", menuName = "Dialog System/Dialog Graph")]
+    [CreateAssetMenu(fileName = "DialogGraph", menuName = "Dialog System/Graph/Dialog Graph", order = 0)]
     public class DialogGraph : ScriptableObject
     {
         #region -------- Graph Data --------

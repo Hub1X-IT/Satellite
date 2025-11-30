@@ -19,36 +19,40 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
     /// </summary>
     public class ChoiceNodeView : BaseNodeView<ChoiceNode>
     {
-        #region Layout
-        private const float NodeWidth = 400f;
-        private const float PortHolderWidth = 28f;
+        #region ---------------- Inspector / Debug ----------------
+        [SerializeField] private bool doDebug = false;
         #endregion
 
-        #region Data / Graph
+        #region ---------------- Layout ----------------
+        private const float NODE_WIDTH = 400f;
+        private const float PORT_HOLDER_WIDTH = 28f;
+        #endregion
+
+        #region ---------------- Data / Graph ----------------
         public string GUID { get; set; }
         public DialogGraphView graphView;
         #endregion
 
-        #region UI
-        private VisualElement answerSection;
-        private Button addAnswerBtn;
+        #region ---------------- UI ----------------
+        private VisualElement _answerSection;
+        private Button _addAnswerBtn;
 
         public Port inputPort;
-        public readonly List<Port> outputPorts = new(); // index == choice index
+        public readonly List<Port> outputPorts = new();   // index == choice index
         public readonly List<string> answers = new();
 
-        private static StyleSheet s_uss;
+        private static StyleSheet _s_uss;
         private bool _suppressAssetSync = false;
         #endregion
 
-        #region Asset helpers
+        #region ---------------- Asset helpers ----------------
         private static string CombineAssetPath(string folder, string fileWithExt)
             => $"{folder.TrimEnd('/')}/{fileWithExt.TrimStart('/')}";
 
         private DialogGraph GetAssetSafe()
         {
-            if (graphView == null || string.IsNullOrEmpty(graphView.GraphId)) return null;
-            var path = CombineAssetPath(TextResources.CONVERSATION_FOLDER, $"{graphView.GraphId}.asset");
+            if (graphView == null || string.IsNullOrEmpty(graphView.graphId)) return null;
+            var path = CombineAssetPath(TextResources.CONVERSATION_FOLDER, $"{graphView.graphId}.asset");
             return AssetDatabase.LoadAssetAtPath<DialogGraph>(path);
         }
 
@@ -56,6 +60,15 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
         private ChoiceNode FindSoNode(DialogGraph asset)
         {
             if (asset == null || string.IsNullOrEmpty(GUID)) return null;
+
+            // Prefer the list on the asset if available
+            if (asset.choiceNodes != null && asset.choiceNodes.Count > 0)
+            {
+                var direct = asset.choiceNodes.FirstOrDefault(n => n != null && n.GetGuid() == GUID);
+                if (direct != null) return direct;
+            }
+
+            // Fallback: scan sub-assets at the same path (defensive)
             var path = AssetDatabase.GetAssetPath(asset);
             var subs = AssetDatabase.LoadAllAssetsAtPath(path);
             return subs.OfType<ChoiceNode>().FirstOrDefault(n => n != null && n.GetGuid() == GUID);
@@ -65,8 +78,11 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
         {
             if (_suppressAssetSync) return;
 
-            var asset = GetAssetSafe(); if (asset == null) return;
-            var soNode = FindSoNode(asset); if (soNode == null) return;
+            var asset = GetAssetSafe();
+            if (asset == null) return;
+
+            var soNode = FindSoNode(asset);
+            if (soNode == null) return;
 
             Undo.RecordObject(soNode, undoLabel);
             act(asset, soNode);
@@ -75,19 +91,22 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
         }
         #endregion
 
-        #region Ctor
+        #region ---------------- Ctor ----------------
         public ChoiceNodeView(string nodeTitle, DialogGraphView graph)
         {
             graphView = graph;
             GUID = Guid.NewGuid().ToString("N");
 
-            if (s_uss == null) s_uss = Resources.Load<StyleSheet>("USS/NodeViewUSS");
-            if (s_uss != null && !styleSheets.Contains(s_uss)) styleSheets.Add(s_uss);
+            if (_s_uss == null)
+                _s_uss = Resources.Load<StyleSheet>("USS/NodeViewUSS");
+
+            if (_s_uss != null && !styleSheets.Contains(_s_uss))
+                styleSheets.Add(_s_uss);
 
             AddToClassList("dlg-node");
             AddToClassList("type-choice");
 
-            style.width = NodeWidth;
+            style.width = NODE_WIDTH;
             title = "Choice Node";
 
             BuildHeader();
@@ -113,7 +132,7 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
         }
         #endregion
 
-        #region Header
+        #region ---------------- Header ----------------
         private void BuildHeader()
         {
             titleContainer?.AddToClassList("action-header");
@@ -128,21 +147,24 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
         }
         #endregion
 
-        #region Body
+        #region ---------------- Body ----------------
         private void BuildBody()
         {
-            answerSection = new VisualElement { name = "answers" };
-            answerSection.style.flexDirection = FlexDirection.Column;
-            answerSection.style.marginBottom = 4;
+            _answerSection = new VisualElement { name = "answers" };
+            _answerSection.style.flexDirection = FlexDirection.Column;
+            _answerSection.style.marginBottom = 4;
 
-            addAnswerBtn = new Button(() => AddChoicePort("New Choice", true)) { text = "+ Add Choice" };
+            _addAnswerBtn = new Button(() => AddChoicePort("New Choice", true))
+            {
+                text = "+ Add Choice"
+            };
 
-            mainContainer.Add(answerSection);
-            mainContainer.Add(addAnswerBtn);
+            mainContainer.Add(_answerSection);
+            mainContainer.Add(_addAnswerBtn);
         }
         #endregion
 
-        #region Ports
+        #region ---------------- Ports ----------------
         private void BuildPorts()
         {
             inputPort = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Multi, typeof(float));
@@ -160,7 +182,7 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
         }
         #endregion
 
-        #region Public API
+        #region ---------------- Public API ----------------
         /// <summary>Populate from a list of saved choices (no asset writes).</summary>
         public void LoadNodeData(IList<Choice> choiceList)
         {
@@ -173,7 +195,7 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
         {
             answers.Clear();
             outputPorts.Clear();
-            answerSection.Clear();
+            _answerSection.Clear();
 
             if (choiceList != null && choiceList.Count > 0)
             {
@@ -187,7 +209,7 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
         }
         #endregion
 
-        #region Answers
+        #region ---------------- Answers ----------------
         public void AddChoicePort(string answerText, bool syncAsset)
         {
             // Port per answer
@@ -201,7 +223,12 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
             row.style.alignItems = Align.Center;
             row.style.overflow = Overflow.Visible;
 
-            var field = new TextField { value = answerText, name = "answer-text", isDelayed = false };
+            var field = new TextField
+            {
+                value = answerText,
+                name = "answer-text",
+                isDelayed = false
+            };
             field.style.flexGrow = 1;
             field.style.minWidth = 80;
 
@@ -214,11 +241,16 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
 
                 WithAssetNode("Edit Answer Text", (asset, soNode) =>
                 {
-                    if (soNode.choices == null) soNode.choices = new List<Choice>();
-                    while (soNode.choices.Count <= index) soNode.choices.Add(new Choice());
+                    if (soNode.choices == null)
+                        soNode.choices = new List<Choice>();
+
+                    while (soNode.choices.Count <= index)
+                        soNode.choices.Add(new Choice());
+
                     soNode.choices[index].answerText = e.newValue;
                 });
 
+                // Optional: auto-delete empty answers for a cleaner UX
                 if (string.IsNullOrWhiteSpace(e.newValue))
                     RemoveChoice(port, row);
             });
@@ -230,7 +262,7 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
             delBtn.clicked += () => RemoveChoice(port, row);
 
             var portHolder = new VisualElement { name = "port-holder" };
-            portHolder.style.width = PortHolderWidth;
+            portHolder.style.width = PORT_HOLDER_WIDTH;
             portHolder.style.overflow = Overflow.Visible;
             portHolder.Add(port);
 
@@ -239,7 +271,7 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
             row.Add(delBtn);
             row.Add(portHolder);
 
-            answerSection.Add(row);
+            _answerSection.Add(row);
             outputPorts.Add(port);
             answers.Add(answerText);
 
@@ -247,9 +279,20 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
             {
                 WithAssetNode("Add Answer", (asset, soNode) =>
                 {
-                    if (soNode.choices == null) soNode.choices = new List<Choice>();
-                    soNode.choices.Add(new Choice { answerText = answerText, nextNodeGUID = null });
+                    if (soNode.choices == null)
+                        soNode.choices = new List<Choice>();
+
+                    soNode.choices.Add(new Choice
+                    {
+                        answerText = answerText,
+                        nextNodeGUID = null
+                    });
                 });
+            }
+
+            if (doDebug)
+            {
+                Debug.Log($"[ChoiceNodeView] Added choice '{answerText}' at index {outputPorts.Count - 1} (GUID={GUID})");
             }
         }
 
@@ -266,6 +309,11 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
             int index = outputPorts.IndexOf(port);
             if (index < 0) return;
 
+            if (doDebug)
+            {
+                Debug.Log($"[ChoiceNodeView] Removing choice at index {index} (GUID={GUID})");
+            }
+
             // Disconnect existing edge (if any)
             var edge = port.connections.FirstOrDefault();
             if (edge != null)
@@ -279,24 +327,43 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
             {
                 if (soNode.choices != null && index < soNode.choices.Count)
                 {
+                    var nodeGuid = soNode.GetGuid();
+
+                    // Clean up graph links for this port
+                    if (asset.links != null)
+                    {
+                        // Remove links from this answer's port
+                        asset.links.RemoveAll(l =>
+                            l.fromGuid == nodeGuid &&
+                            l.fromPortIndex == index
+                        );
+
+                        // Shift indices for answers after this one
+                        for (int i = 0; i < asset.links.Count; i++)
+                        {
+                            var link = asset.links[i];
+                            if (link.fromGuid == nodeGuid && link.fromPortIndex > index)
+                            {
+                                link.fromPortIndex -= 1;
+                                asset.links[i] = link;
+                            }
+                        }
+                    }
+
+                    // Clear and remove the choice itself
                     soNode.choices[index].nextNodeGUID = null;
                     soNode.choices.RemoveAt(index);
                 }
             });
 
+            // Remove UI state
             outputPorts.RemoveAt(index);
             answers.RemoveAt(index);
             row.RemoveFromHierarchy();
         }
-
-        public override void SetPosition(Rect newPos)
-        {
-            base.SetPosition(newPos);
-            WithAssetNode("Move Choice Node", (_, soNode) => soNode.SetPosition(newPos.position));
-        }
         #endregion
 
-        #region Edge helpers (for GraphView)
+        #region ---------------- Edge helpers (for GraphView) ----------------
         public int GetPortIndex(Port p) => outputPorts.IndexOf(p);
 
         public void SetNextForPort(Port p, string targetGuid)
@@ -306,10 +373,19 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
 
             WithAssetNode("Link Choice", (asset, soNode) =>
             {
-                if (soNode.choices == null) soNode.choices = new List<Choice>();
-                while (soNode.choices.Count <= i) soNode.choices.Add(new Choice());
+                if (soNode.choices == null)
+                    soNode.choices = new List<Choice>();
+
+                while (soNode.choices.Count <= i)
+                    soNode.choices.Add(new Choice());
+
                 soNode.choices[i].nextNodeGUID = targetGuid;
             });
+
+            if (doDebug)
+            {
+                Debug.Log($"[ChoiceNodeView] Set next node for choice {i} to GUID={targetGuid}");
+            }
         }
 
         public void ClearNextForPort(Port p, string targetGuid)
@@ -325,6 +401,11 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
                     soNode.choices[i].nextNodeGUID = null;
                 }
             });
+
+            if (doDebug)
+            {
+                Debug.Log($"[ChoiceNodeView] Cleared next node for choice {i} (target was GUID={targetGuid})");
+            }
         }
         #endregion
     }

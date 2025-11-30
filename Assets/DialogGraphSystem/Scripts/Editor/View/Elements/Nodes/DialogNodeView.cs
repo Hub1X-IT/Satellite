@@ -19,35 +19,39 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
     /// </summary>
     public class DialogNodeView : BaseNodeView<DialogNode>
     {
+        #region ---------------- Debug ----------------
+        [SerializeField] private bool doDebug = true;
+        #endregion
+
         #region Layout
-        private const float NodeWidth = 400f;
-        private const float PortHolderWidth = 28f;
+        private const float NODE_WIDTH = 400f;
+        private const float PORT_HOLDER_WIDTH = 28f;
         #endregion
 
         #region Data
         public string GUID { get; set; }
-        public string SpeakerName;
-        public string QuestionText;
-        public string NodeTitle;
-        public Sprite PortraitSprite;
-        public AudioClip DialogueAudio;
-        public float DisplayTimeSeconds;
+        public string speakerName;
+        public string questionText;
+        public string nodeTitle;
+        public Sprite portraitSprite;
+        public AudioClip dialogueAudio;
+        public float displayTimeSeconds;
         #endregion
 
         #region Graph / UI
         public DialogGraphView graphView;
 
-        private VisualElement header;
-        private Image avatar;
-        private Label titleLabel;
-        private VisualElement portraitPreview;
+        private VisualElement _header;
+        private Image _avatar;
+        private Label _titleLabel;
+        private VisualElement _portraitPreview;
 
-        private TextField titleField;
-        private TextField speakerField;
-        private ObjectField spriteField;
-        private TextField questionField;
-        private FloatField displayTimeField;
-        private ObjectField audioField;
+        private TextField _titleField;
+        private TextField _speakerField;
+        private ObjectField _spriteField;
+        private TextField _questionField;
+        private FloatField _displayTimeField;
+        private ObjectField _audioField;
 
         public Port inputPort;
         public Port outputPort;
@@ -56,68 +60,96 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
         #endregion
 
         #region Asset helpers
+
         private static string CombineAssetPath(string folder, string fileWithExt)
             => $"{folder.TrimEnd('/')}/{fileWithExt.TrimStart('/')}";
 
+        /// <summary>
+        /// Loads the DialogGraph asset using the graphView.GraphId.
+        /// </summary>
         private DialogGraph GetAssetSafe()
         {
-            if (graphView == null || string.IsNullOrEmpty(graphView.GraphId)) return null;
-            var path = CombineAssetPath(TextResources.CONVERSATION_FOLDER, $"{graphView.GraphId}.asset");
+            if (graphView == null || string.IsNullOrEmpty(graphView.graphId))
+                return null;
+
+            var path = CombineAssetPath(TextResources.CONVERSATION_FOLDER, $"{graphView.graphId}.asset");
             return AssetDatabase.LoadAssetAtPath<DialogGraph>(path);
         }
 
+        /// <summary>
+        /// Finds the ScriptableObject DialogNode by GUID inside the given asset.
+        /// </summary>
         private DialogNode FindSoNode(DialogGraph asset)
         {
-            if (asset == null || string.IsNullOrEmpty(GUID)) return null;
-            // Use view GUID (Data may be null for freshly created views)
+            if (asset == null || string.IsNullOrEmpty(GUID))
+                return null;
+
             return asset.nodes.FirstOrDefault(n => n != null && n.GetGuid() == GUID);
         }
 
+        /// <summary>
+        /// Convenience helper: locate asset + node and apply an action with Undo.
+        /// </summary>
         private void WithAssetNode(string undoLabel, Action<DialogGraph, DialogNode> act)
         {
-            var asset = GetAssetSafe(); if (asset == null) return;
-            var soNode = FindSoNode(asset); if (soNode == null) return;
+            var asset = GetAssetSafe();
+            if (asset == null) return;
+
+            var soNode = FindSoNode(asset);
+            if (soNode == null) return;
 
             Undo.RecordObject(soNode, undoLabel);
             act(asset, soNode);
             EditorUtility.SetDirty(soNode);
             EditorUtility.SetDirty(asset);
         }
+
         #endregion
 
-        #region API (setters)
+        #region API (setters called by other tools)
+
         public void SetPortraitSprite(Sprite sprite)
         {
-            PortraitSprite = sprite;
-            spriteField.SetValueWithoutNotify(sprite);
+            portraitSprite = sprite;
+
+            if (_spriteField != null)
+                _spriteField.SetValueWithoutNotify(sprite);
+
             UpdatePortraitPreview();
             UpdateAvatarVisual();
         }
 
         public void SetSpeakerName(string name)
         {
-            SpeakerName = name;
-            speakerField.SetValueWithoutNotify(name);
+            speakerName = name;
+
+            if (_speakerField != null)
+                _speakerField.SetValueWithoutNotify(name);
+
             UpdatePortraitPreview();
             UpdateAvatarVisual();
         }
+
         #endregion
 
         #region Ctor
+
         public DialogNodeView(string nodeTitle, DialogGraphView graph)
         {
             graphView = graph;
-            NodeTitle = nodeTitle;
+            this.nodeTitle = nodeTitle;
             title = nodeTitle;
             GUID = Guid.NewGuid().ToString("N");
 
-            if (s_uss == null) s_uss = Resources.Load<StyleSheet>("USS/NodeViewUSS");
-            if (s_uss != null && !styleSheets.Contains(s_uss)) styleSheets.Add(s_uss);
+            if (s_uss == null)
+                s_uss = Resources.Load<StyleSheet>("USS/NodeViewUSS");
+            if (s_uss != null && !styleSheets.Contains(s_uss))
+                styleSheets.Add(s_uss);
 
             AddToClassList("dlg-node");
             AddToClassList("type-dialogue");
 
-            style.width = NodeWidth;
+            style.width = NODE_WIDTH;
 
             BuildHeader();
             BuildBody();
@@ -140,139 +172,179 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
                 });
             }));
         }
+
         #endregion
 
         #region Header
+
         private void BuildHeader()
         {
             titleContainer?.AddToClassList("action-header");
 
-            // Assign to field (avoid shadowing)
-            titleLabel = titleContainer?.Q<Label>();
-            if (titleLabel != null)
+            _titleLabel = titleContainer?.Q<Label>();
+            if (_titleLabel != null)
             {
-                titleLabel.text = NodeTitle;
-                titleLabel.style.color = Color.white;
+                _titleLabel.text = nodeTitle;
+                _titleLabel.style.color = Color.white;
 #if UNITY_2021_3_OR_NEWER
-                titleLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
+                _titleLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
 #endif
             }
 
-            header = new VisualElement { name = "header" };
+            _header = new VisualElement { name = "header" };
 
             var headRow = new VisualElement();
             headRow.style.flexDirection = FlexDirection.Row;
             headRow.style.alignItems = Align.Center;
 
-            avatar = new Image { name = "avatar", scaleMode = ScaleMode.ScaleToFit };
-            headRow.Add(avatar);
+            _avatar = new Image { name = "avatar", scaleMode = ScaleMode.ScaleToFit };
+            headRow.Add(_avatar);
 
-            header.Add(headRow);
-            titleContainer.Add(header);
+            _header.Add(headRow);
+            titleContainer.Add(_header);
 
             UpdateAvatarVisual();
         }
 
         private void UpdateAvatarVisual()
         {
-            if (avatar == null) return;
+            if (_avatar == null) return;
 
-            if (PortraitSprite != null)
+            if (portraitSprite != null)
             {
-                avatar.image = PortraitSprite.texture;
-                avatar.style.display = DisplayStyle.Flex;
+                _avatar.image = portraitSprite.texture;
+                _avatar.style.display = DisplayStyle.Flex;
             }
             else
             {
-                avatar.image = null;
-                avatar.style.display = DisplayStyle.None;
+                _avatar.image = null;
+                _avatar.style.display = DisplayStyle.None;
             }
         }
+
         #endregion
 
         #region Body
+
         private void BuildBody()
         {
-            titleField = new TextField("Node Title") { value = NodeTitle };
-            titleField.RegisterValueChangedCallback(e =>
+            // Node title
+            _titleField = new TextField("Node Title")
             {
-                NodeTitle = e.newValue;
+                value = nodeTitle,
+                isDelayed = true        // commit on focus change / Enter
+            };
+            _titleField.RegisterValueChangedCallback(e =>
+            {
+                nodeTitle = e.newValue;
                 title = e.newValue;
-                if (titleLabel != null) titleLabel.text = e.newValue;
+                if (_titleLabel != null) _titleLabel.text = e.newValue;
 
                 WithAssetNode("Edit Node Title", (_, soNode) =>
                 {
-                    soNode.name = "Node_" + (string.IsNullOrWhiteSpace(NodeTitle) ? "Untitled" : NodeTitle.Trim());
+                    var clean = string.IsNullOrWhiteSpace(nodeTitle) ? "Untitled" : nodeTitle.Trim();
+                    soNode.name = "Node_" + clean;
                 });
             });
 
-            speakerField = new TextField("Speaker") { value = "" };
-            speakerField.RegisterValueChangedCallback(e =>
+            // Speaker
+            _speakerField = new TextField("Speaker")
             {
-                SpeakerName = e.newValue;
-                WithAssetNode("Edit Speaker", (_, soNode) => soNode.speakerName = SpeakerName);
+                value = "",
+                isDelayed = true
+            };
+            _speakerField.RegisterValueChangedCallback(e =>
+            {
+                speakerName = e.newValue;
+                WithAssetNode("Edit Speaker", (_, soNode) => soNode.speakerName = speakerName);
             });
 
-            spriteField = new ObjectField("Portrait") { objectType = typeof(Sprite), allowSceneObjects = false };
-            spriteField.RegisterValueChangedCallback(e =>
+            // Portrait Sprite
+            _spriteField = new ObjectField("Portrait")
             {
-                PortraitSprite = e.newValue as Sprite;
+                objectType = typeof(Sprite),
+                allowSceneObjects = false
+            };
+            _spriteField.RegisterValueChangedCallback(e =>
+            {
+                portraitSprite = e.newValue as Sprite;
                 UpdatePortraitPreview();
                 UpdateAvatarVisual();
-                WithAssetNode("Change Portrait", (_, soNode) => soNode.speakerPortrait = PortraitSprite);
+
+                WithAssetNode("Change Portrait", (_, soNode) =>
+                {
+                    soNode.speakerPortrait = portraitSprite;
+                });
             });
 
-            // Visual preview beside the dialog text
-            portraitPreview = new VisualElement { name = "portrait-preview" };
-            portraitPreview.style.width = 64;
-            portraitPreview.style.height = 64;
-            portraitPreview.style.marginRight = 6;
-            portraitPreview.style.backgroundColor = new Color(0.1f, 0.1f, 0.1f, 0.3f);
+            // Visual preview next to dialog text
+            _portraitPreview = new VisualElement { name = "portrait-preview" };
+            _portraitPreview.style.width = 64;
+            _portraitPreview.style.height = 64;
+            _portraitPreview.style.marginRight = 6;
+            _portraitPreview.style.backgroundColor = new Color(0.1f, 0.1f, 0.1f, 0.3f);
 
-            questionField = new TextField("Dialog") { multiline = true };
-            questionField.name = "Dialog";
-            questionField.style.minHeight = 60;
-            questionField.style.maxWidth = NodeWidth - 20;
-            questionField.style.whiteSpace = WhiteSpace.Normal;
-            questionField.RegisterValueChangedCallback(e =>
+            // Dialog text
+            _questionField = new TextField("Dialog")
             {
-                QuestionText = e.newValue;
-                WithAssetNode("Edit Dialogue Text", (_, soNode) => soNode.questionText = QuestionText);
-            });
-
-            displayTimeField = new FloatField("Display Time (sec)") { value = 0f };
-            displayTimeField.RegisterValueChangedCallback(e =>
+                multiline = true,
+                isDelayed = true
+            };
+            _questionField.name = "Dialog";
+            _questionField.style.minHeight = 60;
+            _questionField.style.maxWidth = NODE_WIDTH - 20;
+            _questionField.style.whiteSpace = WhiteSpace.Normal;
+            _questionField.RegisterValueChangedCallback(e =>
             {
-                DisplayTimeSeconds = e.newValue;
-                WithAssetNode("Edit Display Time", (_, soNode) => soNode.displayTime = DisplayTimeSeconds);
+                questionText = e.newValue;
+                WithAssetNode("Edit Dialogue Text", (_, soNode) => soNode.questionText = questionText);
             });
 
-            audioField = new ObjectField("Audio Clip") { objectType = typeof(AudioClip), allowSceneObjects = false };
-            audioField.RegisterValueChangedCallback(e =>
+            // Display time
+            _displayTimeField = new FloatField("Display Time (sec)")
             {
-                DialogueAudio = e.newValue as AudioClip;
-                WithAssetNode("Change Dialogue Audio", (_, soNode) => soNode.dialogAudio = DialogueAudio);
+                value = 0f
+            };
+            _displayTimeField.RegisterValueChangedCallback(e =>
+            {
+                displayTimeSeconds = e.newValue;
+                WithAssetNode("Edit Display Time", (_, soNode) => soNode.displayTime = displayTimeSeconds);
             });
 
+            // Audio clip
+            _audioField = new ObjectField("Audio Clip")
+            {
+                objectType = typeof(AudioClip),
+                allowSceneObjects = false
+            };
+            _audioField.RegisterValueChangedCallback(e =>
+            {
+                dialogueAudio = e.newValue as AudioClip;
+                WithAssetNode("Change Dialogue Audio", (_, soNode) => soNode.dialogAudio = dialogueAudio);
+            });
+
+            // Layout row for portrait preview + dialog text
             var dialogRow = new VisualElement { name = "dialogue-row" };
             dialogRow.style.flexDirection = FlexDirection.Row;
             dialogRow.style.alignItems = Align.FlexStart;
 
-            dialogRow.Add(portraitPreview);
-            dialogRow.Add(questionField);
+            dialogRow.Add(_portraitPreview);
+            dialogRow.Add(_questionField);
 
-            mainContainer.Add(titleField);
-            mainContainer.Add(speakerField);
-            mainContainer.Add(spriteField);
+            mainContainer.Add(_titleField);
+            mainContainer.Add(_speakerField);
+            mainContainer.Add(_spriteField);
             mainContainer.Add(dialogRow);
-            mainContainer.Add(displayTimeField);
-            mainContainer.Add(audioField);
+            mainContainer.Add(_displayTimeField);
+            mainContainer.Add(_audioField);
 
             UpdatePortraitPreview();
         }
+
         #endregion
 
         #region Ports
+
         private void BuildPorts()
         {
             inputPort = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Multi, typeof(float));
@@ -297,29 +369,35 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
             RefreshExpandedState();
             RefreshPorts();
         }
+
         #endregion
 
         #region Load / Visual
+
+        /// <summary>
+        /// Populate the view from existing DialogNode data (LoadGraph path).
+        /// Does not record Undo; Undo is handled by changes after this point.
+        /// </summary>
         public void LoadNodeData(
             string speaker, string question, string titleText, Sprite sprite,
             AudioClip audioClip, float displayTime)
         {
-            SpeakerName = speaker;
-            QuestionText = question;
-            NodeTitle = titleText;
-            PortraitSprite = sprite;
-            DialogueAudio = audioClip;
-            DisplayTimeSeconds = displayTime;
+            speakerName = speaker;
+            questionText = question;
+            nodeTitle = titleText;
+            portraitSprite = sprite;
+            dialogueAudio = audioClip;
+            displayTimeSeconds = displayTime;
 
-            if (titleLabel != null) titleLabel.text = titleText;
+            if (_titleLabel != null) _titleLabel.text = titleText;
             title = titleText;
 
-            speakerField.SetValueWithoutNotify(speaker);
-            questionField.SetValueWithoutNotify(question);
-            titleField.SetValueWithoutNotify(titleText);
-            spriteField.SetValueWithoutNotify(sprite);
-            audioField.SetValueWithoutNotify(audioClip);
-            displayTimeField.SetValueWithoutNotify(displayTime);
+            if (_speakerField != null) _speakerField.SetValueWithoutNotify(speaker);
+            if (_questionField != null) _questionField.SetValueWithoutNotify(question);
+            if (_titleField != null) _titleField.SetValueWithoutNotify(titleText);
+            if (_spriteField != null) _spriteField.SetValueWithoutNotify(sprite);
+            if (_audioField != null) _audioField.SetValueWithoutNotify(audioClip);
+            if (_displayTimeField != null) _displayTimeField.SetValueWithoutNotify(displayTime);
 
             UpdatePortraitPreview();
             UpdateAvatarVisual();
@@ -327,27 +405,34 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
 
         private void UpdatePortraitPreview()
         {
-            if (portraitPreview == null) return;
+            if (_portraitPreview == null) return;
 
-            if (PortraitSprite != null)
+            if (portraitSprite != null)
             {
-                portraitPreview.style.backgroundImage = new StyleBackground(PortraitSprite);
-                portraitPreview.style.backgroundColor = Color.clear;
+                _portraitPreview.style.backgroundImage = new StyleBackground(portraitSprite);
+                _portraitPreview.style.backgroundColor = Color.clear;
             }
             else
             {
-                portraitPreview.style.backgroundImage = null;
-                portraitPreview.style.backgroundColor = new Color(0.1f, 0.1f, 0.1f, 0.3f);
+                _portraitPreview.style.backgroundImage = null;
+                _portraitPreview.style.backgroundColor = new Color(0.1f, 0.1f, 0.1f, 0.3f);
             }
         }
+
         #endregion
 
-        #region Persist position
+        #region Position persistence
+
+        /// <summary>
+        /// We deliberately do NOT write to the ScriptableObject here.
+        /// Node movement persistence is handled centrally in DialogGraphView.OnGraphViewChanged
+        /// so that all selected nodes move as a single Undo step.
+        /// </summary>
         public override void SetPosition(Rect newPos)
         {
             base.SetPosition(newPos);
-            WithAssetNode("Move Dialog Node", (_, soNode) => soNode.SetPosition(newPos.position));
         }
+
         #endregion
     }
 }

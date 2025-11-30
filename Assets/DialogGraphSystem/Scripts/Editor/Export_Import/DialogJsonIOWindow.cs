@@ -13,34 +13,34 @@ namespace DialogSystem.EditorTools.ExportImport
 {
     public class DialogJsonIOWindow : EditorWindow
     {
-        #region ---------------- Icons & Menu ----------------
-        private Texture2D _iconExport;
-        private Texture2D _iconImport;
+        #region ---------------- Debug & Tabs ----------------
+        [SerializeField] private bool doDebug = true;
 
-        [MenuItem("Tools/Dialog/JSON Import-Export...")]
-        public static void Open()
-        {
-            var win = GetWindow<DialogJsonIOWindow>("Dialog JSON I/O");
-            win.minSize = new Vector2(560, 520);
-            win.Show();
-        }
-        #endregion
-
-        #region ---------------- UI State ----------------
         private enum Tab { Export, Import }
         private Tab _tab = Tab.Export;
-
-        // EditorPrefs keys
-        private const string kPrefsKeyRoot = "DialogJsonIOWindow";
-        private const string kPrefsExportFolder = kPrefsKeyRoot + ".exportFolder";
-        private const string kPrefsImportFolder = kPrefsKeyRoot + ".importFolder";
-        private const string kPrefsRecent = kPrefsKeyRoot + ".recent";
-        private const int kMaxRecent = 8;
 
         private Vector2 _scroll;
         private GUIStyle _headerStyle;
         private GUIStyle _boxStyle;
-        private GUIStyle _pillStyle;
+        #endregion
+
+        #region ---------------- Icons & Menu ----------------
+        private Texture2D _iconExport;
+        private Texture2D _iconImport;
+
+        [MenuItem("Tools/Dialog System/JSON Import-Export...")]
+        public static void Open()
+        {
+            var win = GetWindow<DialogJsonIOWindow>("Dialog JSON I/O");
+            win.minSize = new Vector2(520, 420);
+            win.Show();
+        }
+        #endregion
+
+        #region ---------------- EditorPrefs Keys ----------------
+        private const string K_PREFS_KEY_ROOT = "DialogJsonIOWindow";
+        private const string K_PREFS_EXPORT_FOLDER = K_PREFS_KEY_ROOT + ".exportFolder";
+        private const string K_PREFS_IMPORT_FOLDER = K_PREFS_KEY_ROOT + ".importFolder";
         #endregion
 
         #region ---------------- Export State ----------------
@@ -49,8 +49,6 @@ namespace DialogSystem.EditorTools.ExportImport
         private string _exportFolder = TextResources.EXPORT_FOLDER;
         private bool _exportPretty = true;
         private bool _exportIncludePositions = true;
-        private bool _exportOverwrite = true;
-        private bool _exportUseGraphName = true;
         #endregion
 
         #region ---------------- Import State ----------------
@@ -58,41 +56,20 @@ namespace DialogSystem.EditorTools.ExportImport
         private string _importExternalPath = "";
         private string _importFolder = TextResources.IMPORT_FOLDER;
         private string _importTargetName = "ImportedConversation";
+
         private string _loadedJson = "";
         private string _jsonError = "";
         private DialogGraphExport _previewDto;
-
-        private enum ImportMode { CreateNewGraph, MergeIntoExisting }
-        private ImportMode _mode = ImportMode.CreateNewGraph;
-
-        private DialogGraph _targetGraph;  // for merge
-        private DialogNode _rootNode;      // for merge strategies
-
-        private enum MergeStrategy { ReplaceChildren, Append }
-        private MergeStrategy _mergeStrategy = MergeStrategy.ReplaceChildren;
-
-        private enum GuidPolicy { Preserve, RegenerateOnConflict, RegenerateAll }
-        private GuidPolicy _guidPolicy = GuidPolicy.RegenerateOnConflict;
-
-        private bool _backupBeforeImport = true;
-        private bool _recordUndo = true;
-        private bool _useJsonPositions = true;
-        private Vector2 _autoLayoutOffset = new Vector2(40, 80);
-
-        // Pro preview toggles (disabled in this build)
-        private const bool PRO_UNLOCKED = false;
-        private bool _pro_AutoLayoutGrid = true;
         #endregion
 
         #region ---------------- Unity ----------------
         private void OnEnable()
         {
-            _exportFolder = EditorPrefs.GetString(kPrefsExportFolder, _exportFolder);
-            _importFolder = EditorPrefs.GetString(kPrefsImportFolder, _importFolder);
+            _exportFolder = EditorPrefs.GetString(K_PREFS_EXPORT_FOLDER, _exportFolder);
+            _importFolder = EditorPrefs.GetString(K_PREFS_IMPORT_FOLDER, _importFolder);
 
             _headerStyle = new GUIStyle(EditorStyles.boldLabel) { fontSize = 13 };
             _boxStyle = new GUIStyle("HelpBox") { padding = new RectOffset(8, 8, 8, 8) };
-            _pillStyle = new GUIStyle(EditorStyles.miniButtonMid) { fontStyle = FontStyle.Bold };
 
             _iconExport = AssetDatabase.LoadAssetAtPath<Texture2D>(TextResources.ICON_EXPORT);
             _iconImport = AssetDatabase.LoadAssetAtPath<Texture2D>(TextResources.ICON_IMPORT);
@@ -100,8 +77,8 @@ namespace DialogSystem.EditorTools.ExportImport
 
         private void OnDisable()
         {
-            EditorPrefs.SetString(kPrefsExportFolder, _exportFolder);
-            EditorPrefs.SetString(kPrefsImportFolder, _importFolder);
+            EditorPrefs.SetString(K_PREFS_EXPORT_FOLDER, _exportFolder);
+            EditorPrefs.SetString(K_PREFS_IMPORT_FOLDER, _importFolder);
         }
         #endregion
 
@@ -113,12 +90,16 @@ namespace DialogSystem.EditorTools.ExportImport
             _scroll = EditorGUILayout.BeginScrollView(_scroll);
             switch (_tab)
             {
-                case Tab.Export: DrawExport(); break;
-                case Tab.Import: DrawImport(); break;
+                case Tab.Export:
+                    DrawExport();
+                    break;
+                case Tab.Import:
+                    DrawImport();
+                    break;
             }
             EditorGUILayout.EndScrollView();
 
-            DragAndDropArea();
+            DrawDragAndDropArea();
         }
 
         private void DrawToolbar()
@@ -161,16 +142,11 @@ namespace DialogSystem.EditorTools.ExportImport
 
                 using (new EditorGUILayout.HorizontalScope())
                 {
-                    EditorGUI.BeginDisabledGroup(_exportUseGraphName);
-                    _exportFileName = EditorGUILayout.TextField(
-                        "File Name",
-                        string.IsNullOrEmpty(_exportFileName) && _exportGraph != null && _exportUseGraphName
-                            ? SafeFile(_exportGraph.name)
-                            : _exportFileName
-                    );
-                    EditorGUI.EndDisabledGroup();
+                    string suggested = (_exportGraph != null && string.IsNullOrEmpty(_exportFileName))
+                        ? SafeFile(_exportGraph.name)
+                        : _exportFileName;
 
-                    _exportUseGraphName = GUILayout.Toggle(_exportUseGraphName, "Use Graph Name", GUILayout.Width(120));
+                    _exportFileName = EditorGUILayout.TextField("File Name", suggested);
                 }
 
                 using (new EditorGUILayout.HorizontalScope())
@@ -180,7 +156,8 @@ namespace DialogSystem.EditorTools.ExportImport
                     if (GUILayout.Button("Select...", GUILayout.Width(80)))
                     {
                         var abs = EditorUtility.OpenFolderPanel("Choose export folder (inside Assets)", Application.dataPath, "");
-                        if (IsUnderAssets(abs, out var rel)) _exportFolder = rel;
+                        if (IsUnderAssets(abs, out var rel))
+                            _exportFolder = rel;
                         else if (!string.IsNullOrEmpty(abs))
                             EditorUtility.DisplayDialog("Folder not under Assets", "Please choose a folder inside your project's Assets.", "OK");
                     }
@@ -188,9 +165,8 @@ namespace DialogSystem.EditorTools.ExportImport
 
                 _exportPretty = EditorGUILayout.ToggleLeft("Pretty Print", _exportPretty);
                 _exportIncludePositions = EditorGUILayout.ToggleLeft("Include Node Positions", _exportIncludePositions);
-                _exportOverwrite = EditorGUILayout.ToggleLeft("Overwrite if file exists", _exportOverwrite);
 
-                EditorGUILayout.Space(4);
+                EditorGUILayout.Space(6);
                 using (new EditorGUILayout.HorizontalScope())
                 {
                     GUILayout.FlexibleSpace();
@@ -208,29 +184,36 @@ namespace DialogSystem.EditorTools.ExportImport
                     EditorGUI.EndDisabledGroup();
                 }
             }
-
-            EditorGUILayout.Space(6);
-            DrawRecentSection();
         }
 
         private void DoExport()
         {
             if (_exportGraph == null) return;
 
-            var fileName = _exportUseGraphName && _exportGraph != null
+            var fileName = string.IsNullOrEmpty(_exportFileName)
                 ? SafeFile(_exportGraph.name)
-                : (string.IsNullOrEmpty(_exportFileName) ? "DialogGraph" : SafeFile(_exportFileName));
+                : SafeFile(_exportFileName);
+
+            if (string.IsNullOrEmpty(fileName))
+                fileName = "DialogGraph";
 
             var assetRelDir = _exportFolder;
             var absDir = AbsoluteFromAssets(assetRelDir);
-            if (!Directory.Exists(absDir)) Directory.CreateDirectory(absDir);
+            if (!Directory.Exists(absDir))
+                Directory.CreateDirectory(absDir);
 
             var relPath = $"{assetRelDir}/{fileName}.json";
             var absPath = AbsoluteFromAssets(relPath);
 
-            if (File.Exists(absPath) && !_exportOverwrite)
+            if (File.Exists(absPath))
             {
-                if (!EditorUtility.DisplayDialog("File exists", $"Overwrite existing file?\n{relPath}", "Overwrite", "Cancel"))
+                bool overwrite = EditorUtility.DisplayDialog(
+                    "File exists",
+                    $"A JSON file already exists at:\n{relPath}\n\nOverwrite it?",
+                    "Overwrite",
+                    "Cancel"
+                );
+                if (!overwrite)
                     return;
             }
 
@@ -240,7 +223,9 @@ namespace DialogSystem.EditorTools.ExportImport
             AssetDatabase.Refresh();
 
             ShowNotification(new GUIContent($"Exported → {relPath}"));
-            AddRecent(absPath);
+
+            if (doDebug)
+                Debug.Log($"[DialogJsonIOWindow] Exported DialogGraph '{_exportGraph.name}' to: {relPath}");
         }
         #endregion
 
@@ -252,6 +237,7 @@ namespace DialogSystem.EditorTools.ExportImport
 
             using (new EditorGUILayout.VerticalScope(_boxStyle))
             {
+                // Source JSON
                 EditorGUILayout.LabelField("Source JSON", EditorStyles.boldLabel);
 
                 _importJsonAsset = (TextAsset)EditorGUILayout.ObjectField("TextAsset (optional)", _importJsonAsset, typeof(TextAsset), false);
@@ -263,18 +249,15 @@ namespace DialogSystem.EditorTools.ExportImport
                     if (GUILayout.Button("Browse...", GUILayout.Width(80)))
                     {
                         var p = EditorUtility.OpenFilePanel("Choose JSON file", GetInitialImportFolder(), "json");
-                        if (!string.IsNullOrEmpty(p)) _importExternalPath = p;
+                        if (!string.IsNullOrEmpty(p))
+                            _importExternalPath = p;
                     }
                 }
 
                 using (new EditorGUILayout.HorizontalScope())
                 {
-                    if (GUILayout.Button("Load / Preview", GUILayout.Height(22))) LoadJsonForPreview();
-
-                    EditorGUI.BeginDisabledGroup(string.IsNullOrEmpty(_loadedJson));
-                    if (GUILayout.Button("Validate", GUILayout.Height(22))) ValidateJson();
-                    if (GUILayout.Button("Format", GUILayout.Height(22))) PrettyFormatJson();
-                    EditorGUI.EndDisabledGroup();
+                    if (GUILayout.Button("Load & Validate", GUILayout.Height(22)))
+                        LoadJsonForPreview();
                 }
 
                 if (!string.IsNullOrEmpty(_jsonError))
@@ -293,114 +276,70 @@ namespace DialogSystem.EditorTools.ExportImport
                         EditorGUILayout.LabelField($"Dialog Nodes: {dialogCount}");
                         EditorGUILayout.LabelField($"Choice Nodes: {choiceCount}");
                         EditorGUILayout.LabelField($"Action Nodes: {actionCount}");
-                        EditorGUILayout.LabelField($"Start Node: {(_previewDto.startNode != null ? "Yes" : "No")}");
-                        EditorGUILayout.LabelField($"End Node: {(_previewDto.endNode != null ? "Yes" : "No")}");
                         EditorGUILayout.LabelField($"Links: {linkCount}");
-                        EditorGUILayout.LabelField($"Entry GUID: {(_previewDto.startNode?.guid ?? "<none>")}");
                     }
                 }
 
                 EditorGUILayout.Space(8);
-                EditorGUILayout.LabelField("Import Options", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Target Asset", EditorStyles.boldLabel);
 
-                _mode = (ImportMode)EditorGUILayout.EnumPopup("Mode", _mode);
+                _importTargetName = EditorGUILayout.TextField("Asset Name", _importTargetName);
 
-                if (_mode == ImportMode.CreateNewGraph)
+                using (new EditorGUILayout.HorizontalScope())
                 {
-                    using (new EditorGUILayout.VerticalScope("box"))
+                    EditorGUILayout.PrefixLabel(new GUIContent("Folder (Assets)"));
+                    EditorGUILayout.SelectableLabel(_importFolder, EditorStyles.textField, GUILayout.Height(18));
+                    if (GUILayout.Button("Select...", GUILayout.Width(80)))
                     {
-                        _importTargetName = EditorGUILayout.TextField("Asset Name", _importTargetName);
-                        using (new EditorGUILayout.HorizontalScope())
-                        {
-                            EditorGUILayout.PrefixLabel(new GUIContent("Folder (Assets)"));
-                            EditorGUILayout.SelectableLabel(_importFolder, EditorStyles.textField, GUILayout.Height(18));
-                            if (GUILayout.Button("Select...", GUILayout.Width(80)))
-                            {
-                                var abs = EditorUtility.OpenFolderPanel("Choose graph folder (inside Assets)", Application.dataPath, "");
-                                if (IsUnderAssets(abs, out var rel)) _importFolder = rel;
-                                else if (!string.IsNullOrEmpty(abs))
-                                    EditorUtility.DisplayDialog("Folder not under Assets", "Please choose a folder inside your project's Assets.", "OK");
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    using (new EditorGUILayout.VerticalScope("box"))
-                    {
-                        _targetGraph = (DialogGraph)EditorGUILayout.ObjectField("Target Graph", _targetGraph, typeof(DialogGraph), false);
-                        using (new EditorGUILayout.HorizontalScope())
-                        {
-                            _rootNode = (DialogNode)EditorGUILayout.ObjectField("Root Node", _rootNode, typeof(DialogNode), false);
-                            if (GUILayout.Button("Use Selected Node", GUILayout.Width(140)))
-                                _rootNode = Selection.activeObject as DialogNode;
-                        }
-                        _mergeStrategy = (MergeStrategy)EditorGUILayout.EnumPopup("Merge Strategy", _mergeStrategy);
+                        var abs = EditorUtility.OpenFolderPanel("Choose graph folder (inside Assets)", Application.dataPath, "");
+                        if (IsUnderAssets(abs, out var rel))
+                            _importFolder = rel;
+                        else if (!string.IsNullOrEmpty(abs))
+                            EditorUtility.DisplayDialog("Folder not under Assets", "Please choose a folder inside your project's Assets.", "OK");
                     }
                 }
 
-                using (new EditorGUILayout.VerticalScope("box"))
-                {
-                    _guidPolicy = (GuidPolicy)EditorGUILayout.EnumPopup("GUID Policy", _guidPolicy);
-                    _backupBeforeImport = EditorGUILayout.ToggleLeft("Backup target graph to JSON before import", _backupBeforeImport);
-                    _recordUndo = EditorGUILayout.ToggleLeft("Record Undo", _recordUndo);
-                    _useJsonPositions = EditorGUILayout.ToggleLeft("Use JSON node positions", _useJsonPositions);
-
-                    EditorGUI.BeginDisabledGroup(!PRO_UNLOCKED);
-                    _pro_AutoLayoutGrid = EditorGUILayout.ToggleLeft("(Pro) Auto-layout grid for imported nodes", _pro_AutoLayoutGrid);
-                    EditorGUI.EndDisabledGroup();
-
-                    if (!PRO_UNLOCKED)
-                        EditorGUILayout.HelpBox("Pro features are previewed here and currently disabled.", MessageType.None);
-                }
-
-                EditorGUILayout.Space(4);
-                DrawJsonEditorArea();
+                EditorGUILayout.HelpBox(
+                    "Import will create or overwrite a DialogGraph asset using the name and folder above.\n" +
+                    "If an asset with the same name already exists, you will be asked whether to overwrite it or create a copy.",
+                    MessageType.Info
+                );
 
                 EditorGUILayout.Space(8);
                 using (new EditorGUILayout.HorizontalScope())
                 {
                     GUILayout.FlexibleSpace();
-                    var canImport =
-                        _previewDto != null &&
-                        ((_mode == ImportMode.CreateNewGraph) ||
-                         (_targetGraph != null && (_mergeStrategy == MergeStrategy.Append || _rootNode != null)));
-
+                    bool canImport = _previewDto != null;
                     EditorGUI.BeginDisabledGroup(!canImport);
                     if (GUILayout.Button(new GUIContent("Import", EditorGUIUtility.IconContent("d_Import").image), GUILayout.Width(140), GUILayout.Height(24)))
                         DoImport();
                     EditorGUI.EndDisabledGroup();
                 }
             }
-
-            EditorGUILayout.Space(6);
-            DrawRecentSection();
         }
 
-        private void DrawJsonEditorArea()
+        private void DoImport()
         {
-            EditorGUILayout.LabelField("JSON Preview / Editor", EditorStyles.boldLabel);
-            var height = Mathf.Clamp(EditorGUIUtility.singleLineHeight * 8f, 120f, position.height * 0.35f);
-            EditorGUI.BeginChangeCheck();
-            _loadedJson = EditorGUILayout.TextArea(_loadedJson ?? "", GUILayout.MinHeight(height));
-            if (EditorGUI.EndChangeCheck())
+            if (_previewDto == null)
             {
-                _previewDto = null;
-                _jsonError = "";
+                EditorUtility.DisplayDialog("No JSON", "Load a JSON file and validate it first.", "OK");
+                return;
             }
 
-            using (new EditorGUILayout.HorizontalScope())
-            {
-                if (GUILayout.Button("Reload from Source")) LoadJsonForPreview();
-                if (GUILayout.Button("Save JSON As...")) SaveJsonToAssets();
-            }
+            CreateOrOverwriteGraphFromDto(_previewDto);
         }
         #endregion
 
         #region ---------------- Export DTO Builder ----------------
         private DialogGraphExport BuildExportDTO(DialogGraph graph)
         {
-            var export = new DialogGraphExport();
+            var export = new DialogGraphExport
+            {
+                dialogNodes = new List<DialogExportDialogNode>(),
+                choiceNodes = new List<DialogExportChoiceNode>(),
+                actionNodes = new List<DialogExportActionNode>(),
+                links = new List<ExportLink>()
+            };
 
             // Dialog nodes
             if (graph.nodes != null)
@@ -468,27 +407,30 @@ namespace DialogSystem.EditorTools.ExportImport
                 }
             }
 
+            // Start / End
             if (!string.IsNullOrEmpty(graph.startGuid))
             {
                 export.startNode = new ExportStartNode
                 {
-                    isInitialized = true,
+                    isInitialized = graph.startInitialized,
                     guid = graph.startGuid,
                     nodePositionX = graph.startPosition.x,
                     nodePositionY = graph.startPosition.y
                 };
             }
+
             if (!string.IsNullOrEmpty(graph.endGuid))
             {
                 export.endNode = new ExportEndNode
                 {
-                    isInitialized = true,
+                    isInitialized = graph.endInitialized,
                     guid = graph.endGuid,
                     nodePositionX = graph.endPosition.x,
                     nodePositionY = graph.endPosition.y
                 };
             }
 
+            // Links
             if (graph.links != null)
             {
                 export.links = graph.links.Select(l => new ExportLink
@@ -503,86 +445,110 @@ namespace DialogSystem.EditorTools.ExportImport
         }
         #endregion
 
-        #region ---------------- Import Logic ----------------
-        private void DoImport()
+        #region ---------------- Import Logic (Safe) ----------------
+        private void CreateOrOverwriteGraphFromDto(DialogGraphExport dto)
         {
-            if (_previewDto == null)
+            var absDir = AbsoluteFromAssets(_importFolder);
+            if (!Directory.Exists(absDir))
+                Directory.CreateDirectory(absDir);
+
+            var baseName = string.IsNullOrEmpty(_importTargetName)
+                ? "ImportedConversation"
+                : SafeFile(_importTargetName);
+
+            var targetRelPath = $"{_importFolder}/{baseName}.asset";
+            var targetAbsPath = AbsoluteFromAssets(targetRelPath);
+
+            // If asset already exists at that path → ask user
+            if (File.Exists(targetAbsPath))
             {
-                EditorUtility.DisplayDialog("No JSON", "Load a JSON file and pass validation first.", "OK");
+                int option = EditorUtility.DisplayDialogComplex(
+                    "DialogGraph already exists",
+                    $"A DialogGraph asset with this name already exists:\n\n{targetRelPath}\n\n" +
+                    "What would you like to do?",
+                    "Overwrite",      // 0
+                    "Create Copy",    // 1
+                    "Cancel"          // 2
+                );
+
+                if (option == 2)
+                    return;
+
+                if (option == 0)
+                {
+                    OverwriteExistingGraph(targetRelPath, dto);
+                    return;
+                }
+
+                if (option == 1)
+                {
+                    targetRelPath = AssetDatabase.GenerateUniqueAssetPath(targetRelPath);
+                    targetAbsPath = AbsoluteFromAssets(targetRelPath);
+                }
+            }
+
+            // Create brand-new asset
+            var newGraph = ScriptableObject.CreateInstance<DialogGraph>();
+            AssetDatabase.CreateAsset(newGraph, targetRelPath);
+
+            BuildFromDto(newGraph, dto);
+
+            EditorUtility.SetDirty(newGraph);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+
+            Selection.activeObject = newGraph;
+            ShowNotification(new GUIContent($"Created {Path.GetFileName(targetRelPath)}"));
+
+            if (doDebug)
+                Debug.Log($"[DialogJsonIOWindow] Created new DialogGraph at: {targetRelPath}");
+        }
+
+        private void OverwriteExistingGraph(string targetRelPath, DialogGraphExport dto)
+        {
+            var graph = AssetDatabase.LoadAssetAtPath<DialogGraph>(targetRelPath);
+            if (graph == null)
+            {
+                EditorUtility.DisplayDialog(
+                    "Cannot overwrite",
+                    "The existing asset at this path is not a DialogGraph.\nImport cancelled.",
+                    "OK"
+                );
                 return;
             }
 
-            if (_mode == ImportMode.CreateNewGraph)
+            // Clear existing data
+            if (graph.nodes != null) graph.nodes.Clear();
+            if (graph.choiceNodes != null) graph.choiceNodes.Clear();
+            if (graph.actionNodes != null) graph.actionNodes.Clear();
+            if (graph.links != null) graph.links.Clear();
+
+            // Remove sub-assets (old nodes, etc.)
+            foreach (var sub in AssetDatabase.LoadAllAssetsAtPath(targetRelPath))
             {
-                CreateNewGraphFromDto(_previewDto);
+                if (sub != graph)
+                    AssetDatabase.RemoveObjectFromAsset(sub);
             }
-            else
-            {
-                if (_targetGraph == null)
-                {
-                    EditorUtility.DisplayDialog("Missing Target Graph", "Choose a target graph.", "OK");
-                    return;
-                }
-                if (_mergeStrategy == MergeStrategy.ReplaceChildren && _rootNode == null)
-                {
-                    EditorUtility.DisplayDialog("Missing Root Node", "Choose a root node for Replace Children.", "OK");
-                    return;
-                }
 
-                if (_backupBeforeImport) BackupGraphToJson(_targetGraph);
-                if (_recordUndo) Undo.RegisterCompleteObjectUndo(_targetGraph, "Import Dialog JSON");
-
-                if (_mergeStrategy == MergeStrategy.ReplaceChildren)
-                    MergeReplaceChildren(_targetGraph, _rootNode, _previewDto);
-                else
-                    MergeAppend(_targetGraph, _previewDto);
-
-                EditorUtility.SetDirty(_targetGraph);
-                AssetDatabase.SaveAssets();
-                AssetDatabase.Refresh();
-                ShowNotification(new GUIContent("Import complete"));
-            }
-        }
-
-        private void CreateNewGraphFromDto(DialogGraphExport dto)
-        {
-            var absDir = AbsoluteFromAssets(_importFolder);
-            if (!Directory.Exists(absDir)) Directory.CreateDirectory(absDir);
-
-            var assetName = SafeFile(_importTargetName);
-            var uniquePath = AssetDatabase.GenerateUniqueAssetPath($"{_importFolder}/{assetName}.asset");
-
-            var graph = ScriptableObject.CreateInstance<DialogGraph>();
-            AssetDatabase.CreateAsset(graph, uniquePath);
-
-            _ = BuildFromDto(graph, dto, rootForAttach: null, addAttachLink: false);
+            BuildFromDto(graph, dto);
 
             EditorUtility.SetDirty(graph);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
 
             Selection.activeObject = graph;
-            ShowNotification(new GUIContent($"Created {Path.GetFileName(uniquePath)}"));
-        }
+            ShowNotification(new GUIContent($"Overwrote {Path.GetFileName(targetRelPath)}"));
 
-        private void MergeReplaceChildren(DialogGraph graph, DialogNode root, DialogGraphExport dto)
-        {
-            // Import nodes/links and add one attach link: root -> imported entry (port 0)
-            _ = BuildFromDto(graph, dto, rootForAttach: root, addAttachLink: true);
-        }
-
-        private void MergeAppend(DialogGraph graph, DialogGraphExport dto)
-        {
-            // Import nodes/links without attach link
-            _ = BuildFromDto(graph, dto, rootForAttach: null, addAttachLink: false);
+            if (doDebug)
+                Debug.Log($"[DialogJsonIOWindow] Overwrote DialogGraph at: {targetRelPath}");
         }
 
         /// <summary>
-        /// Create nodes and links from DTO into 'graph'.
-        /// If 'rootForAttach' is provided and 'addAttachLink' is true, also link root→importedEntry (port 0).
-        /// Returns mapped entry GUID in the target graph (or null).
+        /// Creates nodes and links from DTO into the given graph.
+        /// Simple policy: preserve GUIDs unless they conflict with existing ones,
+        /// in which case new GUIDs are generated.
         /// </summary>
-        private string BuildFromDto(DialogGraph graph, DialogGraphExport dto, DialogNode rootForAttach, bool addAttachLink)
+        private void BuildFromDto(DialogGraph graph, DialogGraphExport dto)
         {
             if (graph.nodes == null) graph.nodes = new List<DialogNode>();
             if (graph.choiceNodes == null) graph.choiceNodes = new List<ChoiceNode>();
@@ -592,12 +558,16 @@ namespace DialogSystem.EditorTools.ExportImport
             var existing = new HashSet<string>();
             var map = new Dictionary<string, string>();
 
+            // Collect existing GUIDs from graph
+            existing.UnionWith(graph.nodes.Where(n => n != null).Select(n => n.GetGuid()));
+            existing.UnionWith(graph.choiceNodes.Where(n => n != null).Select(n => n.GetGuid()));
+            existing.UnionWith(graph.actionNodes.Where(n => n != null).Select(n => n.GetGuid()));
+
             // Start / End (editor markers)
             if (dto.startNode != null && !string.IsNullOrEmpty(dto.startNode.guid))
             {
                 graph.startGuid = dto.startNode.guid;
                 graph.startPosition = new Vector2(dto.startNode.nodePositionX, dto.startNode.nodePositionY);
-                map[dto.startNode.guid] = graph.startGuid;
             }
             else
             {
@@ -609,7 +579,6 @@ namespace DialogSystem.EditorTools.ExportImport
             {
                 graph.endGuid = dto.endNode.guid;
                 graph.endPosition = new Vector2(dto.endNode.nodePositionX, dto.endNode.nodePositionY);
-                map[dto.endNode.guid] = graph.endGuid;
             }
             else
             {
@@ -620,18 +589,13 @@ namespace DialogSystem.EditorTools.ExportImport
             graph.startInitialized = dto.startNode != null && dto.startNode.isInitialized;
             graph.endInitialized = dto.endNode != null && dto.endNode.isInitialized;
 
-            // Collect existing GUIDs to detect conflicts
-            existing.UnionWith(graph.nodes.Where(n => n != null).Select(n => n.GetGuid()));
-            existing.UnionWith(graph.choiceNodes.Where(n => n != null).Select(n => n.GetGuid()));
-            existing.UnionWith(graph.actionNodes.Where(n => n != null).Select(n => n.GetGuid()));
-
             // Map dialog nodes
             foreach (var d in dto.dialogNodes ?? Enumerable.Empty<DialogExportDialogNode>())
             {
                 var src = string.IsNullOrEmpty(d.guid) ? Guid.NewGuid().ToString("N") : d.guid;
                 var dst = src;
 
-                if (_guidPolicy == GuidPolicy.RegenerateAll || (_guidPolicy == GuidPolicy.RegenerateOnConflict && existing.Contains(dst)))
+                if (existing.Contains(dst))
                     dst = Guid.NewGuid().ToString("N");
 
                 map[src] = dst;
@@ -644,7 +608,7 @@ namespace DialogSystem.EditorTools.ExportImport
                 var src = string.IsNullOrEmpty(c.guid) ? Guid.NewGuid().ToString("N") : c.guid;
                 var dst = src;
 
-                if (_guidPolicy == GuidPolicy.RegenerateAll || (_guidPolicy == GuidPolicy.RegenerateOnConflict && existing.Contains(dst)))
+                if (existing.Contains(dst))
                     dst = Guid.NewGuid().ToString("N");
 
                 map[src] = dst;
@@ -657,7 +621,7 @@ namespace DialogSystem.EditorTools.ExportImport
                 var src = string.IsNullOrEmpty(a.guid) ? Guid.NewGuid().ToString("N") : a.guid;
                 var dst = src;
 
-                if (_guidPolicy == GuidPolicy.RegenerateAll || (_guidPolicy == GuidPolicy.RegenerateOnConflict && existing.Contains(dst)))
+                if (existing.Contains(dst))
                     dst = Guid.NewGuid().ToString("N");
 
                 map[src] = dst;
@@ -668,15 +632,17 @@ namespace DialogSystem.EditorTools.ExportImport
             foreach (var d in dto.dialogNodes ?? Enumerable.Empty<DialogExportDialogNode>())
             {
                 var so = ScriptableObject.CreateInstance<DialogNode>();
-                so.SetGuid(map[d.guid]);
+
+                // original guid might be empty; map covers that
+                if (!map.TryGetValue(d.guid, out var mapped))
+                    mapped = Guid.NewGuid().ToString("N");
+
+                so.SetGuid(mapped);
                 so.name = "Node_" + (string.IsNullOrEmpty(d.title) ? "Untitled" : SafeFile(d.title));
                 so.speakerName = d.speaker;
                 so.questionText = d.question;
                 so.displayTime = d.displayTime;
-
-                so.SetPosition(_useJsonPositions
-                    ? new Vector2(d.nodePositionX, d.nodePositionY)
-                    : (rootForAttach != null ? rootForAttach.GetPosition() + _autoLayoutOffset : Vector2.zero));
+                so.SetPosition(new Vector2(d.nodePositionX, d.nodePositionY));
 
                 graph.nodes.Add(so);
                 AssetDatabase.AddObjectToAsset(so, graph);
@@ -686,13 +652,14 @@ namespace DialogSystem.EditorTools.ExportImport
             foreach (var c in dto.choiceNodes ?? Enumerable.Empty<DialogExportChoiceNode>())
             {
                 var so = ScriptableObject.CreateInstance<ChoiceNode>();
-                so.SetGuid(map[c.guid]);
+
+                if (!map.TryGetValue(c.guid, out var mapped))
+                    mapped = Guid.NewGuid().ToString("N");
+
+                so.SetGuid(mapped);
                 so.name = "ChoiceNode";
                 so.text = c.text;
-
-                so.SetPosition(_useJsonPositions
-                    ? new Vector2(c.nodePositionX, c.nodePositionY)
-                    : (rootForAttach != null ? rootForAttach.GetPosition() + _autoLayoutOffset : Vector2.zero));
+                so.SetPosition(new Vector2(c.nodePositionX, c.nodePositionY));
 
                 so.choices = new List<Choice>();
                 foreach (var ch in c.choices ?? Enumerable.Empty<ExportChoice>())
@@ -700,7 +667,7 @@ namespace DialogSystem.EditorTools.ExportImport
                     so.choices.Add(new Choice
                     {
                         answerText = ch.answerText,
-                        nextNodeGUID = null // authoritative links will be created below
+                        nextNodeGUID = null // authoritative links created below
                     });
                 }
 
@@ -712,18 +679,17 @@ namespace DialogSystem.EditorTools.ExportImport
             foreach (var a in dto.actionNodes ?? Enumerable.Empty<DialogExportActionNode>())
             {
                 var so = ScriptableObject.CreateInstance<DialogSystem.Runtime.Models.Nodes.ActionNode>();
-                so.SetGuid(map[a.guid]);
+
+                if (!map.TryGetValue(a.guid, out var mapped))
+                    mapped = Guid.NewGuid().ToString("N");
+
+                so.SetGuid(mapped);
                 so.name = "ActionNode";
                 so.actionId = a.actionId;
                 so.payloadJson = a.payloadJson;
                 so.waitForCompletion = a.waitForCompletion;
                 so.waitSeconds = a.waitSeconds;
-
-                var pos = _useJsonPositions
-                    ? new Vector2(a.nodePositionX, a.nodePositionY)
-                    : (rootForAttach != null ? rootForAttach.GetPosition() + _autoLayoutOffset : Vector2.zero);
-
-                so.SetPosition(pos);
+                so.SetPosition(new Vector2(a.nodePositionX, a.nodePositionY));
 
                 graph.actionNodes.Add(so);
                 AssetDatabase.AddObjectToAsset(so, graph);
@@ -760,9 +726,13 @@ namespace DialogSystem.EditorTools.ExportImport
             // Map & add links
             foreach (var l in linkBuffer)
             {
-                if (string.IsNullOrEmpty(l.fromGuid) || string.IsNullOrEmpty(l.toGuid)) continue;
-                if (!map.TryGetValue(l.fromGuid, out var fromMapped)) continue;
-                if (!map.TryGetValue(l.toGuid, out var toMapped)) continue;
+                if (string.IsNullOrEmpty(l.fromGuid) || string.IsNullOrEmpty(l.toGuid))
+                    continue;
+
+                if (!map.TryGetValue(l.fromGuid, out var fromMapped))
+                    continue;
+                if (!map.TryGetValue(l.toGuid, out var toMapped))
+                    continue;
 
                 graph.links.Add(new GraphLink
                 {
@@ -771,20 +741,6 @@ namespace DialogSystem.EditorTools.ExportImport
                     fromPortIndex = l.fromPortIndex
                 });
             }
-
-            // Attach imported entry to provided root (if requested)
-            string mappedEntry = dto.startNode != null && !string.IsNullOrEmpty(dto.startNode.guid) && map.TryGetValue(dto.startNode.guid, out var entry) ? entry : null;
-            if (addAttachLink && rootForAttach != null && !string.IsNullOrEmpty(mappedEntry))
-            {
-                graph.links.Add(new GraphLink
-                {
-                    fromGuid = rootForAttach.GetGuid(),
-                    toGuid = mappedEntry,
-                    fromPortIndex = 0
-                });
-            }
-
-            return mappedEntry;
         }
         #endregion
 
@@ -805,7 +761,6 @@ namespace DialogSystem.EditorTools.ExportImport
                 else if (!string.IsNullOrEmpty(_importExternalPath) && File.Exists(_importExternalPath))
                 {
                     json = File.ReadAllText(_importExternalPath, Encoding.UTF8);
-                    TryRememberImportFolder(_importExternalPath);
                 }
                 else
                 {
@@ -814,22 +769,22 @@ namespace DialogSystem.EditorTools.ExportImport
                 }
 
                 _loadedJson = json;
-                ValidateJson();
-            }
-            catch (Exception ex)
-            {
-                _jsonError = "Load failed: " + ex.Message;
-            }
-        }
 
-        private void ValidateJson()
-        {
-            try
-            {
+                // Validate
                 _previewDto = JsonUtility.FromJson<DialogGraphExport>(_loadedJson);
                 bool ok = _previewDto != null &&
-                          (_previewDto.dialogNodes != null || _previewDto.choiceNodes != null || _previewDto.actionNodes != null);
-                _jsonError = ok ? "" : "Invalid or empty JSON.";
+                          (_previewDto.dialogNodes != null ||
+                           _previewDto.choiceNodes != null ||
+                           _previewDto.actionNodes != null);
+
+                if (!ok)
+                {
+                    _previewDto = null;
+                    _jsonError = "Invalid or empty JSON for DialogGraphExport.";
+                }
+
+                if (doDebug && ok)
+                    Debug.Log("[DialogJsonIOWindow] JSON validated successfully for import.");
             }
             catch (Exception ex)
             {
@@ -837,120 +792,18 @@ namespace DialogSystem.EditorTools.ExportImport
                 _jsonError = "JSON parse error: " + ex.Message;
             }
         }
-
-        private void PrettyFormatJson()
-        {
-            if (string.IsNullOrEmpty(_loadedJson)) return;
-            try
-            {
-                var dto = JsonUtility.FromJson<DialogGraphExport>(_loadedJson);
-                if (dto != null)
-                {
-                    _loadedJson = JsonUtility.ToJson(dto, true);
-                    _jsonError = "";
-                }
-                else _jsonError = "Cannot format: invalid JSON.";
-            }
-            catch (Exception ex)
-            {
-                _jsonError = "Format failed: " + ex.Message;
-            }
-        }
-
-        private void SaveJsonToAssets()
-        {
-            var relPath = EditorUtility.SaveFilePanelInProject("Save JSON", "DialogGraph.json", "json", "Choose save location");
-            if (string.IsNullOrEmpty(relPath)) return;
-            File.WriteAllText(AbsoluteFromAssets(relPath), _loadedJson ?? "", Encoding.UTF8);
-            AssetDatabase.Refresh();
-            ShowNotification(new GUIContent("Saved JSON to " + relPath));
-            AddRecent(AbsoluteFromAssets(relPath));
-        }
-        #endregion
-
-        #region ---------------- Recent / Backup helpers ----------------
-        private void DrawRecentSection()
-        {
-            var recent = GetRecent();
-            if (recent.Count == 0) return;
-
-            EditorGUILayout.LabelField("Recent Files", _headerStyle);
-            using (new EditorGUILayout.VerticalScope(_boxStyle))
-            {
-                foreach (var abs in recent.ToList())
-                {
-                    var exists = File.Exists(abs);
-                    using (new EditorGUILayout.HorizontalScope())
-                    {
-                        var label = exists ? ShortenPath(abs) : $"(Missing) {ShortenPath(abs)}";
-                        EditorGUILayout.SelectableLabel(label, GUILayout.Height(16));
-
-                        if (GUILayout.Button("Reveal", GUILayout.Width(60)))
-                            EditorUtility.RevealInFinder(abs);
-
-                        if (GUILayout.Button("Load", GUILayout.Width(60)))
-                        {
-                            _importJsonAsset = null;
-                            _importExternalPath = abs;
-                            LoadJsonForPreview();
-                        }
-
-                        if (!exists)
-                        {
-                            if (GUILayout.Button("Remove", GUILayout.Width(60)))
-                                RemoveRecent(abs);
-                        }
-                    }
-                }
-            }
-        }
-
-        private void AddRecent(string abs)
-        {
-            var list = GetRecent();
-            list.Remove(abs);
-            list.Insert(0, abs);
-            if (list.Count > kMaxRecent) list.RemoveAt(list.Count - 1);
-            EditorPrefs.SetString(kPrefsRecent, string.Join("|", list));
-        }
-
-        private void RemoveRecent(string abs)
-        {
-            var list = GetRecent();
-            list.Remove(abs);
-            EditorPrefs.SetString(kPrefsRecent, string.Join("|", list));
-        }
-
-        private List<string> GetRecent()
-        {
-            var raw = EditorPrefs.GetString(kPrefsRecent, "");
-            var list = raw.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-            return list;
-        }
-
-        private void BackupGraphToJson(DialogGraph graph)
-        {
-            if (graph == null) return;
-            var dto = BuildExportDTO(graph);
-            var ts = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-            var folder = _exportFolder;
-            var absDir = AbsoluteFromAssets(folder);
-            if (!Directory.Exists(absDir)) Directory.CreateDirectory(absDir);
-            var relPath = $"{folder}/{SafeFile(graph.name)}_BACKUP_{ts}.json";
-            File.WriteAllText(AbsoluteFromAssets(relPath), JsonUtility.ToJson(dto, true), Encoding.UTF8);
-            AssetDatabase.Refresh();
-            AddRecent(AbsoluteFromAssets(relPath));
-        }
         #endregion
 
         #region ---------------- Drag & Drop ----------------
-        private void DragAndDropArea()
+        private void DrawDragAndDropArea()
         {
             var evt = Event.current;
             var rect = GUILayoutUtility.GetRect(0, 40, GUILayout.ExpandWidth(true));
             GUI.Box(rect, "Drag & Drop a .json file here to preview/import", EditorStyles.helpBox);
 
-            if (!rect.Contains(evt.mousePosition)) return;
+            if (!rect.Contains(evt.mousePosition))
+                return;
+
             if (evt.type == EventType.DragUpdated || evt.type == EventType.DragPerform)
             {
                 var paths = DragAndDrop.paths;
@@ -974,24 +827,35 @@ namespace DialogSystem.EditorTools.ExportImport
         private static bool IsUnderAssets(string absolutePath, out string assetsRelative)
         {
             assetsRelative = null;
-            if (string.IsNullOrEmpty(absolutePath)) return false;
+            if (string.IsNullOrEmpty(absolutePath))
+                return false;
+
             absolutePath = absolutePath.Replace("\\", "/");
             var assetsAbs = Application.dataPath.Replace("\\", "/");
-            if (!absolutePath.StartsWith(assetsAbs, StringComparison.OrdinalIgnoreCase)) return false;
+            if (!absolutePath.StartsWith(assetsAbs, StringComparison.OrdinalIgnoreCase))
+                return false;
+
             assetsRelative = "Assets" + absolutePath.Substring(assetsAbs.Length);
             return true;
         }
 
         private static string AbsoluteFromAssets(string assetsRelative)
         {
-            if (string.IsNullOrEmpty(assetsRelative)) return null;
+            if (string.IsNullOrEmpty(assetsRelative))
+                return null;
+
             var rel = assetsRelative.Replace("\\", "/");
-            if (!rel.StartsWith("Assets/") && rel != "Assets") throw new Exception("Path must start with 'Assets/'");
+            if (!rel.StartsWith("Assets/") && rel != "Assets")
+                throw new Exception("Path must start with 'Assets/'");
+
             return Path.GetFullPath(Path.Combine(Application.dataPath, "..", rel)).Replace("\\", "/");
         }
 
         private static string SafeFile(string name)
         {
+            if (string.IsNullOrEmpty(name))
+                return "Unnamed";
+
             var invalid = Path.GetInvalidFileNameChars();
             var sb = new StringBuilder(name.Length);
             foreach (var ch in name)
@@ -1006,30 +870,6 @@ namespace DialogSystem.EditorTools.ExportImport
             if (!string.IsNullOrEmpty(_importFolder))
                 return AbsoluteFromAssets(_importFolder);
             return Application.dataPath;
-        }
-
-        private void TryRememberImportFolder(string externalAbsPath)
-        {
-            var dir = Path.GetDirectoryName(externalAbsPath)?.Replace("\\", "/");
-            if (IsUnderAssets(externalAbsPath, out var rel))
-            {
-                var relFolder = Path.GetDirectoryName(rel)?.Replace("\\", "/");
-                if (!string.IsNullOrEmpty(relFolder))
-                {
-                    _importFolder = relFolder;
-                    EditorPrefs.SetString(kPrefsImportFolder, _importFolder);
-                }
-            }
-        }
-
-        private static string ShortenPath(string abs, int max = 70)
-        {
-            if (abs.Length <= max) return abs;
-            var file = Path.GetFileName(abs);
-            var dir = Path.GetDirectoryName(abs).Replace("\\", "/");
-            var start = dir.Length > 10 ? dir.Substring(0, 10) : dir;
-            var end = dir.Length > 10 ? dir.Substring(dir.Length - 10) : "";
-            return $"{start}…/{end}/{file}";
         }
         #endregion
     }

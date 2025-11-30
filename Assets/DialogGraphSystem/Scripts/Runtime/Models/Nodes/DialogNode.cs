@@ -5,7 +5,7 @@ namespace DialogSystem.Runtime.Models.Nodes
     /// <summary>
     /// Standard dialog line with optional speaker, portrait, audio, and display time.
     /// </summary>
-    [CreateAssetMenu(fileName = "DialogNode", menuName = "Dialog System/Dialog Node")]
+    [CreateAssetMenu(fileName = "DialogNode", menuName = "Dialog System/Graph/Dialog Node")]
     public class DialogNode : BaseNode
     {
         #region -------- Speaker --------

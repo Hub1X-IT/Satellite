@@ -17,34 +17,34 @@ namespace DialogSystem.EditorTools.Windows
     /// </summary>
     public class EditorSidbarWindow : VisualElement
     {
-        private readonly DialogGraphEditorWindow owner;
+        private readonly DialogGraphEditorWindow _owner;
 
         private enum Tab { Characters, Actions }
-        private Tab currentTab = Tab.Characters;
+        private Tab _currentTab = Tab.Characters;
 
         // Header
-        private Toolbar headerBar;
-        private Button collapseBtn;
-        private Button rescanBtn;
-        private Button applyBtn;
-        private Label titleLabel;
+        private Toolbar _headerBar;
+        private Button _collapseBtn;
+        private Button _rescanBtn;
+        private Button _applyBtn;
+        private Label _titleLabel;
 
         // Tab bar + search
-        private Toolbar tabBar;
-        private ToolbarToggle tabCharacters;
-        private ToolbarToggle tabActions;
-        private ToolbarSearchField searchField;
+        private Toolbar _tabBar;
+        private ToolbarToggle _tabCharacters;
+        private ToolbarToggle _tabActions;
+        private ToolbarSearchField _searchField;
 
         // Content
-        private ScrollView listView;
+        private ScrollView _listView;
 
         // Data
-        private readonly Dictionary<string, CharacterRow> characterRows = new();
-        private readonly Dictionary<string, ActionRow> actionRows = new();
+        private readonly Dictionary<string, CharacterRow> _characterRows = new();
+        private readonly Dictionary<string, ActionRow> _actionRows = new();
 
         public EditorSidbarWindow(DialogGraphEditorWindow owner)
         {
-            this.owner = owner;
+            this._owner = owner;
 
             // Keep your existing USS hooks so styles continue to apply
             AddToClassList("dlg-char-sidebar");
@@ -60,79 +60,79 @@ namespace DialogSystem.EditorTools.Windows
 
         private void BuildHeader()
         {
-            headerBar = new Toolbar();
-            headerBar.AddToClassList("dlg-char-toolbar");
+            _headerBar = new Toolbar();
+            _headerBar.AddToClassList("dlg-char-toolbar");
 
             // Collapse button (icon-only if your ICON_COLLAPSE exists, else shows text)
-            collapseBtn = MakeToolbarButton("⮌", TextResources.ICON_COLLAPSE, "Collapse Sidebar", () => owner.ToggleSidebar());
-            headerBar.Add(collapseBtn);
+            _collapseBtn = MakeToolbarButton("⮌", TextResources.ICON_COLLAPSE, "Collapse Sidebar", () => _owner.ToggleSidebar());
+            _headerBar.Add(_collapseBtn);
 
-            titleLabel = new Label("Sidebar");
-            titleLabel.AddToClassList("dlg-char-title");
-            headerBar.Add(titleLabel);
+            _titleLabel = new Label("Sidebar");
+            _titleLabel.AddToClassList("dlg-char-title");
+            _headerBar.Add(_titleLabel);
 
-            rescanBtn = MakeToolbarButton("Rescan", TextResources.ICON_RESCAN, "Rescan content from nodes", OnClickRescan);
-            rescanBtn.AddToClassList("dlg-char-btn");
-            headerBar.Add(rescanBtn);
+            _rescanBtn = MakeToolbarButton("Rescan", TextResources.ICON_RESCAN, "Rescan content from nodes", OnClickRescan);
+            _rescanBtn.AddToClassList("dlg-char-btn");
+            _headerBar.Add(_rescanBtn);
 
-            applyBtn = MakeToolbarButton("Apply", TextResources.ICON_APPLY, "Apply edits to matching nodes", OnClickApply);
-            applyBtn.AddToClassList("dlg-char-btn");
-            headerBar.Add(applyBtn);
+            _applyBtn = MakeToolbarButton("Apply", TextResources.ICON_APPLY, "Apply edits to matching nodes", OnClickApply);
+            _applyBtn.AddToClassList("dlg-char-btn");
+            _headerBar.Add(_applyBtn);
 
-            Add(headerBar);
+            Add(_headerBar);
         }
 
         private void BuildTabs()
         {
-            tabBar = new Toolbar();
+            _tabBar = new Toolbar();
 
-            tabCharacters = new ToolbarToggle { text = "Characters" };
-            tabCharacters.RegisterValueChangedCallback(evt =>
+            _tabCharacters = new ToolbarToggle { text = "Characters" };
+            _tabCharacters.RegisterValueChangedCallback(evt =>
             {
                 if (evt.newValue)
                 {
-                    tabActions.SetValueWithoutNotify(false);
+                    _tabActions.SetValueWithoutNotify(false);
                     SetTab(Tab.Characters, refresh: true);
                 }
-                else if (!tabActions.value) // keep one selected
+                else if (!_tabActions.value) // keep one selected
                 {
-                    tabCharacters.SetValueWithoutNotify(true);
+                    _tabCharacters.SetValueWithoutNotify(true);
                 }
             });
-            tabBar.Add(tabCharacters);
+            _tabBar.Add(_tabCharacters);
 
-            tabActions = new ToolbarToggle { text = "Actions" };
-            tabActions.RegisterValueChangedCallback(evt =>
+            _tabActions = new ToolbarToggle { text = "Actions" };
+            _tabActions.RegisterValueChangedCallback(evt =>
             {
                 if (evt.newValue)
                 {
-                    tabCharacters.SetValueWithoutNotify(false);
+                    _tabCharacters.SetValueWithoutNotify(false);
                     SetTab(Tab.Actions, refresh: true);
                 }
-                else if (!tabCharacters.value) // keep one selected
+                else if (!_tabCharacters.value) // keep one selected
                 {
-                    tabActions.SetValueWithoutNotify(true);
+                    _tabActions.SetValueWithoutNotify(true);
                 }
             });
-            tabBar.Add(tabActions);
+            _tabBar.Add(_tabActions);
 
-            tabCharacters.SetValueWithoutNotify(true);
+            _tabCharacters.SetValueWithoutNotify(true);
 
-            tabBar.Add(new ToolbarSpacer());
+            _tabBar.Add(new ToolbarSpacer());
 
-            searchField = new ToolbarSearchField();
-            searchField.style.flexGrow = 1;
-            searchField.RegisterValueChangedCallback(_ => FilterVisible());
-            tabBar.Add(searchField);
+            _searchField = new ToolbarSearchField();
+            _searchField.style.flexGrow = 1;
+            _searchField.RegisterValueChangedCallback(_ => FilterVisible());
+            _tabBar.Add(_searchField);
 
-            Add(tabBar);
+            Add(_tabBar);
         }
 
         private void BuildList()
         {
-            listView = new ScrollView(ScrollViewMode.Vertical);
-            listView.AddToClassList("dlg-char-list");
-            Add(listView);
+            _listView = new ScrollView(ScrollViewMode.Vertical);
+            _listView.AddToClassList("dlg-char-list");
+            Add(_listView);
         }
 
         private Button MakeToolbarButton(string fallbackText, string iconPath, string tooltip, Action onClick)
@@ -165,16 +165,16 @@ namespace DialogSystem.EditorTools.Windows
 
         public void ClearAll()
         {
-            characterRows.Clear();
-            actionRows.Clear();
-            listView?.Clear();
+            _characterRows.Clear();
+            _actionRows.Clear();
+            _listView?.Clear();
         }
 
         public void RebuildFromGraph()
         {
-            listView.Clear();
+            _listView.Clear();
 
-            if (currentTab == Tab.Characters)
+            if (_currentTab == Tab.Characters)
             {
                 BuildCharactersFace();
             }
@@ -193,9 +193,9 @@ namespace DialogSystem.EditorTools.Windows
 
         private void BuildCharactersFace()
         {
-            characterRows.Clear();
+            _characterRows.Clear();
 
-            var names = owner.CollectSpeakersFromNodes()
+            var names = _owner.CollectSpeakersFromNodes()
                              .Where(n => !string.IsNullOrWhiteSpace(n))
                              .Select(n => n.Trim())
                              .Distinct(StringComparer.Ordinal)
@@ -204,10 +204,10 @@ namespace DialogSystem.EditorTools.Windows
 
             foreach (var name in names)
             {
-                var firstSprite = owner.FindFirstSpriteForSpeaker(name);
+                var firstSprite = _owner.FindFirstSpriteForSpeaker(name);
                 var row = new CharacterRow(name, name, firstSprite);
-                characterRows[name] = row;
-                listView.Add(row);
+                _characterRows[name] = row;
+                _listView.Add(row);
             }
         }
 
@@ -269,33 +269,33 @@ namespace DialogSystem.EditorTools.Windows
 
         private void BuildActionsFace()
         {
-            actionRows.Clear();
+            _actionRows.Clear();
 
-            var nodes = owner.CollectActionNodes()
-                             .OrderBy(v => string.IsNullOrEmpty(v.ActionId) ? "~" : v.ActionId, StringComparer.OrdinalIgnoreCase)
+            var nodes = _owner.CollectActionNodes()
+                             .OrderBy(v => string.IsNullOrEmpty(v.actionId) ? "~" : v.actionId, StringComparer.OrdinalIgnoreCase)
                              .ThenBy(v => v.GUID, StringComparer.OrdinalIgnoreCase)
                              .ToList();
 
             // group by Action Id (bulk edit template per id)
-            var groups = nodes.GroupBy(v => v.ActionId ?? "", StringComparer.OrdinalIgnoreCase);
+            var groups = nodes.GroupBy(v => v.actionId ?? "", StringComparer.OrdinalIgnoreCase);
 
             foreach (var g in groups)
             {
                 var first = g.First();
                 var row = new ActionRow(
                     originalActionId: g.Key,
-                    actionId: first.ActionId ?? "",
-                    payload: first.PayloadJson ?? "",
-                    wait: first.WaitForCompletion,
-                    waitSeconds: first.WaitSeconds);
+                    actionId: first.actionId ?? "",
+                    payload: first.payloadJson ?? "",
+                    wait: first.waitForCompletion,
+                    waitSeconds: first.waitSeconds);
 
                 row.OnSelectAll = () =>
                 {
-                    var gv = owner.GetGraphView();
+                    var gv = _owner.GetGraphView();
                     if (gv == null) return;
 
                     var matching = nodes.Where(v =>
-                        string.Equals(v.ActionId ?? "", g.Key, StringComparison.OrdinalIgnoreCase)).Cast<GraphElement>();
+                        string.Equals(v.actionId ?? "", g.Key, StringComparison.OrdinalIgnoreCase)).Cast<GraphElement>();
 
                     gv.ClearSelection();
                     bool any = false;
@@ -303,8 +303,8 @@ namespace DialogSystem.EditorTools.Windows
                     if (any) gv.FrameSelection();
                 };
 
-                actionRows[g.Key] = row;
-                listView.Add(row);
+                _actionRows[g.Key] = row;
+                _listView.Add(row);
             }
         }
 
@@ -372,8 +372,8 @@ namespace DialogSystem.EditorTools.Windows
 
         private void SetTab(Tab tab, bool refresh)
         {
-            currentTab = tab;
-            titleLabel.text = tab == Tab.Characters ? "Characters" : "Actions";
+            _currentTab = tab;
+            _titleLabel.text = tab == Tab.Characters ? "Characters" : "Actions";
 
             if (refresh) RebuildFromGraph();
         }
@@ -382,10 +382,10 @@ namespace DialogSystem.EditorTools.Windows
 
         private void OnClickApply()
         {
-            if (currentTab == Tab.Characters)
+            if (_currentTab == Tab.Characters)
             {
                 var data = ExportCharacterBindings();
-                owner.ApplySpritesToNodes(data);
+                _owner.ApplySpritesToNodes(data);
 
                 if (data.Any(b => !string.Equals(b.originalName?.Trim(), b.currentName?.Trim(), StringComparison.Ordinal)))
                     RebuildFromGraph();
@@ -393,7 +393,7 @@ namespace DialogSystem.EditorTools.Windows
             else
             {
                 var data = ExportActionBindings();
-                owner.ApplyActionsToNodes(data);
+                _owner.ApplyActionsToNodes(data);
 
                 if (data.Any(b => !string.Equals(b.originalActionId ?? "", b.actionId ?? "", StringComparison.Ordinal)))
                     RebuildFromGraph();
@@ -402,11 +402,11 @@ namespace DialogSystem.EditorTools.Windows
 
         private void FilterVisible()
         {
-            var q = searchField?.value ?? string.Empty;
+            var q = _searchField?.value ?? string.Empty;
             q = q.Trim();
             bool hasQ = !string.IsNullOrEmpty(q);
 
-            foreach (var child in listView.Children())
+            foreach (var child in _listView.Children())
             {
                 if (!hasQ)
                 {
@@ -425,8 +425,8 @@ namespace DialogSystem.EditorTools.Windows
 
         private List<DialogGraphEditorWindow.CharacterBinding> ExportCharacterBindings()
         {
-            var list = new List<DialogGraphEditorWindow.CharacterBinding>(characterRows.Count);
-            foreach (var kv in characterRows)
+            var list = new List<DialogGraphEditorWindow.CharacterBinding>(_characterRows.Count);
+            foreach (var kv in _characterRows)
             {
                 var r = kv.Value;
                 list.Add(new DialogGraphEditorWindow.CharacterBinding
@@ -441,8 +441,8 @@ namespace DialogSystem.EditorTools.Windows
 
         private List<DialogGraphEditorWindow.ActionBinding> ExportActionBindings()
         {
-            var list = new List<DialogGraphEditorWindow.ActionBinding>(actionRows.Count);
-            foreach (var kv in actionRows)
+            var list = new List<DialogGraphEditorWindow.ActionBinding>(_actionRows.Count);
+            foreach (var kv in _actionRows)
             {
                 var r = kv.Value;
                 list.Add(new DialogGraphEditorWindow.ActionBinding

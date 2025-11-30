@@ -11,7 +11,7 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
     /// </summary>
     public abstract class BaseNodeView<TData> : Node where TData : ScriptableObject
     {
-        public TData Data { get; private set; }
+        public TData data { get; private set; }
 
         /// <summary>Fired when this view changes (e.g., moved or fields edited).</summary>
         public Action<BaseNodeView<TData>> OnChanged;
@@ -19,7 +19,7 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
         #region Init
         public virtual void Initialize(TData data, Vector2 position, string titleText)
         {
-            Data = data;
+            this.data = data;
             title = titleText;
             SetPosition(new Rect(position, new Vector2(280, 240)));
         }
@@ -28,7 +28,7 @@ namespace DialogSystem.EditorTools.View.Elements.Nodes
         #region Utilities
         protected void MarkDirty(UnityEngine.Object obj = null)
         {
-            var target = obj != null ? obj : (UnityEngine.Object)Data;
+            var target = obj != null ? obj : (UnityEngine.Object)data;
             if (target != null) EditorUtility.SetDirty(target);
             OnChanged?.Invoke(this);
         }

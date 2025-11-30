@@ -5,7 +5,7 @@ namespace DialogSystem.Runtime.Models.Nodes
     /// <summary>
     /// Graph start marker. Points to the first playable node in the conversation.
     /// </summary>
-    [CreateAssetMenu(fileName = "StartNode", menuName = "Dialog System/Start Node")]
+    [CreateAssetMenu(fileName = "StartNode", menuName = "Dialog System/Graph/Start Node")]
     public class StartNode : BaseNode
     {
         [Tooltip("First node to jump to (GUID).")]

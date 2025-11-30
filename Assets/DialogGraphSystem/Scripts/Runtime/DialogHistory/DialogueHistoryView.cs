@@ -35,9 +35,9 @@ namespace DialogSystem.Runtime
         [Tooltip("If true, choice rows hide their icon by default.")]
         public bool hideChoiceIcon = true;
 
-        private readonly List<DialogueHistoryItem> pool = new();
-        private int activeCount = 0;
-        private bool dirtyScrollToBottom;
+        private readonly List<DialogueHistoryItem> _pool = new();
+        private int _activeCount = 0;
+        private bool _dirtyScrollToBottom;
         #endregion
 
         #region -------- Unity Lifecycle --------
@@ -48,8 +48,8 @@ namespace DialogSystem.Runtime
 
         private void LateUpdate()
         {
-            if (!dirtyScrollToBottom) return;
-            dirtyScrollToBottom = false;
+            if (!_dirtyScrollToBottom) return;
+            _dirtyScrollToBottom = false;
 
             Canvas.ForceUpdateCanvases();
             if (scrollRect != null)
@@ -84,7 +84,7 @@ namespace DialogSystem.Runtime
                     BindToNext(entries[i]);
             }
 
-            dirtyScrollToBottom = true;
+            _dirtyScrollToBottom = true;
         }
 
         /// <summary>
@@ -92,9 +92,9 @@ namespace DialogSystem.Runtime
         /// </summary>
         public void AppendItem(HistoryEntry entry)
         {
-            EnsurePool(activeCount + 1);
+            EnsurePool(_activeCount + 1);
             BindToNext(entry);
-            dirtyScrollToBottom = true;
+            _dirtyScrollToBottom = true;
         }
         #endregion
 
@@ -117,30 +117,30 @@ namespace DialogSystem.Runtime
                 return;
             }
 
-            while (pool.Count < count)
+            while (_pool.Count < count)
             {
                 var item = Instantiate(itemPrefab, contentRoot);
                 item.gameObject.SetActive(false);
                 item.hideIconForChoices = hideChoiceIcon; // pass choice icon policy down
-                pool.Add(item);
+                _pool.Add(item);
             }
         }
 
         private void ReturnAll()
         {
-            for (int i = 0; i < activeCount; i++)
+            for (int i = 0; i < _activeCount; i++)
             {
-                var item = pool[i];
+                var item = _pool[i];
                 if (item) item.gameObject.SetActive(false);
             }
-            activeCount = 0;
+            _activeCount = 0;
         }
 
         private void BindToNext(HistoryEntry e)
         {
-            if (activeCount >= pool.Count || e == null) return;
+            if (_activeCount >= _pool.Count || e == null) return;
 
-            var item = pool[activeCount++];
+            var item = _pool[_activeCount++];
             item.gameObject.SetActive(true);
 
             // For choices, null out portrait if icons are hidden

@@ -1,41 +1,64 @@
-﻿using UnityEditor.Experimental.GraphView;
-using UnityEngine;
-using UnityEngine.UIElements;
+﻿using DialogSystem.EditorTools.Util;
+using DialogSystem.EditorTools.View.Elements.Nodes;
+using DialogSystem.Runtime.Models;
+using DialogSystem.Runtime.Models.Nodes;
+using DialogSystem.Runtime.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
-
-using DialogSystem.Runtime.Models;
-using DialogSystem.EditorTools.View.Elements.Nodes;
-using DialogSystem.Runtime.Models.Nodes;
-using DialogSystem.Runtime.Utils;
+using UnityEditor.Experimental.GraphView;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace DialogSystem.EditorTools.View
 {
+    /// <summary>
+    /// Main GraphView responsible for authoring dialog graphs.
+    /// - Owns all node views & edges.
+    /// - Synchronizes with a DialogGraph ScriptableObject (via GraphId).
+    /// - Handles Undo/Redo, link management, duplication, and save/load.
+    /// </summary>
     public class DialogGraphView : GraphView
     {
         #region ---------------- Fields ----------------
+
+        [SerializeField] private bool doDebug = true;
+
         private MiniMap miniMap;
-        private const float MiniW = 200f;
-        private const float MiniH = 140f;
-        private const float MiniMargin = 10f;
+        private const float MIN_WIDTH = 200f;
+        private const float MIN_HEIGHT = 140f;
+        private const float MIN_MARGIN = 10f;
         private static readonly Vector2 kDefaultNodeSize = new Vector2(200, 120);
 
-        public string GraphId { get; set; } = "NewDialogGraph";
+        /// <summary>
+        /// Logical id / file name of the graph (without .asset extension).
+        /// The editor window sets this before calling SaveGraph/LoadGraph.
+        /// </summary>
+        public string graphId { get; set; } = "NewDialogGraph";
+
         #endregion
 
         #region ---------------- Ctor ----------------
+
+        /// <summary>
+        /// Constructs the graph view:
+        /// - Configures zoom, dragging, selection.
+        /// - Adds grid + minimap.
+        /// - Registers context menu for node creation.
+        /// - Hooks GraphViewChanged for Undo-aware data sync.
+        /// </summary>
         public DialogGraphView()
         {
             name = "Dialog Graph";
-            GraphId = name;
 
+            // Core interactions
             SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
             this.AddManipulator(new ContentDragger());
             this.AddManipulator(new SelectionDragger());
             this.AddManipulator(new RectangleSelector());
 
+            // Grid background
             var grid = new GridBackground();
             Insert(0, grid);
             grid.StretchToParentSize();
@@ -46,7 +69,7 @@ namespace DialogSystem.EditorTools.View
             this.RegisterCallback<GeometryChangedEvent>(_ => RepositionMiniMap());
             RepositionMiniMap();
 
-            // Context menu: create nodes
+            // Context menu: create nodes at mouse position
             this.AddManipulator(new ContextualMenuManipulator(evt =>
             {
                 evt.menu.InsertAction(0, "Create Dialog Node", action =>
@@ -71,99 +94,200 @@ namespace DialogSystem.EditorTools.View
                 });
             }));
 
+            // Global graph change callback (undo-friendly)
             graphViewChanged = OnGraphViewChanged;
+
+            // Always ensure there is a start/end pair in the view
             EnsureStartEndNodes();
         }
+
         #endregion
 
         #region ---------------- MiniMap ----------------
+
+        /// <summary>
+        /// Repositions the minimap in the bottom-right corner of the GraphView.
+        /// </summary>
         private void RepositionMiniMap()
         {
             var w = layout.width;
             var h = layout.height;
             miniMap.SetPosition(new Rect(
-                Mathf.Max(MiniMargin, w - MiniW - MiniMargin),
-                Mathf.Max(MiniMargin, h - MiniH - MiniMargin),
-                MiniW, MiniH));
+                Mathf.Max(MIN_MARGIN, w - MIN_WIDTH - MIN_MARGIN),
+                Mathf.Max(MIN_MARGIN, h - MIN_HEIGHT - MIN_MARGIN),
+                MIN_WIDTH, MIN_HEIGHT));
         }
+
         #endregion
 
         #region ---------------- Node Create ----------------
+
+        /// <summary>
+        /// Ensures there is a DialogGraph asset for the current GraphId.
+        /// If it does not exist, an empty asset is auto-created under the conversations folder.
+        /// </summary>
+        private DialogGraph RequireGraphAsset()
+        {
+            var path = CombineAssetPath(TextResources.CONVERSATION_FOLDER, $"{graphId}.asset");
+            var asset = AssetDatabase.LoadAssetAtPath<DialogGraph>(path);
+            if (asset != null)
+                return asset;
+
+            asset = ScriptableObject.CreateInstance<DialogGraph>();
+            AssetDatabase.CreateAsset(asset, path);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+
+            if (doDebug)
+                Debug.Log($"[DialogGraphView] Auto-created DialogGraph at: {path}");
+
+            return asset;
+        }
+
+        /// <summary>
+        /// Creates a new DialogNode:
+        /// - Allocates a sub-asset in the DialogGraph with Undo.
+        /// - Spawns a DialogNodeView bound to it at the desired position.
+        /// </summary>
         public DialogNodeView CreateDialogNode(string nodeName, bool autoPosition = false, float xPos = 0, float yPos = 0)
         {
-            var node = new DialogNodeView(nodeName, this);
+            var asset = RequireGraphAsset();
+            asset.nodes ??= new List<DialogNode>();
 
+            // Decide position
             Vector2 size = new Vector2(220, 170);
             Vector2 position = new Vector2(xPos, yPos);
 
             if (autoPosition)
             {
-                Vector2 viewCenter = contentViewContainer.WorldToLocal(this.layout.center);
+                Vector2 viewCenter = contentViewContainer.WorldToLocal(layout.center);
                 position = viewCenter - (size * 0.5f);
             }
 
-            node.SetPosition(new Rect(position, size));
-            AddElement(node);
-            return node;
+            // 1) Create data sub-asset
+            var data = ScriptableObject.CreateInstance<DialogNode>();
+            data.name = "Node_" + nodeName;
+            data.SetGuid();
+            data.SetPosition(position);
+
+            // 2) Register Undo for creation + graph change
+            DialogUndoUtility.RegisterCreatedNode("Create Dialog Node", asset, data);
+
+            // 3) Attach to graph asset
+            asset.nodes.Add(data);
+            AssetDatabase.AddObjectToAsset(data, asset);
+            EditorUtility.SetDirty(asset);
+
+            // 4) Create the view bound to this data
+            var view = new DialogNodeView(nodeName, this)
+            {
+                GUID = data.GetGuid()
+            };
+            view.SetPosition(new Rect(position, size));
+            AddElement(view);
+
+            if (doDebug)
+                Debug.Log($"[DialogGraphView] Created DialogNode '{nodeName}' at {position}");
+
+            return view;
         }
 
+        /// <summary>
+        /// Creates a new ChoiceNode with one or more answers.
+        /// </summary>
         public ChoiceNodeView CreateChoiceNode(string nodeName, bool autoPosition = false, float xPos = 0, float yPos = 0)
         {
-            var node = new ChoiceNodeView(nodeName, this);
+            var asset = RequireGraphAsset();
+            asset.choiceNodes ??= new List<ChoiceNode>();
 
+            // Decide position
             Vector2 size = new Vector2(260, 220);
             Vector2 position = new Vector2(xPos, yPos);
 
             if (autoPosition)
             {
-                Vector2 viewCenter = contentViewContainer.WorldToLocal(this.layout.center);
+                Vector2 viewCenter = contentViewContainer.WorldToLocal(layout.center);
                 position = viewCenter - (size * 0.5f);
             }
 
-            node.SetPosition(new Rect(position, size));
-            node.LoadNodeData(null); // start with one empty row
-            AddElement(node);
-            return node;
-        }
-
-        public ActionNodeView CreateActionNode(string nodeName, bool autoPosition = false, float xPos = 0, float yPos = 0)
-        {
-            // temp data (graph asset sub-asset is created on SaveGraph)
-            var data = ScriptableObject.CreateInstance<ActionNode>();
+            // 1) Create data sub-asset
+            var data = ScriptableObject.CreateInstance<ChoiceNode>();
+            data.name = "ChoiceNode";
             data.SetGuid();
-            data.SetPosition(new Vector2(xPos, yPos));
+            data.SetPosition(position);
 
-            var view = new ActionNodeView(data.GetGuid());
-            view.Initialize(data, new Vector2(xPos, yPos), "Action");
-            view.LoadNodeData("", "", false, 0f);
+            // 2) Register Undo for creation + graph change
+            DialogUndoUtility.RegisterCreatedNode("Create Choice Node", asset, data);
 
-            // keep data position synced while dragging
-            view.OnChanged += _ =>
+            // 3) Attach to graph asset
+            asset.choiceNodes.Add(data);
+            AssetDatabase.AddObjectToAsset(data, asset);
+            EditorUtility.SetDirty(asset);
+
+            // 4) Create the view bound to this data
+            var view = new ChoiceNodeView(nodeName, this)
             {
-                if (view.Data == null) return;
-
-                Undo.RecordObject(view.Data, "Move Node");
-                view.Data.SetPosition(view.GetPosition().position);
-                EditorUtility.SetDirty(view.Data);
-
-                var asset = LoadGraphAsset(GraphId);
-                if (asset != null) EditorUtility.SetDirty(asset);
+                GUID = data.GetGuid()
             };
 
-            var size = new Vector2(240, 170);
-            var pos = new Vector2(xPos, yPos);
-
-            if (autoPosition)
-            {
-                Vector2 viewCenter = contentViewContainer.WorldToLocal(this.layout.center);
-                pos = viewCenter - (size * 0.5f);
-            }
-
-            view.SetPosition(new Rect(pos, size));
+            view.SetPosition(new Rect(position, size));
+            view.LoadNodeData(null); // start with one empty row
             AddElement(view);
+
+            if (doDebug)
+                Debug.Log($"[DialogGraphView] Created ChoiceNode '{nodeName}' at {position}");
+
             return view;
         }
 
+        /// <summary>
+        /// Creates a new ActionNode view and backing sub-asset.
+        /// </summary>
+        public ActionNodeView CreateActionNode(string nodeName, bool autoPosition = false, float xPos = 0, float yPos = 0)
+        {
+            var asset = RequireGraphAsset();
+            asset.actionNodes ??= new List<ActionNode>();
+
+            // Decide position
+            Vector2 size = new Vector2(240, 170);
+            Vector2 position = new Vector2(xPos, yPos);
+
+            if (autoPosition)
+            {
+                Vector2 viewCenter = contentViewContainer.WorldToLocal(layout.center);
+                position = viewCenter - (size * 0.5f);
+            }
+
+            // 1) Create data sub-asset
+            var data = ScriptableObject.CreateInstance<ActionNode>();
+            data.name = "ActionNode";
+            data.SetGuid();
+            data.SetPosition(position);
+
+            // 2) Register Undo for creation + graph change
+            DialogUndoUtility.RegisterCreatedNode("Create Action Node", asset, data);
+
+            // 3) Attach to graph asset
+            asset.actionNodes.Add(data);
+            AssetDatabase.AddObjectToAsset(data, asset);
+            EditorUtility.SetDirty(asset);
+
+            // 4) Create the view bound to this data
+            var view = new ActionNodeView(data.GetGuid(), this);
+            view.Initialize(data, position, nodeName);
+            view.LoadNodeData("", "", false, 0f);
+            view.SetPosition(new Rect(position, size));
+            AddElement(view);
+
+            if (doDebug)
+                Debug.Log($"[DialogGraphView] Created ActionNode '{nodeName}' at {position}");
+
+            return view;
+        }
+
+        /// <summary>
+        /// Returns an existing StartNode view or creates one at the given position.
+        /// </summary>
         private StartNodeView GetOrCreateStartView(string guid, Vector2 pos)
         {
             var existing = nodes.ToList().OfType<StartNodeView>().FirstOrDefault();
@@ -171,7 +295,9 @@ namespace DialogSystem.EditorTools.View
             {
                 if (!string.IsNullOrEmpty(guid)) existing.GUID = guid;
                 var r = existing.GetPosition();
-                var size = (r.width <= 0f || r.height <= 0f) ? kDefaultNodeSize : new Vector2(r.width, r.height);
+                var size = (r.width <= 0f || r.height <= 0f)
+                    ? kDefaultNodeSize
+                    : new Vector2(r.width, r.height);
                 existing.SetPosition(new Rect(pos, size));
                 return existing;
             }
@@ -182,6 +308,9 @@ namespace DialogSystem.EditorTools.View
             return view;
         }
 
+        /// <summary>
+        /// Returns an existing EndNode view or creates one at the given position.
+        /// </summary>
         private EndNodeView GetOrCreateEndView(string guid, Vector2 pos)
         {
             var existing = nodes.ToList().OfType<EndNodeView>().FirstOrDefault();
@@ -189,7 +318,9 @@ namespace DialogSystem.EditorTools.View
             {
                 if (!string.IsNullOrEmpty(guid)) existing.GUID = guid;
                 var r = existing.GetPosition();
-                var size = (r.width <= 0f || r.height <= 0f) ? kDefaultNodeSize : new Vector2(r.width, r.height);
+                var size = (r.width <= 0f || r.height <= 0f)
+                    ? kDefaultNodeSize
+                    : new Vector2(r.width, r.height);
                 existing.SetPosition(new Rect(pos, size));
                 return existing;
             }
@@ -200,6 +331,9 @@ namespace DialogSystem.EditorTools.View
             return view;
         }
 
+        /// <summary>
+        /// Ensures there is exactly one non-deletable Start and End node in the view.
+        /// </summary>
         public void EnsureStartEndNodes()
         {
             bool hasStart = nodes.ToList().Any(n => n is StartNodeView);
@@ -216,11 +350,19 @@ namespace DialogSystem.EditorTools.View
                 end.capabilities &= ~Capabilities.Deletable;
             }
         }
+
         #endregion
 
         #region ---------------- Graph Change Handling ----------------
+
+        /// <summary>
+        /// Central callback for all GraphView structural changes (moves, deletions, link changes).
+        /// Applies Undo-aware changes to the DialogGraph asset.
+        /// </summary>
         private GraphViewChange OnGraphViewChanged(GraphViewChange change)
         {
+            var asset = LoadGraphAsset(graphId);
+
             // Never allow deleting Start/End views
             if (change.elementsToRemove != null && change.elementsToRemove.Count > 0)
             {
@@ -229,62 +371,122 @@ namespace DialogSystem.EditorTools.View
                     .ToList();
             }
 
-            // Deletions (nodes or edges)
-            if (change.elementsToRemove != null && change.elementsToRemove.Count > 0)
+            // Node moves → update data positions with a single Undo step
+            if (change.movedElements != null && change.movedElements.Count > 0 && asset != null)
             {
-                var asset = LoadGraphAsset(GraphId);
-                if (asset != null)
-                {
-                    foreach (var element in change.elementsToRemove)
-                    {
-                        if (element is Edge edge)
-                        {
-                            HandleDeleteEdge(asset, edge);
-                            continue;
-                        }
+                // One undo step for the whole move batch (Dialog / Choice / Action / Start / End)
+                DialogUndoUtility.RecordGraph("Move Nodes", asset);
 
-                        if (element is DialogNodeView || element is ChoiceNodeView || element is ActionNodeView)
+                foreach (var element in change.movedElements)
+                {
+                    // Dialog node
+                    if (element is DialogNodeView dv)
+                    {
+                        var data = asset.nodes?.FirstOrDefault(n => n != null && n.GetGuid() == dv.GUID);
+                        if (data != null)
                         {
-                            HandleDeleteNode(asset, element);
-                            continue;
+                            data.SetPosition(dv.GetPosition().position);
+                            EditorUtility.SetDirty(data);
                         }
+                        continue;
                     }
 
-                    EditorUtility.SetDirty(asset);
-                    AssetDatabase.SaveAssets();
+                    // Choice node
+                    if (element is ChoiceNodeView cv)
+                    {
+                        var data = asset.choiceNodes?.FirstOrDefault(n => n != null && n.GetGuid() == cv.GUID);
+                        if (data != null)
+                        {
+                            data.SetPosition(cv.GetPosition().position);
+                            EditorUtility.SetDirty(data);
+                        }
+                        continue;
+                    }
+
+                    // Action node
+                    if (element is ActionNodeView av)
+                    {
+                        var data = asset.actionNodes?.FirstOrDefault(n => n != null && n.GetGuid() == av.GUID);
+                        if (data != null)
+                        {
+                            data.SetPosition(av.GetPosition().position);
+                            EditorUtility.SetDirty(data);
+                        }
+                        continue;
+                    }
+
+                    // START node (no ScriptableObject, stored directly on DialogGraph)
+                    if (element is StartNodeView sv)
+                    {
+                        asset.startPosition = sv.GetPosition().position;
+                        asset.startInitialized = true;
+                        continue;
+                    }
+
+                    // END node (no ScriptableObject, stored directly on DialogGraph)
+                    if (element is EndNodeView ev)
+                    {
+                        asset.endPosition = ev.GetPosition().position;
+                        asset.endInitialized = true;
+                        continue;
+                    }
                 }
+
+                EditorUtility.SetDirty(asset);
+            }
+
+            // Deletions (nodes or edges)
+            if (change.elementsToRemove != null && change.elementsToRemove.Count > 0 && asset != null)
+            {
+                DialogUndoUtility.RecordGraph("Delete Elements", asset);
+
+                foreach (var element in change.elementsToRemove)
+                {
+                    if (element is Edge edge)
+                    {
+                        HandleDeleteEdge(asset, edge);
+                        continue;
+                    }
+
+                    if (element is DialogNodeView || element is ChoiceNodeView || element is ActionNodeView)
+                    {
+                        HandleDeleteNode(asset, element);
+                        continue;
+                    }
+                }
+
+                EditorUtility.SetDirty(asset);
+                AssetDatabase.SaveAssets();
             }
 
             // Edge create → add/update link + set choice nextNodeGUID
-            if (change.edgesToCreate != null && change.edgesToCreate.Count > 0)
+            if (change.edgesToCreate != null && change.edgesToCreate.Count > 0 && asset != null)
             {
-                var asset = LoadGraphAsset(GraphId);
-                if (asset != null)
+                DialogUndoUtility.RecordGraph("Connect Nodes", asset);
+
+                foreach (var e in change.edgesToCreate)
                 {
-                    foreach (var e in change.edgesToCreate)
+                    var fromGuid = ExtractGuidFromView(e.output?.node as Node);
+                    var toGuid = ExtractGuidFromView(e.input?.node as Node);
+                    if (string.IsNullOrEmpty(fromGuid) || string.IsNullOrEmpty(toGuid)) continue;
+
+                    int portIdx = GetOutputPortIndex(e.output);
+
+                    // Unique per (fromGuid, portIdx)
+                    asset.links.RemoveAll(l => l.fromGuid == fromGuid && l.fromPortIndex == portIdx);
+                    asset.links.Add(new GraphLink { fromGuid = fromGuid, toGuid = toGuid, fromPortIndex = portIdx });
+
+                    // If from is a ChoiceNode, update the saved next
+                    var cSo = asset.choiceNodes?.FirstOrDefault(c => c != null && c.GetGuid() == fromGuid);
+                    if (cSo != null && cSo.choices != null && portIdx >= 0 && portIdx < cSo.choices.Count)
                     {
-                        var fromGuid = ExtractGuidFromView(e.output?.node as Node);
-                        var toGuid = ExtractGuidFromView(e.input?.node as Node);
-                        if (string.IsNullOrEmpty(fromGuid) || string.IsNullOrEmpty(toGuid)) continue;
-
-                        int portIdx = GetOutputPortIndex(e.output);
-
-                        // Unique per (fromGuid, portIdx)
-                        asset.links.RemoveAll(l => l.fromGuid == fromGuid && l.fromPortIndex == portIdx);
-                        asset.links.Add(new GraphLink { fromGuid = fromGuid, toGuid = toGuid, fromPortIndex = portIdx });
-
-                        // If from is a ChoiceNode, update the saved next
-                        var cSo = asset.choiceNodes?.FirstOrDefault(c => c != null && c.GetGuid() == fromGuid);
-                        if (cSo != null && cSo.choices != null && portIdx >= 0 && portIdx < cSo.choices.Count)
-                        {
-                            cSo.choices[portIdx].nextNodeGUID = toGuid;
-                            EditorUtility.SetDirty(cSo);
-                        }
+                        cSo.choices[portIdx].nextNodeGUID = toGuid;
+                        EditorUtility.SetDirty(cSo);
                     }
-
-                    EditorUtility.SetDirty(asset);
-                    AssetDatabase.SaveAssets();
                 }
+
+                EditorUtility.SetDirty(asset);
+                AssetDatabase.SaveAssets();
 
                 // Update UI mapping in the view too
                 foreach (var e in change.edgesToCreate)
@@ -297,12 +499,16 @@ namespace DialogSystem.EditorTools.View
                 }
             }
 
-            // Moves handled in node views (OnChanged hooks)
             return change;
         }
+
         #endregion
 
         #region ---------------- Port Rules ----------------
+
+        /// <summary>
+        /// Prevents connecting a port to itself or to the same node; allows only opposite directions.
+        /// </summary>
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
         {
             return ports.ToList().Where(port =>
@@ -310,9 +516,15 @@ namespace DialogSystem.EditorTools.View
                 startPort.node != port.node &&
                 startPort.direction != port.direction).ToList();
         }
+
         #endregion
 
         #region ---------------- Utils ----------------
+
+        /// <summary>
+        /// Returns true if the graph has no user nodes or edges (only start/end).
+        /// Used to warn about overwriting with an empty graph.
+        /// </summary>
         public bool IsGraphEmptyForSave()
         {
             var anyNodes = this.nodes != null && this.nodes.ToList().Count > 0;
@@ -320,6 +532,9 @@ namespace DialogSystem.EditorTools.View
             return !(anyNodes || anyEdges);
         }
 
+        /// <summary>
+        /// Clears all visual elements from the GraphView and re-adds the start/end nodes.
+        /// </summary>
         public void ClearGraph()
         {
             graphElements.ToList().ForEach(RemoveElement);
@@ -353,6 +568,88 @@ namespace DialogSystem.EditorTools.View
         {
             var path = CombineAssetPath(TextResources.CONVERSATION_FOLDER, $"{graphId}.asset");
             return AssetDatabase.LoadAssetAtPath<DialogGraph>(path);
+        }
+
+        /// <summary>
+        /// Creates a DialogNodeView from existing data (used in LoadGraph).
+        /// Does NOT modify asset.nodes.
+        /// </summary>
+        private DialogNodeView CreateDialogNodeViewFromData(DialogNode dNode)
+        {
+            if (dNode == null) return null;
+
+            var title = string.IsNullOrEmpty(dNode.name)
+                ? "Node"
+                : dNode.name.Replace("Node_", "");
+
+            var view = new DialogNodeView(title, this)
+            {
+                GUID = dNode.GetGuid()
+            };
+
+            var pos = dNode.GetPosition();
+            var size = new Vector2(200f, 150f);
+
+            view.SetPosition(new Rect(pos, size));
+            view.LoadNodeData(
+                dNode.speakerName,
+                dNode.questionText,
+                title,
+                dNode.speakerPortrait,
+                dNode.dialogAudio,
+                dNode.displayTime
+            );
+
+            AddElement(view);
+            return view;
+        }
+
+        /// <summary>
+        /// Creates a ChoiceNodeView from existing data (used in LoadGraph).
+        /// Does NOT modify asset.choiceNodes.
+        /// </summary>
+        private ChoiceNodeView CreateChoiceNodeViewFromData(ChoiceNode chNode)
+        {
+            if (chNode == null) return null;
+
+            var view = new ChoiceNodeView("Choice", this)
+            {
+                GUID = chNode.GetGuid()
+            };
+
+            var pos = chNode.GetPosition();
+            var size = new Vector2(260f, 220f);
+
+            view.SetPosition(new Rect(pos, size));
+            view.LoadNodeData(chNode.choices);
+
+            AddElement(view);
+            return view;
+        }
+
+        /// <summary>
+        /// Creates an ActionNodeView from existing data (used in LoadGraph).
+        /// Does NOT modify asset.actionNodes.
+        /// </summary>
+        private ActionNodeView CreateActionNodeViewFromData(ActionNode aNode)
+        {
+            if (aNode == null) return null;
+
+            var view = new ActionNodeView(aNode.GetGuid(), this);
+            var pos = aNode.GetPosition();
+            var size = new Vector2(320f, 240f);
+
+            view.Initialize(aNode, pos, "Action");
+            view.LoadNodeData(
+                aNode.actionId,
+                aNode.payloadJson,
+                aNode.waitForCompletion,
+                aNode.waitSeconds
+            );
+            view.SetPosition(new Rect(pos, size));
+
+            AddElement(view);
+            return view;
         }
 
         private void HandleDeleteEdge(DialogGraph asset, Edge edge)
@@ -412,7 +709,7 @@ namespace DialogSystem.EditorTools.View
                 asset.nodes.Remove(dSo);
                 var match = all.FirstOrDefault(x => x == dSo);
                 if (match != null) AssetDatabase.RemoveObjectFromAsset(match);
-                UnityEngine.Object.DestroyImmediate(dSo, true);
+                Undo.DestroyObjectImmediate(dSo);
             }
 
             // Choice
@@ -422,7 +719,7 @@ namespace DialogSystem.EditorTools.View
                 asset.choiceNodes.Remove(chSo);
                 var match = all.FirstOrDefault(x => x == chSo);
                 if (match != null) AssetDatabase.RemoveObjectFromAsset(match);
-                UnityEngine.Object.DestroyImmediate(chSo, true);
+                Undo.DestroyObjectImmediate(chSo);
             }
 
             // Action
@@ -432,19 +729,57 @@ namespace DialogSystem.EditorTools.View
                 asset.actionNodes.Remove(aSo);
                 var match = all.FirstOrDefault(x => x == aSo);
                 if (match != null) AssetDatabase.RemoveObjectFromAsset(match);
-                UnityEngine.Object.DestroyImmediate(aSo, true);
+                Undo.DestroyObjectImmediate(aSo);
             }
         }
+
+        /// <summary>
+        /// Centers the GraphView camera on a given node.
+        /// Uses a delayed schedule so layout is valid before calling FrameSelection().
+        /// </summary>
+        private void FocusOnNode(Node node)
+        {
+            if (node == null) return;
+
+            // Run after layout so FrameSelection can compute a proper rect.
+            schedule.Execute(() =>
+            {
+                if (node.parent == null) // node might have been deleted
+                    return;
+
+                ClearSelection();
+                AddToSelection(node);
+
+                // Primary: frame the selected node.
+                FrameSelection();
+
+                // Fallback: if something went wrong, at least frame the entire graph.
+                if (selection == null || selection.Count == 0)
+                {
+                    FrameAll();
+                }
+
+            }).ExecuteLater(1);
+        }
+
         #endregion
 
         #region ---------------- Duplicate Node Functionality ----------------
+
+        /// <summary>
+        /// Duplicates all selected Dialog / Choice / Action nodes, including edges between them.
+        /// New nodes are offset diagonally and fully wired up.
+        /// </summary>
         public void DuplicateSelectedNodes()
         {
             var dialogNodeOriginals = selection.OfType<DialogNodeView>().ToList();
             var choiceNodeOriginals = selection.OfType<ChoiceNodeView>().ToList();
             var actionNodeOriginals = selection.OfType<ActionNodeView>().ToList();
 
-            if (dialogNodeOriginals.Count == 0 && choiceNodeOriginals.Count == 0 && actionNodeOriginals.Count == 0) return;
+            if (dialogNodeOriginals.Count == 0 &&
+                choiceNodeOriginals.Count == 0 &&
+                actionNodeOriginals.Count == 0)
+                return;
 
             var existingEdges = this.edges.ToList().OfType<Edge>().ToList();
 
@@ -452,26 +787,26 @@ namespace DialogSystem.EditorTools.View
             var mapChoiceNodes = new Dictionary<ChoiceNodeView, ChoiceNodeView>();
             var mapActionNodes = new Dictionary<ActionNodeView, ActionNodeView>();
 
-            // clone dialog nodes
+            // Clone dialog nodes
             foreach (var src in dialogNodeOriginals)
             {
                 var srcRect = src.GetPosition();
                 var pos = srcRect.position + new Vector2(40f, 40f);
 
-                var clone = CreateDialogNode(src.NodeTitle, false, pos.x, pos.y);
+                var clone = CreateDialogNode(src.nodeTitle, false, pos.x, pos.y);
                 clone.LoadNodeData(
-                    src.SpeakerName,
-                    src.QuestionText,
-                    src.NodeTitle,
-                    src.PortraitSprite,
-                    src.DialogueAudio,
-                    src.DisplayTimeSeconds
+                    src.speakerName,
+                    src.questionText,
+                    src.nodeTitle,
+                    src.portraitSprite,
+                    src.dialogueAudio,
+                    src.displayTimeSeconds
                 );
                 clone.SetPosition(new Rect(pos, srcRect.size));
                 mapDialogNodes[src] = clone;
             }
 
-            // clone choice nodes
+            // Clone choice nodes
             foreach (var src in choiceNodeOriginals)
             {
                 var srcRect = src.GetPosition();
@@ -484,19 +819,19 @@ namespace DialogSystem.EditorTools.View
                 mapChoiceNodes[src] = clone;
             }
 
-            // clone action nodes
+            // Clone action nodes
             foreach (var src in actionNodeOriginals)
             {
                 var srcRect = src.GetPosition();
                 var pos = srcRect.position + new Vector2(40f, 40f);
 
                 var clone = CreateActionNode("Action", false, pos.x, pos.y);
-                clone.LoadNodeData(src.ActionId, src.PayloadJson, src.WaitForCompletion, src.WaitSeconds);
+                clone.LoadNodeData(src.actionId, src.payloadJson, src.waitForCompletion, src.waitSeconds);
                 clone.SetPosition(new Rect(pos, srcRect.size));
                 mapActionNodes[src] = clone;
             }
 
-            // re-create edges between cloned nodes when both endpoints were selected
+            // Re-create edges between cloned nodes when both endpoints were selected
             foreach (var e in existingEdges)
             {
                 var from = e.output?.node as Node;
@@ -532,45 +867,39 @@ namespace DialogSystem.EditorTools.View
                 }
             }
 
-            // update selection to clones
+            // Update selection to clones
             ClearSelection();
             foreach (var kv in mapDialogNodes) AddToSelection(kv.Value);
             foreach (var kv in mapChoiceNodes) AddToSelection(kv.Value);
         }
+
         #endregion
 
         #region ---------------- Save / Load ----------------
+
+        /// <summary>
+        /// Writes graph metadata (Start/End positions + links) into the DialogGraph asset.
+        /// Node sub-assets are kept in sync live while you edit.
+        /// </summary>
         public void SaveGraph(string fileName)
         {
+            graphId = fileName;
+
             string path = CombineAssetPath(TextResources.CONVERSATION_FOLDER, $"{fileName}.asset");
-            DialogGraph asset = AssetDatabase.LoadAssetAtPath<DialogGraph>(path);
+            var asset = AssetDatabase.LoadAssetAtPath<DialogGraph>(path);
 
             if (asset == null)
             {
                 asset = ScriptableObject.CreateInstance<DialogGraph>();
                 AssetDatabase.CreateAsset(asset, path);
             }
-            else
-            {
-                foreach (var node in asset.nodes)
-                    if (node != null) UnityEngine.Object.DestroyImmediate(node, true);
 
-                var subs = AssetDatabase.LoadAllAssetsAtPath(path);
-                foreach (var c in subs.OfType<ChoiceNode>().ToList())
-                    UnityEngine.Object.DestroyImmediate(c, true);
-                foreach (var a in subs.OfType<ActionNode>().ToList())
-                    UnityEngine.Object.DestroyImmediate(a, true);
+            asset.nodes ??= new List<DialogNode>();
+            asset.choiceNodes ??= new List<ChoiceNode>();
+            asset.actionNodes ??= new List<ActionNode>();
+            asset.links ??= new List<GraphLink>();
 
-                if (asset.actionNodes == null) asset.actionNodes = new List<ActionNode>();
-                if (asset.choiceNodes == null) asset.choiceNodes = new List<ChoiceNode>();
-                if (asset.links == null) asset.links = new List<GraphLink>();
-
-                asset.links.Clear();
-                asset.nodes.Clear();
-                asset.actionNodes.Clear();
-                asset.choiceNodes.Clear();
-            }
-
+            // Start / End views
             var startView = nodes.ToList().OfType<StartNodeView>().FirstOrDefault();
             var endView = nodes.ToList().OfType<EndNodeView>().FirstOrDefault();
 
@@ -582,8 +911,10 @@ namespace DialogSystem.EditorTools.View
             }
             else
             {
-                asset.startGuid = string.IsNullOrEmpty(asset.startGuid) ? Guid.NewGuid().ToString("N") : asset.startGuid;
-                asset.startPosition = asset.startInitialized ? new Vector2(-320f, 80f) : asset.startPosition;
+                if (string.IsNullOrEmpty(asset.startGuid))
+                    asset.startGuid = Guid.NewGuid().ToString("N");
+                if (!asset.startInitialized)
+                    asset.startPosition = new Vector2(-320f, 80f);
             }
 
             if (endView != null)
@@ -594,72 +925,16 @@ namespace DialogSystem.EditorTools.View
             }
             else
             {
-                asset.endGuid = string.IsNullOrEmpty(asset.endGuid) ? Guid.NewGuid().ToString("N") : asset.endGuid;
-                asset.endPosition = asset.startInitialized ? new Vector2(720f, 80f) : asset.endPosition;
+                if (string.IsNullOrEmpty(asset.endGuid))
+                    asset.endGuid = Guid.NewGuid().ToString("N");
+                if (!asset.endInitialized)
+                    asset.endPosition = new Vector2(720f, 80f);
             }
-            EditorUtility.SetDirty(asset);
+
+            // Rebuild link list from current edges
+            asset.links.Clear();
 
             var edges = this.edges.ToList().OfType<Edge>().ToList();
-            var dialogViews = this.nodes.ToList().OfType<DialogNodeView>().ToList();
-            var choiceViews = this.nodes.ToList().OfType<ChoiceNodeView>().ToList();
-            var actionViews = this.nodes.ToList().OfType<ActionNodeView>().ToList();
-
-            // Dialog nodes
-            var dialogMap = new Dictionary<string, DialogNode>();
-            foreach (var view in dialogViews)
-            {
-                var dNode = ScriptableObject.CreateInstance<DialogNode>();
-                dNode.SetGuid(view.GUID);
-                dNode.name = "Node_" + view.NodeTitle;
-                dNode.speakerName = view.SpeakerName;
-                dNode.questionText = view.QuestionText;
-                dNode.speakerPortrait = view.PortraitSprite;
-                dNode.dialogAudio = view.DialogueAudio;
-                dNode.displayTime = view.DisplayTimeSeconds;
-                dNode.SetPosition(view.GetPosition().position);
-
-                asset.nodes.Add(dNode);
-                dialogMap[view.GUID] = dNode;
-                AssetDatabase.AddObjectToAsset(dNode, asset);
-            }
-
-            // Choice nodes
-            var choiceMap = new Dictionary<string, ChoiceNode>();
-            foreach (var view in choiceViews)
-            {
-                var chNode = ScriptableObject.CreateInstance<ChoiceNode>();
-                chNode.SetGuid(view.GUID);
-                chNode.name = "ChoiceNode";
-                chNode.SetPosition(view.GetPosition().position);
-
-                chNode.choices = new List<Choice>();
-                foreach (var a in view.answers)
-                    chNode.choices.Add(new Choice { answerText = a, nextNodeGUID = null });
-
-                asset.choiceNodes.Add(chNode);
-                choiceMap[view.GUID] = chNode;
-                AssetDatabase.AddObjectToAsset(chNode, asset);
-            }
-
-            // Action nodes
-            var actionMap = new Dictionary<string, ActionNode>();
-            foreach (var view in actionViews)
-            {
-                var aNode = ScriptableObject.CreateInstance<ActionNode>();
-                aNode.SetGuid(view.GUID);
-                aNode.name = "ActionNode";
-                aNode.actionId = view.ActionId;
-                aNode.payloadJson = view.PayloadJson;
-                aNode.waitForCompletion = view.WaitForCompletion;
-                aNode.waitSeconds = view.WaitSeconds;
-                aNode.SetPosition(view.GetPosition().position);
-
-                asset.actionNodes.Add(aNode);
-                actionMap[view.GUID] = aNode;
-                AssetDatabase.AddObjectToAsset(aNode, asset);
-            }
-
-            // Links + wire choice nexts
             foreach (var e in edges)
             {
                 var fromGuid = ExtractGuidFromView(e.output?.node as Node);
@@ -667,29 +942,58 @@ namespace DialogSystem.EditorTools.View
                 if (string.IsNullOrEmpty(fromGuid) || string.IsNullOrEmpty(toGuid)) continue;
 
                 int portIdx = GetOutputPortIndex(e.output);
-                asset.links.Add(new GraphLink { fromGuid = fromGuid, toGuid = toGuid, fromPortIndex = portIdx });
-
-                if (choiceMap.TryGetValue(fromGuid, out var cSo))
+                asset.links.Add(new GraphLink
                 {
-                    if (cSo.choices != null && portIdx >= 0 && portIdx < cSo.choices.Count)
-                        cSo.choices[portIdx].nextNodeGUID = toGuid;
+                    fromGuid = fromGuid,
+                    toGuid = toGuid,
+                    fromPortIndex = portIdx
+                });
+            }
+
+            // Wire ChoiceNode nextNodeGUID based on links
+            if (asset.choiceNodes != null)
+            {
+                // Clear previous next GUIDs
+                foreach (var c in asset.choiceNodes)
+                {
+                    if (c?.choices == null) continue;
+                    foreach (var ch in c.choices)
+                        if (ch != null) ch.nextNodeGUID = null;
+                }
+
+                // Reapply based on link table
+                foreach (var link in asset.links)
+                {
+                    var cSo = asset.choiceNodes.FirstOrDefault(c => c != null && c.GetGuid() == link.fromGuid);
+                    if (cSo == null || cSo.choices == null) continue;
+                    if (link.fromPortIndex < 0 || link.fromPortIndex >= cSo.choices.Count) continue;
+                    cSo.choices[link.fromPortIndex].nextNodeGUID = link.toGuid;
                 }
             }
 
             EditorUtility.SetDirty(asset);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
+
+            if (doDebug)
+                Debug.Log($"[DialogGraphView] Saved DialogGraph to '{path}'");
         }
 
-        public void LoadGraph(string fileName)
+        /// <summary>
+        /// Clears the current view and reconstructs all nodes/edges
+        /// from the DialogGraph asset on disk, then centers the view on the start node.
+        /// </summary>
+        public void LoadGraph(string fileName, bool onUndo)
         {
-            GraphId = fileName;
+            graphId = fileName;
+
             string path = CombineAssetPath(TextResources.CONVERSATION_FOLDER, $"{fileName}.asset");
             var asset = AssetDatabase.LoadAssetAtPath<DialogGraph>(path);
 
             if (asset == null)
             {
-                Debug.LogError("DialogGraph asset not found: " + path);
+                if (doDebug)
+                    Debug.LogError("[DialogGraphView] DialogGraph asset not found: " + path);
                 return;
             }
 
@@ -721,71 +1025,177 @@ namespace DialogSystem.EditorTools.View
             viewLookup[endView.GUID] = endView;
 
             // Dialog nodes
-            foreach (var dNode in asset.nodes)
+            if (asset.nodes != null)
             {
-                if (dNode == null) continue;
-
-                var view = CreateDialogNode(dNode.name.Replace("Node_", ""), false, dNode.GetPosition().x, dNode.GetPosition().y);
-                view.GUID = dNode.GetGuid();
-                view.LoadNodeData(dNode.speakerName, dNode.questionText, view.NodeTitle, dNode.speakerPortrait, dNode.dialogAudio, dNode.displayTime);
-                view.SetPosition(new Rect(dNode.GetPosition(), new Vector2(200, 150)));
-                viewLookup[dNode.GetGuid()] = view;
+                foreach (var dNode in asset.nodes)
+                {
+                    if (dNode == null) continue;
+                    var view = CreateDialogNodeViewFromData(dNode);
+                    if (view != null)
+                        viewLookup[dNode.GetGuid()] = view;
+                }
             }
 
             // Choice nodes
-            foreach (var chNode in asset.choiceNodes)
+            if (asset.choiceNodes != null)
             {
-                if (chNode == null) continue;
-
-                var view = CreateChoiceNode("Choice", false, chNode.GetPosition().x, chNode.GetPosition().y);
-                view.GUID = chNode.GetGuid();
-                view.LoadNodeData(chNode.choices);
-                viewLookup[chNode.GetGuid()] = view;
+                foreach (var chNode in asset.choiceNodes)
+                {
+                    if (chNode == null) continue;
+                    var view = CreateChoiceNodeViewFromData(chNode);
+                    if (view != null)
+                        viewLookup[chNode.GetGuid()] = view;
+                }
             }
 
             // Action nodes
-            foreach (var aNode in asset.actionNodes)
+            if (asset.actionNodes != null)
             {
-                if (aNode == null) continue;
-
-                var view = CreateActionNode("Action", false, aNode.GetPosition().x, aNode.GetPosition().y);
-                view.GUID = aNode.GetGuid();
-                view.LoadNodeData(aNode.actionId, aNode.payloadJson, aNode.waitForCompletion, aNode.waitSeconds);
-                view.SetPosition(new Rect(aNode.GetPosition(), new Vector2(320, 240)));
-                viewLookup[aNode.GetGuid()] = view;
+                foreach (var aNode in asset.actionNodes)
+                {
+                    if (aNode == null) continue;
+                    var view = CreateActionNodeViewFromData(aNode);
+                    if (view != null)
+                        viewLookup[aNode.GetGuid()] = view;
+                }
             }
 
             // Rebuild edges
-            foreach (var link in asset.links)
+            if (asset.links != null)
             {
-                if (!viewLookup.TryGetValue(link.fromGuid, out var fromView)) continue;
-                if (!viewLookup.TryGetValue(link.toGuid, out var toView)) continue;
-
-                Port outPort = null, inPort = null;
-
-                if (fromView is DialogNodeView fdv) outPort = fdv.outputPort;
-                else if (fromView is ChoiceNodeView fcv)
+                foreach (var link in asset.links)
                 {
-                    if (link.fromPortIndex >= 0 && link.fromPortIndex < fcv.outputPorts.Count)
-                        outPort = fcv.outputPorts[link.fromPortIndex];
-                }
-                else if (fromView is StartNodeView fsv) outPort = fsv.outputPort;
-                else if (fromView is ActionNodeView fav) outPort = fav.outputPort;
+                    if (!viewLookup.TryGetValue(link.fromGuid, out var fromView)) continue;
+                    if (!viewLookup.TryGetValue(link.toGuid, out var toView)) continue;
 
-                if (toView is DialogNodeView tdv) inPort = tdv.inputPort;
-                else if (toView is ChoiceNodeView tcv) inPort = tcv.inputPort;
-                else if (toView is EndNodeView tev) inPort = tev.inputPort;
-                else if (toView is ActionNodeView tav) inPort = tav.inputPort;
+                    Port outPort = null, inPort = null;
 
-                if (outPort != null && inPort != null)
-                {
-                    var edge = outPort.ConnectTo(inPort);
-                    if (edge != null) AddElement(edge);
+                    if (fromView is DialogNodeView fdv) outPort = fdv.outputPort;
+                    else if (fromView is ChoiceNodeView fcv)
+                    {
+                        if (link.fromPortIndex >= 0 && link.fromPortIndex < fcv.outputPorts.Count)
+                            outPort = fcv.outputPorts[link.fromPortIndex];
+                    }
+                    else if (fromView is StartNodeView fsv) outPort = fsv.outputPort;
+                    else if (fromView is ActionNodeView fav) outPort = fav.outputPort;
+
+                    if (toView is DialogNodeView tdv) inPort = tdv.inputPort;
+                    else if (toView is ChoiceNodeView tcv) inPort = tcv.inputPort;
+                    else if (toView is EndNodeView tev) inPort = tev.inputPort;
+                    else if (toView is ActionNodeView tav) inPort = tav.inputPort;
+
+                    if (outPort != null && inPort != null)
+                    {
+                        var edge = outPort.ConnectTo(inPort);
+                        if (edge != null) AddElement(edge);
+                    }
                 }
             }
 
             EditorUtility.SetDirty(asset);
+
+            if (doDebug)
+                Debug.Log($"[DialogGraphView] Loaded DialogGraph from '{path}'");
+
+            // Center the view on the Start node after everything is laid out.
+            if(!onUndo)
+                FocusOnNode(startView);
         }
+
+        /// <summary>
+        /// Clears the current dialog graph (all Dialog / Choice / Action nodes and links),
+        /// after a confirmation dialog. The operation is fully Undo-able.
+        /// Start and End nodes are kept.
+        /// </summary>
+        public void ClearGraphWithConfirmation()
+        {
+            var asset = LoadGraphAsset(graphId);
+            if (asset == null)
+            {
+                if (doDebug)
+                    Debug.LogWarning($"[DialogGraphView] Cannot clear graph – asset for '{graphId}' not found.");
+                return;
+            }
+
+            // Confirmation prompt
+            bool confirm = EditorUtility.DisplayDialog(
+                "Clear this dialog graph?",
+                "This will delete all Dialog, Choice, and Action nodes and all connections in this graph.\n\n" +
+                "The Start and End nodes will be kept.\n\n" +
+                "You can undo this via Edit → Undo.",
+                "Clear Graph",
+                "Cancel");
+
+            if (!confirm)
+                return;
+
+            // Record Undo for the graph asset (and its hierarchy via your utility)
+            DialogUndoUtility.RecordGraph("Clear Graph", asset);
+
+            // Ensure lists exist
+            asset.nodes ??= new List<DialogNode>();
+            asset.choiceNodes ??= new List<ChoiceNode>();
+            asset.actionNodes ??= new List<ActionNode>();
+            asset.links ??= new List<GraphLink>();
+
+            // 1) Clear link table
+            asset.links.Clear();
+
+            // 2) Destroy node sub-assets with Undo so they can be restored
+            if (asset.nodes != null)
+            {
+                foreach (var n in asset.nodes.ToArray())
+                {
+                    if (n == null) continue;
+                    Undo.DestroyObjectImmediate(n);
+                }
+                asset.nodes.Clear();
+            }
+
+            if (asset.choiceNodes != null)
+            {
+                foreach (var n in asset.choiceNodes.ToArray())
+                {
+                    if (n == null) continue;
+                    Undo.DestroyObjectImmediate(n);
+                }
+                asset.choiceNodes.Clear();
+            }
+
+            if (asset.actionNodes != null)
+            {
+                foreach (var n in asset.actionNodes.ToArray())
+                {
+                    if (n == null) continue;
+                    Undo.DestroyObjectImmediate(n);
+                }
+                asset.actionNodes.Clear();
+            }
+
+            EditorUtility.SetDirty(asset);
+            AssetDatabase.SaveAssets();
+
+            // 3) Clear visual graph elements except Start/End
+            var toRemove = graphElements.ToList()
+                .Where(e =>
+                    e is Edge ||
+                    (e is Node n && n is not StartNodeView && n is not EndNodeView))
+                .ToList();
+
+            foreach (var ge in toRemove)
+                RemoveElement(ge);
+
+            // Ensure Start/End exist (in case something went wrong visually)
+            EnsureStartEndNodes();
+
+            // 4) Re-frame the start node for a clean, centered view
+            var startView = nodes.ToList().OfType<StartNodeView>().FirstOrDefault();
+            FocusOnNode(startView);
+
+            if (doDebug)
+                Debug.Log($"[DialogGraphView] Cleared graph '{graphId}' (Undo available).");
+        }
+
         #endregion
     }
 }
