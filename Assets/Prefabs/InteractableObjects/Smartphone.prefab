@@ -87,6 +87,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoSetLayerOnStart: 1
   interactionVisual: {fileID: 2243465711891912054}
+  isInteractableOnStart: 1
 --- !u!114 &2243465711891912054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,19 +246,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1f36e39ef68f9814e92f8464f78831ab, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -2.8625952e-10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1f36e39ef68f9814e92f8464f78831ab, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.000000052397304
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 1f36e39ef68f9814e92f8464f78831ab, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.000000074505806
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1f36e39ef68f9814e92f8464f78831ab, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1f36e39ef68f9814e92f8464f78831ab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -269,7 +266,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1f36e39ef68f9814e92f8464f78831ab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1f36e39ef68f9814e92f8464f78831ab, type: 3}
       propertyPath: m_ConstrainProportionsScale
