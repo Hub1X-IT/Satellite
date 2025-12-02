@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class DialogueManager : MonoBehaviour
+public class DialogueManager : MonoBehaviour, DevTools.IDevAware
 {
     [Serializable]
     public class DialogueSentence
@@ -143,5 +143,15 @@ public class DialogueManager : MonoBehaviour
         bool shouldActivateSentenceTimeTimer = sentence.SentenceTime > 0;
         isSentenceTimeTimerActive = shouldActivateSentenceTimeTimer;
         sentenceTimeTimer = sentence.SentenceTime;
+    }
+
+    public void EnableDevMode()
+    {
+        debugDialogueSkipping = true;
+    }
+
+    public void DisableDevMode()
+    {
+        debugDialogueSkipping = false;
     }
 }

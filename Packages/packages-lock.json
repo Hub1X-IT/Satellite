@@ -1,5 +1,16 @@
 {
   "dependencies": {
+    "com.hackerzhuli.code": {
+      "version": "https://github.com/gresm/com.hackerzhuli.code.git#gresm-patch-1",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.test-framework": "1.4.6",
+        "com.unity.nuget.newtonsoft-json": "3.2.1",
+        "com.unity.nuget.mono-cecil": "1.11.4"
+      },
+      "hash": "df98af996162067196a35fc2dac025058d43eac6"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
@@ -137,7 +148,7 @@
     },
     "com.unity.nuget.mono-cecil": {
       "version": "1.11.4",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -319,6 +330,13 @@
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
       }
+    },
+    "com.yasirkula.runtimeinspector": {
+      "version": "1.7.4",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
     },
     "dev.ameye.linework-lite": {
       "version": "file:dev.ameye.linework-lite",
