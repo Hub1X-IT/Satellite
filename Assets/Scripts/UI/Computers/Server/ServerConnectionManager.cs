@@ -9,7 +9,7 @@ public class ServerConnectionManager : MonoBehaviour
     public event Action<bool> ServerConnectionEnabled;
 
     [SerializeField]
-    private List<ServerConnectionItemUI> possibleConnectionItems;
+    private ServerConnectionItemUI connectionItemUI;
 
     private ServerConnectionItemUI currentConnectedServer;
 
@@ -36,11 +36,9 @@ public class ServerConnectionManager : MonoBehaviour
         }
         Instance = this;
 
-        foreach (var serverConnectionItem in possibleConnectionItems)
-        {
-            serverConnectionItem.ConnectionEnabled += SetCurrentConnectedServer;
-            serverConnectionItem.ConnectionDisabled += DisconnectCurrentServer;
-        }
+
+        connectionItemUI.ConnectionEnabled += SetCurrentConnectedServer;
+        connectionItemUI.ConnectionDisabled += DisconnectCurrentServer;
         IsConnectionActive = false;
         WasEverConnected = false;
     }
@@ -84,29 +82,28 @@ public class ServerConnectionManager : MonoBehaviour
 
     private void DeleteServer(ServerConnectionItemUI serverConnectionItem)
     {
-        if (serverConnectionItem == currentConnectedServer)
+        /*if (serverConnectionItem == currentConnectedServer)
         {
             IsConnectionActive = false;
             currentConnectedServer.gameObject.SetActive(false);
             // Destroy(currentConnectedServer.gameObject);
             currentConnectedServer = null;
         }
-        possibleConnectionItems.Remove(serverConnectionItem);
         ServerConnectionEnabled?.Invoke(false);
-        UpdateConnectionItems();
+        UpdateConnectionItems();*/
+        connectionItemUI.availableServersNum--;
     }
 
     private void UpdateConnectionItems()
     {
-        foreach (var connectionItem in possibleConnectionItems)
-        {
-            connectionItem.SetColor(IsConnectionActive ? notConnectedColor : connectionInactiveColor);
-            connectionItem.SetInteractionEnabled(!IsConnectionActive);
-        }
-        if (IsConnectionActive)
+
+        connectionItemUI.SetColor(IsConnectionActive ? notConnectedColor : connectionInactiveColor);
+        //connectionItemUI.SetInteractionEnabled(!IsConnectionActive);
+
+        /*if (IsConnectionActive)
         {
             currentConnectedServer.SetColor(connectedColor);
             currentConnectedServer.SetInteractionEnabled(true);
-        }
+        }*/
     }
 }
