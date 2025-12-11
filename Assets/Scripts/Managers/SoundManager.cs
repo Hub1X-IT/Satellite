@@ -16,6 +16,12 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     private AudioMixer mainAudioMixer;
 
+    [SerializeField]
+    private AudioSource[] pausePersistentSounds;
+
+    [SerializeField]
+    private bool unpauseOnLoad;
+
     public const string MasterVolume = "MasterVolume";
     public const string MusicVolume = "MusicVolume";
     public const string SoundFXVolume = "SoundFXVolume";
@@ -35,6 +41,24 @@ public class SoundManager : MonoBehaviour
     private void Start()
     {
         UpdateVolume();
+
+        foreach (var sound in pausePersistentSounds)
+        {
+            sound.ignoreListenerPause = true;
+        }
+
+        if (unpauseOnLoad)
+        {
+            AudioListener.pause = false;
+        }
+
+        if (GameManager.Instance)
+        {
+            GameManager.Instance.GamePausedUnpaused += (paused) =>
+            {
+                AudioListener.pause = paused;
+            };
+        }
     }
 
     public void UpdateVolume()
