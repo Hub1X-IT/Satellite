@@ -60,9 +60,13 @@ public class ServerConnectionItemUI : MonoBehaviour
     {
         isConnected = enabled;
         connectionTextField.text = enabled ? DisconnectText : ConnectText;
-        availableServers.text = enabled ? availableServersNum.ToString() : (availableServersNum - 1).ToString();
+        availableServers.text = availableServersNum.ToString();
         SetServerIDs(availableServersNum, serverIDList);
-        serverID.text = enabled ? nullServerID : serverIDList[availableServersNum];
+        for (int i = 0; i < availableServersNum; i++)
+        {
+            Debug.Log(serverIDList[i]);
+        }
+        serverID.text = enabled ? serverIDList[availableServersNum - 1] : nullServerID;
 
         if (enabled)
         {
@@ -92,6 +96,7 @@ public class ServerConnectionItemUI : MonoBehaviour
         for (int i = serversNumber - 1; i >= 0; i--)
         {
             serverIDs[i] = (i + 1).ToString();
+            Debug.Log(serverIDList[i]); // problem z gatunku jestem kretynem i nie wiem czemu sie wywala ~Hubert
         }
     }
 }

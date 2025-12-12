@@ -146,12 +146,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f0cd4aa14cb38142b15fa525d0e056e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  possibleConnectionItems:
-  - {fileID: 2026963218515509549}
+  connectionItemUI: {fileID: 2026963218515509549}
   connectionEnabledGameEvent: {fileID: 11400000, guid: ab062249a6b1b9629b00af488bbd5741, type: 2}
   connectionInactiveColor: {r: 0, g: 1, b: 1, a: 1}
   notConnectedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  connectedColor: {r: 0, g: 1, b: 0, a: 1}
+  connectionActiveColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &5384816798996892466
 MonoBehaviour:
   m_ObjectHideFlags: 0

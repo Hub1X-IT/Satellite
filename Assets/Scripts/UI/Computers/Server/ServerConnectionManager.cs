@@ -24,7 +24,7 @@ public class ServerConnectionManager : MonoBehaviour
     [SerializeField]
     private Color notConnectedColor = Color.gray;
     [SerializeField]
-    private Color connectedColor = Color.green;
+    private Color connectionActiveColor = Color.green;
 
     private void Awake()
     {
@@ -65,7 +65,7 @@ public class ServerConnectionManager : MonoBehaviour
         WasEverConnected = true;
         currentConnectedServer = serverConnectionItem;
         ServerConnectionEnabled?.Invoke(true);
-        UpdateConnectionItems();
+        UpdateConnectionColor();
         if (connectionEnabledGameEvent != null)
         {
             connectionEnabledGameEvent.TryRaiseEvent();
@@ -77,12 +77,12 @@ public class ServerConnectionManager : MonoBehaviour
         IsConnectionActive = false;
         currentConnectedServer = null;
         ServerConnectionEnabled?.Invoke(false);
-        UpdateConnectionItems();
+        UpdateConnectionColor();
     }
 
     private void DeleteServer(ServerConnectionItemUI serverConnectionItem)
     {
-        /*if (serverConnectionItem == currentConnectedServer)
+        if (serverConnectionItem == currentConnectedServer)
         {
             IsConnectionActive = false;
             currentConnectedServer.gameObject.SetActive(false);
@@ -90,14 +90,14 @@ public class ServerConnectionManager : MonoBehaviour
             currentConnectedServer = null;
         }
         ServerConnectionEnabled?.Invoke(false);
-        UpdateConnectionItems();*/
+        UpdateConnectionColor();
         connectionItemUI.availableServersNum--;
     }
 
-    private void UpdateConnectionItems()
+    private void UpdateConnectionColor()
     {
 
-        connectionItemUI.SetColor(IsConnectionActive ? notConnectedColor : connectionInactiveColor);
+        connectionItemUI.SetColor(IsConnectionActive ? connectionInactiveColor : connectionActiveColor);
         //connectionItemUI.SetInteractionEnabled(!IsConnectionActive);
 
         /*if (IsConnectionActive)
