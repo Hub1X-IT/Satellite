@@ -8,11 +8,6 @@ public class ServerConnectionManager : MonoBehaviour
 
     public event Action<bool> ServerConnectionEnabled;
 
-    [SerializeField]
-    private ServerConnectionItemUI connectionItemUI;
-
-    private ServerConnectionItemUI currentConnectedServer;
-
     public bool IsConnectionActive { get; private set; }
     public bool WasEverConnected { get; private set; }
 
@@ -20,11 +15,11 @@ public class ServerConnectionManager : MonoBehaviour
     private GameEventSO connectionEnabledGameEvent;
 
     [SerializeField]
-    private Color connectionInactiveColor = Color.red;
-    [SerializeField]
-    private Color notConnectedColor = Color.gray;
-    [SerializeField]
-    private Color connectionActiveColor = Color.green;
+    private List<string> availableServerIDList;
+
+    public string CurrentServerID => availableServerIDList[0];
+
+    public int AvailableServersNumber => availableServerIDList.Count;
 
     private void Awake()
     {
@@ -36,9 +31,6 @@ public class ServerConnectionManager : MonoBehaviour
         }
         Instance = this;
 
-
-        connectionItemUI.ConnectionEnabled += SetCurrentConnectedServer;
-        connectionItemUI.ConnectionDisabled += DisconnectCurrentServer;
         IsConnectionActive = false;
         WasEverConnected = false;
     }
@@ -47,63 +39,55 @@ public class ServerConnectionManager : MonoBehaviour
     {
         DetectionManager.Instance.DetectionOccured += () =>
         {
-            if (currentConnectedServer != null)
+            if (IsConnectionActive)
             {
-                DeleteServer(currentConnectedServer);
+                DeleteCurrentServer();
+            }
+            else
+            {
+                Debug.LogWarning("No active server connection!");
             }
         };
     }
 
-    private void OnDestroy()
+    public void TryToggleServerConnection()
     {
-        ServerConnectionEnabled = null;
+        if (AvailableServersNumber > 0)
+        {
+            SetServerConnectionEnabled(!IsConnectionActive);
+        }
+        else
+        {
+            Debug.Log("No available servers.");
+        }
     }
 
-    private void SetCurrentConnectedServer(ServerConnectionItemUI serverConnectionItem)
+    private void SetServerConnectionEnabled(bool enabled)
     {
-        IsConnectionActive = true;
-        WasEverConnected = true;
-        currentConnectedServer = serverConnectionItem;
-        ServerConnectionEnabled?.Invoke(true);
-        UpdateConnectionColor();
-        if (connectionEnabledGameEvent != null)
+        IsConnectionActive = enabled;
+        if (!WasEverConnected && enabled)
+        {
+            WasEverConnected = true;
+        }
+
+        ServerConnectionEnabled?.Invoke(enabled);
+
+        if (enabled && connectionEnabledGameEvent != null)
         {
             connectionEnabledGameEvent.TryRaiseEvent();
         }
     }
 
-    private void DisconnectCurrentServer()
+    private void DeleteCurrentServer()
     {
-        IsConnectionActive = false;
-        currentConnectedServer = null;
-        ServerConnectionEnabled?.Invoke(false);
-        UpdateConnectionColor();
-    }
+        SetServerConnectionEnabled(false);
 
-    private void DeleteServer(ServerConnectionItemUI serverConnectionItem)
-    {
-        if (serverConnectionItem == currentConnectedServer)
+        if (AvailableServersNumber == 0)
         {
-            IsConnectionActive = false;
-            currentConnectedServer.gameObject.SetActive(false);
-            // Destroy(currentConnectedServer.gameObject);
-            currentConnectedServer = null;
+            Debug.LogWarning("No available servers to delete.");
+            return;
         }
-        ServerConnectionEnabled?.Invoke(false);
-        UpdateConnectionColor();
-        connectionItemUI.availableServersNum--;
-    }
 
-    private void UpdateConnectionColor()
-    {
-
-        connectionItemUI.SetColor(IsConnectionActive ? connectionInactiveColor : connectionActiveColor);
-        //connectionItemUI.SetInteractionEnabled(!IsConnectionActive);
-
-        /*if (IsConnectionActive)
-        {
-            currentConnectedServer.SetColor(connectedColor);
-            currentConnectedServer.SetInteractionEnabled(true);
-        }*/
+        availableServerIDList.RemoveAt(0);
     }
 }

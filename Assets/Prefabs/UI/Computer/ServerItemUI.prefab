@@ -887,7 +887,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7410677305497100838}
-  - component: {fileID: 1359513987575356942}
+  - component: {fileID: 5217234458396083574}
   m_Layer: 5
   m_Name: ServerItemUI
   m_TagString: Untagged
@@ -920,7 +920,7 @@ RectTransform:
   m_AnchoredPosition: {x: -400, y: 250}
   m_SizeDelta: {x: 600, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1359513987575356942
+--- !u!114 &5217234458396083574
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -929,14 +929,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7919905780070321803}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a3059638bc574944a43111881659cae, type: 3}
+  m_Script: {fileID: 11500000, guid: fdcf4ac3240bb9c23bb9d413f4abe9c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   toggleConnectionButton: {fileID: 2633688228453865224}
   serverIcon: {fileID: 6849398486088448417}
-  connectionTextField: {fileID: 2757964376549931014}
-  connectionStatus: {fileID: 463628132283049838}
-  availableServers: {fileID: 2477597407173418763}
-  serverID: {fileID: 9111606437643387631}
-  availableServersNum: 6
-  serverIDs: []
+  connectionButtonTextField: {fileID: 2757964376549931014}
+  connectionStatusTextField: {fileID: 463628132283049838}
+  availableServersTextField: {fileID: 2477597407173418763}
+  serverIDTextField: {fileID: 9111606437643387631}
+  connectionInactiveColor: {r: 1, g: 0, b: 0, a: 1}
+  connectionActiveColor: {r: 0, g: 1, b: 0, a: 1}
