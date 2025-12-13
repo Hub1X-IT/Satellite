@@ -33,8 +33,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        VirtualClipboard.InitializeVirtualClipboard();
-
         GameInput.Instance.OnPauseAction += () => PauseGameToMenu(!IsGamePaused);
         PauseGameToMenu(false);
     }

@@ -90,13 +90,13 @@ public class CopyPasteMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private void CopyText()
     {
         string textToCopy = contentField.text;
-        VirtualClipboard.SetClipboardText(textToCopy);
+        ClipboardController.SetClipboardText(textToCopy);
         CopiedText?.Invoke(textToCopy);
     }
 
     private void PasteText()
     {
-        string textToPaste = VirtualClipboard.GetClipboardText();
+        string textToPaste = ClipboardController.GetClipboardText();
         contentField.text = textToPaste;
         PastedText?.Invoke(textToPaste);
     }
