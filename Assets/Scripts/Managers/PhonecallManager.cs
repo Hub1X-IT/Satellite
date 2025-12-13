@@ -129,17 +129,19 @@ public class PhonecallManager : MonoBehaviour
         }
     }
 
-    public void EndCall()
+    public bool TryEndOngoingCall()
     {
         if (currentCall != null && currentCall.CallType == CallType.OngoingCall)
         {
             ContactSO contactSO = currentCall.ContactSO;
             StopCurrentCall();
             contactSO.InvokeCallEndedGameEvents();
+            return true;
         }
         else
         {
             Debug.LogWarning("EndCall invoked when no ongoing call");
+            return false;
         }
     }
 

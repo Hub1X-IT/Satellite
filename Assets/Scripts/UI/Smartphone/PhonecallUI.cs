@@ -43,7 +43,7 @@ public class PhonecallUI : MonoBehaviour
     private void Start()
     {
         acceptCallButton.onClick.AddListener(PhonecallManager.Instance.AcceptIncomingCall);
-        endCallButton.onClick.AddListener(PhonecallManager.Instance.EndCall);
+        endCallButton.onClick.AddListener(() => PhonecallManager.Instance.TryEndOngoingCall());
         stopCallingButton.onClick.AddListener(PhonecallManager.Instance.StopCalling);
 
         PhonecallManager.Instance.NewCallStarted += OnNewCallStarted;
