@@ -11,7 +11,13 @@ public class GraphicsSettingsManager : MonoBehaviour
 
     private double currentRefreshRate;
 
-    private int startResolutionIndex;
+    public int StartResolutionIndex { get; private set; }
+
+    [SerializeField]
+    private CameraBobController cameraBobController;
+
+    [SerializeField]
+    private FPSCounter fpsCounter;
 
     private void Awake()
     {
@@ -28,10 +34,14 @@ public class GraphicsSettingsManager : MonoBehaviour
 
     private void Start()
     {
-        GameSettingsManager.Instance.SetResolutionIndex(startResolutionIndex);
+        GameSettingsManager.Instance.SetResolutionIndex(StartResolutionIndex);
 
         SetGraphics(GameSettingsManager.Instance.GraphicsIndex);
         SetResolution(GameSettingsManager.Instance.ResolutionIndex);
+        SetFullscreen(GameSettingsManager.Instance.Fullscreen);
+        SetVSync(GameSettingsManager.Instance.VSync);
+        SetFPSMax(GameSettingsManager.Instance.FPSMax);
+        SetHeadBobEnabled(GameSettingsManager.Instance.HeadBobEnabled);
     }
 
     public void SetGraphics(int index)
@@ -64,6 +74,24 @@ public class GraphicsSettingsManager : MonoBehaviour
         GameSettingsManager.Instance.SetFPSMax(value);
     }
 
+    public void SetHeadBobEnabled(bool enabled)
+    {
+        if (cameraBobController != null)
+        {
+            cameraBobController.SetHeadBobEnabled(enabled);
+        }
+        GameSettingsManager.Instance.SetHeadBobEnabled(enabled);
+    }
+
+    public void SetFPSDisplayEnabled(bool enabled)
+    {
+        if (fpsCounter != null)
+        {
+            fpsCounter.SetFPSCounterActive(enabled);
+        }
+        GameSettingsManager.Instance.SetFPSDisplay(enabled);
+    }
+
     private void SetupResolutionSettings()
     {
         Resolution[] screenResolutions = Screen.resolutions;
@@ -72,7 +100,7 @@ public class GraphicsSettingsManager : MonoBehaviour
         List<string> dropdownOptions = new();
         List<Resolution> validResolutionsList = new();
 
-        startResolutionIndex = 0;
+        StartResolutionIndex = 0;
 
         for (int i = 0; i < screenResolutions.Length; i++)
         {
@@ -91,7 +119,7 @@ public class GraphicsSettingsManager : MonoBehaviour
             Resolution resolution = availableResolutions[i];
             if (resolution.width == Screen.currentResolution.width && resolution.height == Screen.currentResolution.height)
             {
-                startResolutionIndex = i;
+                StartResolutionIndex = i;
             }
         }
 

@@ -1214,8 +1214,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NoiseProfile: {fileID: 11400000, guid: 46965f9cbaf525742a6da4c2172a99cd, type: 2}
   PivotOffset: {x: 0, y: 0, z: 0}
-  AmplitudeGain: 0.6
-  FrequencyGain: 0.3
+  AmplitudeGain: 0
+  FrequencyGain: 0
   m_NoiseOffsets: {x: 589.8039, y: -344.9508, z: -638.0338}
 --- !u!114 &438686343
 MonoBehaviour:
@@ -1238,6 +1238,9 @@ MonoBehaviour:
   playerMovingSettings:
     AmplitudeGain: 1
     FrequencyGain: 0.8
+  headBobDisabledSettings:
+    AmplitudeGain: 0
+    FrequencyGain: 0
 --- !u!1 &489091047
 GameObject:
   m_ObjectHideFlags: 0
@@ -1986,6 +1989,17 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &994728905 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6252112779616505373, guid: 4b4536b5382a4a849bfc9c02d3ee8cff, type: 3}
+  m_PrefabInstance: {fileID: 3636573079593337719}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01b8deccce1f0fa4f9425e7ba01a7999, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1008346972
 GameObject:
   m_ObjectHideFlags: 0
@@ -3338,6 +3352,14 @@ PrefabInstance:
       propertyPath: 'contactList.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: bc18ab159df759d4daf5d01d851ce733, type: 2}
+    - target: {fileID: 1777541644198993963, guid: 521f4f33850a94934b739a08a383275d, type: 3}
+      propertyPath: fpsCounter
+      value: 
+      objectReference: {fileID: 994728905}
+    - target: {fileID: 1777541644198993963, guid: 521f4f33850a94934b739a08a383275d, type: 3}
+      propertyPath: cameraBobController
+      value: 
+      objectReference: {fileID: 438686343}
     - target: {fileID: 2190563738922611775, guid: 521f4f33850a94934b739a08a383275d, type: 3}
       propertyPath: m_Name
       value: GameManagers

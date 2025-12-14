@@ -3,30 +3,17 @@ using UnityEngine;
 
 public class FPSCounter : MonoBehaviour
 {
-    private float fps;
+    private int fps;
 
     [SerializeField]
     private TMP_Text fpsCounterText;
 
-    [SerializeField]
-    private GraphicsSettingsUI graphicsSettingsUI;
-
-    private void Awake()
-    {
-        graphicsSettingsUI.OnFPSDisplayToggled += (bool enabled) =>
-        {
-            SetFPSCounterActive(enabled);
-        };
-    }
-
     private void Start()
     {
-        SetFPSCounterActive(GameSettingsManager.Instance.FPSDisplay);
-        
         InvokeRepeating(nameof(GetFPS), 1, 1);
     }
 
-    private void SetFPSCounterActive(bool enabled)
+    public void SetFPSCounterActive(bool enabled)
     {
         fpsCounterText.gameObject.SetActive(enabled);
     }

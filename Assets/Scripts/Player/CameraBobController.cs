@@ -28,7 +28,12 @@ public class CameraBobController : MonoBehaviour
     [SerializeField]
     private CinemachineBasicMultiChannelPerlinSettings playerMovingSettings;
 
+    [SerializeField]
+    private CinemachineBasicMultiChannelPerlinSettings headBobDisabledSettings;
+
     private CinemachineBasicMultiChannelPerlinSettings currentSettings;
+
+    private bool isHeadBobEnabled;
 
     private void Awake()
     {
@@ -37,12 +42,18 @@ public class CameraBobController : MonoBehaviour
         cinemachineBasicMultiChannelPerlin = playerCinemachineCamera.GetComponent<CinemachineBasicMultiChannelPerlin>();
 
         currentSettings = playerNotMovingSettings;
+
+        // Should be set by GraphicsSettingManager on Start anyway
+        isHeadBobEnabled = false;
     }
 
     private void Update()
     {
-        cinemachineBasicMultiChannelPerlin.AmplitudeGain = Mathf.Lerp(cinemachineBasicMultiChannelPerlin.AmplitudeGain, currentSettings.AmplitudeGain, Time.deltaTime * lerpSpeed);
-        cinemachineBasicMultiChannelPerlin.FrequencyGain = Mathf.Lerp(cinemachineBasicMultiChannelPerlin.FrequencyGain, currentSettings.FrequencyGain, Time.deltaTime * lerpSpeed);
+        if (isHeadBobEnabled)
+        {
+            cinemachineBasicMultiChannelPerlin.AmplitudeGain = Mathf.Lerp(cinemachineBasicMultiChannelPerlin.AmplitudeGain, currentSettings.AmplitudeGain, Time.deltaTime * lerpSpeed);
+            cinemachineBasicMultiChannelPerlin.FrequencyGain = Mathf.Lerp(cinemachineBasicMultiChannelPerlin.FrequencyGain, currentSettings.FrequencyGain, Time.deltaTime * lerpSpeed);
+        }
     }
 
     private void OnDestroy()
@@ -53,5 +64,15 @@ public class CameraBobController : MonoBehaviour
     public void OnPlayerStartedMoving(bool isMoving)
     {
         currentSettings = isMoving ? playerMovingSettings : playerNotMovingSettings;
+    }
+
+    public void SetHeadBobEnabled(bool enabled)
+    {
+        isHeadBobEnabled = enabled;
+        if (!enabled)
+        {
+            cinemachineBasicMultiChannelPerlin.AmplitudeGain = headBobDisabledSettings.AmplitudeGain;
+            cinemachineBasicMultiChannelPerlin.FrequencyGain = headBobDisabledSettings.FrequencyGain;
+        }
     }
 }
