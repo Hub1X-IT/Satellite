@@ -146,8 +146,11 @@ public class Computer : MonoBehaviour
 
         ToggleComputerTrigger();
 
-        // Probably a temporary solution
-        outline.SetOutlineEnabled(!active);
+        // May be a temporary solution
+        if (computerTrigger.IsInteractable)
+        {
+            outline.SetOutlineEnabled(!active);
+        }
 
         ComputerViewEnabled?.Invoke(active);
 
