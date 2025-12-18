@@ -20,9 +20,11 @@ public class ServerConnectionUI : MonoBehaviour
     private TMP_Text serverIDTextField;
 
     [SerializeField]
-    private Color connectionInactiveColor = Color.red;
+    private Color buttonDisconnectColor = Color.red;
     [SerializeField]
-    private Color connectionActiveColor = Color.green;
+    private Color serverDisconnectedColor = Color.cyan;
+    [SerializeField]
+    private Color connectedColor = Color.green;
 
     private const string disconnectedStatus = "<color=\"red\">Disconnected</color>";
     private const string connectedStatus = "<color=\"green\">Connected</color>";
@@ -43,14 +45,18 @@ public class ServerConnectionUI : MonoBehaviour
         availableServersTextField.text = ServerConnectionManager.Instance.AvailableServersNumber.ToString();
 
         ServerConnectionManager.Instance.ServerConnectionEnabled += OnServerConnectionEnabled;
+
+        toggleConnectionButton.image.color = connectedColor;
+        serverIcon.color = serverDisconnectedColor;
     }
 
     private void OnServerConnectionEnabled(bool enabled)
     {
+        connectionStatusTextField.text = enabled ? connectedStatus : disconnectedStatus;
         connectionButtonTextField.text = enabled ? DisconnectText : ConnectText;
         availableServersTextField.text = ServerConnectionManager.Instance.AvailableServersNumber.ToString();
         serverIDTextField.text = enabled ? ServerConnectionManager.Instance.CurrentServerID : nullServerID;
-        serverIcon.color = enabled ? connectionInactiveColor : connectionActiveColor;
-        toggleConnectionButton.image.color = enabled ? connectionInactiveColor : connectionActiveColor;
+        serverIcon.color = enabled ? connectedColor : serverDisconnectedColor;
+        toggleConnectionButton.image.color = enabled ? buttonDisconnectColor : connectedColor;
     }
 }

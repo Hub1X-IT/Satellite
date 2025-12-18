@@ -146,11 +146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f0cd4aa14cb38142b15fa525d0e056e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectionItemUI: {fileID: 2026963218515509549}
   connectionEnabledGameEvent: {fileID: 11400000, guid: ab062249a6b1b9629b00af488bbd5741, type: 2}
-  connectionInactiveColor: {r: 0, g: 1, b: 1, a: 1}
-  notConnectedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  connectionActiveColor: {r: 0, g: 1, b: 0, a: 1}
+  availableServerIDList: []
 --- !u!114 &5384816798996892466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,17 +364,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e4d880fbb6aafc41a8588b0b9849bcd, type: 3}
---- !u!114 &2026963218515509549 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1359513987575356942, guid: 6e4d880fbb6aafc41a8588b0b9849bcd, type: 3}
-  m_PrefabInstance: {fileID: 1079965103249219363}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a3059638bc574944a43111881659cae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &7504348506351009029 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7410677305497100838, guid: 6e4d880fbb6aafc41a8588b0b9849bcd, type: 3}
