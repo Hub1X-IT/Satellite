@@ -1,33 +1,17 @@
 using UnityEngine;
-using UnityEngine.UI;
 
-public class SmartphoneUI : MonoBehaviour
+public class SmartphoneController : MonoBehaviour
 {
     [SerializeField]
     private Animator smartphoneAnimator;
-
-    private RectTransform smartphoneRectTransform;
-
-    [SerializeField]
-    private Vector2 defaultSmartphonePosition = new(640f, -800f);
 
     private bool isSmartphoneEnabled;
 
     private const string PHONE_ON_TRIGGER = "PhoneOn";
     private const string PHONE_OFF_TRIGGER = "PhoneOff";
 
-    [SerializeField]
-    private SmartphoneMenuUI mainMenu;
-
-    [SerializeField]
-    private Button mainMenuButton;
-
     private void Awake()
     {
-        smartphoneRectTransform = smartphoneAnimator.GetComponent<RectTransform>();
-
-        smartphoneRectTransform.localPosition = defaultSmartphonePosition;
-
         isSmartphoneEnabled = false;
     }
 
@@ -41,7 +25,6 @@ public class SmartphoneUI : MonoBehaviour
                 TryToggleSmartphone();
             }
         };
-        mainMenuButton.onClick.AddListener(() => mainMenu.GoToMainMenu());
     }
 
     private void TryToggleSmartphone()

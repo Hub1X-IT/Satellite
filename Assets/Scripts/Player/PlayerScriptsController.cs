@@ -11,7 +11,7 @@ public class PlayerScriptsController : MonoBehaviour
     [SerializeField]
     private PlayerHudUI playerHudUI;
     [SerializeField]
-    private SmartphoneUI smartphoneController;
+    private SmartphoneController smartphoneController;
     [SerializeField]
     private FlashlightController flashlightController;
     [SerializeField]
@@ -34,7 +34,7 @@ public class PlayerScriptsController : MonoBehaviour
     {
         SetPlayerMovementEnabled(true);
         SetCanShowPlayerHUD(true);
-        SetCanShowSmartphoneUI(false);
+        SetCanShowSmartphone(false);
     }
 
     public void SetPlayerMovementEnabled(bool enabled)
@@ -47,9 +47,10 @@ public class PlayerScriptsController : MonoBehaviour
     {
         playerHudUI.CanShowPlayerHUD = canShow;
         playerHudUI.SetPlayerHUDEnabled(!GameManager.Instance.IsGamePaused);
+        SetCanShowSmartphone(canShow);
     }
 
-    public void SetCanShowSmartphoneUI(bool canShow)
+    public void SetCanShowSmartphone(bool canShow)
     {
         smartphoneController.SetCanShowSmartphone(canShow);
     }

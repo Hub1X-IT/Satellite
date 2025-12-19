@@ -17,6 +17,6 @@ public class Smartphone : MonoBehaviour
     {
         gameObject.SetActive(false);
         phonePickupGameEvent.TryRaiseEvent();
-        PlayerScriptsController.Instance.SetCanShowSmartphoneUI(true);
+        PlayerScriptsController.Instance.SetCanShowSmartphone(true);
     }
 }

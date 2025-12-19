@@ -14,6 +14,9 @@ public class SmartphoneMenuUI : MonoBehaviour
         public GameObject notificationCircle;
         public TMP_Text notificationCount;
     }
+    
+    [SerializeField]
+    private Button mainMenuButton;
 
     [SerializeField]
     private SerializableDictionary<string, AppEntry> apps;
@@ -28,9 +31,11 @@ public class SmartphoneMenuUI : MonoBehaviour
                 item.Value.ui.Enable(() => SetEnabled(true));
             });
         }
+
+        mainMenuButton.onClick.AddListener(GoToMainMenu);
     }
 
-    public void GoToMainMenu()
+    private void GoToMainMenu()
     {
         // Disable all objects except main menu
         foreach (var item in apps.Dictionary)
