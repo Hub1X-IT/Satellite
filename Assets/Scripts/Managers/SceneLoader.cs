@@ -17,13 +17,18 @@ public static class SceneLoader
     public static void LoadScene(Scene scene)
     {
         targetScene = scene;
-
+        
+        Time.timeScale = 1f;
+        
         SceneManager.LoadScene(targetScene.ToString());
     }
 
     public static IEnumerator LoadSceneAsync(Scene scene, Slider loadingSlider)
     {
         targetScene = scene;
+
+        Time.timeScale = 1f;
+
         AsyncOperation loadOperation = SceneManager.LoadSceneAsync(targetScene.ToString());
 
         while (!loadOperation.isDone)
