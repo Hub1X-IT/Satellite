@@ -49,6 +49,11 @@ public class PhonecallUI : MonoBehaviour
         PhonecallManager.Instance.NewCallStarted += OnNewCallStarted;
         PhonecallManager.Instance.CurrentCallEnded += StopCall;
         PhonecallManager.Instance.OnCanEndCall += OnCanEndCall;
+
+        if (PhonecallManager.Instance.CurrentCall != null)
+        {
+            OnNewCallStarted(PhonecallManager.Instance.CurrentCall);
+        }
     }
 
     private void Update()
