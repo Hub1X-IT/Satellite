@@ -17,7 +17,7 @@ public class ContactsOverviewUI : MonoBehaviour
     [SerializeField]
     private Transform contactListHolder;
 
-    private void Awake()
+    private void Start()
     {
         /*
         contactsExitButton.onClick.AddListener(() =>

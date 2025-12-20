@@ -5,9 +5,10 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "Allow Call End", story: "Allow player to end current call", category: "Action", id: "f66cebae45817d64661aa7369a8ceff1")]
-public partial class AllowCallEndAction : Action
+[NodeDescription(name: "SetCanEndCall", story: "Allow player to end current call: [CanEndCall]", category: "Action", id: "32520235bf73e489a378255265c0bd4d")]
+public partial class SetCanEndCallAction : Action
 {
+    [SerializeReference] public BlackboardVariable<bool> CanEndCall;
 
     protected override Status OnStart()
     {
@@ -16,8 +17,7 @@ public partial class AllowCallEndAction : Action
             return Status.Failure;
         }
 
-        PhonecallManager.Instance.SetCanEndCall();
+        PhonecallManager.Instance.SetCanEndCall(CanEndCall.Value);
         return Status.Success;
     }
 }
-

@@ -73,7 +73,6 @@ public class PhonecallManager : MonoBehaviour
             if (outgoingCallTimer <= 0)
             {
                 AnswerOutgoingCall();
-                Debug.Log("sdfsdf");
             }
             else
             {
@@ -186,9 +185,9 @@ public class PhonecallManager : MonoBehaviour
         currentCall = null;
     }
 
-    public void SetCanEndCall()
+    public void SetCanEndCall(bool canEnd)
     {
-        OnCanEndCall?.Invoke(true);
+        OnCanEndCall?.Invoke(canEnd);
     }
 
     public Call StartIncomingCall(ContactSO contactSO, bool canBeEnded)
