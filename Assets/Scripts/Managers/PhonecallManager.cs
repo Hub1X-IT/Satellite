@@ -56,11 +56,6 @@ public class PhonecallManager : MonoBehaviour
         }
         Instance = this;
 
-        foreach (var contactSO in ContactList)
-        {
-            contactSO.InitializeContactSO();
-        }
-
         isOutgoingCallActive = false;
         outgoingCallTimer = 0;
     }

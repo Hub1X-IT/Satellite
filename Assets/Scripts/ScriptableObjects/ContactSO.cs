@@ -22,35 +22,9 @@ public class ContactSO : ScriptableObject
     [SerializeField]
     private GameEventSO[] callEndedGameEvents;
 
-    [Tooltip("Default value for the receiver's ability to answer the phone when the player is calling")]
-    [SerializeField]
-    private bool phoneCanBeAnsweredDefault;
-
-    [Tooltip("Game events that enable the receiver to answer the phone when the player is calling")]
-    [SerializeField]
-    private GameEventSO[] phoneCanBeAnsweredGameEvents;
-
-    [Tooltip("Game events that disable the receiver to answer the phone when the player is calling")]
-    [SerializeField]
-    private GameEventSO[] phoneCantBeAnsweredGameEvents;
-
     public bool CanPhoneBeAnswered { get; set; }
 
     public string ContactName => contactName;
-
-    public void InitializeContactSO()
-    {
-        CanPhoneBeAnswered = phoneCanBeAnsweredDefault;
-
-        foreach (var gameEvent in phoneCanBeAnsweredGameEvents)
-        {
-            gameEvent.EventRaised += () => CanPhoneBeAnswered = true;
-        }
-        foreach (var gameEvent in phoneCantBeAnsweredGameEvents)
-        {
-            gameEvent.EventRaised += () => CanPhoneBeAnswered = false;
-        }
-    }
 
     public void InvokePhoneAnsweredGameEvents()
     {
