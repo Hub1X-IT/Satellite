@@ -70,8 +70,11 @@ public class MonitorFileSystemInitializer : MonoBehaviour
             monitorUI.FileExplorer.InitializeFileExplorer(this);
             currentIPAddress = ipAddress;
             commandData.Response?.Invoke(true, $"Connected to target: {ipAddress}");
-            objective = ipAndObjectiveDictionary[ipAddress];
-            objective?.TryRaiseEvent();
+            if (ipAndObjectiveDictionary.ContainsKey(ipAddress))
+            {
+                objective = ipAndObjectiveDictionary[ipAddress];
+                objective.TryRaiseEvent();
+            }
         }
         else
         {
