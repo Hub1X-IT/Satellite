@@ -7,8 +7,7 @@ public class SmartphoneController : MonoBehaviour
 
     private bool isSmartphoneEnabled;
 
-    private const string PHONE_ON_TRIGGER = "PhoneOn";
-    private const string PHONE_OFF_TRIGGER = "PhoneOff";
+    private const string IsPhoneOnParam = "IsPhoneOn";
 
     private void Awake()
     {
@@ -50,14 +49,7 @@ public class SmartphoneController : MonoBehaviour
 
         GameManager.Instance.SetCursorShown(enabled);
 
-        if (enabled)
-        {
-            smartphoneAnimator.SetTrigger(PHONE_ON_TRIGGER);
-        }
-        else
-        {
-            smartphoneAnimator.SetTrigger(PHONE_OFF_TRIGGER);
-        }
+        smartphoneAnimator.SetBool(IsPhoneOnParam, enabled);
     }
 
     public void SetCanShowSmartphone(bool canShow)

@@ -17,8 +17,7 @@ public class Lever : MonoBehaviour
     [SerializeField]
     private AudioSource leverToggleAudioSource;
 
-    private const string LeverOnTrigger = "LeverOn";
-    private const string LeverOffTrigger = "LeverOff";
+    private const string IsLeverOnParam = "IsLeverOn";
 
     private bool isLeverEnabled = true;
 
@@ -31,7 +30,7 @@ public class Lever : MonoBehaviour
     private void SetLeverEnabled(bool enabled)
     {
         isLeverEnabled = enabled;
-        leverAnimator.SetTrigger(enabled ? LeverOnTrigger : LeverOffTrigger);
+        leverAnimator.SetBool(IsLeverOnParam, enabled);
         lightSource.SetActive(enabled);
         if (enabled)
         {
