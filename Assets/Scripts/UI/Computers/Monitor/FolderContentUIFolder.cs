@@ -7,10 +7,7 @@ public class FolderContentUIFolder : FileExplorerUIDataContainer
     private DoubleClickButtonUI openButton;
 
     [SerializeField]
-    private Sprite baseFolderIcon;
-
-    [SerializeField]
-    private Sprite lockedFolderIcon;
+    private Sprite folderIcon;
 
     private FolderSO selfFolderSO;
 
@@ -22,8 +19,7 @@ public class FolderContentUIFolder : FileExplorerUIDataContainer
         SelfDataContainerSO = folderSO;
         this.parentFolderContentUI = parentFolderContentUI;
 
-        BaseDataContainerIcon = baseFolderIcon;
-        LockedDataContainerIcon = lockedFolderIcon;
+        DataContainerIcon = folderIcon;
 
         openButton.OnDoubleClick += OpenFolderContent;
     }

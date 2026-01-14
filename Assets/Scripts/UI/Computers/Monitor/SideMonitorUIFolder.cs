@@ -10,10 +10,7 @@ public class SideMonitorUIFolder : FileExplorerUIDataContainer
     private Button folderContentButton;
 
     [SerializeField]
-    private Sprite baseFolderIcon;
-
-    [SerializeField]
-    private Sprite lockedFolderIcon;
+    private Sprite folderIcon;
 
     [SerializeField]
     private RectTransform childFoldersHiddenSprite;
@@ -57,8 +54,7 @@ public class SideMonitorUIFolder : FileExplorerUIDataContainer
 
         SetName(selfFolderSO.SelfName);
 
-        BaseDataContainerIcon = baseFolderIcon;
-        LockedDataContainerIcon = lockedFolderIcon;
+        DataContainerIcon = folderIcon;
 
         childFoldersButton.gameObject.SetActive(gameObject.activeSelf && selfFolderSO.HasChildFolders());
         childFoldersButton.image.rectTransform.localRotation = selfFolderSO.ShouldShowChildFolders ? childFoldersShown : childFoldersHidden;

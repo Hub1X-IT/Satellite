@@ -10,12 +10,14 @@ public abstract class FileExplorerUIDataContainer : MonoBehaviour
     [SerializeField]
     private Image dataContainerIconImage;
 
+    [SerializeField]
+    private GameObject lockIcon;
+
     public RectTransform SelfRectTransform { get; private set; }
 
     protected DataContainerSO SelfDataContainerSO { private get; set; }
 
-    protected Sprite BaseDataContainerIcon { private get; set; }
-    protected Sprite LockedDataContainerIcon { private get; set; }
+    protected Sprite DataContainerIcon { private get; set; }
 
     protected FileExplorerUI CurrentFileExplorer { get; private set; }
     protected MonitorAppsManagerUI CurrentMonitorAppsManager { get; private set; }
@@ -68,7 +70,7 @@ public abstract class FileExplorerUIDataContainer : MonoBehaviour
 
     private void UpdateIcon()
     {
-        dataContainerIconImage.sprite = SelfDataContainerSO.IsLocked && LockedDataContainerIcon != null ? 
-            LockedDataContainerIcon : BaseDataContainerIcon;
+        dataContainerIconImage.sprite = DataContainerIcon;
+        lockIcon.SetActive(SelfDataContainerSO.IsLocked);
     }
 }

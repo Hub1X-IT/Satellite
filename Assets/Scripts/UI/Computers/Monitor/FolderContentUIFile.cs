@@ -7,22 +7,13 @@ public class FolderContentUIFile : FileExplorerUIDataContainer
     private DoubleClickButtonUI openButton;
 
     [SerializeField]
-    private Sprite baseUnknownFileIcon;
+    private Sprite unknownFileIcon;
 
     [SerializeField]
-    private Sprite lockedUnknownFileIcon;
+    private Sprite textFileIcon;
 
     [SerializeField]
-    private Sprite baseTextFileIcon;
-
-    [SerializeField]
-    private Sprite lockedTextFileIcon;
-
-    [SerializeField]
-    private Sprite baseDoorAppShortcutFileIcon;
-
-    [SerializeField]
-    private Sprite lockedDoorAppShortcutFileIcon;
+    private Sprite doorAppShortcutFileIcon;
 
     private FileSO selfFileSO;
 
@@ -73,18 +64,15 @@ public class FolderContentUIFile : FileExplorerUIDataContainer
     {
         if (selfFileSO is FileStringSO)
         {
-            BaseDataContainerIcon = baseTextFileIcon;
-            LockedDataContainerIcon = lockedTextFileIcon;
+            DataContainerIcon = textFileIcon;
         }
         else if (selfFileSO is FileDoorAppShortcutSO)
         {
-            BaseDataContainerIcon = baseDoorAppShortcutFileIcon;
-            LockedDataContainerIcon = lockedDoorAppShortcutFileIcon;
+            DataContainerIcon = doorAppShortcutFileIcon;
         }
         else
         {
-            BaseDataContainerIcon = baseUnknownFileIcon;
-            LockedDataContainerIcon = lockedUnknownFileIcon;
+            DataContainerIcon = unknownFileIcon;
         }
     }
 }
