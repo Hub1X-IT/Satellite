@@ -22,7 +22,7 @@ public class ContactSO : ScriptableObject
     [SerializeField]
     private GameEventSO[] callEndedGameEvents;
 
-    public bool CanPhoneBeAnswered { get; set; }
+    // public bool CanPhoneBeAnswered { get; set; 
 
     public string ContactName => contactName;
 

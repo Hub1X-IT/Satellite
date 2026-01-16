@@ -158,14 +158,13 @@ public class PhonecallManager : MonoBehaviour
 
         if (currentCall != null && currentCall.CallType == CallType.OutgoingCall)
         {
-            if (currentCall.ContactSO.CanPhoneBeAnswered)
-            {
-                Call newCall = currentCall;
-                newCall.CallType = CallType.OngoingCall;
-                StopCurrentCall();
-                newCall.ContactSO.InvokeOutgoingCallAnsweredGameEvents();
-                StartCall(newCall);
-            }
+            // if (currentCall.ContactSO.CanPhoneBeAnswered) { }
+            Call newCall = currentCall;
+            newCall.CallType = CallType.OngoingCall;
+            StopCurrentCall();
+            newCall.ContactSO.InvokeOutgoingCallAnsweredGameEvents();
+            StartCall(newCall);
+
         }
         else
         {
