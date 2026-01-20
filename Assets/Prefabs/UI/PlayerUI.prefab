@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1869861400465302161}
   - component: {fileID: 1664313575028447805}
-  - component: {fileID: 7724870884077129913}
   - component: {fileID: 4919828173750905007}
   - component: {fileID: 3507571683723168101}
   - component: {fileID: 4575451719049611331}
@@ -67,29 +66,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &7724870884077129913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 283638129673818041}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
-  m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
-  m_PhysicalUnit: 3
-  m_FallbackScreenDPI: 96
-  m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
 --- !u!114 &4919828173750905007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1567,7 +1543,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2840008929420313651}
   - component: {fileID: 2237934129882684952}
-  - component: {fileID: 3069159159059404}
   - component: {fileID: 2838068481483850581}
   - component: {fileID: 1185868517228137939}
   m_Layer: 5
@@ -1623,29 +1598,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &3069159159059404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5834778961385335336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
-  m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
-  m_PhysicalUnit: 3
-  m_FallbackScreenDPI: 96
-  m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
 --- !u!114 &2838068481483850581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2576,7 +2528,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5855535162739269970, guid: 95151eef2e0e2dc9aaceb8648c2d8c3b, type: 3}
       propertyPath: m_Name
-      value: InGameOptionsCanvas
+      value: InGameOptions
       objectReference: {fileID: 0}
     - target: {fileID: 5924581519807930401, guid: 95151eef2e0e2dc9aaceb8648c2d8c3b, type: 3}
       propertyPath: m_Pivot.x
@@ -2781,7 +2733,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5398952413723958718, guid: d3b095f97950db40796f243f7f30e16b, type: 3}
       propertyPath: m_Name
-      value: FPSCounterCanvas
+      value: FPSCounter
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
