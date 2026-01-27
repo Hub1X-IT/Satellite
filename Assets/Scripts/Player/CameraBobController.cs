@@ -63,7 +63,7 @@ public class CameraBobController : MonoBehaviour
 
     public void OnPlayerStartedMoving(bool isMoving)
     {
-        currentSettings = isMoving ? playerMovingSettings : playerNotMovingSettings;
+        // currentSettings = isMoving ? playerMovingSettings : playerNotMovingSettings;
     }
 
     public void SetHeadBobEnabled(bool enabled)

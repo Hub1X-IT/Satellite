@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerMovementController : MonoBehaviour
 {
     public event Action<bool> StartedMoving;
+    public bool IsPlayerMoving;
 
     private CharacterController characterController;
 
@@ -25,6 +26,7 @@ public class PlayerMovementController : MonoBehaviour
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
+        IsPlayerMoving = false;
         wasMoving = false;
     }
 
@@ -52,11 +54,13 @@ public class PlayerMovementController : MonoBehaviour
         if (!wasMoving && inputVector != Vector2.zero)
         {
             StartedMoving?.Invoke(true);
+            IsPlayerMoving = true;
             wasMoving = true;
         }
         else if (wasMoving && inputVector == Vector2.zero)
         {
             StartedMoving?.Invoke(false);
+            IsPlayerMoving = false;
             wasMoving = false;
         }
 
