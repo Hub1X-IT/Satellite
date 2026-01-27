@@ -23,6 +23,8 @@ public class CommandPromptUI : MonoBehaviour
     [SerializeField]
     private AudioSource cmdAudioSource;
 
+    private Button outputFieldButton;
+
     /*
     [SerializeField]
     private ScrollRect outputFieldScrollRect;
@@ -45,6 +47,8 @@ public class CommandPromptUI : MonoBehaviour
         outputTextFieldPrefab.text = string.Empty;
 
         previousCommandsList = new();
+
+        outputFieldButton = GetComponent<Button>();
 
         //SetStartupText(cmdStartText.text + "\n");
 
@@ -83,6 +87,8 @@ public class CommandPromptUI : MonoBehaviour
         {
             cmdAudioSource.Play();
         });
+
+        outputFieldButton.onClick.AddListener(() => shouldFocusOnInputFieldNextFrame = true);
     }
 
     private void LateUpdate()
