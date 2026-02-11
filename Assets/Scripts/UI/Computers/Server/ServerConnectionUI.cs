@@ -22,41 +22,43 @@ public class ServerConnectionUI : MonoBehaviour
     [SerializeField]
     private Color buttonDisconnectColor = Color.red;
     [SerializeField]
-    private Color serverDisconnectedColor = Color.cyan;
+    private Color serverIconDisconnectedColor = Color.cyan;
+    [SerializeField]
+    private Color textDisconnectedColor = Color.red;
     [SerializeField]
     private Color connectedColor = Color.green;
 
-    private const string disconnectedStatus = "<color=\"red\">Disconnected</color>";
-    private const string connectedStatus = "<color=\"green\">Connected</color>";
-    private const string nullServerID = "NULL";
+    private const string DisconnectedStatusText = "Disconnected";
+    private const string ConnectedStatusText = "Connected";
+    private const string NullServerIDText = "NULL";
 
     private const string DisconnectText = "Disconnect";
     private const string ConnectText = "Connect";
 
     private void Awake()
     {
-        connectionStatusTextField.text = disconnectedStatus;
-        serverIDTextField.text = nullServerID;
+        connectionStatusTextField.text = DisconnectedStatusText;
+        serverIDTextField.text = NullServerIDText;
     }
 
     private void Start()
     {
         toggleConnectionButton.onClick.AddListener(ServerConnectionManager.Instance.TryToggleServerConnection);
-        availableServersTextField.text = ServerConnectionManager.Instance.AvailableServersNumber.ToString();
 
-        ServerConnectionManager.Instance.ServerConnectionEnabled += OnServerConnectionEnabled;
+        ServerConnectionManager.Instance.OnServerConnectionStateChanged += UpdateServerConnectionUI;    
 
-        toggleConnectionButton.image.color = connectedColor;
-        serverIcon.color = serverDisconnectedColor;
+        UpdateServerConnectionUI(ServerConnectionManager.Instance.IsConnectionActive);
     }
 
-    private void OnServerConnectionEnabled(bool enabled)
+    private void UpdateServerConnectionUI(bool isConnectionActive)
     {
-        connectionStatusTextField.text = enabled ? connectedStatus : disconnectedStatus;
-        connectionButtonTextField.text = enabled ? DisconnectText : ConnectText;
+        connectionStatusTextField.text = isConnectionActive ? ConnectedStatusText : DisconnectedStatusText;
+        connectionButtonTextField.text = isConnectionActive ? DisconnectText : ConnectText;
         availableServersTextField.text = ServerConnectionManager.Instance.AvailableServersNumber.ToString();
-        serverIDTextField.text = enabled ? ServerConnectionManager.Instance.CurrentServerID : nullServerID;
-        serverIcon.color = enabled ? connectedColor : serverDisconnectedColor;
-        toggleConnectionButton.image.color = enabled ? buttonDisconnectColor : connectedColor;
+        serverIDTextField.text = isConnectionActive ? ServerConnectionManager.Instance.CurrentServerID : NullServerIDText;
+        
+        connectionStatusTextField.color = isConnectionActive ? connectedColor : textDisconnectedColor;
+        serverIcon.color = isConnectionActive ? connectedColor : serverIconDisconnectedColor;
+        toggleConnectionButton.image.color = isConnectionActive ? buttonDisconnectColor : connectedColor;
     }
 }

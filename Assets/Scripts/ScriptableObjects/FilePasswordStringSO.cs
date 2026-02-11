@@ -25,8 +25,5 @@ public class FilePasswordStringSO : FileStringSO
         EncryptedPasswordsManager.AddEncryptedPassword(encryptedPassword);
         string encodedPasswordString = encryptedPassword.Password;
         EncodedCompressedPasswordContent = TextCompressor.GetCompressedText(encodedPasswordString);
-
-        // Probably temporary
-        TempPasswordChecker.CorrectPassword = PasswordContent;
     }
 }

@@ -78,8 +78,7 @@ public class MonitorStartupScreenUI : MonoBehaviour
             currentSelectedStartupScreenElements = case1StartupScreenElements;
             // Debug.Log("Selected case1");
         }
-        else if (!ServerConnectionManager.Instance.IsConnectionActive || DetectionManager.Instance.WasDetected)
-        // ^ Second condition may not be necessary
+        else if (!ServerConnectionManager.Instance.IsConnectionActive)
         {
             currentSelectedStartupScreenElements = case2StartupScreenElements;
             // Debug.Log("Selected case2");

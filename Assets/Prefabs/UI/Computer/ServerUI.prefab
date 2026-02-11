@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 2690851480790893903}
   - component: {fileID: 8542147808249456428}
   - component: {fileID: 8488139356491066015}
-  - component: {fileID: 2284213737073396204}
   - component: {fileID: 5384816798996892466}
   m_Layer: 5
   m_Name: ServerUICanvas
@@ -133,21 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serverViewEnabledGameEvent: {fileID: 11400000, guid: afbe7a2755a5fa24fa1c116d787af9db, type: 2}
-  serverTurnedOffScreen: {fileID: 0}
---- !u!114 &2284213737073396204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4435371910128469743}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f0cd4aa14cb38142b15fa525d0e056e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  connectionEnabledGameEvent: {fileID: 11400000, guid: ab062249a6b1b9629b00af488bbd5741, type: 2}
-  availableServerIDList: []
+  serverTurnedOffScreen: {fileID: 5735704264536462491}
 --- !u!114 &5384816798996892466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -469,5 +454,10 @@ PrefabInstance:
 --- !u!224 &5653896906963142402 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9011676917587195530, guid: ccaa8d573ddd27e45ac6dd541110eb1a, type: 3}
+  m_PrefabInstance: {fileID: 3709071776679522696}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5735704264536462491 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8998215706378724627, guid: ccaa8d573ddd27e45ac6dd541110eb1a, type: 3}
   m_PrefabInstance: {fileID: 3709071776679522696}
   m_PrefabAsset: {fileID: 0}

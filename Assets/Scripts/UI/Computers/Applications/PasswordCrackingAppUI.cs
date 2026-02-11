@@ -14,6 +14,9 @@ public class PasswordCrackingAppUI : MonoBehaviour
         public int PageNumber;
     }
 
+    [SerializeField]
+    private GameEventSO onCorrectPasswordDecodedGameEvent;
+
     private MonitorAppUI monitorAppUI;
 
     private Monitor monitor;
@@ -79,15 +82,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
     private TMP_Text detectionChanceTextField;
     private const string DetectionChanceText = "Detection Chance: ";
 
-    // Probably temporary
-    public event Action<string> NewPasswordConverted;
-    private bool wasDetected;
-
-    private void OnDestroy()
-    {
-        NewPasswordConverted = null;
-    }
-
     public void InitializePasswordCrackingApp(string appName)
     {
         monitorAppUI = GetComponent<MonitorAppUI>();
@@ -97,28 +91,23 @@ public class PasswordCrackingAppUI : MonoBehaviour
         monitor = GetComponentInParent<Monitor>();
 
         InitializePasswordCracking();
-        SetDetectionChanceText();
+        SetDetectionChanceText(DetectionManager.Instance.CurrentDetectionChance);
 
-        TempPasswordChecker.SetPasswordCrackingAppReference(this);
         pasteMenuUI.InitializeCopyPasteMenuUI(CopyPasteMenuUI.MenuFunction.PasteMenu, inputField);
 
-        DetectionManager.Instance.DetectionOccured += () =>
+        PowerManager.Instance.OnPowerStateChanged += (isPowerEnabled) =>
         {
-            // DisableApp();
-            wasDetected = true;
-            if (monitorAppUI != null)
+            if (!isPowerEnabled && monitorAppUI != null)
             {
                 monitorAppUI.DestroyOnClose = true;
                 monitorAppUI.CloseApp();
             }
         };
-        DetectionManager.Instance.DetectionRemoved += () =>
+        DetectionManager.Instance.OnDetectionChanceChanged += (newDetectionChance) =>
         {
-            // EnableApp();
-            SetDetectionChanceText();
+            SetDetectionChanceText(newDetectionChance);
         };
 
-        wasDetected = false;
         // shouldShowDecodingMessage = false;
         // shouldShowErrorMessage = false;
 
@@ -132,19 +121,11 @@ public class PasswordCrackingAppUI : MonoBehaviour
         decompressedPassword = string.Empty;
         decompressedPasswordUI.gameObject.SetActive(false);
 
-        if (!DetectionManager.Instance.WasDetected)
-        {
-            EnableApp();
-        }
-        else
-        {
-            DisableApp();
-        }
+        EnableApp();
     }
 
     private void EnableApp()
     {
-        // inputField.onEndEdit.AddListener(ChangeOriginalPassword);
         resetPasswordCrackingButton.onClick.AddListener(ResetPasswordCracking);
         inputField.onSelect.AddListener(InputField_OnSelect);
         inputField.onValueChanged.AddListener(InputField_OnValueChanged);
@@ -163,30 +144,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
         foreach (var guidebookLookupButton in guidebookLookupButtons)
         {
             guidebookLookupButton.LookupButton.onClick.AddListener(() => LookupPageInGuidebook(guidebookLookupButton.PageNumber));
-        }
-    }
-
-    private void DisableApp()
-    {
-        // inputField.onEndEdit.RemoveListener(ChangeOriginalPassword);
-        resetPasswordCrackingButton.onClick.RemoveListener(ResetPasswordCracking);
-        inputField.onSelect.RemoveListener(InputField_OnSelect);
-        inputField.onValueChanged.RemoveListener(InputField_OnValueChanged);
-        inputField.onValidateInput -= InputField_OnValidateInput;
-
-        undoAllStepsButton.onClick.RemoveListener(UndoAllSteps);
-        undoLastStepButton.onClick.RemoveListener(UndoLastStep);
-
-        binButton.onClick.RemoveListener(BinDecode);
-        octButton.onClick.RemoveListener(OctDecode);
-        decButton.onClick.RemoveListener(DecDecode);
-        hexButton.onClick.RemoveListener(HexDecode);
-        atbashButton.onClick.RemoveListener(AtbashDecode);
-        caesarButton.onClick.RemoveListener(CaesarDecode);
-
-        foreach (var guidebookLookupButton in guidebookLookupButtons)
-        {
-            guidebookLookupButton.LookupButton.onClick.RemoveAllListeners();
         }
     }
 
@@ -309,13 +266,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
 
             // CreateNewPasswordTextField(convertedPassword);
 
-            if (!wasDetected)
-            {
-                NewPasswordConverted?.Invoke(convertedPassword);
-
-                // May be unnecessary now when checking decoding steps is implemented
-            }
-
             if (encryptionStepIndex == -1)
             {
                 // Player guessed the correct password.
@@ -332,7 +282,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
             StartCoroutine(ShowDecodingMessageAndConvertedPassword(true, "", false));
 
             DetectionManager.Instance.CheckDetection();
-            SetDetectionChanceText();
         }
     }
 
@@ -351,14 +300,19 @@ public class PasswordCrackingAppUI : MonoBehaviour
             else
             {
                 CreateNewPasswordTextField(convertedPassword, isFinalStep);
+
+                if (isFinalStep && onCorrectPasswordDecodedGameEvent != null)
+                {
+                    onCorrectPasswordDecodedGameEvent.TryRaiseEvent();
+                }
             }
         }
         SetButtonsEnabled(true);
     }
 
-    private void SetDetectionChanceText()
+    private void SetDetectionChanceText(int detectionChance)
     {
-        detectionChanceTextField.text = DetectionChanceText + DetectionManager.Instance.CurrentDetectionChance + "%";
+        detectionChanceTextField.text = DetectionChanceText + detectionChance + "%";
     }
 
     private void CreateNewPasswordTextField(string newPassword, bool isCorrectPassword)
@@ -400,7 +354,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
         if (!TryDestroyErrorMessageObject() && previousConvertedPasswordUIStack.TryPop(out ConvertedPasswordUI currentConvertedPasswordUI))
         {
             currentConvertedPasswordUI.DestroySelf();
-            Debug.Log("Destroyed: " + currentConvertedPasswordUI);
             encryptionStepIndex++;
         }
     }
@@ -415,7 +368,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
     {
         if (currentDecodingMessageObject != null)
         {
-            Debug.Log("t");
             Destroy(currentDecodingMessageObject);
             currentDecodingMessageObject = null;
             return true;
@@ -427,7 +379,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
     {
         if (currentErrorMessageObject != null)
         {
-            Debug.Log("t1");
             Destroy(currentErrorMessageObject);
             currentErrorMessageObject = null;
             return true;

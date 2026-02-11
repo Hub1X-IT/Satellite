@@ -6,7 +6,7 @@ public class ServerConnectionManager : MonoBehaviour
 {
     public static ServerConnectionManager Instance { get; private set; }
 
-    public event Action<bool> ServerConnectionEnabled;
+    public event Action<bool> OnServerConnectionStateChanged;
 
     public bool IsConnectionActive { get; private set; }
     public bool WasEverConnected { get; private set; }
@@ -17,8 +17,7 @@ public class ServerConnectionManager : MonoBehaviour
     [SerializeField]
     private List<string> availableServerIDList;
 
-    public string CurrentServerID => availableServerIDList[0];
-
+    public string CurrentServerID { get; private set; }
     public int AvailableServersNumber => availableServerIDList.Count;
 
     private void Awake()
@@ -31,23 +30,10 @@ public class ServerConnectionManager : MonoBehaviour
         }
         Instance = this;
 
+        CurrentServerID = availableServerIDList[0];
+
         IsConnectionActive = false;
         WasEverConnected = false;
-    }
-
-    private void Start()
-    {
-        DetectionManager.Instance.DetectionOccured += () =>
-        {
-            if (IsConnectionActive)
-            {
-                DeleteCurrentServer();
-            }
-            else
-            {
-                Debug.LogWarning("No active server connection!");
-            }
-        };
     }
 
     public void TryToggleServerConnection()
@@ -62,6 +48,18 @@ public class ServerConnectionManager : MonoBehaviour
         }
     }
 
+    public void TryDeleteCurrentServer()
+    {
+        if (IsConnectionActive)
+        {
+            DeleteCurrentServer();
+        }
+        else
+        {
+            Debug.LogWarning("Tracing ended when no active server connection!");
+        }
+    }
+
     private void SetServerConnectionEnabled(bool enabled)
     {
         IsConnectionActive = enabled;
@@ -70,7 +68,12 @@ public class ServerConnectionManager : MonoBehaviour
             WasEverConnected = true;
         }
 
-        ServerConnectionEnabled?.Invoke(enabled);
+        if (enabled)
+        {
+            CurrentServerID = availableServerIDList[0];
+        }
+
+        OnServerConnectionStateChanged?.Invoke(enabled);
 
         if (enabled && connectionEnabledGameEvent != null)
         {
@@ -80,14 +83,16 @@ public class ServerConnectionManager : MonoBehaviour
 
     private void DeleteCurrentServer()
     {
-        SetServerConnectionEnabled(false);
-
         if (AvailableServersNumber == 0)
         {
             Debug.LogWarning("No available servers to delete.");
             return;
         }
 
-        availableServerIDList.RemoveAt(0);
+        availableServerIDList.Remove(CurrentServerID);
+        CurrentServerID = null;
+
+        IsConnectionActive = false;
+        OnServerConnectionStateChanged?.Invoke(false);
     }
 }

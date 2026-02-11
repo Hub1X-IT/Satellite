@@ -62,16 +62,10 @@ public class Server : MonoBehaviour
 
     private void Start()
     {
-        DetectionManager.Instance.DetectionOccured += () =>
+        PowerManager.Instance.OnPowerStateChanged += (isPowerOn) =>
         {
-            SetServerEnabled(false);
-            SetServerOnOffMaterial(false);
-        };
-
-        DetectionManager.Instance.ServerPowerEnabled += (enabled) =>
-        {
-            SetServerEnabled(enabled);
-            SetServerOnOffMaterial(enabled);
+            SetServerEnabled(isPowerOn);
+            SetServerOnOffMaterial(isPowerOn);
         };
     }
 

@@ -5,26 +5,16 @@ public class DetectionManager : MonoBehaviour
 {
     public static DetectionManager Instance { get; private set; }
 
-    public event Action DetectionOccured;
-    public event Action DetectionRemoved;
-
-    public event Action<bool> ServerPowerEnabled;
-
-    [SerializeField]
-    private GameEventSO onDetectionOccuredGameEvent;
-    [SerializeField]
-    private GameEventSO onDetectionRemovedGameEvent;
+    public event Action OnDetectionOccured;
+    public event Action<int> OnDetectionChanceChanged;
 
     public int CurrentDetectionChance { get; private set; }
 
     private int currentDetectionLevel;
-    private const int DefaultDetectionLevel = 0;
+    public const int DefaultDetectionLevel = 0;
 
     private readonly int[] detectionLevels = { 2, 5, 10, 25, 40, 70, 98, 100 };
-    // Debug detection level:
     // private static readonly int[] detectionLevels = { -1 };
-
-    public bool WasDetected { get; private set; }
 
     private void Awake()
     {
@@ -37,14 +27,7 @@ public class DetectionManager : MonoBehaviour
         Instance = this;
 
         currentDetectionLevel = DefaultDetectionLevel;
-        WasDetected = false;
         SetDetectionChance();
-    }
-
-    private void OnDestroy()
-    {
-        onDetectionOccuredGameEvent.ResetGameEvent();
-        onDetectionRemovedGameEvent.ResetGameEvent();
     }
 
     public void CheckDetection()
@@ -53,43 +36,30 @@ public class DetectionManager : MonoBehaviour
 
         if (randomDetectionChance < CurrentDetectionChance)
         {
-            WasDetected = true;
-            DetectionOccured?.Invoke();
-            if (onDetectionOccuredGameEvent != null)
+            if (!TracingManager.Instance.IsTracingActive)
             {
-                onDetectionOccuredGameEvent.TryRaiseEvent();
+                TracingManager.Instance.StartTracing();
             }
+            else
+            {
+                TracingManager.Instance.TryIncreaseTracingSpeed();
+            }
+
+            OnDetectionOccured?.Invoke();
         }
         else
         {
-            IncreaseDetectionLevel();
-        }
-        // Debug.Log($"Current detection chance: {detectionLevels[currentDetectionLevel]}");
-        // Debug.Log($"{(WasDetected ? "" : "Not ")}Detected");
-    }
-
-    public void SetServerPowerEnabled(bool enabled)
-    {
-        ServerPowerEnabled?.Invoke(enabled);
-        if (enabled && WasDetected)
-        {
-            ResetDetection();
+            IncreaseDetectionChance();
         }
     }
 
-    private void ResetDetection()
+    public void ResetDetectionChance()
     {
-        WasDetected = false;
         currentDetectionLevel = DefaultDetectionLevel;
         SetDetectionChance();
-        DetectionRemoved?.Invoke();
-        if (onDetectionRemovedGameEvent != null)
-        {
-            onDetectionRemovedGameEvent.TryRaiseEvent();
-        }
     }
 
-    private void IncreaseDetectionLevel()
+    private void IncreaseDetectionChance()
     {
         if (currentDetectionLevel < detectionLevels.Length - 1)
         {
@@ -101,5 +71,6 @@ public class DetectionManager : MonoBehaviour
     private void SetDetectionChance()
     {
         CurrentDetectionChance = detectionLevels[currentDetectionLevel];
+        OnDetectionChanceChanged?.Invoke(CurrentDetectionChance);
     }
 }

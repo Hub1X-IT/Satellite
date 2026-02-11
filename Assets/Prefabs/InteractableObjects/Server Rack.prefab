@@ -68,6 +68,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoSetLayerOnStart: 1
   interactionVisual: {fileID: 4771750393475192814}
+  isInteractableOnStart: 1
 --- !u!1 &6384699643392127517
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,14 +237,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4742351580507593745}
     m_Modifications:
-    - target: {fileID: 1197482729245048752, guid: 28c492a261ffab3499197258c7c16e61, type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4435371910128469743, guid: 28c492a261ffab3499197258c7c16e61, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5093539729971052260, guid: 28c492a261ffab3499197258c7c16e61, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.010499999

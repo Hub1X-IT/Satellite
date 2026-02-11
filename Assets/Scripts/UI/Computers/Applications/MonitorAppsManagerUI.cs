@@ -73,6 +73,5 @@ public class MonitorAppsManagerUI : MonoBehaviour
     {
         // Temporary method (idk whether it's used anywhere)
         DoorAppUI doorApp = OpenApplication(ApplicationType.DoorApp).GetComponent<DoorAppUI>();
-
     }
 }

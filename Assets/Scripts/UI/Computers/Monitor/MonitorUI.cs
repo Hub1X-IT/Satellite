@@ -30,15 +30,7 @@ public class MonitorUI : MonoBehaviour
 
     private void Start()
     {
-        DetectionManager.Instance.DetectionOccured += () =>
-                {
-                    monitorStartupScreenUI.gameObject.SetActive(true);
-                    monitorStartupScreenUI.StartStartupScreen(null);
-
-                    IsSputnikOSStarted = false;
-                };
-
-        ServerConnectionManager.Instance.ServerConnectionEnabled += (enabled) =>
+        ServerConnectionManager.Instance.OnServerConnectionStateChanged += (enabled) =>
         {
             monitorStartupScreenUI.gameObject.SetActive(true);
             monitorStartupScreenUI.StartStartupScreen(null);
@@ -49,7 +41,7 @@ public class MonitorUI : MonoBehaviour
             }
         };
 
-        DetectionManager.Instance.ServerPowerEnabled += (enabled) =>
+        PowerManager.Instance.OnPowerStateChanged += (enabled) =>
         {
             if (enabled)
             {

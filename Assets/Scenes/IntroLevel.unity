@@ -1475,51 +1475,6 @@ Transform:
   - {fileID: 2046917774}
   m_Father: {fileID: 375421349}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &648160404
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 648160405}
-  - component: {fileID: 648160406}
-  m_Layer: 0
-  m_Name: TempPasswordChecker
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &648160405
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 648160404}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 710156001}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &648160406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 648160404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3493e45e3b29bc4fbc2ed3a38f013f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  correctPasswordGuessedGameEvent: {fileID: 11400000, guid: 94c976010b692794a847176fed445bf5, type: 2}
 --- !u!1 &688868320
 GameObject:
   m_ObjectHideFlags: 0
@@ -1661,7 +1616,6 @@ Transform:
   - {fileID: 1198099350}
   - {fileID: 538899896}
   - {fileID: 938275799}
-  - {fileID: 648160405}
   - {fileID: 573505917}
   - {fileID: 1135550205}
   - {fileID: 133324309}
@@ -3715,6 +3669,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5069642093851917172, guid: 521f4f33850a94934b739a08a383275d, type: 3}
+      propertyPath: availableServerIDList.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5069642093851917172, guid: 521f4f33850a94934b739a08a383275d, type: 3}
+      propertyPath: 'availableServerIDList.Array.data[0]'
+      value: Server 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5069642093851917172, guid: 521f4f33850a94934b739a08a383275d, type: 3}
+      propertyPath: 'availableServerIDList.Array.data[1]'
+      value: Server 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5069642093851917172, guid: 521f4f33850a94934b739a08a383275d, type: 3}
+      propertyPath: 'availableServerIDList.Array.data[2]'
+      value: Server 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5069642093851917172, guid: 521f4f33850a94934b739a08a383275d, type: 3}
+      propertyPath: 'availableServerIDList.Array.data[3]'
+      value: Server 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5069642093851917172, guid: 521f4f33850a94934b739a08a383275d, type: 3}
+      propertyPath: 'availableServerIDList.Array.data[4]'
+      value: Server 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5069642093851917172, guid: 521f4f33850a94934b739a08a383275d, type: 3}
+      propertyPath: 'availableServerIDList.Array.data[5]'
+      value: Server 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6330661084763740754, guid: 521f4f33850a94934b739a08a383275d, type: 3}
       propertyPath: uiPanel
       value: 
@@ -4081,11 +4063,6 @@ Animator:
 --- !u!4 &1638967038 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2156510165858759038, guid: 5a35d51f2fdf5434ebade9b5c9aa8898, type: 3}
-  m_PrefabInstance: {fileID: 803798540884770071}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1720580459 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1479530267932271002, guid: 5a35d51f2fdf5434ebade9b5c9aa8898, type: 3}
   m_PrefabInstance: {fileID: 803798540884770071}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1756187813
@@ -5151,11 +5128,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5223186187760367504, guid: 4b4536b5382a4a849bfc9c02d3ee8cff, type: 3}
   m_PrefabInstance: {fileID: 3636573079593337719}
   m_PrefabAsset: {fileID: 0}
---- !u!143 &3636573079593337721 stripped
-CharacterController:
-  m_CorrespondingSourceObject: {fileID: 3877968950443369897, guid: 4b4536b5382a4a849bfc9c02d3ee8cff, type: 3}
-  m_PrefabInstance: {fileID: 3636573079593337719}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3636573079593337722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5168,7 +5140,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a5d2db04490662628a647f7ee5ed176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterController: {fileID: 3636573079593337721}
   cameraFollowTransform: {fileID: 1877066322}
   playerMovementController: {fileID: 1583305512}
   bobSpeed: 10
@@ -5362,10 +5333,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 375421349}
     m_Modifications:
-    - target: {fileID: 413231145215562612, guid: c360b6590fa787b4a955b4b8d2cf0ff8, type: 3}
-      propertyPath: lightSource
-      value: 
-      objectReference: {fileID: 1720580459}
     - target: {fileID: 3537205592837580568, guid: c360b6590fa787b4a955b4b8d2cf0ff8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.04663086
@@ -5423,34 +5390,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 375421349}
     m_Modifications:
-    - target: {fileID: 2617964788357942375, guid: 95245b08f918ca54b993fdd22e10ca3a, type: 3}
-      propertyPath: availableServerIDList.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2617964788357942375, guid: 95245b08f918ca54b993fdd22e10ca3a, type: 3}
-      propertyPath: 'availableServerIDList.Array.data[0]'
-      value: Server 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2617964788357942375, guid: 95245b08f918ca54b993fdd22e10ca3a, type: 3}
-      propertyPath: 'availableServerIDList.Array.data[1]'
-      value: Server 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2617964788357942375, guid: 95245b08f918ca54b993fdd22e10ca3a, type: 3}
-      propertyPath: 'availableServerIDList.Array.data[2]'
-      value: Server 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2617964788357942375, guid: 95245b08f918ca54b993fdd22e10ca3a, type: 3}
-      propertyPath: 'availableServerIDList.Array.data[3]'
-      value: Server 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2617964788357942375, guid: 95245b08f918ca54b993fdd22e10ca3a, type: 3}
-      propertyPath: 'availableServerIDList.Array.data[4]'
-      value: Server 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2617964788357942375, guid: 95245b08f918ca54b993fdd22e10ca3a, type: 3}
-      propertyPath: 'availableServerIDList.Array.data[5]'
-      value: Server 6
-      objectReference: {fileID: 0}
     - target: {fileID: 3132703664222599739, guid: 95245b08f918ca54b993fdd22e10ca3a, type: 3}
       propertyPath: m_Camera
       value: 
