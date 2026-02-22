@@ -7,7 +7,7 @@ public class Lever : MonoBehaviour
 
     [SerializeField]
     private Animator leverAnimator;
-    
+
     [SerializeField]
     private AudioSource leverToggleAudioSource;
 
@@ -18,7 +18,9 @@ public class Lever : MonoBehaviour
     private void Start()
     {
         interactionTrigger.OnInteractionTriggered += () => SetLeverEnabled(!isLeverEnabled);
-        SetLeverEnabled(PowerManager.Instance.IsPowerOn);
+
+        isLeverEnabled = PowerManager.Instance.IsPowerOn;
+        leverAnimator.SetBool(IsLeverOnParam, isLeverEnabled);
     }
 
     private void SetLeverEnabled(bool enabled)
