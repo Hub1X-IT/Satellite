@@ -1,69 +1,62 @@
-using System;
-using Unity.Cinemachine;
 using UnityEngine;
 
 public class CameraBobController : MonoBehaviour
 {
-    [Serializable]
-    private class CinemachineBasicMultiChannelPerlinSettings
-    {
-        public float AmplitudeGain;
-        public float FrequencyGain;
-    }
-
     [SerializeField]
-    private CinemachineCamera playerCinemachineCamera;
-
-    private CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin;
-
+    private Transform cameraFollowTransform;
     [SerializeField]
     private PlayerMovementController playerMovementController;
 
     [SerializeField]
-    private float lerpSpeed;
-
+    private float bobSpeed = 10f;
     [SerializeField]
-    private CinemachineBasicMultiChannelPerlinSettings playerNotMovingSettings;
-
+    private float bobAmount = 0.05f;
     [SerializeField]
-    private CinemachineBasicMultiChannelPerlinSettings playerMovingSettings;
-
+    private float swayAmount = 0.03f;
     [SerializeField]
-    private CinemachineBasicMultiChannelPerlinSettings headBobDisabledSettings;
+    private float smooth = 8f;
 
-    private CinemachineBasicMultiChannelPerlinSettings currentSettings;
+    private float timer;
+    private float bobWeight; // 0 = no bob, 1 = full bob
+    private Vector3 startPosition;
 
     private bool isHeadBobEnabled;
 
-    private void Awake()
+    private void Start()
     {
-        playerMovementController.StartedMoving += OnPlayerStartedMoving;
-
-        cinemachineBasicMultiChannelPerlin = playerCinemachineCamera.GetComponent<CinemachineBasicMultiChannelPerlin>();
-
-        currentSettings = playerNotMovingSettings;
-
-        // Should be set by GraphicsSettingManager on Start anyway
-        isHeadBobEnabled = false;
+        startPosition = cameraFollowTransform.localPosition;
     }
 
     private void Update()
     {
         if (isHeadBobEnabled)
         {
-            cinemachineBasicMultiChannelPerlin.AmplitudeGain = Mathf.Lerp(cinemachineBasicMultiChannelPerlin.AmplitudeGain, currentSettings.AmplitudeGain, Time.deltaTime * lerpSpeed);
-            cinemachineBasicMultiChannelPerlin.FrequencyGain = Mathf.Lerp(cinemachineBasicMultiChannelPerlin.FrequencyGain, currentSettings.FrequencyGain, Time.deltaTime * lerpSpeed);
+            HandleCameraBob();
         }
     }
 
-    private void OnDestroy()
+    private void HandleCameraBob()
     {
-        playerMovementController.StartedMoving -= OnPlayerStartedMoving;
-    }
+        bool isMoving = playerMovementController.IsPlayerMoving;
+        // Smoothly blend bob in/out
+        bobWeight = Mathf.Lerp(
+            bobWeight,
+            isMoving ? 1f : 0f,
+            Time.deltaTime * smooth
+        );
 
-    public void OnPlayerStartedMoving(bool isMoving)
-    {
-        // currentSettings = isMoving ? playerMovingSettings : playerNotMovingSettings;
+        timer += Time.deltaTime * bobSpeed;
+
+        float bobOffset = Mathf.Sin(timer) * bobAmount * bobWeight;
+        float swayOffset = Mathf.Cos(timer * 0.5f) * swayAmount * bobWeight;
+
+        Vector3 targetPos = startPosition + new Vector3(swayOffset, bobOffset, 0f);
+
+        cameraFollowTransform.localPosition = Vector3.Lerp(
+            cameraFollowTransform.localPosition,
+            targetPos,
+            Time.deltaTime * smooth
+        );
     }
 
     public void SetHeadBobEnabled(bool enabled)
@@ -71,8 +64,9 @@ public class CameraBobController : MonoBehaviour
         isHeadBobEnabled = enabled;
         if (!enabled)
         {
-            cinemachineBasicMultiChannelPerlin.AmplitudeGain = headBobDisabledSettings.AmplitudeGain;
-            cinemachineBasicMultiChannelPerlin.FrequencyGain = headBobDisabledSettings.FrequencyGain;
+            // Reset position when disabling
+            cameraFollowTransform.localPosition = startPosition;
+            timer = 0f; // Reset timer to avoid jumps when re-enabling
         }
     }
 }

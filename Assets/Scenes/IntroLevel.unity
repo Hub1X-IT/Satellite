@@ -969,7 +969,6 @@ GameObject:
   - component: {fileID: 438686340}
   - component: {fileID: 438686341}
   - component: {fileID: 438686342}
-  - component: {fileID: 438686343}
   m_Layer: 0
   m_Name: CinemachineMainCamera
   m_TagString: Untagged
@@ -1078,30 +1077,6 @@ MonoBehaviour:
   AmplitudeGain: 0
   FrequencyGain: 0
   m_NoiseOffsets: {x: 589.8039, y: -344.9508, z: -638.0338}
---- !u!114 &438686343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 438686337}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2878618d90e359ae996849fb07347f30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerCinemachineCamera: {fileID: 438686340}
-  playerMovementController: {fileID: 1583305512}
-  lerpSpeed: 10
-  playerNotMovingSettings:
-    AmplitudeGain: 0.6
-    FrequencyGain: 0.3
-  playerMovingSettings:
-    AmplitudeGain: 1
-    FrequencyGain: 0.8
-  headBobDisabledSettings:
-    AmplitudeGain: 0
-    FrequencyGain: 0
 --- !u!1001 &477827054
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3521,7 +3496,7 @@ PrefabInstance:
     - target: {fileID: 1777541644198993963, guid: 521f4f33850a94934b739a08a383275d, type: 3}
       propertyPath: cameraBobController
       value: 
-      objectReference: {fileID: 438686343}
+      objectReference: {fileID: 3636573079593337722}
     - target: {fileID: 2190563738922611775, guid: 521f4f33850a94934b739a08a383275d, type: 3}
       propertyPath: m_Name
       value: GameManagers
@@ -4739,34 +4714,19 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5223186187760367504, guid: 4b4536b5382a4a849bfc9c02d3ee8cff, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3636573079593337722}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b4536b5382a4a849bfc9c02d3ee8cff, type: 3}
---- !u!1 &3636573079593337720 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5223186187760367504, guid: 4b4536b5382a4a849bfc9c02d3ee8cff, type: 3}
+--- !u!114 &3636573079593337722 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1647119865224848259, guid: 4b4536b5382a4a849bfc9c02d3ee8cff, type: 3}
   m_PrefabInstance: {fileID: 3636573079593337719}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3636573079593337722
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3636573079593337720}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a5d2db04490662628a647f7ee5ed176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraFollowTransform: {fileID: 1877066322}
-  playerMovementController: {fileID: 1583305512}
-  bobSpeed: 10
-  bobAmount: 0.05
-  swayAmount: 0.03
-  smooth: 8
 --- !u!1001 &3772388227603850553
 PrefabInstance:
   m_ObjectHideFlags: 0
