@@ -91,7 +91,10 @@ public class TracingManager : MonoBehaviour
     {
         Debug.Log("Player has been traced.");
 
-        ServerConnectionManager.Instance.TryDeleteCurrentServer();
+        if (!ServerConnectionManager.Instance.TryDeleteCurrentServer())
+        {
+            Debug.LogWarning("Tracing ended when no active server connection!");
+        }
         PowerManager.Instance.SetPowerState(false);
         // OnPlayerTraced?.Invoke();
         DetectionManager.Instance.ResetDetectionChance();

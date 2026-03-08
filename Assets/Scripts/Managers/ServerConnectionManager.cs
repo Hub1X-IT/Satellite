@@ -15,10 +15,13 @@ public class ServerConnectionManager : MonoBehaviour
     private GameEventSO connectionEnabledGameEvent;
 
     [SerializeField]
-    private List<string> availableServerIDList;
+    private List<ServerSO> availableServersList;
 
-    public string CurrentServerID { get; private set; }
-    public int AvailableServersNumber => availableServerIDList.Count;
+    public List<ServerSO> AvailableServersList => availableServersList;
+
+    public ServerSO CurrentServerSO { get; private set; }
+
+    public int AvailableServersNumber => AvailableServersList.Count;
 
     private void Awake()
     {
@@ -30,69 +33,72 @@ public class ServerConnectionManager : MonoBehaviour
         }
         Instance = this;
 
-        CurrentServerID = availableServerIDList[0];
-
         IsConnectionActive = false;
         WasEverConnected = false;
     }
 
-    public void TryToggleServerConnection()
+    public bool TryConnectToServer(string serverID)
     {
-        if (AvailableServersNumber > 0)
+        if (!IsConnectionActive)
         {
-            SetServerConnectionEnabled(!IsConnectionActive);
+            foreach (var serverSO in availableServersList)
+            {
+                if (serverSO.ServerID == serverID)
+                {
+                    ConnectToServer(serverSO);
+                    return true;
+                }
+            }
         }
-        else
-        {
-            Debug.Log("No available servers.");
-        }
+
+        return false;
     }
 
-    public void TryDeleteCurrentServer()
+    public bool TryDisconnectFromServer()
     {
         if (IsConnectionActive)
         {
-            DeleteCurrentServer();
+            DisconnectServer();
+            return true;
         }
-        else
-        {
-            Debug.LogWarning("Tracing ended when no active server connection!");
-        }
+
+        return false;
     }
 
-    private void SetServerConnectionEnabled(bool enabled)
+    public bool TryDeleteCurrentServer()
     {
-        IsConnectionActive = enabled;
-        if (!WasEverConnected && enabled)
+        if (IsConnectionActive)
+        {
+            availableServersList.Remove(CurrentServerSO);
+            DisconnectServer();
+            return true;
+        }
+
+        return false;
+    }
+
+    private void DisconnectServer()
+    {
+        IsConnectionActive = false;
+        CurrentServerSO = null;
+        OnServerConnectionStateChanged?.Invoke(false);
+    }
+
+    private void ConnectToServer(ServerSO serverSO)
+    {
+        IsConnectionActive = true;
+        if (!WasEverConnected)
         {
             WasEverConnected = true;
         }
 
-        if (enabled)
-        {
-            CurrentServerID = availableServerIDList[0];
-        }
+        CurrentServerSO = serverSO;
 
-        OnServerConnectionStateChanged?.Invoke(enabled);
+        OnServerConnectionStateChanged?.Invoke(true);
 
-        if (enabled && connectionEnabledGameEvent != null)
+        if (connectionEnabledGameEvent != null)
         {
             connectionEnabledGameEvent.RaiseEvent();
         }
-    }
-
-    private void DeleteCurrentServer()
-    {
-        if (AvailableServersNumber == 0)
-        {
-            Debug.LogWarning("No available servers to delete.");
-            return;
-        }
-
-        availableServerIDList.Remove(CurrentServerID);
-        CurrentServerID = null;
-
-        IsConnectionActive = false;
-        OnServerConnectionStateChanged?.Invoke(false);
     }
 }

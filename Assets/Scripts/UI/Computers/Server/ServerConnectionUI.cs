@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +7,9 @@ public class ServerConnectionUI : MonoBehaviour
 {
     [SerializeField]
     private Button toggleConnectionButton;
+
+    [SerializeField]
+    private TMP_Dropdown availableServersDropdown;
 
     [SerializeField]
     private Image serverIcon;
@@ -35,30 +39,73 @@ public class ServerConnectionUI : MonoBehaviour
     private const string DisconnectText = "Disconnect";
     private const string ConnectText = "Connect";
 
+    private List<string> availableServerIDList;
+
+    private bool isConnectionActive;
+
     private void Awake()
     {
         connectionStatusTextField.text = DisconnectedStatusText;
         serverIDTextField.text = NullServerIDText;
+        isConnectionActive = false;
     }
 
     private void Start()
     {
-        toggleConnectionButton.onClick.AddListener(ServerConnectionManager.Instance.TryToggleServerConnection);
+        toggleConnectionButton.onClick.AddListener(OnToggleConnectionButtonClicked);
 
-        ServerConnectionManager.Instance.OnServerConnectionStateChanged += UpdateServerConnectionUI;    
+        ServerConnectionManager.Instance.OnServerConnectionStateChanged += UpdateServerConnectionUI;
 
         UpdateServerConnectionUI(ServerConnectionManager.Instance.IsConnectionActive);
     }
 
-    private void UpdateServerConnectionUI(bool isConnectionActive)
+    private void OnToggleConnectionButtonClicked()
     {
-        connectionStatusTextField.text = isConnectionActive ? ConnectedStatusText : DisconnectedStatusText;
-        connectionButtonTextField.text = isConnectionActive ? DisconnectText : ConnectText;
+        if (isConnectionActive)
+        {
+            ServerConnectionManager.Instance.TryDisconnectFromServer();
+        }
+        else
+        {
+            ServerConnectionManager.Instance.TryConnectToServer(availableServerIDList[availableServersDropdown.value]);
+        }
+    }
+
+    private void UpdateServerConnectionUI(bool isConnected)
+    {
+        isConnectionActive = isConnected;
+
+        connectionStatusTextField.text = isConnected ? ConnectedStatusText : DisconnectedStatusText;
+        connectionButtonTextField.text = isConnected ? DisconnectText : ConnectText;
         availableServersTextField.text = ServerConnectionManager.Instance.AvailableServersNumber.ToString();
-        serverIDTextField.text = isConnectionActive ? ServerConnectionManager.Instance.CurrentServerID : NullServerIDText;
-        
-        connectionStatusTextField.color = isConnectionActive ? connectedColor : textDisconnectedColor;
-        serverIcon.color = isConnectionActive ? connectedColor : serverIconDisconnectedColor;
-        toggleConnectionButton.image.color = isConnectionActive ? buttonDisconnectColor : connectedColor;
+        serverIDTextField.text = isConnected ? ServerConnectionManager.Instance.CurrentServerSO.ServerID : NullServerIDText;
+
+        connectionStatusTextField.color = isConnected ? connectedColor : textDisconnectedColor;
+        serverIcon.color = isConnected ? connectedColor : serverIconDisconnectedColor;
+        toggleConnectionButton.image.color = isConnected ? buttonDisconnectColor : connectedColor;
+
+        RefreshDropdownOptions();
+    }
+
+    private void RefreshDropdownOptions()
+    {
+        availableServerIDList = new();
+
+        int currentDropdownValue = 0;
+
+        for(int i = 0; i < ServerConnectionManager.Instance.AvailableServersList.Count; i++)
+        {
+            ServerSO serverSO = ServerConnectionManager.Instance.AvailableServersList[i];
+            availableServerIDList.Add(serverSO.ServerID);
+
+            if (serverSO == ServerConnectionManager.Instance.CurrentServerSO)
+            {
+                currentDropdownValue = i;
+            }
+        }
+
+        availableServersDropdown.ClearOptions();
+        availableServersDropdown.AddOptions(availableServerIDList);
+        availableServersDropdown.value = currentDropdownValue;
     }
 }

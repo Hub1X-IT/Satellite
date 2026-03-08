@@ -30,20 +30,20 @@ public class MonitorUI : MonoBehaviour
 
     private void Start()
     {
-        ServerConnectionManager.Instance.OnServerConnectionStateChanged += (enabled) =>
+        ServerConnectionManager.Instance.OnServerConnectionStateChanged += (isConnected) =>
         {
             monitorStartupScreenUI.gameObject.SetActive(true);
             monitorStartupScreenUI.StartStartupScreen(null);
 
-            if (!enabled)
+            if (!isConnected)
             {
                 IsSputnikOSStarted = false;
             }
         };
 
-        PowerManager.Instance.OnPowerStateChanged += (enabled) =>
+        PowerManager.Instance.OnPowerStateChanged += (isPowerOn) =>
         {
-            if (enabled)
+            if (isPowerOn)
             {
                 SetMonitorEnabled(true);
                 monitorStartupScreenUI.gameObject.SetActive(true);
