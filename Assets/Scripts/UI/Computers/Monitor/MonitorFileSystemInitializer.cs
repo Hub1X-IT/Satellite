@@ -73,7 +73,7 @@ public class MonitorFileSystemInitializer : MonoBehaviour
             if (ipAndObjectiveDictionary.ContainsKey(ipAddress))
             {
                 objective = ipAndObjectiveDictionary[ipAddress];
-                objective.TryRaiseEvent();
+                objective.RaiseEvent();
             }
         }
         else

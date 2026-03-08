@@ -6,36 +6,9 @@ public class GameEventSO : ScriptableObject
 {
     public event Action EventRaised;
 
-    [SerializeField]
-    private bool oneTimeTrigger = false;
-
-    [SerializeField]
-    private GameEventSO[] previousGameEvents;
-
-    public void TryRaiseEvent()
-    {
-        if (oneTimeTrigger && GameEventOrderManager.Instance.WasGameEventRaised(this))
-        {
-            return;
-        }
-
-        foreach (var previousGameEvent in previousGameEvents)
-        {
-            if (!GameEventOrderManager.Instance.WasGameEventRaised(previousGameEvent))
-            {
-                return;
-            }
-        }
-
-        EventRaised?.Invoke();
-
-        GameEventOrderManager.Instance.AddGameEvent(this);
-    }
-
-    public void ForceRaiseEvent()
+    public void RaiseEvent()
     {
         EventRaised?.Invoke();
-        GameEventOrderManager.Instance.AddGameEvent(this);
     }
 
     public void ResetGameEvent()
@@ -52,11 +25,6 @@ public class GameEventSO<T> : ScriptableObject
     // This should mostly be used for constant data.
 
     public event Action<T> EventRaised;
-    
-    [SerializeField]
-    private T overriddenData;
-
-    public void RaiseEvent() => EventRaised?.Invoke(overriddenData);
 
     public void RaiseEvent(T data) => EventRaised?.Invoke(data);
 

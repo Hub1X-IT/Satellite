@@ -169,7 +169,7 @@ public class Computer : MonoBehaviour
         {
             GameInput.Instance.CurrentInputActions.Computer.Disable();
             CameraController.Instance.ChangeToMainCinemachineCamera();
-            computerViewDisabledGameEvent.TryRaiseEvent();
+            computerViewDisabledGameEvent.RaiseEvent();
 
             // Set timer to enable player movement
             playerMovementEnableTimer = 0f;
@@ -187,7 +187,7 @@ public class Computer : MonoBehaviour
 
         ComputerViewEnabled?.Invoke(false);
 
-        computerViewDisabledGameEvent.TryRaiseEvent();
+        computerViewDisabledGameEvent.RaiseEvent();
 
         newComputer.ChangeToThisComputer();
     }

@@ -16,7 +16,7 @@ public class Smartphone : MonoBehaviour
     public void OnInteractionTriggered()
     {
         gameObject.SetActive(false);
-        phonePickupGameEvent.TryRaiseEvent();
+        phonePickupGameEvent.RaiseEvent();
         PlayerScriptsController.Instance.SetCanShowSmartphone(true);
     }
 }

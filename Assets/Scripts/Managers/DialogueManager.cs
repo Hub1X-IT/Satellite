@@ -132,7 +132,7 @@ public class DialogueManager : MonoBehaviour
         DialogueEnded?.Invoke();
         if (currentDialogueSO != null && currentDialogueSO.DialogueEndedGameEvent != null)
         {
-            currentDialogueSO.DialogueEndedGameEvent.TryRaiseEvent();
+            currentDialogueSO.DialogueEndedGameEvent.RaiseEvent();
         }
     }
 

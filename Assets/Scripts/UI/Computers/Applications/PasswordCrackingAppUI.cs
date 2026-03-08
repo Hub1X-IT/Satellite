@@ -303,7 +303,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
 
                 if (isFinalStep && onCorrectPasswordDecodedGameEvent != null)
                 {
-                    onCorrectPasswordDecodedGameEvent.TryRaiseEvent();
+                    onCorrectPasswordDecodedGameEvent.RaiseEvent();
                 }
             }
         }

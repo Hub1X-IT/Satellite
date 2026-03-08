@@ -47,7 +47,7 @@ public class SMSManager : MonoBehaviour
     {
         SendMessage(messageSO.GetMessage(), () =>
         {
-            messageSO.OnFirstOpenedGameEvent?.TryRaiseEvent();
+            messageSO.OnFirstOpenedGameEvent?.RaiseEvent();
         });
     }
 }

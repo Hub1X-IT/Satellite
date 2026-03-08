@@ -16,7 +16,7 @@ public partial class RaiseGameEventAction : Action
             return Status.Failure;
         }
         
-        GameEvent.Value.TryRaiseEvent();
+        GameEvent.Value.RaiseEvent();
         return Status.Success;
     }
 }

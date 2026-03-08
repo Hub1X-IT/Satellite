@@ -30,7 +30,7 @@ public class ContactSO : ScriptableObject
     {
         foreach (var gameEvent in phoneAnsweredGameEvents)
         {
-            gameEvent.TryRaiseEvent();
+            gameEvent.RaiseEvent();
         }
     }
 
@@ -38,7 +38,7 @@ public class ContactSO : ScriptableObject
     {
         foreach (var gameEvent in outgoingCallGameEvents)
         {
-            gameEvent.TryRaiseEvent();
+            gameEvent.RaiseEvent();
         }
     }
 
@@ -46,7 +46,7 @@ public class ContactSO : ScriptableObject
     {
         foreach (var gameEvent in outgoingCallAnsweredGameEvents)
         {
-            gameEvent.TryRaiseEvent();
+            gameEvent.RaiseEvent();
         }
     }
 
@@ -54,7 +54,7 @@ public class ContactSO : ScriptableObject
     {
         foreach (var gameEvent in callEndedGameEvents)
         {
-            gameEvent.TryRaiseEvent();
+            gameEvent.RaiseEvent();
         }
     }
 }

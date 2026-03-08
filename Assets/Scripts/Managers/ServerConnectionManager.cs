@@ -77,7 +77,7 @@ public class ServerConnectionManager : MonoBehaviour
 
         if (enabled && connectionEnabledGameEvent != null)
         {
-            connectionEnabledGameEvent.TryRaiseEvent();
+            connectionEnabledGameEvent.RaiseEvent();
         }
     }
 

@@ -44,7 +44,7 @@ public class StartCommandManager : MonoBehaviour
                 });
                 if (startCommandProgram.ObjectiveGameEvent != null)
                 {
-                    startCommandProgram.ObjectiveGameEvent.TryRaiseEvent();
+                    startCommandProgram.ObjectiveGameEvent.RaiseEvent();
                 }
                 return;
             }
