@@ -5,7 +5,7 @@ public class DetectionManager : MonoBehaviour
 {
     public static DetectionManager Instance { get; private set; }
 
-    public event Action OnDetectionOccured;
+    public event Action<bool> OnDetectionWarningStateChanged;
     public event Action<int> OnDetectionChanceChanged;
 
     public int CurrentDetectionChance { get; private set; }
@@ -13,8 +13,13 @@ public class DetectionManager : MonoBehaviour
     private int currentDetectionLevel;
     public const int DefaultDetectionLevel = 0;
 
-    private readonly int[] detectionLevels = { 2, 5, 10, 25, 40, 70, 98, 100 };
-    // private static readonly int[] detectionLevels = { -1 };
+    private readonly int[] detectionLevels = { 0, 2, 5, 10, 25, 40, 70, 98, 100 };
+    // private readonly int[] detectionLevels = { -1 };
+
+    private bool isWarningEnabled;
+
+    private const float DetectionWarningTime = 10f;
+    private float detectionWarningTimer;
 
     private void Awake()
     {
@@ -27,7 +32,19 @@ public class DetectionManager : MonoBehaviour
         Instance = this;
 
         currentDetectionLevel = DefaultDetectionLevel;
-        SetDetectionChance();
+        UpdateDetectionChance();
+    }
+
+    private void Update()
+    {
+        if (isWarningEnabled)
+        {
+            detectionWarningTimer -= Time.deltaTime;
+            if (detectionWarningTimer < 0f)
+            {
+                SetDetectionWarningEnabled(false);
+            }
+        }
     }
 
     public void CheckDetection()
@@ -45,7 +62,7 @@ public class DetectionManager : MonoBehaviour
                 TracingManager.Instance.TryIncreaseTracingSpeed();
             }
 
-            OnDetectionOccured?.Invoke();
+            SetDetectionWarningEnabled(true);
         }
         else
         {
@@ -53,10 +70,26 @@ public class DetectionManager : MonoBehaviour
         }
     }
 
+    public bool TrySetDetectionChance(int detectionChance)
+    {
+        int valueIndex = Array.IndexOf(detectionLevels, detectionChance);
+        if (valueIndex >= 0)
+        {
+            currentDetectionLevel = valueIndex;
+            UpdateDetectionChance();
+            return true;
+        }
+        else
+        {
+            // currentDetectionLevel = DefaultDetectionLevel;
+        }
+        return false;
+    }
+
     public void ResetDetectionChance()
     {
         currentDetectionLevel = DefaultDetectionLevel;
-        SetDetectionChance();
+        UpdateDetectionChance();
     }
 
     private void IncreaseDetectionChance()
@@ -64,13 +97,24 @@ public class DetectionManager : MonoBehaviour
         if (currentDetectionLevel < detectionLevels.Length - 1)
         {
             currentDetectionLevel++;
-            SetDetectionChance();
+            UpdateDetectionChance();
         }
     }
 
-    private void SetDetectionChance()
+    private void UpdateDetectionChance()
     {
         CurrentDetectionChance = detectionLevels[currentDetectionLevel];
         OnDetectionChanceChanged?.Invoke(CurrentDetectionChance);
+    }
+
+    private void SetDetectionWarningEnabled(bool enabled)
+    {
+        isWarningEnabled = enabled;
+        if (enabled)
+        {
+            detectionWarningTimer = DetectionWarningTime;
+        }
+
+        OnDetectionWarningStateChanged?.Invoke(enabled);
     }
 }

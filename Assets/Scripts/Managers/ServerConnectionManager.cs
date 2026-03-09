@@ -58,6 +58,10 @@ public class ServerConnectionManager : MonoBehaviour
     {
         if (IsConnectionActive)
         {
+            // May be temporary - save current detection chance to ServerSO
+
+            CurrentServerSO.CurrentDetectionChance = DetectionManager.Instance.CurrentDetectionChance;
+
             DisconnectServer();
             return true;
         }
@@ -93,6 +97,15 @@ public class ServerConnectionManager : MonoBehaviour
         }
 
         CurrentServerSO = serverSO;
+
+        if (DetectionManager.Instance.TrySetDetectionChance(serverSO.CurrentDetectionChance))
+        {
+            Debug.Log("Detection chance set to: " + serverSO.CurrentDetectionChance);
+        }
+        else
+        {
+            Debug.Log("TrySetDetectionChance failed");
+        }
 
         OnServerConnectionStateChanged?.Invoke(true);
 
