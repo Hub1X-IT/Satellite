@@ -11,7 +11,7 @@ public class GraphicsSettingsManager : MonoBehaviour
 
     private double currentRefreshRate;
 
-    public int StartResolutionIndex { get; private set; }
+    private int startResolutionIndex;
 
     [SerializeField]
     private CameraBobController cameraBobController;
@@ -34,10 +34,19 @@ public class GraphicsSettingsManager : MonoBehaviour
 
     private void Start()
     {
-        GameSettingsManager.Instance.SetResolutionIndex(StartResolutionIndex);
+        // GameSettingsManager.Instance.SetResolutionIndex(StartResolutionIndex);
 
         SetGraphics(GameSettingsManager.Instance.GraphicsIndex);
-        SetResolution(GameSettingsManager.Instance.ResolutionIndex);
+        
+        if (GameSettingsManager.Instance.ResolutionIndex >= 0 && GameSettingsManager.Instance.ResolutionIndex < availableResolutions.Length)
+        {
+            SetResolution(GameSettingsManager.Instance.ResolutionIndex);
+        }
+        else
+        {
+            SetResolution(startResolutionIndex);
+        }
+
         SetFullscreen(GameSettingsManager.Instance.Fullscreen);
         SetVSync(GameSettingsManager.Instance.VSync);
         SetFPSMax(GameSettingsManager.Instance.FPSMax);
@@ -100,11 +109,10 @@ public class GraphicsSettingsManager : MonoBehaviour
         List<string> dropdownOptions = new();
         List<Resolution> validResolutionsList = new();
 
-        StartResolutionIndex = 0;
+        startResolutionIndex = 0;
 
-        for (int i = 0; i < screenResolutions.Length; i++)
+        foreach (var resolution in screenResolutions)
         {
-            Resolution resolution = screenResolutions[i];
             if (resolution.refreshRateRatio.value == currentRefreshRate)
             {
                 validResolutionsList.Add(resolution);
@@ -119,7 +127,7 @@ public class GraphicsSettingsManager : MonoBehaviour
             Resolution resolution = availableResolutions[i];
             if (resolution.width == Screen.currentResolution.width && resolution.height == Screen.currentResolution.height)
             {
-                StartResolutionIndex = i;
+                startResolutionIndex = i;
             }
         }
 

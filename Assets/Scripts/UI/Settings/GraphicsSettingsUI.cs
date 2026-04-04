@@ -37,7 +37,7 @@ public class GraphicsSettingsUI : MonoBehaviour
 
         resolutionDropdown.ClearOptions();
         resolutionDropdown.AddOptions(GraphicsSettingsManager.Instance.ResolutionDropdownOptions);
-        resolutionDropdown.value = GraphicsSettingsManager.Instance.StartResolutionIndex;
+        resolutionDropdown.value = GameSettingsManager.Instance.ResolutionIndex;
         resolutionDropdown.RefreshShownValue();
 
         fullscreenToggle.isOn = GameSettingsManager.Instance.Fullscreen;

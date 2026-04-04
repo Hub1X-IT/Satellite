@@ -14,7 +14,7 @@ public class GameSettingsManager : MonoBehaviour
     private const float DefaultVolume = 1f;
 
     private const int DefaultGraphicsIndex = 0;
-    private const int DefaultResolutionIndex = 0;
+    private const int DefaultResolutionIndex = -1;
     private const int DefaultFullscreenIndex = 1;
     private const int DefaultVSyncIndex = 1;
     private const int DefaultFPSMax = 0;
@@ -76,7 +76,6 @@ public class GameSettingsManager : MonoBehaviour
         DialogueVolume = PlayerPrefs.GetFloat(PlayerPrefs_DialogueVolume, DefaultVolume);
 
         GraphicsIndex = PlayerPrefs.GetInt(PlayerPrefs_GraphicsIndex, DefaultGraphicsIndex);
-        // Resolution index is overwritten on Start by GraphicsSettingsManager, the one stored in PlayerPrefs should not be used.
         ResolutionIndex = PlayerPrefs.GetInt(PlayerPrefs_ResolutionIndex, DefaultResolutionIndex);
         Fullscreen = PlayerPrefs.GetInt(PlayerPrefs_FullscreenIndex, DefaultFullscreenIndex) == 1;
         VSync = PlayerPrefs.GetInt(PlayerPrefs_VSyncIndex, DefaultVSyncIndex) == 1;
