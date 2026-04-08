@@ -1,4 +1,7 @@
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MonitorUI : MonoBehaviour
 {
@@ -16,6 +19,12 @@ public class MonitorUI : MonoBehaviour
 
     [SerializeField]
     private GameEventStartProgramDataSO startSputnikOSGameEvent;
+
+    [SerializeField]
+    private TMP_Text detectionChanceText;
+    
+    [SerializeField]
+    private Image detectionChanceIcon;
 
     public bool IsSputnikOSStarted { get; private set; }
 
@@ -84,10 +93,20 @@ public class MonitorUI : MonoBehaviour
 
         SetMonitorEnabled(true);
         monitorStartupScreenUI.StartStartupScreen(null);
+
+        DetectionManager.Instance.OnDetectionChanceChanged += (chance) =>
+        {
+            SetDetectionChanceText();
+        };
     }
 
     private void SetMonitorEnabled(bool enabled)
     {
         computerTurnedOffScreen.SetActive(!enabled);
+    }
+
+    private void SetDetectionChanceText()
+    {
+        detectionChanceText.text = DetectionManager.Instance.CurrentDetectionChance.ToString() + "%";
     }
 }

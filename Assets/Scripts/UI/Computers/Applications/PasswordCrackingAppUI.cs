@@ -78,10 +78,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
     private PasswordEncryption.EncryptionStep[] passwordEncryptionSteps;
     private int encryptionStepIndex;
 
-    [SerializeField]
-    private TMP_Text detectionChanceTextField;
-    private const string DetectionChanceText = "Detection Chance: ";
-
     public void InitializePasswordCrackingApp(string appName)
     {
         monitorAppUI = GetComponent<MonitorAppUI>();
@@ -91,7 +87,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
         monitor = GetComponentInParent<Monitor>();
 
         InitializePasswordCracking();
-        SetDetectionChanceText(DetectionManager.Instance.CurrentDetectionChance);
 
         pasteMenuUI.InitializeCopyPasteMenuUI(CopyPasteMenuUI.MenuFunction.PasteMenu, inputField);
 
@@ -102,10 +97,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
                 monitorAppUI.DestroyOnClose = true;
                 monitorAppUI.CloseApp();
             }
-        };
-        DetectionManager.Instance.OnDetectionChanceChanged += (newDetectionChance) =>
-        {
-            SetDetectionChanceText(newDetectionChance);
         };
 
         // shouldShowDecodingMessage = false;
@@ -308,11 +299,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
             }
         }
         SetButtonsEnabled(true);
-    }
-
-    private void SetDetectionChanceText(int detectionChance)
-    {
-        detectionChanceTextField.text = DetectionChanceText + detectionChance + "%";
     }
 
     private void CreateNewPasswordTextField(string newPassword, bool isCorrectPassword)
