@@ -16,8 +16,8 @@ public class GameInput : MonoBehaviour
     // public static Vector2 MouseDelta => PlayerInputActions.Computer.MouseDelta.ReadValue<Vector2>();
 
     public float MouseScroll => CurrentInputActions.CommandPrompt.MouseScroll.ReadValue<Vector2>().y;
-
-
+    
+    public event Action EscapeAction;
     public event Action OnPauseAction;
 
     public event Action OnInteractAction;
@@ -69,7 +69,7 @@ public class GameInput : MonoBehaviour
         CurrentInputActions.Computer.Disable();
         CurrentInputActions.CommandPrompt.Disable();
 
-        CurrentInputActions.All.Pause.performed += Pause_performed;
+        CurrentInputActions.All.Escape.performed += Escape_performed;
 
         CurrentInputActions.PlayerWalking.Interact.performed += Interact_performed;
 
@@ -94,7 +94,7 @@ public class GameInput : MonoBehaviour
 
     private void RemoveInput()
     {
-        CurrentInputActions.All.Pause.performed -= Pause_performed;
+        CurrentInputActions.All.Escape.performed -= Escape_performed;
 
         CurrentInputActions.PlayerWalking.Interact.performed -= Interact_performed;
 
@@ -127,7 +127,17 @@ public class GameInput : MonoBehaviour
         }
     }
 
-    private void Pause_performed(InputAction.CallbackContext _) => OnPauseAction?.Invoke();
+    private void Escape_performed(InputAction.CallbackContext _)
+    {
+        if (EscapeAction != null)
+        {
+            EscapeAction.Invoke();
+        }
+        else
+        {
+            OnPauseAction?.Invoke();
+        }
+    }
 
     private void Interact_performed(InputAction.CallbackContext _) => OnInteractAction?.Invoke();
 

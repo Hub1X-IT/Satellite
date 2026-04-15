@@ -84,6 +84,8 @@ public class Server : MonoBehaviour
 
     private void SetServerViewActive(bool active)
     {
+        // Uncomment if necessary
+        // if (isInServerView == active) return;
         isInServerView = active;
         wasToggledThisFrame = true;
         GameManager.Instance.IsInScreenView = active;
@@ -99,20 +101,23 @@ public class Server : MonoBehaviour
         outline.SetOutlineEnabled(!active);
 
         serverViewEnabledGameEvent.RaiseEvent(active);
-
         GameManager.Instance.SetCursorShown(active);
 
         if (active)
         {
             GameInput.Instance.CurrentInputActions.Computer.Enable();
+            GameInput.Instance.EscapeAction += ExitServerView;
             CameraController.Instance.SetActiveCinemachineCamera(serverCinemachineCamera);
         }
         else
         {
             GameInput.Instance.CurrentInputActions.Computer.Disable();
+            GameInput.Instance.EscapeAction -= ExitServerView;
             CameraController.Instance.ChangeToMainCinemachineCamera();
         }
     }
+
+    private void ExitServerView() => SetServerViewActive(false);
 
     private void SetServerTriggerEnabled(bool enabled)
     {

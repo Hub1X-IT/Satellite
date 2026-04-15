@@ -162,12 +162,14 @@ public class Computer : MonoBehaviour
         {
             GameInput.Instance.CurrentInputActions.PlayerWalking.Disable();
             GameInput.Instance.CurrentInputActions.Computer.Enable();
+            GameInput.Instance.EscapeAction += ExitComputerView;
             CameraController.Instance.SetActiveCinemachineCamera(computerCinemachineCamera);
             computerViewEnabledGameEvent.RaiseEvent(this);
         }
         else
         {
             GameInput.Instance.CurrentInputActions.Computer.Disable();
+            GameInput.Instance.EscapeAction -= ExitComputerView;
             CameraController.Instance.ChangeToMainCinemachineCamera();
             computerViewDisabledGameEvent.RaiseEvent();
 
@@ -182,6 +184,7 @@ public class Computer : MonoBehaviour
     public void ChangeCurrentComputer(Computer newComputer)
     {
         isInComputerView = false;
+        GameInput.Instance.EscapeAction -= ExitComputerView;
 
         ToggleComputerTrigger();
 
@@ -195,6 +198,7 @@ public class Computer : MonoBehaviour
     public void ChangeToThisComputer()
     {
         isInComputerView = true;
+        GameInput.Instance.EscapeAction += ExitComputerView;
 
         ToggleComputerTrigger();
 

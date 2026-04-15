@@ -149,4 +149,9 @@ public class ComputersChangingUI : MonoBehaviour
         }
         changeToComputerGameEvent.RaiseEvent(computer);
     }
+
+    public static void ExitComputerView()
+    {
+        ComputerExitTriggered?.Invoke();
+    }
 }

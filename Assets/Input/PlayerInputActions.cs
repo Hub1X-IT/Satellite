@@ -93,7 +93,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ""id"": ""0b743467-d1fe-4221-9b89-039eeaf463bb"",
             ""actions"": [
                 {
-                    ""name"": ""Pause"",
+                    ""name"": ""Escape"",
                     ""type"": ""Button"",
                     ""id"": ""67e90970-f792-4505-9853-0f2fbb229af3"",
                     ""expectedControlType"": """",
@@ -110,7 +110,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Pause"",
+                    ""action"": ""Escape"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -516,7 +516,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
 }");
         // All
         m_All = asset.FindActionMap("All", throwIfNotFound: true);
-        m_All_Pause = m_All.FindAction("Pause", throwIfNotFound: true);
+        m_All_Escape = m_All.FindAction("Escape", throwIfNotFound: true);
         // PlayerWalking
         m_PlayerWalking = asset.FindActionMap("PlayerWalking", throwIfNotFound: true);
         m_PlayerWalking_Move = m_PlayerWalking.FindAction("Move", throwIfNotFound: true);
@@ -627,7 +627,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     // All
     private readonly InputActionMap m_All;
     private List<IAllActions> m_AllActionsCallbackInterfaces = new List<IAllActions>();
-    private readonly InputAction m_All_Pause;
+    private readonly InputAction m_All_Escape;
     /// <summary>
     /// Provides access to input actions defined in input action map "All".
     /// </summary>
@@ -640,9 +640,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// </summary>
         public AllActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "All/Pause".
+        /// Provides access to the underlying input action "All/Escape".
         /// </summary>
-        public InputAction @Pause => m_Wrapper.m_All_Pause;
+        public InputAction @Escape => m_Wrapper.m_All_Escape;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -669,9 +669,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_AllActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_AllActionsCallbackInterfaces.Add(instance);
-            @Pause.started += instance.OnPause;
-            @Pause.performed += instance.OnPause;
-            @Pause.canceled += instance.OnPause;
+            @Escape.started += instance.OnEscape;
+            @Escape.performed += instance.OnEscape;
+            @Escape.canceled += instance.OnEscape;
         }
 
         /// <summary>
@@ -683,9 +683,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="AllActions" />
         private void UnregisterCallbacks(IAllActions instance)
         {
-            @Pause.started -= instance.OnPause;
-            @Pause.performed -= instance.OnPause;
-            @Pause.canceled -= instance.OnPause;
+            @Escape.started -= instance.OnEscape;
+            @Escape.performed -= instance.OnEscape;
+            @Escape.canceled -= instance.OnEscape;
         }
 
         /// <summary>
@@ -1317,12 +1317,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public interface IAllActions
     {
         /// <summary>
-        /// Method invoked when associated input action "Pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Escape" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnPause(InputAction.CallbackContext context);
+        void OnEscape(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "PlayerWalking" which allows adding and removing callbacks.
