@@ -26,6 +26,8 @@ public class MonitorUI : MonoBehaviour
     [SerializeField]
     private Image detectionChanceIcon;
 
+    private Sequence detectionColorSequence;
+
     public bool IsSputnikOSStarted { get; private set; }
 
     public FileExplorerUI FileExplorer => fileExplorer;
@@ -96,6 +98,7 @@ public class MonitorUI : MonoBehaviour
 
         DetectionManager.Instance.OnDetectionChanceChanged += (chance) =>
         {
+            AnimateDetectionChanceText(chance);
             SetDetectionChanceVisual();
         };
     }
@@ -107,21 +110,53 @@ public class MonitorUI : MonoBehaviour
 
     private void SetDetectionChanceVisual()
     {
-        detectionChanceText.text = DetectionManager.Instance.CurrentDetectionChance.ToString() + "%";  
-        InvokeRepeating(nameof(SetDetectionChanceColors), 0f, 0.1f * Time.deltaTime);
-        Invoke(nameof(StopSetDetectionChanceColors), 3f);
+        detectionChanceText.text = DetectionManager.Instance.CurrentDetectionChance.ToString() + "%";
+        
+        // Kill any existing sequence to prevent stacking
+        detectionColorSequence?.Kill();
+        DOTween.Kill(detectionChanceText); // Kill any tweens on text
+        
+        // Create a smooth color loop animation for icon
+        detectionColorSequence = DOTween.Sequence()
+            .Append(detectionChanceIcon.DOColor(Color.red, 0.5f))
+            .Join(detectionChanceText.DOColor(Color.red, 0.5f))
+            .Append(detectionChanceIcon.DOColor(Color.white, 0.5f))
+            .Join(detectionChanceText.DOColor(Color.white, 0.5f))
+            .SetLoops(4, LoopType.Restart);
+
+        // Same smooth animation for text - properly synchronized
+        //detectionChanceText.DOColor(Color.red, 0.5f)
+            //.SetLoops(-1, LoopType.Yoyo);
+        
+        // Stop animation after 3 seconds
+        //Invoke(nameof(StopSetDetectionChanceColors), 4f);
+        detectionColorSequence.OnComplete(() => StopSetDetectionChanceVisuals());
     }
 
-    private void SetDetectionChanceColors()
+    private void AnimateDetectionChanceText(int targetValue, float duration = 1f)
     {
-        detectionChanceIcon.color = Color.Lerp(Color.white, Color.red, Mathf.PingPong(Time.time * 1f, 1f));
-        detectionChanceText.color = Color.Lerp(Color.white, Color.red, Mathf.PingPong(Time.time * 1f, 1f));
+        // Counter for smooth number increment
+        int currentDisplayValue = int.Parse(detectionChanceText.text.Replace("%", ""));
+        
+        DOTween.To(
+            () => currentDisplayValue,
+            x => 
+            {
+                currentDisplayValue = x;
+                detectionChanceText.text = currentDisplayValue.ToString() + "%";
+            },
+            targetValue,
+            duration
+        ).SetEase(Ease.OutQuad);
     }
+
+    private void StopSetDetectionChanceVisuals()
+    {
+        detectionColorSequence?.Kill();
+        DOTween.Kill(detectionChanceText); // Kill text tweens
+        detectionChanceIcon.DOColor(Color.white, 0.2f);
+        detectionChanceText.DOColor(Color.white, 0.2f);
+    }
+
     
-    private void StopSetDetectionChanceColors()
-    {
-        CancelInvoke(nameof(SetDetectionChanceColors));
-        detectionChanceIcon.color = Color.white;
-        detectionChanceText.color = Color.white;
-    }
 }
