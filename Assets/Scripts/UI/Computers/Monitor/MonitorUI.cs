@@ -96,7 +96,7 @@ public class MonitorUI : MonoBehaviour
 
         DetectionManager.Instance.OnDetectionChanceChanged += (chance) =>
         {
-            SetDetectionChanceText();
+            SetDetectionChanceVisual();
         };
     }
 
@@ -105,8 +105,15 @@ public class MonitorUI : MonoBehaviour
         computerTurnedOffScreen.SetActive(!enabled);
     }
 
-    private void SetDetectionChanceText()
+    private void SetDetectionChanceVisual()
     {
-        detectionChanceText.text = DetectionManager.Instance.CurrentDetectionChance.ToString() + "%";
+        detectionChanceText.text = DetectionManager.Instance.CurrentDetectionChance.ToString() + "%";  
+        //InvokeRepeating(nameof(SetDetectionChanceIconColor), 0f, 0.1f);
+        //CancelInvoke(nameof(SetDetectionChanceIconColor));
+    }
+
+    private void SetDetectionChanceIconColor()
+    {
+        detectionChanceIcon.color = Color.Lerp(Color.white, Color.red, Mathf.PingPong(Time.time * 1f, 1f));
     }
 }
