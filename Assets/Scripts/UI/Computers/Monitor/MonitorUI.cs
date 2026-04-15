@@ -108,7 +108,7 @@ public class MonitorUI : MonoBehaviour
     private void SetDetectionChanceVisual()
     {
         detectionChanceText.text = DetectionManager.Instance.CurrentDetectionChance.ToString() + "%";  
-        InvokeRepeating(nameof(SetDetectionChanceColors), 0f, 0.1f);
+        InvokeRepeating(nameof(SetDetectionChanceColors), 0f, 0.1f * Time.deltaTime);
         Invoke(nameof(StopSetDetectionChanceColors), 3f);
     }
 
