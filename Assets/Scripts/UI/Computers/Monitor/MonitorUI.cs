@@ -108,12 +108,20 @@ public class MonitorUI : MonoBehaviour
     private void SetDetectionChanceVisual()
     {
         detectionChanceText.text = DetectionManager.Instance.CurrentDetectionChance.ToString() + "%";  
-        //InvokeRepeating(nameof(SetDetectionChanceIconColor), 0f, 0.1f);
-        //CancelInvoke(nameof(SetDetectionChanceIconColor));
+        InvokeRepeating(nameof(SetDetectionChanceColors), 0f, 0.1f);
+        Invoke(nameof(StopSetDetectionChanceColors), 3f);
     }
 
-    private void SetDetectionChanceIconColor()
+    private void SetDetectionChanceColors()
     {
         detectionChanceIcon.color = Color.Lerp(Color.white, Color.red, Mathf.PingPong(Time.time * 1f, 1f));
+        detectionChanceText.color = Color.Lerp(Color.white, Color.red, Mathf.PingPong(Time.time * 1f, 1f));
+    }
+    
+    private void StopSetDetectionChanceColors()
+    {
+        CancelInvoke(nameof(SetDetectionChanceColors));
+        detectionChanceIcon.color = Color.white;
+        detectionChanceText.color = Color.white;
     }
 }
