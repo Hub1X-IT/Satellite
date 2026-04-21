@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MonitorAppsManagerUI : MonoBehaviour
@@ -8,6 +9,7 @@ public class MonitorAppsManagerUI : MonoBehaviour
         DoorApp,
         NotepadApp,
         PasswordCrackingApp,
+        TracingApp,
     }
 
     [SerializeField]
@@ -27,6 +29,13 @@ public class MonitorAppsManagerUI : MonoBehaviour
 
     // Temporary
     private PasswordCrackingAppUI currentPasswordCrackingApp;
+
+    private Dictionary<ApplicationType, MonitorAppUI> openApps;
+
+    private void Start()
+    {
+        openApps = new();
+    }
 
     public MonitorAppUI OpenApplication(ApplicationType application)
     {
@@ -49,24 +58,27 @@ public class MonitorAppsManagerUI : MonoBehaviour
                 instantiatedApp = Instantiate(passwordCrackingAppPrefab.gameObject, appsHolder).GetComponent<MonitorAppUI>();
                 break;
         }
-        instantiatedApp.InitializeApp(this);
+        instantiatedApp.InitializeApp(this, application);
+        openApps[application] = instantiatedApp;
         return instantiatedApp;
     }
 
-    public void OpenPasswordCracking()
+    public bool IsAppOpen(ApplicationType applicationType)
     {
-        // Method for temporary password cracking button - don't delete until the button is deleted!
-        if (currentPasswordCrackingApp != null)
-        {
-            currentPasswordCrackingApp.gameObject.SetActive(true);
-            currentPasswordCrackingApp.transform.SetAsLastSibling();
-        }
-        else
-        {
-            PasswordCrackingAppUI passwordCrackingApp = OpenApplication(ApplicationType.PasswordCrackingApp).GetComponent<PasswordCrackingAppUI>();
-            passwordCrackingApp.InitializePasswordCrackingApp("Password Cracking Software");
-            currentPasswordCrackingApp = passwordCrackingApp;
-        }
+        return openApps.ContainsKey(applicationType) && openApps[applicationType] != null;
+    }
+
+    public void ToggleMinimizeApp(ApplicationType applicationType)
+    {
+        MonitorAppUI monitorApp = openApps[applicationType];
+        monitorApp.SetAppMinimized(!monitorApp.IsMinimized);
+    }
+
+    public void CloseApp(ApplicationType applicationType)
+    {
+        MonitorAppUI monitorApp = openApps[applicationType];
+        monitorApp.CloseApp();
+        openApps[applicationType] = null;
     }
 
     public void OpenDoorApp()

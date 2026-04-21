@@ -1,38 +1,69 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MonitorAppUI : MonoBehaviour
 {
     [SerializeField]
-    private AppTitleBarUI titleBar;
+    private TMP_Text appNameTextField;
+
+    [SerializeField]
+    private Button appCloseButton;
+
+    [SerializeField]
+    private Button appMinimizeButton;
 
     private MonitorAppsManagerUI currentMonitorAppManager;
 
     public MonitorAppsManagerUI CurrentMonitorAppManager => currentMonitorAppManager;
 
-    // Temporary
-    public bool DestroyOnClose { get; set; }
+    public bool IsMinimized { get; private set; }
 
-    public void InitializeApp(MonitorAppsManagerUI monitorAppManager)
+    public MonitorAppsManagerUI.ApplicationType AppType { get; set; }
+
+    private void Start()
+    {
+        appCloseButton.onClick.AddListener(CloseApp);
+        if (appMinimizeButton != null)
+        {
+            appMinimizeButton.onClick.AddListener(() => SetAppMinimized(true));
+        }
+    }
+
+    public void InitializeApp(MonitorAppsManagerUI monitorAppManager, MonitorAppsManagerUI.ApplicationType appType)
     {
         currentMonitorAppManager = monitorAppManager;
-        titleBar.AppCloseTriggered += CloseApp;
-        DestroyOnClose = true;
+        AppType = appType;
+
+        IsMinimized = false;
     }
 
     public void SetAppName(string appName)
     {
         gameObject.name = name = appName;
-        titleBar.SetAppName(appName);
+        appNameTextField.text = appName;
     }
 
     public void CloseApp()
     {
         Debug.Log($"Close app: {gameObject.name}");
         gameObject.SetActive(false);
+        Destroy(gameObject);
+    }
 
-        if (DestroyOnClose)
+    public void SetAppMinimized(bool minimized)
+    {
+        gameObject.SetActive(!minimized);
+        IsMinimized = minimized;
+
+        if (!minimized)
         {
-            Destroy(gameObject);
+            BringAppToFront();
         }
+    }
+
+    public void BringAppToFront()
+    {
+        transform.SetAsLastSibling();
     }
 }
