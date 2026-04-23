@@ -5,20 +5,22 @@ public class TracingManager : MonoBehaviour
 {
     public static TracingManager Instance { get; private set; }
 
-    // public event Action OnPlayerTraced; - event for tracing UI
+    public event Action OnTracingStarted;
+    public event Action OnPlayerTraced;
 
-    private float tracingTimer;
-    private bool isTracingActive = false;
     private float tracingSpeedMultiplier = 1f;
     private int currentTracingSpeedLevel;
 
     private const float DefaultTracingTime = 60f;
-    // private const float DefaultTracingTime = 5f;
+    // private const float DefaultTracingTime = 5f; // For debugging
+
     private readonly float[] tracingSpeedLevels = { 1f, 1.1f, 1.2f }; // to be adjusted later
 
-    public bool IsTracingActive => isTracingActive;
+    public bool IsTracingActive { get; private set; }
 
-    public float TracingTimer => tracingTimer;
+    public float TracingTimer { get; private set; }
+
+    public float TracingProgress => (DefaultTracingTime - TracingTimer) / DefaultTracingTime;
 
     private void Awake()
     {
@@ -51,13 +53,12 @@ public class TracingManager : MonoBehaviour
 
     private void Update()
     {
-        if (isTracingActive)
+        if (IsTracingActive)
         {
-            tracingTimer -= Time.deltaTime * tracingSpeedMultiplier;
-            // Debug.Log("Tracing timer: " + tracingTimer);
-            if (tracingTimer <= 0)
+            TracingTimer -= Time.deltaTime * tracingSpeedMultiplier;
+            if (TracingTimer <= 0)
             {
-                isTracingActive = false;
+                IsTracingActive = false;
                 EndTracingPlayer();
             }
         }
@@ -65,10 +66,11 @@ public class TracingManager : MonoBehaviour
 
     public void StartTracing()
     {
-        isTracingActive = true;
-        tracingTimer = DefaultTracingTime;
+        IsTracingActive = true;
+        TracingTimer = DefaultTracingTime;
 
         Debug.Log("Tracing has started.");
+        OnTracingStarted?.Invoke();
     }
 
     public void TryIncreaseTracingSpeed()
@@ -79,12 +81,12 @@ public class TracingManager : MonoBehaviour
 
     public float GetRealRemainingTracingTime()
     {
-        return tracingTimer / tracingSpeedMultiplier;
+        return TracingTimer / tracingSpeedMultiplier;
     }
 
     private void InterruptTracing()
     {
-        isTracingActive = false;
+        IsTracingActive = false;
     }
 
     private void EndTracingPlayer()
@@ -96,7 +98,7 @@ public class TracingManager : MonoBehaviour
             Debug.LogWarning("Tracing ended when no active server connection!");
         }
         PowerManager.Instance.SetPowerState(false);
-        // OnPlayerTraced?.Invoke();
+        OnPlayerTraced?.Invoke();
         DetectionManager.Instance.ResetDetectionChance();
     }
 }

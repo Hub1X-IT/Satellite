@@ -29,15 +29,18 @@ public class TaskbarUI : MonoBehaviour
             MonitorAppUI monitorApp = monitorAppsManager.OpenApplication(applicationType);
 
             // that will probably be moved somewhere else
-            if (applicationType == MonitorAppsManagerUI.ApplicationType.PasswordCrackingApp)
+            switch (applicationType)
             {
-                PasswordCrackingAppUI passwordCrackingApp = monitorApp.GetComponent<PasswordCrackingAppUI>();
-                passwordCrackingApp.InitializePasswordCrackingApp("Password Cracking Software");
-            }
-            else if (applicationType == MonitorAppsManagerUI.ApplicationType.TracingApp)
-            {
-                TracingAppUI tracingApp = monitorApp.GetComponent<TracingAppUI>();
-                tracingApp.InitializeTracingApp();
+                default:
+                    break;
+                case MonitorAppsManagerUI.ApplicationType.PasswordCrackingApp:
+                    PasswordCrackingAppUI passwordCrackingApp = monitorApp.GetComponent<PasswordCrackingAppUI>();
+                    passwordCrackingApp.InitializePasswordCrackingApp();
+                    break;
+                case MonitorAppsManagerUI.ApplicationType.TracingApp:
+                    TracingAppUI tracingApp = monitorApp.GetComponent<TracingAppUI>();
+                    tracingApp.InitializeTracingApp();
+                    break;
             }
         }
     }

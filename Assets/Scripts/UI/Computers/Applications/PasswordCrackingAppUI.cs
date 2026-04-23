@@ -21,6 +21,8 @@ public class PasswordCrackingAppUI : MonoBehaviour
 
     private Monitor monitor;
 
+    private const string AppName = "Password Cracking Software";
+
     [SerializeField]
     private ConvertedPasswordUI convertedPasswordPrefab;
     [SerializeField]
@@ -78,10 +80,10 @@ public class PasswordCrackingAppUI : MonoBehaviour
     private PasswordEncryption.EncryptionStep[] passwordEncryptionSteps;
     private int encryptionStepIndex;
 
-    public void InitializePasswordCrackingApp(string appName)
+    public void InitializePasswordCrackingApp()
     {
         monitorAppUI = GetComponent<MonitorAppUI>();
-        monitorAppUI.SetAppName(appName);
+        monitorAppUI.SetAppName(AppName);
 
         monitor = GetComponentInParent<Monitor>();
 

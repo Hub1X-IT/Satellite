@@ -17,18 +17,14 @@ public class MonitorAppsManagerUI : MonoBehaviour
 
     [SerializeField]
     private DataContainerPasswordScreenUI dataContainerPasswordScreenPrefab;
-
     [SerializeField]
     private DoorAppUI doorAppPrefab;
-
     [SerializeField]
     private NotepadAppUI notepadAppPrefab;
-
     [SerializeField]
     private PasswordCrackingAppUI passwordCrackingAppPrefab;
-
-    // Temporary
-    private PasswordCrackingAppUI currentPasswordCrackingApp;
+    [SerializeField]
+    private TracingAppUI tracingAppPrefab;
 
     private Dictionary<ApplicationType, MonitorAppUI> openApps;
 
@@ -56,6 +52,9 @@ public class MonitorAppsManagerUI : MonoBehaviour
                 break;
             case ApplicationType.PasswordCrackingApp:
                 instantiatedApp = Instantiate(passwordCrackingAppPrefab.gameObject, appsHolder).GetComponent<MonitorAppUI>();
+                break;
+            case ApplicationType.TracingApp:
+                instantiatedApp = Instantiate(tracingAppPrefab.gameObject, appsHolder).GetComponent<MonitorAppUI>();
                 break;
         }
         instantiatedApp.InitializeApp(this, application);
