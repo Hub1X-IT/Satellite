@@ -16,6 +16,19 @@ public class TaskbarUI : MonoBehaviour
     {
         passwordCrackingAppButton.onClick.AddListener(() => OnAppButtonPressed(MonitorAppsManagerUI.ApplicationType.PasswordCrackingApp));
         TracingAppButton.onClick.AddListener(() => OnAppButtonPressed(MonitorAppsManagerUI.ApplicationType.TracingApp));
+
+        // Temporary
+        TracingManager.Instance.OnTracingStarted += () =>
+        {
+            if (monitorAppsManager.IsAppOpen(MonitorAppsManagerUI.ApplicationType.TracingApp))
+            {
+                monitorAppsManager.GetOpenApp(MonitorAppsManagerUI.ApplicationType.TracingApp).SetAppMinimized(false);
+            }
+            else
+            {
+                OnAppButtonPressed(MonitorAppsManagerUI.ApplicationType.TracingApp);
+            }
+        };
     }
 
     private void OnAppButtonPressed(MonitorAppsManagerUI.ApplicationType applicationType)

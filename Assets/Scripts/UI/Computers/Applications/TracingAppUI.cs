@@ -39,19 +39,19 @@ public class TracingAppUI : MonoBehaviour
         };
 
         TracingManager.Instance.OnPlayerTraced += ResetTracingUI;
-        TracingManager.Instance.OnTracingStarted += StartTracingUI;
+        TracingManager.Instance.OnTracingStarted += InitializeTracingUI;
         ResetTracingUI();
 
         if (TracingManager.Instance.IsTracingActive)
         {
-            StartTracingUI();
+            InitializeTracingUI();
         }
     }
 
     private void OnDestroy()
     {
         TracingManager.Instance.OnPlayerTraced -= ResetTracingUI;
-        TracingManager.Instance.OnTracingStarted -= StartTracingUI;
+        TracingManager.Instance.OnTracingStarted -= InitializeTracingUI;
     }
 
     private void Update()
@@ -79,12 +79,17 @@ public class TracingAppUI : MonoBehaviour
         }
     }
 
-    private void StartTracingUI()
+    private void InitializeTracingUI()
     {
         foreach (var tracingDot in tracingDots)
         {
             tracingDot.color = notTracedDotColor;
         }
-        currentTracedDotCount = 0;
+        
+        currentTracedDotCount = (int)Mathf.Round(TracingManager.Instance.TracingProgress * tracingDots.Length);
+        for (int i = tracingDots.Length - currentTracedDotCount; i < tracingDots.Length; i++)
+        {
+            tracingDots[i].color = tracedDotColor;
+        }
     }
 }

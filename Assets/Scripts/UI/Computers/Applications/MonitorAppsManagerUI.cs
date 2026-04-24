@@ -67,6 +67,11 @@ public class MonitorAppsManagerUI : MonoBehaviour
         return openApps.ContainsKey(applicationType) && openApps[applicationType] != null;
     }
 
+    public MonitorAppUI GetOpenApp(ApplicationType applicationType)
+    {
+        return openApps[applicationType];
+    }
+
     public void ToggleMinimizeApp(ApplicationType applicationType)
     {
         MonitorAppUI monitorApp = openApps[applicationType];
