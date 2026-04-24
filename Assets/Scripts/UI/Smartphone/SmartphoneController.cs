@@ -7,6 +7,8 @@ public class SmartphoneController : MonoBehaviour
 
     private bool isSmartphoneEnabled;
 
+    public bool IsSmartphoneEnabled => isSmartphoneEnabled;
+
     private const string IsPhoneOnParam = "IsPhoneOn";
 
     private void Awake()

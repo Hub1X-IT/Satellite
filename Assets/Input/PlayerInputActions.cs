@@ -173,6 +173,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DialogueSkip"",
+                    ""type"": ""Button"",
+                    ""id"": ""57fd3f1a-5601-4c5c-9cdb-edcf239c4ff2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -283,6 +292,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""FlashlightToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7de97827-f343-4ad8-acf2-29dcfa65d90d"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DialogueSkip"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -525,6 +545,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_PlayerWalking_FlashlightToggle = m_PlayerWalking.FindAction("FlashlightToggle", throwIfNotFound: true);
         m_PlayerWalking_SmartphoneToggle = m_PlayerWalking.FindAction("SmartphoneToggle", throwIfNotFound: true);
         m_PlayerWalking_GuidebookToggle = m_PlayerWalking.FindAction("GuidebookToggle", throwIfNotFound: true);
+        m_PlayerWalking_DialogueSkip = m_PlayerWalking.FindAction("DialogueSkip", throwIfNotFound: true);
         // Dialogue
         m_Dialogue = asset.FindActionMap("Dialogue", throwIfNotFound: true);
         m_Dialogue_NextSentence = m_Dialogue.FindAction("NextSentence", throwIfNotFound: true);
@@ -729,6 +750,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerWalking_FlashlightToggle;
     private readonly InputAction m_PlayerWalking_SmartphoneToggle;
     private readonly InputAction m_PlayerWalking_GuidebookToggle;
+    private readonly InputAction m_PlayerWalking_DialogueSkip;
     /// <summary>
     /// Provides access to input actions defined in input action map "PlayerWalking".
     /// </summary>
@@ -764,6 +786,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "PlayerWalking/GuidebookToggle".
         /// </summary>
         public InputAction @GuidebookToggle => m_Wrapper.m_PlayerWalking_GuidebookToggle;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerWalking/DialogueSkip".
+        /// </summary>
+        public InputAction @DialogueSkip => m_Wrapper.m_PlayerWalking_DialogueSkip;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -808,6 +834,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @GuidebookToggle.started += instance.OnGuidebookToggle;
             @GuidebookToggle.performed += instance.OnGuidebookToggle;
             @GuidebookToggle.canceled += instance.OnGuidebookToggle;
+            @DialogueSkip.started += instance.OnDialogueSkip;
+            @DialogueSkip.performed += instance.OnDialogueSkip;
+            @DialogueSkip.canceled += instance.OnDialogueSkip;
         }
 
         /// <summary>
@@ -837,6 +866,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @GuidebookToggle.started -= instance.OnGuidebookToggle;
             @GuidebookToggle.performed -= instance.OnGuidebookToggle;
             @GuidebookToggle.canceled -= instance.OnGuidebookToggle;
+            @DialogueSkip.started -= instance.OnDialogueSkip;
+            @DialogueSkip.performed -= instance.OnDialogueSkip;
+            @DialogueSkip.canceled -= instance.OnDialogueSkip;
         }
 
         /// <summary>
@@ -1373,6 +1405,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnGuidebookToggle(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DialogueSkip" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDialogueSkip(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Dialogue" which allows adding and removing callbacks.

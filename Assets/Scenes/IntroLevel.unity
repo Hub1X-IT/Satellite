@@ -1020,6 +1020,51 @@ MonoBehaviour:
   AmplitudeGain: 0
   FrequencyGain: 0
   m_NoiseOffsets: {x: 589.8039, y: -344.9508, z: -638.0338}
+--- !u!1 &462968253
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 462968254}
+  - component: {fileID: 462968255}
+  m_Layer: 0
+  m_Name: TempDialogSkipper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &462968254
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 462968253}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 710156001}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &462968255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 462968253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c640f967a853359e29f8adf1c3ec5b4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TempDialogSkipper
+  smartphoneController: {fileID: 2081466537}
 --- !u!1001 &477827054
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1397,13 +1442,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 633959673}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1457,6 +1502,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 462968254}
   - {fileID: 1582366076}
   - {fileID: 1198099350}
   - {fileID: 538899896}
@@ -4598,6 +4644,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6985541225823806980, guid: 9bc96042951f42a44981658eb34efda8, type: 3}
   m_PrefabInstance: {fileID: 8437927905843853784}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2081466537 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3538383097016653990, guid: 4b4536b5382a4a849bfc9c02d3ee8cff, type: 3}
+  m_PrefabInstance: {fileID: 3636573079593337719}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8360647b2e65ae417a7a444699547276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2146558229
 GameObject:
   m_ObjectHideFlags: 0

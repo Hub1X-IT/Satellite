@@ -25,6 +25,7 @@ public class GameInput : MonoBehaviour
     public event Action OnFlashlightToggleAction;
     public event Action OnSmartphoneToggleAction;
     public event Action OnGuidebookToggleAction;
+    public event Action OnDialogueSkipAction;
 
     public event Action OnNextDialogueSentenceAction;
 
@@ -76,6 +77,8 @@ public class GameInput : MonoBehaviour
         CurrentInputActions.PlayerWalking.FlashlightToggle.performed += FlashlightToggle_performed;
         CurrentInputActions.PlayerWalking.SmartphoneToggle.performed += SmartphoneToggle_performed;
         CurrentInputActions.PlayerWalking.GuidebookToggle.performed += GuidebookToggle_performed;
+
+        CurrentInputActions.PlayerWalking.DialogueSkip.performed += DialogueSkip_performed;
 
         CurrentInputActions.Dialogue.NextSentence.performed += NextDialogueSentence_performed;
 
@@ -144,6 +147,7 @@ public class GameInput : MonoBehaviour
     private void FlashlightToggle_performed(InputAction.CallbackContext _) => OnFlashlightToggleAction?.Invoke();
     private void SmartphoneToggle_performed(InputAction.CallbackContext _) => OnSmartphoneToggleAction?.Invoke();
     private void GuidebookToggle_performed(InputAction.CallbackContext _) => OnGuidebookToggleAction?.Invoke();
+    private void DialogueSkip_performed(InputAction.CallbackContext _) => OnDialogueSkipAction?.Invoke();
 
     private void NextDialogueSentence_performed(InputAction.CallbackContext _) => OnNextDialogueSentenceAction?.Invoke();
 
