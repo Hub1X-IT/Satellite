@@ -39,6 +39,7 @@ public class PlayerScriptsController : MonoBehaviour
 
     public void SetPlayerMovementEnabled(bool enabled)
     {
+        playerMovementController.StopMovement();
         playerMovementController.enabled = enabled;
         playerCameraRotationController.enabled = enabled;
     }

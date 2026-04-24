@@ -1,9 +1,7 @@
-using System;
 using UnityEngine;
 
 public class PlayerMovementController : MonoBehaviour
 {
-    public event Action<bool> StartedMoving;
     public bool IsPlayerMoving;
 
     private CharacterController characterController;
@@ -20,14 +18,11 @@ public class PlayerMovementController : MonoBehaviour
 
     private float verticalVelocity;
 
-    private bool wasMoving;
-
 
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
         IsPlayerMoving = false;
-        wasMoving = false;
     }
 
     private void Update()
@@ -39,11 +34,6 @@ public class PlayerMovementController : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
-    {
-        StartedMoving = null;
-    }
-
     private void HandleMovement()
     {
         Vector2 inputVector = GameInput.Instance.MovementVectorNormalized;
@@ -51,21 +41,15 @@ public class PlayerMovementController : MonoBehaviour
 
         moveDirection = transform.right * movementInput.x + transform.forward * movementInput.z;
 
-        if (!wasMoving && inputVector != Vector2.zero)
-        {
-            StartedMoving?.Invoke(true);
-            IsPlayerMoving = true;
-            wasMoving = true;
-        }
-        else if (wasMoving && inputVector == Vector2.zero)
-        {
-            StartedMoving?.Invoke(false);
-            IsPlayerMoving = false;
-            wasMoving = false;
-        }
+        IsPlayerMoving = inputVector != Vector2.zero;
 
         moveDirection.y = verticalVelocity;
         characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
+    }
+
+    public void StopMovement()
+    {
+        IsPlayerMoving = false;
     }
 
     private void HandleGravity()
