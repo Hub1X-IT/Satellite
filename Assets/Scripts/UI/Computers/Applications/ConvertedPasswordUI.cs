@@ -118,7 +118,7 @@ public class ConvertedPasswordUI : MonoBehaviour
     public void DisplayCorrectPassword(string passwordToDisplay)
     {
         TMP_Text currentTextField = CreateNewTextField();
-        currentTextField.text = passwordToDisplay + " - correct password";
+        currentTextField.text = "Correct password decoded: " + passwordToDisplay;
         currentTextField.color = correctPasswordTextColor;
 
         SetBackground(1);
