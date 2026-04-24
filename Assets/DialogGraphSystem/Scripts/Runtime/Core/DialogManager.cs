@@ -245,6 +245,43 @@ namespace DialogSystem.Runtime.Core
             StopImmediately();
         }
 
+        public void SkipCurrentLine()
+        {
+            if (!conversationActive || isPausedByHistory || _isWaitingForActions) return;
+            if (IsChoiceOverlayActive()) return;
+
+            if (isTyping)
+            {
+                if (!CanSkipCurrentLine()) return;
+
+                SafeStopTyping();
+                var full = currentDialog != null ? currentDialog.questionText : currentChoice?.text ?? string.Empty;
+                if (uiPanel?.dialogText != null) uiPanel.dialogText.text = full;
+
+                if (ShouldStopOnSkipLine() && currentDialog != null) StopAudio(ShouldFadeOutOnStop());
+
+                CancelAutoAdvance();
+                HandleAfterTyping();
+                return;
+            }
+
+            if (currentDialog != null)
+            {
+                if (!string.IsNullOrEmpty(pendingNextGuidAfterDialog))
+                {
+                    var next = pendingNextGuidAfterDialog;
+                    pendingNextGuidAfterDialog = null;
+                    GoTo(next);
+                    return;
+                }
+
+                var nextGuid = GetNextFromDialog(currentDialog.GetGuid());
+                if (!string.IsNullOrEmpty(nextGuid)) { GoTo(nextGuid); return; }
+            }
+
+            EndDialog();
+        }
+
         public Coroutine InvokeGlobalAction(string actionId, string payloadJson = "", bool waitForCompletion = false, float preDelaySeconds = 0f)
         {
             if (actionRunner == null) { WarnOnceNoRunner(); return null; }
