@@ -44,8 +44,6 @@ public class MainMenuUI : MonoBehaviour
             StartCoroutine(SceneLoader.LoadSceneAsync(SceneLoader.Scene.IntroLevel, loadingSlider));
         });
 
-        playButton.onClick.AddListener(() => GameManager.Instance.PauseGameToMenu(false));
-
         settingsButton.onClick.AddListener(() =>
         {
             DisableMainMenu();
