@@ -50,6 +50,7 @@ public class GraphicsSettingsManager : MonoBehaviour
         SetFullscreen(GameSettingsManager.Instance.Fullscreen);
         SetVSync(GameSettingsManager.Instance.VSync);
         SetFPSMax(GameSettingsManager.Instance.FPSMax);
+        SetFPSDisplayEnabled(GameSettingsManager.Instance.FPSDisplay);
         SetHeadBobEnabled(GameSettingsManager.Instance.HeadBobEnabled);
     }
 
