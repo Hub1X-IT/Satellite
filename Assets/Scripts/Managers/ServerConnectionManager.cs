@@ -33,6 +33,12 @@ public class ServerConnectionManager : MonoBehaviour
         }
         Instance = this;
 
+        int initialDetectionChance = 0;
+        foreach (var serverSO in availableServersList)
+        {
+            serverSO.CurrentDetectionChance = initialDetectionChance;
+        }
+
         IsConnectionActive = false;
         WasEverConnected = false;
     }
