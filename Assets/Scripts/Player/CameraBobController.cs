@@ -22,7 +22,7 @@ public class CameraBobController : MonoBehaviour
 
     private bool isHeadBobEnabled;
 
-    private void Start()
+    private void Awake()
     {
         startPosition = cameraFollowTransform.localPosition;
     }
