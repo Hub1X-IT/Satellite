@@ -44,7 +44,7 @@ public class FolderContentUIFile : FileExplorerUIDataContainer
             {
                 DoorAppUI doorApp = CurrentMonitorAppsManager.
                     OpenApplication(fileAppShortcutSO.TriggeredApplicationType).GetComponent<DoorAppUI>();
-                doorApp.InitializeDoorApp("Door app");
+                doorApp.InitializeDoorApp("Door Control System");
             }
             selfFileSO.TriggerOnOpenEvent();
         }
