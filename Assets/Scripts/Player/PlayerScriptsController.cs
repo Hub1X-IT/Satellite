@@ -51,6 +51,11 @@ public class PlayerScriptsController : MonoBehaviour
         SetCanShowSmartphone(canShow);
     }
 
+    public void SetCrosshairEnabled(bool enabled)
+    {
+        playerHudUI.SetCrosshairEnabled(enabled);
+    }
+
     public void SetCanShowSmartphone(bool canShow)
     {
         smartphoneController.SetCanShowSmartphone(canShow);
