@@ -4,6 +4,8 @@ public class SmartphoneController : MonoBehaviour
 {
     [SerializeField]
     private Animator smartphoneAnimator;
+    [SerializeField]
+    private GameObject crosshair;
 
     private bool isSmartphoneEnabled;
 
@@ -50,6 +52,8 @@ public class SmartphoneController : MonoBehaviour
         PlayerScriptsController.Instance.SetInteractionEnabled(!enabled);
 
         GameManager.Instance.SetCursorShown(enabled);
+
+        crosshair.SetActive(!enabled);
 
         smartphoneAnimator.SetBool(IsPhoneOnParam, enabled);
     }
