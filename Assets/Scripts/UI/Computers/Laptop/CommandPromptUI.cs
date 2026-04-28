@@ -142,6 +142,11 @@ public class CommandPromptUI : MonoBehaviour
         inputTextField.caretPosition = inputTextField.text.Length;
     }
 
+    public void FocusOffInputField()
+    {
+        inputTextField.DeactivateInputField();
+    }
+
     private void TrySetPreviousCommand()
     {
         if (canGetPreviousCommand)

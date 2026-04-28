@@ -20,6 +20,10 @@ public class LaptopUI : MonoBehaviour
             {
                 commandPromptUI.FocusOnInputField();
             }
+            else
+            {
+                commandPromptUI.FocusOffInputField();
+            }
         };
 
         commandPromptScroll.enabled = false;
