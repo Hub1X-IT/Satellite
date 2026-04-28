@@ -17,9 +17,11 @@ public class CommandPromptManager : MonoBehaviour
 
     public void SubmitCommand(string command)
     {
-        if (command.Length > 0)
+        string commandLower = command.ToLower();
+
+        if (commandLower.Length > 0)
         {
-            string[] splitCommand = command.Split(' ');
+            string[] splitCommand = commandLower.Split(' ');
             string baseCommand = splitCommand[0];
             if (splitCommand.Length > 1)
             {
