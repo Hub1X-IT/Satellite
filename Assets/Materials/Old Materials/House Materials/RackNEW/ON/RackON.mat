@@ -34,7 +34,7 @@ Material:
   - _NORMALMAP
   - _NORMALMAP_TANGENT_SPACE
   m_InvalidKeywords: []
-  m_LightmapFlags: 1
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -79,9 +79,21 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _MetallicRemapMax: 0
+    - _AORemapMax: 1
+    - _AlbedoAffectEmissive: 0
+    - _CoatMask: 0
+    - _EmissiveExposureWeight: 1
+    - _EmissiveIntensity: 80
+    - _MetallicRemapMax: 0.60305333
+    - _MetallicRemapMin: 0
+    - _NormalScale: 2.3
+    - _SmoothnessRemapMax: 1
+    - _SmoothnessRemapMin: 0
+    - _UseEmissiveIntensity: 1
     m_Colors:
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissiveColor: {r: 59.921566, g: 59.921566, b: 59.921566, a: 80}
+    - _EmissiveColorLDR: {r: 0.88031507, g: 0.88031507, b: 0.88031507, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &8173547698981267020
