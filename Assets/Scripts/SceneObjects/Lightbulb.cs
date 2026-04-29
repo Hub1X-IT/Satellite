@@ -8,8 +8,15 @@ public class Lightbulb : MonoBehaviour
     [SerializeField]
     private Material lightbulbMaterial;
 
+    private float originalEmissiveIntensity;
+
+    private Color emissiveOffColor = Color.black;
+    private Color emissiveOnColor;
+
     private void Start()
     {
+        originalEmissiveIntensity = lightbulbMaterial.GetFloat("_EmissiveIntensity");
+        emissiveOnColor = lightbulbMaterial.GetColor("_EmissiveColor");
         PowerManager.Instance.OnPowerStateChanged += SetLightEnabled;
     }
 
@@ -18,11 +25,11 @@ public class Lightbulb : MonoBehaviour
         lightSource.SetActive(enabled);
         if (enabled)
         {
-            lightbulbMaterial.EnableKeyword("_EMISSION");
+            lightbulbMaterial.SetColor("_EmissiveColor", emissiveOnColor * originalEmissiveIntensity);
         }
         else
         {
-            lightbulbMaterial.DisableKeyword("_EMISSION");
+            lightbulbMaterial.SetColor("_EmissiveColor", emissiveOffColor * 0f);
         }
     }
 }
