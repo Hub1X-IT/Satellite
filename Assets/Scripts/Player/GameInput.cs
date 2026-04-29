@@ -154,7 +154,13 @@ public class GameInput : MonoBehaviour
     private void GuidebookChangePageLeft_performed(InputAction.CallbackContext _) => OnGuidebookChangePageLeftAction?.Invoke();
     private void GuidebookChangePageRight_performed(InputAction.CallbackContext _) => OnGuidebookChangePageRightAction?.Invoke();
 
-    private void LeftClick_performed(InputAction.CallbackContext _) => OnLeftClickPerformedAction?.Invoke();
+    private void LeftClick_performed(InputAction.CallbackContext _) {
+        // Disable clicking sound in guidebook view
+        if (!CurrentInputActions.Guidebook.enabled)
+        {
+            OnLeftClickPerformedAction?.Invoke();
+        }
+    }
     private void Return_performed(InputAction.CallbackContext _) => OnReturnPerformedAction?.Invoke();
 
     private void CommandSubmit_performed(InputAction.CallbackContext _) => OnCommandSubmitAction?.Invoke();
