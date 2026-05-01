@@ -45,10 +45,12 @@ public class MonitorFileSystemInitializer : MonoBehaviour
         monitorUI.FileExplorer.SetFileExplorerEnabled(false);
     }
 
+    /*
     private void Start()
     {
         // monitorUI.FileExplorer.InitializeFileExplorer(this);
     }
+    */
 
     private void OnConnectCommand(CommandData commandData)
     {

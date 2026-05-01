@@ -30,15 +30,17 @@ public class FileExplorerUI : MonoBehaviour
 
     private bool isFileExplorerEnabled;
 
+    /*
     private void Update()
     {
-        /*
+        
         if (Input.GetKeyDown(KeyCode.V))
         {
             RefreshSideFolders();
         }
-        */
+        
     }
+    */
 
     public void SetFileExplorerEnabled(bool enabled)
     {
