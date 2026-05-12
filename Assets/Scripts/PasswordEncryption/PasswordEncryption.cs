@@ -127,7 +127,7 @@ public static class PasswordEncryption
 
     private static CipherType GetRandomCipher(int currentCase, out int newCase, CipherType previousCipher)
     {
-        CipherType[] allowedCiphers = new CipherType[0];
+        CipherType[] allowedCiphers = System.Array.Empty<CipherType>();
 
         switch (currentCase)
         {

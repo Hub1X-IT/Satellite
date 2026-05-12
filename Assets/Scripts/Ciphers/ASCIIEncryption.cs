@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 
 public static class ASCIIEncryption
 {
@@ -6,8 +7,7 @@ public static class ASCIIEncryption
 
     public static string Encode(string input, int outputBase)
     {
-        string output = "";
-
+        StringBuilder output = new();
         int desiredLength = outputBase switch
         {
             2 => 8,
@@ -19,49 +19,29 @@ public static class ASCIIEncryption
         foreach (char c in input)
         {
             string convertedNumber = Convert.ToString(c, outputBase);
-
-            string addedString = "";
-
-            for (int i = 0; i < desiredLength - convertedNumber.Length; i++)
-            {
-                addedString += "0";
-            }
-
-            output += addedString + convertedNumber + " ";
+            output.Append(convertedNumber.PadLeft(desiredLength, '0'));
+            output.Append(" ");
         }
 
-        return output;
+        return output.ToString();
     }
 
     public static string Decode(string input, int inputBase)
     {
-        string output = "";
-        string encodedCharacter = "";
-
-        for (int i = 0; i < input.Length + 1; i++)
+        StringBuilder output = new();
+        foreach (var item in input.Split(' '))
         {
-            if (i >= input.Length || input[i] == ' ')
+            if (TryDecodeCharacter(item, inputBase, out char decodedCharacter) && allowedCharacters.Contains(decodedCharacter))
             {
-                if (encodedCharacter.Length > 0)
-                {
-                    if (TryDecodeCharacter(encodedCharacter, inputBase, out char decodedCharacter) && allowedCharacters.Contains(decodedCharacter))
-                    {
-                        output += decodedCharacter;
-                        encodedCharacter = "";
-                    }
-                    else
-                    {
-                        return "Error";
-                    }
-                }
+                output.Append(decodedCharacter);
             }
             else
             {
-                encodedCharacter += input[i];
+                return "Error";
             }
         }
 
-        return output;
+        return output.ToString();
     }
 
     private static bool TryDecodeCharacter(string encodedCharacter, int inputBase, out char decodedCharacter)

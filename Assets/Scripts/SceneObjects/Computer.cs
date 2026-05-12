@@ -96,7 +96,7 @@ public class Computer : MonoBehaviour
         {
             if (isInComputerView && CanExitComputerView && !wasChangedToInThisFrame && targetComputer != null)
             {
-                Debug.Log(gameObject + " change to " + targetComputer);
+                Debug.Log($"{gameObject} change to {targetComputer}");
                 ChangeCurrentComputer(targetComputer);
             }
         };

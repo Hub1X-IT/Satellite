@@ -1,3 +1,6 @@
+using System;
+using System.Text;
+
 public static class CaesarCipher
 {
     public const string DefaultBase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -7,7 +10,7 @@ public static class CaesarCipher
 
     public static string Encode(string input, string cipherBase, int shift)
     {
-        string output = string.Empty;
+        StringBuilder output = new(input.Length);
 
         foreach (char c in input)
         {
@@ -16,20 +19,10 @@ public static class CaesarCipher
                 return "Error";
             }
 
-            int index = cipherBase.IndexOf(c) + shift;
-
-            while (index >= cipherBase.Length)
-            {
-                index -= cipherBase.Length;
-            }
-            while (index < 0)
-            {
-                index += cipherBase.Length;
-            }
-
-            output += cipherBase[index];
+            int index = Math.Abs((cipherBase.IndexOf(c) + shift) % cipherBase.Length);
+            output.Append(cipherBase[index]);
         }
 
-        return output;
+        return output.ToString();
     }
 }

@@ -149,10 +149,6 @@ public class PhonecallUI : MonoBehaviour
     {
         int callTimeMinutes = callTime / 60;
         int callTimeSeconds = callTime % 60;
-
-        string callTimeTextMinutes = callTimeMinutes <= 9 ? "0" + callTimeMinutes : callTimeMinutes.ToString();
-        string callTimeTextSeconds = callTimeSeconds <= 9 ? "0" + callTimeSeconds : callTimeSeconds.ToString();
-
-        callTimeTextField.text = callTimeTextMinutes + ":" + callTimeTextSeconds;
+        callTimeTextField.text = $"{callTimeMinutes:D2}:{callTimeSeconds:D2}";
     }
 }

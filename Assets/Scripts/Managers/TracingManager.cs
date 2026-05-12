@@ -14,7 +14,7 @@ public class TracingManager : MonoBehaviour
     private const float DefaultTracingTime = 60f;
     // private const float DefaultTracingTime = 5f; // For debugging
 
-    private readonly float[] tracingSpeedLevels = { 1f, 1.1f, 1.2f }; // to be adjusted later
+    private static readonly float[] tracingSpeedLevels = { 1f, 1.1f, 1.2f }; // to be adjusted later
 
     public bool IsTracingActive { get; private set; }
 

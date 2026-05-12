@@ -1,3 +1,5 @@
+using System.Text;
+
 public static class AtbashCipher
 {
     private const string DefaultBase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -6,7 +8,7 @@ public static class AtbashCipher
 
     public static string Encode(string input, string cipherBase)
     {
-        string output = string.Empty;
+        StringBuilder output = new(input.Length);
 
         foreach (char c in input)
         {
@@ -16,9 +18,9 @@ public static class AtbashCipher
             }
 
             int index = cipherBase.Length - cipherBase.IndexOf(c) - 1;
-            output += cipherBase[index];
+            output.Append(cipherBase[index]);
         }
 
-        return output;
+        return output.ToString();
     }
 }

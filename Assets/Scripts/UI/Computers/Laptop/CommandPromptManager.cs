@@ -30,7 +30,7 @@ public class CommandPromptManager : MonoBehaviour
             }
             else
             {
-                ExecuteCommand(baseCommand, new string[0]);
+                ExecuteCommand(baseCommand, Array.Empty<string>());
             }
         }
     }

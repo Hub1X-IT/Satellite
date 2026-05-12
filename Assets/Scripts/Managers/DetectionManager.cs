@@ -13,7 +13,7 @@ public class DetectionManager : MonoBehaviour
     private int currentDetectionLevel;
     public const int DefaultDetectionLevel = 0;
 
-    private readonly int[] detectionLevels = { 0, 2, 5, 10, 25, 40, 70, 98, 100 };
+    private static readonly int[] detectionLevels = { 0, 2, 5, 10, 25, 40, 70, 98, 100 };
     // private readonly int[] detectionLevels = { -1 };
 
     private bool isWarningEnabled;

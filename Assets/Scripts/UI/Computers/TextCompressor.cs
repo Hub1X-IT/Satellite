@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 public static class TextCompressor
@@ -54,11 +55,11 @@ public static class TextCompressor
 
     private static string GenerateKey(int length)
     {
-        string outputKey = "";
+        StringBuilder outputKey = new(length);
         for (int i = 0; i < length; i++)
         {
-            outputKey += AllowedKeyChars[Random.Range(0, AllowedKeyChars.Length)];
+            outputKey.Append(AllowedKeyChars[Random.Range(0, AllowedKeyChars.Length)]);
         }
-        return outputKey;
+        return outputKey.ToString();
     }
 }

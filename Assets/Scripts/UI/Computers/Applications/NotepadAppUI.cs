@@ -1,3 +1,5 @@
+using System.Linq;
+using System.Text;
 using TMPro;
 using UnityEngine;
 
@@ -23,16 +25,14 @@ public class NotepadAppUI : MonoBehaviour
         contentInputField = contentField.GetComponent<TMP_InputField>();
 
         string[] multilineFileContent = fileStringSO.MultilineFileContent;
-        string multilineFileOutput = "";
-        foreach (var line in multilineFileContent)
-        {
-            multilineFileOutput += line + '\n';
-        }
+        StringBuilder multilineFileOutput = new();
+        multilineFileOutput.AppendJoin('\n', multilineFileContent);
+        if (multilineFileContent.Length > 0) multilineFileOutput.Append('\n');
 
         if (fileStringSO is FilePasswordStringSO filePasswordStringSO)
         {
             string password = filePasswordStringSO.EncodedCompressedPasswordContent;
-            multilineFileOutput += password;
+            multilineFileOutput.Append(password);
         }
 
         contentField.ContentFieldClicked += (position) =>
@@ -41,7 +41,7 @@ public class NotepadAppUI : MonoBehaviour
             copyMenuUI.SetCopyPasteMenuEnabled(true);
         };
 
-        contentInputField.text = fileContent = multilineFileOutput;
+        contentInputField.text = fileContent = multilineFileOutput.ToString();
         monitorApp.SetAppName(BaseAppName + fileStringSO.SelfName);
 
         copyMenuUI.InitializeCopyPasteMenuUI(CopyPasteMenuUI.MenuFunction.CopyMenu, contentInputField);
