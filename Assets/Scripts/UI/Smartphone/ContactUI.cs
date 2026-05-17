@@ -21,6 +21,6 @@ public class ContactUI : MonoBehaviour
 
     private void CallContact()
     {
-        PhonecallManager.Instance.StartOutcomingCall(thisContactSO);
+        PhonecallManager.Instance.StartOutgoingCall(thisContactSO, true);
     }
 }

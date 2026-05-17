@@ -148,7 +148,7 @@ public class PhonecallManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("StopCalling invoked when no outcoming call");
+            Debug.LogWarning("StopCalling invoked when no outgoing call");
         }
     }
 
@@ -168,7 +168,7 @@ public class PhonecallManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("AnswerOutgoingCall invoked when no outcoming call");
+            Debug.LogWarning("AnswerOutgoingCall invoked when no outgoing call");
         }
     }
 
@@ -189,11 +189,11 @@ public class PhonecallManager : MonoBehaviour
         return StartCall(CallType.IncomingCall, contactSO, canBeEnded);
     }
 
-    public Call StartOutcomingCall(ContactSO contactSO)
+    public Call StartOutgoingCall(ContactSO contactSO, bool canBeEnded)
     {
         if (currentCall == null)
         {
-            Call newCall = StartCall(CallType.OutgoingCall, contactSO, true);
+            Call newCall = StartCall(CallType.OutgoingCall, contactSO, canBeEnded);
             outgoingCallStartedGameEvent.RaiseEvent(contactSO);
             contactSO.InvokeOutgoingCallGameEvents();
             isOutgoingCallActive = true;
@@ -203,7 +203,7 @@ public class PhonecallManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Can't start outcoming call - a call is already started");
+            Debug.Log("Can't start outgoing call - a call is already started");
             return null;
         }
     }
