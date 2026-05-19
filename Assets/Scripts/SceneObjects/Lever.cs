@@ -10,6 +10,9 @@ public class Lever : MonoBehaviour
 
     [SerializeField]
     private AudioSource leverToggleAudioSource;
+    
+    [SerializeField]
+    private ParticleSystem sparkParticles;
 
     private const string IsLeverOnParam = "IsLeverOn";
 
@@ -31,5 +34,10 @@ public class Lever : MonoBehaviour
         leverToggleAudioSource.Play();
 
         PowerManager.Instance.SetPowerState(enabled);
+    }
+
+    private void playSparkParticles()
+    {
+        sparkParticles.Play();
     }
 }
