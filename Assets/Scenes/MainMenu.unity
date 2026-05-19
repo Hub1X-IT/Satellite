@@ -162,7 +162,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 12
   m_Type: 0
-  m_Color: {r: 0, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.93962264, g: 0.88437384, b: 0.69319326, a: 1}
   m_Intensity: 481.66812
   m_Range: 10
   m_SpotAngle: 179
@@ -241,7 +241,7 @@ MonoBehaviour:
   m_ShapeHeight: -1
   m_AspectRatio: -1
   m_SpotIESCutoffPercent: 100
-  m_LightDimmer: 0.7
+  m_LightDimmer: 0.35
   m_VolumetricDimmer: 1
   m_FadeDistance: 10000
   m_VolumetricFadeDistance: 10000
@@ -712,6 +712,22 @@ PrefabInstance:
     - target: {fileID: 658824687137753323, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
       propertyPath: m_text
       value: Quit
+      objectReference: {fileID: 0}
+    - target: {fileID: 658824687137753323, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 658824687137753323, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 658824687137753323, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 658824687137753323, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 7211431957573203100, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
       propertyPath: m_Pivot.x
@@ -1710,7 +1726,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9411765, g: 0.8862745, b: 0.69411767, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2188,7 +2204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.3207547, g: 0.3207547, b: 0.3207547, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2502,13 +2518,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1127373551}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.21983072, y: -0.33842847, z: 0.046088945, w: 0.9137924}
-  m_LocalPosition: {x: 1.608, y: 2.08, z: -1.65}
+  m_LocalRotation: {x: 0.222957, y: -0.25929934, z: 0.027182708, w: 0.93931633}
+  m_LocalPosition: {x: 1.516, y: 1.926, z: -1.114}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 25.655, y: -41.58, z: -4.107}
+  m_LocalEulerAnglesHint: {x: 25.655, y: -31.8, z: -4.107}
 --- !u!114 &1127373555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2794,8 +2810,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967040
-  m_fontColor: {r: 0, g: 1, b: 1, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2915,7 +2931,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3833,6 +3849,22 @@ PrefabInstance:
       propertyPath: m_text
       value: Settings
       objectReference: {fileID: 0}
+    - target: {fileID: 658824687137753323, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 658824687137753323, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 658824687137753323, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 658824687137753323, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 7211431957573203100, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3949,6 +3981,22 @@ PrefabInstance:
     - target: {fileID: 658824687137753323, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
       propertyPath: m_text
       value: Credits
+      objectReference: {fileID: 0}
+    - target: {fileID: 658824687137753323, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 658824687137753323, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 658824687137753323, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 658824687137753323, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 7211431957573203100, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
       propertyPath: m_Pivot.x
@@ -4230,6 +4278,22 @@ PrefabInstance:
     - target: {fileID: 299591340029007482, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
       propertyPath: m_Name
       value: PlayButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 658824687137753323, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 658824687137753323, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 658824687137753323, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 658824687137753323, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 7211431957573203100, guid: a01c574b85dcd464ab2f429f22bd05c7, type: 3}
       propertyPath: m_Pivot.x
