@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -43,6 +44,10 @@ public class MonitorFileSystemInitializer : MonoBehaviour
         disconnectCommandGameEvent.EventRaised += OnDisconnectCommand;
 
         monitorUI.FileExplorer.SetFileExplorerEnabled(false);
+
+        ServerConnectionManager.Instance.OnServerConnectionStateChanged += (isConnected) => {
+            if (!isConnected) TryDisconnect();
+        };
     }
 
     private void OnConnectCommand(CommandData commandData)
@@ -61,18 +66,9 @@ public class MonitorFileSystemInitializer : MonoBehaviour
         {
             responseData = CommandResponseData.Failure($"Already connected to target: {currentIPAddress}. Disconnect first.");
         }
-        else if (ipAndFolderDictionary.ContainsKey(ipAddress))
+        else if (TryConnectTo(ipAddress))
         {
-            rootFolderSO = ipAndFolderDictionary[ipAddress];
-            monitorUI.FileExplorer.SetFileExplorerEnabled(true);
-            monitorUI.FileExplorer.InitializeFileExplorer(this);
-            currentIPAddress = ipAddress;
             responseData = CommandResponseData.Success($"Connected to target: {ipAddress}");
-            if (ipAndObjectiveDictionary.ContainsKey(ipAddress))
-            {
-                objective = ipAndObjectiveDictionary[ipAddress];
-                objective.RaiseEvent();
-            }
         }
         else
         {
@@ -86,12 +82,9 @@ public class MonitorFileSystemInitializer : MonoBehaviour
     {
         CommandResponseData responseData;
 
-        if (rootFolderSO != null)
+        string ipAddress = currentIPAddress;
+        if (TryDisconnect())
         {
-            monitorUI.FileExplorer.SetFileExplorerEnabled(false);
-            rootFolderSO = null;
-            string ipAddress = currentIPAddress;
-            currentIPAddress = null;
             responseData = CommandResponseData.Success($"Disconnected successfully from {ipAddress}.");
         }
         else
@@ -100,5 +93,40 @@ public class MonitorFileSystemInitializer : MonoBehaviour
         }
 
         commandData.Response?.Invoke(responseData);
+    }
+
+    public bool TryConnectTo(string ipAddress)
+    {
+        if (!ipAndFolderDictionary.ContainsKey(ipAddress)) return false;
+        
+        if (rootFolderSO != null)
+        {
+            Debug.LogWarning($"Connecting to {ipAddress} while still connected to {currentIPAddress}.");
+            TryDisconnect();
+        }
+
+        rootFolderSO = ipAndFolderDictionary[ipAddress];
+        monitorUI.FileExplorer.SetFileExplorerEnabled(true);
+        monitorUI.FileExplorer.InitializeFileExplorer(this);
+        currentIPAddress = ipAddress;
+        
+        if (ipAndObjectiveDictionary.ContainsKey(ipAddress))
+        {
+            objective = ipAndObjectiveDictionary[ipAddress];
+            objective.RaiseEvent();
+        }
+
+        return true;
+    }
+
+    public bool TryDisconnect()
+    {
+        if (rootFolderSO == null) return false;
+
+        monitorUI.FileExplorer.SetFileExplorerEnabled(false);
+        rootFolderSO = null;
+        currentIPAddress = null;
+
+        return false;
     }
 }
