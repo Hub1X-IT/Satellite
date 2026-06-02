@@ -36,7 +36,7 @@ public class Lever : MonoBehaviour
         PowerManager.Instance.SetPowerState(enabled);
     }
 
-    private void playSparkParticles()
+    private void playSparkParticles() //used in Lever Animator as an Event
     {
         sparkParticles.Play();
     }
