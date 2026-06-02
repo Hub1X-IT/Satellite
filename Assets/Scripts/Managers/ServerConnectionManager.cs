@@ -43,6 +43,13 @@ public class ServerConnectionManager : MonoBehaviour
         WasEverConnected = false;
     }
 
+    private void Start()
+    {
+        PowerManager.Instance.OnPowerStateChanged += (isPowerOn) => {
+            if (!isPowerOn) TryDisconnectFromServer();
+        };
+    }
+
     public bool TryConnectToServer(string serverID)
     {
         if (!IsConnectionActive)
