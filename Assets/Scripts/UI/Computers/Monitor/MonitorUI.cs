@@ -87,7 +87,9 @@ public class MonitorUI : MonoBehaviour
                 monitorStartupScreenUI.StartSputnikOSStartupScreen(() =>
                 {
                     monitorStartupScreenUI.DisableStartupScreen();
-                    startProgramEventData.Response?.Invoke(CommandResponseData.Success("SputnikOS started."));
+                    startProgramEventData.Response?.Invoke(CommandResponseData.Success("SputnikOS successfully started."));
+                }, () => {
+                    startProgramEventData.Response?.Invoke(CommandResponseData.Failure("SputnikOS startup aborted."));
                 });
 
                 responseData = CommandResponseData.InProgress("Starting SputnikOS...");

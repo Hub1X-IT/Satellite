@@ -30,6 +30,7 @@ public class MonitorStartupScreenUI : MonoBehaviour
     private GameObject[] currentSelectedStartupScreenElements;
 
     private Action startupScreenFinishedCallback;
+    private Action startupScreenAbortedCallback;
 
     public bool IsStartupScreenStarted => shouldActivateObjects;
 
@@ -52,6 +53,7 @@ public class MonitorStartupScreenUI : MonoBehaviour
                     shouldActivateObjects = false;
                     startupScreenFinishedCallback?.Invoke();
                     startupScreenFinishedCallback = null;
+                    startupScreenAbortedCallback = null;
                     // Finished activating objects
                 }
                 else
@@ -67,10 +69,12 @@ public class MonitorStartupScreenUI : MonoBehaviour
         }
     }
 
-    public void StartStartupScreen(Action onFinishedStartupCallback)
+    public void StartStartupScreen(Action onFinishedStartupCallback, Action onAbortedStartupCallback = null)
     {
+        startupScreenAbortedCallback?.Invoke();
         gameObject.SetActive(true);
         startupScreenFinishedCallback = onFinishedStartupCallback;
+        startupScreenAbortedCallback = onAbortedStartupCallback;
         DisableAllObjects();
 
         if (!ServerConnectionManager.Instance.WasEverConnected && !ServerConnectionManager.Instance.IsConnectionActive)
@@ -94,10 +98,12 @@ public class MonitorStartupScreenUI : MonoBehaviour
         shouldActivateObjects = true;
     }
 
-    public void StartSputnikOSStartupScreen(Action onFinishedStartupCallback)
+    public void StartSputnikOSStartupScreen(Action onFinishedStartupCallback, Action onAbortedStartupCallback = null)
     {
+        startupScreenAbortedCallback?.Invoke();
         gameObject.SetActive(true);
         startupScreenFinishedCallback = onFinishedStartupCallback;
+        startupScreenAbortedCallback = onAbortedStartupCallback;
         DisableAllObjects();
 
         currentSelectedStartupScreenElements = case4StartupScreenElements;
