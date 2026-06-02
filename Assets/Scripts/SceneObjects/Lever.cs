@@ -32,11 +32,14 @@ public class Lever : MonoBehaviour
 
         leverAnimator.SetBool(IsLeverOnParam, enabled);
         leverToggleAudioSource.Play();
-
-        PowerManager.Instance.SetPowerState(enabled);
     }
 
-    private void playSparkParticles() //used in Lever Animator as an Event
+    private void SetLightEnabled() //used in Lever Animator as an Event
+    {
+        PowerManager.Instance.SetPowerState(!PowerManager.Instance.IsPowerOn);
+    }
+
+    private void PlaySparkParticles() //used in Lever Animator as an Event
     {
         sparkParticles.Play();
     }
