@@ -1,15 +1,15 @@
 {
   "dependencies": {
     "com.hackerzhuli.code": {
-      "version": "1.0.14",
+      "version": "https://github.com/hackerzhuli/com.hackerzhuli.code.git",
       "depth": 0,
-      "source": "registry",
+      "source": "git",
       "dependencies": {
-        "com.unity.nuget.mono-cecil": "1.11.4",
+        "com.unity.test-framework": "1.4.6",
         "com.unity.nuget.newtonsoft-json": "3.2.1",
-        "com.unity.test-framework": "1.4.6"
+        "com.unity.nuget.mono-cecil": "1.11.4"
       },
-      "url": "https://package.openupm.com"
+      "hash": "52e753f70b324a21e665da5a73f3fa4b58d0a819"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
@@ -317,6 +317,13 @@
         "com.unity.shadergraph": "17.3.0",
         "com.unity.render-pipelines.core": "17.3.0"
       }
+    },
+    "dev.yarnspinner.unity": {
+      "version": "https://github.com/YarnSpinnerTool/YarnSpinner-Unity.git#current",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "f59b843921af8a95723d3319d0d1efd9007c8450"
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",
