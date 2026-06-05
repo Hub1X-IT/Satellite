@@ -16,14 +16,7 @@ public class LaptopUI : MonoBehaviour
         computerUI.ComputerViewEnabled += (enabled) =>
         {
             commandPromptScroll.enabled = enabled;
-            if (enabled)
-            {
-                commandPromptUI.FocusOnInputField();
-            }
-            else
-            {
-                commandPromptUI.FocusOffInputField();
-            }
+            commandPromptUI.SetCommandPromptEnabled(enabled);
         };
 
         commandPromptScroll.enabled = false;

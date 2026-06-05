@@ -752,8 +752,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   commandPromptManager: {fileID: 783340006264611866}
-  inputTextField: {fileID: 4862336820060130858}
+  inputField: {fileID: 4862336820060130858}
+  inputFieldPlaceholderTextField: {fileID: 8424976649653215151}
   outputTextFieldPrefab: {fileID: 99577737745977310, guid: 02a275169895d9740b0eb29928070e1a, type: 3}
+  defaultOutputTextField: {fileID: 7714662018599779460}
   outputField: {fileID: 3590736367100869470}
   cmdStartText: {fileID: 4900000, guid: 7b6c956cde0a1064bb052a2935e7d1b9, type: 3}
   cmdAudioSource: {fileID: 2007878955777167473}
@@ -1422,22 +1424,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "                           -++++++++:        Luc45_M1ll3r\r\n                       
-    :=#-    :=+*+#:      OS: Sputnik OS\r\n                    .-++#*         .*+#-    
-    Kernel: x86_64 SP20 6.11.2-amd64\r\n                 :==-.  @            %-%    
-    Uptime: 10h 12m\r\n             .-==:     .@            +:%     Packages: 4563\r\n         
-    :--:          ++            *=     Shell: zsc 7.9\r\n      .---              
-    *#:        :#-      Resolution: 1920x1080\r\n   ::-.                 +#:=+++==++%%.      
-    DE: Xgcd\r\n:::                   -#-         =#         WM: Xgwm5\r\n                   
-    .*=          =*          WM Theme: Sputnik-Dark\r\n                   ++          
-    ++           GTK Theme: Sputnik-Dark [GTK2]\r\n                 -*.          
-    +=            Icon Theme: Flat-Remix-Yellow-Dark\r\n               .+-           
-    *-             Font: Fira Monospace\r\n              ==             *:             
-    Disk: 61G / 506G (12%)\r\n            -=              *.               CPU: Intel
-    Core i7-6820HQ @ 8x 3.6GHz [49.0\xB0C]\r\n          .=.              +                
-    GPU: NVIDIA Corporation GM107GLM [Quadro M1000M]\r\n         -:              
-    +                  RAM: 2384MiB / 31351MiB\r\n        .               .=             
-    \r\n                       .-               "
+  m_text: CMD Start Text
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 871af607f76f13b41a9e212d5ca61562, type: 2}
   m_sharedMaterial: {fileID: 6401778941531856212, guid: 871af607f76f13b41a9e212d5ca61562, type: 2}

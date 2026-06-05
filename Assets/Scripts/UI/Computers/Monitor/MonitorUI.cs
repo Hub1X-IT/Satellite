@@ -22,7 +22,7 @@ public class MonitorUI : MonoBehaviour
 
     [SerializeField]
     private TMP_Text detectionChanceText;
-    
+
     [SerializeField]
     private Image detectionChanceIcon;
 
@@ -71,20 +71,36 @@ public class MonitorUI : MonoBehaviour
 
         startSputnikOSGameEvent.EventRaised += (startProgramEventData) =>
         {
+            CommandResponseData responseData = new();
+
             if (!ServerConnectionManager.Instance.IsConnectionActive)
             {
-                startProgramEventData.Response?.Invoke(false, "No server connection.");
+                responseData.ExecutionStatus = CommandExecutionStatus.Failure;
+                responseData.ResponseStringArray = new string[] { "No server connection." };
             }
             else if (IsSputnikOSStarted)
             {
-                startProgramEventData.Response?.Invoke(false, "SputnikOS is already started.");
+                responseData.ExecutionStatus = CommandExecutionStatus.Failure;
+                responseData.ResponseStringArray = new string[] { "SputnikOS is already started." };
             }
             else
             {
                 IsSputnikOSStarted = true;
-                monitorStartupScreenUI.StartSputnikOSStartupScreen(() => monitorStartupScreenUI.DisableStartupScreen());
-                startProgramEventData.Response?.Invoke(true, "Starting SputnikOS...");
+                monitorStartupScreenUI.StartSputnikOSStartupScreen(() =>
+                {
+                    monitorStartupScreenUI.DisableStartupScreen();
+                    startProgramEventData.Response?.Invoke(new CommandResponseData
+                    {
+                        ExecutionStatus = CommandExecutionStatus.Success,
+                        ResponseStringArray = new string[] { "SputnikOS started." }
+                    });
+                });
+                
+                responseData.ExecutionStatus = CommandExecutionStatus.InProgress;
+                responseData.ResponseStringArray = new string[] { "Starting SputnikOS..." };
             }
+
+            startProgramEventData.Response?.Invoke(responseData);
 
             // // This requires additional conditions in the event assignments above!
             // if (!monitorStartupScreenUI.IsStartupScreenStarted)
@@ -111,11 +127,11 @@ public class MonitorUI : MonoBehaviour
     private void SetDetectionChanceVisual()
     {
         detectionChanceText.text = DetectionManager.Instance.CurrentDetectionChance.ToString() + "%";
-        
+
         // Kill any existing sequence to prevent stacking
         detectionColorSequence?.Kill();
         DOTween.Kill(detectionChanceText); // Kill any tweens on text
-        
+
         // Create a smooth color loop animation for icon
         detectionColorSequence = DOTween.Sequence()
             .Append(detectionChanceIcon.DOColor(Color.red, 0.5f))
@@ -126,8 +142,8 @@ public class MonitorUI : MonoBehaviour
 
         // Same smooth animation for text - properly synchronized
         //detectionChanceText.DOColor(Color.red, 0.5f)
-            //.SetLoops(-1, LoopType.Yoyo);
-        
+        //.SetLoops(-1, LoopType.Yoyo);
+
         // Stop animation after 3 seconds
         //Invoke(nameof(StopSetDetectionChanceColors), 4f);
         detectionColorSequence.OnComplete(() => StopSetDetectionChanceVisuals());
@@ -137,10 +153,10 @@ public class MonitorUI : MonoBehaviour
     {
         // Counter for smooth number increment
         int currentDisplayValue = int.Parse(detectionChanceText.text.Replace("%", ""));
-        
+
         DOTween.To(
             () => currentDisplayValue,
-            x => 
+            x =>
             {
                 currentDisplayValue = x;
                 detectionChanceText.text = currentDisplayValue.ToString() + "%";
@@ -158,5 +174,5 @@ public class MonitorUI : MonoBehaviour
         detectionChanceText.DOColor(Color.white, 0.2f);
     }
 
-    
+
 }

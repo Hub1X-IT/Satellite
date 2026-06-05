@@ -1,0 +1,389 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3625570289631400678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c02bb70996b49eba31d0c206e28da24, type: 3}
+  m_Name: TestBehaviorGraph Blackboard
+  m_EditorClassIdentifier: 
+  VersionTimestamp: 639130901658820642
+  AssetID:
+    m_Value0: 16048800971874752127
+    m_Value1: 7070415172194574586
+  m_Blackboard:
+    m_Variables:
+    - rid: 8423081073977065540
+    - rid: 8423081083816903219
+    - rid: 8423081097232908930
+    - rid: 1461395247993979472
+    - rid: 1461395247993979667
+    - rid: 1461395247993979719
+    - rid: 1259831541913354323
+  m_SharedBlackboardVariableGuids: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 1259831541913354323
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 5179509429366065186
+          m_Value1: 9246166095095325548
+        Name: PasswordFileWasOpened
+        m_Value: 0
+    - rid: 1461395247993979472
+      type: {class: 'BlackboardVariable`1[[Interactable, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 9731402448535650144
+          m_Value1: 8087528869668069966
+        Name: ServerInteractable
+        m_Value: {fileID: 0}
+    - rid: 1461395247993979667
+      type: {class: 'BlackboardVariable`1[[Interactable, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 9169959840330105401
+          m_Value1: 2692945787501297442
+        Name: MonitorInteractable
+        m_Value: {fileID: 0}
+    - rid: 1461395247993979719
+      type: {class: 'BlackboardVariable`1[[Interactable, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 17271116087205223620
+          m_Value1: 7086058297483731415
+        Name: GuidebookInteractable
+        m_Value: {fileID: 0}
+    - rid: 8423081073977065540
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 0}
+    - rid: 8423081083816903219
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Playables.PlayableDirector, UnityEngine.DirectorModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 8606589776863811491
+          m_Value1: 16963580325008456966
+        Name: IntroCutscene
+        m_Value: {fileID: 0}
+    - rid: 8423081097232908930
+      type: {class: 'BlackboardVariable`1[[Interactable, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 16132014912764879636
+          m_Value1: 6001264178443321417
+        Name: LaptopInteractable
+        m_Value: {fileID: 0}
+--- !u!114 &-2183856035388503759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b27bb6d9a2c8d540a10dff10acc543e, type: 3}
+  m_Name: TestBehaviorGraph Debug Info
+  m_EditorClassIdentifier: 
+  m_CodeBreakPointsList: []
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bad8f2220607dac4db5082ff333fafb8, type: 3}
+  m_Name: TestBehaviorGraph
+  m_EditorClassIdentifier: 
+  Blackboard: {fileID: 2559737886325497955}
+  m_Description: 
+  m_Nodes:
+  - rid: 8423081073977065541
+  m_VersionTimestamp: 639162763712902960
+  m_SerializedVersion: 2
+  m_DebugInfo: {fileID: -2183856035388503759}
+  m_RuntimeGraph: {fileID: 36955999125407004}
+  AssetID:
+    m_Value0: 16048800971874752127
+    m_Value1: 7070415172194574586
+  Story:
+    Story: 
+    StoryVariableNames: []
+    Variables: []
+  m_NodeModelsInfo:
+  - Name: On Start
+    Story: 
+    RuntimeTypeString: Unity.Behavior.Start, Unity.Behavior, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+    RuntimeTypeID:
+      m_Value0: 3335272451348827663
+      m_Value1: 11549843281177505721
+    Variables: []
+    NamedChildren: []
+    IsPlaceholder: 0
+  m_Blackboards: []
+  m_MainBlackboardAuthoringAsset: {fileID: 2559737886325497955}
+  m_CommandBuffer:
+    m_Commands: []
+  m_SubgraphsInfo: []
+  m_BlackboardMissingManagedRef: 0
+  m_GraphMissingManagedRef: 0
+  m_HasMissingTypeInManagedRef: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 8423081073977065541
+      type: {class: StartNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: 4.948502, y: -270.71796}
+        ID:
+          m_Value0: 18215726508823906141
+          m_Value1: 16211963736953662093
+        Parents: []
+        PortModels:
+        - rid: 8423081073977065542
+        NodeType:
+          m_SerializableType: Unity.Behavior.Start, Unity.Behavior, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 3335272451348827663
+          m_Value1: 11549843281177505721
+        m_FieldValues: []
+        Repeat: 0
+        AllowMultipleRepeatsPerTick: 0
+    - rid: 8423081073977065542
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 8423081073977065541
+        m_Connections: []
+--- !u!114 &36955999125407004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db920e62f70f420bb33c771449926fa4, type: 3}
+  m_Name: TestBehaviorGraph
+  m_EditorClassIdentifier: 
+  Graphs:
+  - rid: 8423081073977065543
+  m_DebugInfo: {fileID: -2183856035388503759}
+  m_WasCompileWithPlaceholderNode: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 1259831541913354357
+      type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 18215726508823906141
+          m_Value1: 16211963736953662093
+        Graph:
+          rid: 8423081073977065543
+        m_Parent:
+          rid: -2
+        m_Child:
+          rid: -2
+        Repeat: 0
+        AllowMultipleRepeatsPerTick: 0
+    - rid: 1461395248233840907
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 0}
+    - rid: 1461395248233840908
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Playables.PlayableDirector, UnityEngine.DirectorModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 8606589776863811491
+          m_Value1: 16963580325008456966
+        Name: IntroCutscene
+        m_Value: {fileID: 0}
+    - rid: 1461395248233840909
+      type: {class: 'BlackboardVariable`1[[Interactable, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 16132014912764879636
+          m_Value1: 6001264178443321417
+        Name: LaptopInteractable
+        m_Value: {fileID: 0}
+    - rid: 1461395248233840910
+      type: {class: 'BlackboardVariable`1[[Interactable, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 9731402448535650144
+          m_Value1: 8087528869668069966
+        Name: ServerInteractable
+        m_Value: {fileID: 0}
+    - rid: 1461395248233840911
+      type: {class: 'BlackboardVariable`1[[Interactable, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 9169959840330105401
+          m_Value1: 2692945787501297442
+        Name: MonitorInteractable
+        m_Value: {fileID: 0}
+    - rid: 1461395248233840912
+      type: {class: 'BlackboardVariable`1[[Interactable, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 17271116087205223620
+          m_Value1: 7086058297483731415
+        Name: GuidebookInteractable
+        m_Value: {fileID: 0}
+    - rid: 8423081073977065543
+      type: {class: BehaviorGraphModule, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        AuthoringAssetID:
+          m_Value0: 16048800971874752127
+          m_Value1: 7070415172194574586
+        m_DebugInfo: {fileID: -2183856035388503759}
+        BlackboardReference:
+          rid: 8423081073977065544
+        BlackboardGroupReferences: []
+        Root:
+          rid: 1259831541913354357
+        m_VersionTimestamp: 639162763712902960
+    - rid: 8423081073977065544
+      type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        m_Blackboard:
+          rid: 8423081073977065548
+        m_Source: {fileID: -3625570289631400678}
+    - rid: 8423081073977065548
+      type: {class: Blackboard, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        m_Variables:
+        - rid: 1461395248233840907
+        - rid: 1461395248233840908
+        - rid: 1461395248233840909
+        - rid: 1461395248233840910
+        - rid: 1461395248233840911
+        - rid: 1461395248233840912
+--- !u!114 &2559737886325497955
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dd922ae02c94c87a66e46a10a7319b9, type: 3}
+  m_Name: TestBehaviorGraph Blackboard
+  m_EditorClassIdentifier: 
+  AssetID:
+    m_Value0: 16048800971874752127
+    m_Value1: 7070415172194574586
+  m_Variables:
+  - rid: 8423081073977065550
+  - rid: 8423081083816903218
+  - rid: 8423081097232908928
+  - rid: 1461395247993979471
+  - rid: 1461395247993979666
+  - rid: 1461395247993979718
+  - rid: 172133616933929762
+  m_VersionTimestamp: 639130901658820642
+  m_CommandBuffer:
+    m_Commands: []
+  m_RuntimeBlackboardAsset: {fileID: -3625570289631400678}
+  references:
+    version: 2
+    RefIds:
+    - rid: 172133616933929762
+      type: {class: 'TypedVariableModel`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 5179509429366065186
+          m_Value1: 9246166095095325548
+        Name: PasswordFileWasOpened
+        IsExposed: 0
+        m_IsShared: 0
+        m_Value: 0
+    - rid: 1461395247993979471
+      type: {class: 'TypedVariableModel`1[[Interactable, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 9731402448535650144
+          m_Value1: 8087528869668069966
+        Name: ServerInteractable
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 1461395247993979666
+      type: {class: 'TypedVariableModel`1[[Interactable, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 9169959840330105401
+          m_Value1: 2692945787501297442
+        Name: MonitorInteractable
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 1461395247993979718
+      type: {class: 'TypedVariableModel`1[[Interactable, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 17271116087205223620
+          m_Value1: 7086058297483731415
+        Name: GuidebookInteractable
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 8423081073977065550
+      type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 8423081083816903218
+      type: {class: 'TypedVariableModel`1[[UnityEngine.Playables.PlayableDirector, UnityEngine.DirectorModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 8606589776863811491
+          m_Value1: 16963580325008456966
+        Name: IntroCutscene
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 8423081097232908928
+      type: {class: 'TypedVariableModel`1[[Interactable, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 16132014912764879636
+          m_Value1: 6001264178443321417
+        Name: LaptopInteractable
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}

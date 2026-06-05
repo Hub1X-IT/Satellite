@@ -40,7 +40,7 @@ public class StartCommandManager : MonoBehaviour
             {
                 startCommandProgram.StartProgramGameEvent.RaiseEvent(new StartProgramEventData
                 {
-                    Response = (wasSuccessful, responseOutput) => commandData.Response?.Invoke(wasSuccessful, responseOutput),
+                    Response = (responseData) => commandData.Response?.Invoke(responseData),
                 });
                 if (startCommandProgram.ObjectiveGameEvent != null)
                 {
@@ -49,7 +49,11 @@ public class StartCommandManager : MonoBehaviour
                 return;
             }
         }
-
-        commandData.Response?.Invoke(false, $"No program with name: {programName}");
+        
+        commandData.Response?.Invoke(new CommandResponseData
+        {
+            ExecutionStatus = CommandExecutionStatus.Failure,
+            ResponseStringArray = new string[] { $"No program with name: {programName}" }
+        });
     }
 }

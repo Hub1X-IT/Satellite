@@ -2,5 +2,5 @@ using System;
 
 public class StartProgramEventData
 {
-    public Action<bool, string> Response;
+    public Action<CommandResponseData> Response;
 }

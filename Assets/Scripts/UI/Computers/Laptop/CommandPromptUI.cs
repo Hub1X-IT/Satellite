@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class CommandPromptUI : MonoBehaviour
@@ -9,10 +10,17 @@ public class CommandPromptUI : MonoBehaviour
     private CommandPromptManager commandPromptManager;
 
     [SerializeField]
-    private TMP_InputField inputTextField;
+    private TMP_InputField inputField;
+    [SerializeField]
+    private TMP_Text inputFieldPlaceholderTextField;
+
+    private const string DefaultPlaceholderText = "Enter command...";
+    private const string CommandInProgressPlaceholderText = "Command execution in progress...";
 
     [SerializeField]
     private TMP_Text outputTextFieldPrefab;
+    [SerializeField]
+    private TMP_Text defaultOutputTextField;
 
     [SerializeField]
     private RectTransform outputField;
@@ -25,13 +33,6 @@ public class CommandPromptUI : MonoBehaviour
 
     private Button outputFieldButton;
 
-    /*
-    [SerializeField]
-    private ScrollRect outputFieldScrollRect;
-    */
-
-    private string outputText;
-
     private List<string> previousCommandsList;
 
     private string currentCommandCache;
@@ -39,25 +40,26 @@ public class CommandPromptUI : MonoBehaviour
     private bool isOnCurrentCommand;
     private bool canGetPreviousCommand;
 
-    private bool shouldFocusOnInputFieldNextFrame;
+    private bool isCommandPromptEnabled;
+    private bool isInputFieldInteractable;
+
+    private bool shouldToggleFocus;
 
     private void Awake()
     {
-        outputText = string.Empty;
-        outputTextFieldPrefab.text = string.Empty;
+        outputTextFieldPrefab.text = "";
 
         previousCommandsList = new();
 
         outputFieldButton = GetComponent<Button>();
-
-        //SetStartupText(cmdStartText.text + "\n");
 
         currentCommandCache = "";
         currentCommandIndex = -1;
         isOnCurrentCommand = true;
         canGetPreviousCommand = false;
 
-        shouldFocusOnInputFieldNextFrame = false;
+        isCommandPromptEnabled = false;
+        isInputFieldInteractable = true;
     }
 
     private void Start()
@@ -72,82 +74,94 @@ public class CommandPromptUI : MonoBehaviour
         GameInput.Instance.OnPreviousCommandAction += TrySetPreviousCommand;
         GameInput.Instance.OnNextCommandAction += TrySetNextCommand;
 
-        commandPromptManager.OnCommandResponse += (responseString) =>
-        {
-            SubmitResponse(responseString);
-        };
+        commandPromptManager.OnPrintCommandOutput += SubmitOutput;
+        commandPromptManager.OnCommandStatusChange += OnCommandStatusChange;
 
-        inputTextField.onSelect.AddListener((_) =>
-        {
-            inputTextField.caretPosition = inputTextField.text.Length;
-        });
+        inputField.onSelect.AddListener((_) => MoveCaretToEnd());
 
+        inputField.onValueChanged.AddListener((_) => PlayKeyboardSound());
 
-        inputTextField.onValueChanged.AddListener((_) =>
-        {
-            cmdAudioSource.Play();
-        });
+        outputFieldButton.onClick.AddListener(ToggleInputFieldFocus);
 
-        outputFieldButton.onClick.AddListener(() => shouldFocusOnInputFieldNextFrame = true);
+        defaultOutputTextField.text = cmdStartText.text;
     }
 
+    // Input field focus handling
     private void LateUpdate()
     {
-        if (shouldFocusOnInputFieldNextFrame)
+        if (shouldToggleFocus)
         {
-            FocusOnInputField();
-            shouldFocusOnInputFieldNextFrame = false;
+            if (isCommandPromptEnabled && isInputFieldInteractable)
+            {
+                inputField.ActivateInputField();
+                MoveCaretToEnd();
+            }
+            else
+            {
+                inputField.DeactivateInputField();
+                EventSystem.current.SetSelectedGameObject(null);
+            }
+            shouldToggleFocus = false;
         }
     }
 
+    private void ToggleInputFieldFocus()
+    {
+        shouldToggleFocus = true;
+    }
+
+    private void MoveCaretToEnd()
+    {
+        inputField.MoveTextEnd(false);
+    }
+
+    // May not be the best solution
+    public void SetCommandPromptEnabled(bool enabled)
+    {
+        inputField.enabled = enabled;
+        isCommandPromptEnabled = enabled;
+        ToggleInputFieldFocus();
+    }
+
+    private void OnCommandStatusChange()
+    {
+        isInputFieldInteractable = !commandPromptManager.IsCommandInProgress;
+        inputField.interactable = isInputFieldInteractable;
+        inputFieldPlaceholderTextField.text = isInputFieldInteractable ? DefaultPlaceholderText : CommandInProgressPlaceholderText;
+        ToggleInputFieldFocus();
+    }
+
+    // Current commands
     private void SubmitCommand(string command)
     {
         previousCommandsList.Add(command);
         isOnCurrentCommand = true;
         canGetPreviousCommand = true;
 
-        inputTextField.text = "";
-        FocusOnInputField();
+        inputField.text = "";
+        ToggleInputFieldFocus();
 
         TMP_Text outputTextField = Instantiate(outputTextFieldPrefab.gameObject, outputField).GetComponent<TMP_Text>();
         outputTextField.text = ">>> " + command;
     }
-
-    private void SubmitResponse(string responseText)
+    private void SubmitOutput(string[] multilineResponse)
     {
-        TMP_Text outputTextField = Instantiate(outputTextFieldPrefab.gameObject, outputField).GetComponent<TMP_Text>();
-        outputTextField.text = responseText;
+        foreach (var line in multilineResponse)
+        {
+            TMP_Text outputTextField = Instantiate(outputTextFieldPrefab.gameObject, outputField).GetComponent<TMP_Text>();
+            outputTextField.text = line;
+        }
     }
-
     private string GetCurrentCommand()
     {
-        string command = inputTextField.text;
-        return command;
+        return inputField.text;
     }
-
     private void SetInputFieldText(string text)
     {
-        inputTextField.text = text;
+        inputField.text = text;
     }
 
-    private void SetStartupText(string text)
-    {
-        outputText = text;
-        outputTextFieldPrefab.text = outputText;
-    }
-
-    public void FocusOnInputField()
-    {
-        inputTextField.enabled = true;
-        inputTextField.ActivateInputField();
-        inputTextField.caretPosition = inputTextField.text.Length;
-    }
-
-    public void FocusOffInputField()
-    {
-        inputTextField.enabled = false;
-    }
-
+    // Previous commands
     private void TrySetPreviousCommand()
     {
         if (canGetPreviousCommand)
@@ -183,7 +197,7 @@ public class CommandPromptUI : MonoBehaviour
             Debug.Log("no previous commands.");
         }
 
-        shouldFocusOnInputFieldNextFrame = true;
+        ToggleInputFieldFocus();
     }
 
     private void TrySetNextCommand()
@@ -198,13 +212,13 @@ public class CommandPromptUI : MonoBehaviour
             else
             {
                 SetInputFieldText(currentCommandCache);
-                currentCommandCache = string.Empty;
+                currentCommandCache = "";
                 isOnCurrentCommand = true;
             }
             canGetPreviousCommand = true;
         }
 
-        shouldFocusOnInputFieldNextFrame = true;
+        ToggleInputFieldFocus();
     }
 
     private bool TryGetCommandWithIndex(int commandIndex, out string command)
@@ -214,7 +228,7 @@ public class CommandPromptUI : MonoBehaviour
             command = previousCommandsList[commandIndex];
             return true;
         }
-        command = string.Empty;
+        command = "";
         return false;
     }
 
@@ -227,8 +241,13 @@ public class CommandPromptUI : MonoBehaviour
             return true;
         }
 
-        command = string.Empty;
+        command = "";
         commandIndex = -1;
         return false;
+    }
+
+    private void PlayKeyboardSound()
+    {
+        cmdAudioSource.Play();
     }
 }

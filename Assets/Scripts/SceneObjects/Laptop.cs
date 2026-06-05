@@ -20,12 +20,10 @@ public class Laptop : MonoBehaviour
             if (enabled)
             {
                 GameInput.Instance.CurrentInputActions.CommandPrompt.Enable();
-                GameInput.Instance.OnLeftClickPerformedAction += commandPromptUI.FocusOnInputField;
             }
             else
             {
                 GameInput.Instance.CurrentInputActions.CommandPrompt.Disable();
-                GameInput.Instance.OnLeftClickPerformedAction -= commandPromptUI.FocusOnInputField;
             }
         };
     }

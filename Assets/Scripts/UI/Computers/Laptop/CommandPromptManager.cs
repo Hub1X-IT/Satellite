@@ -3,41 +3,41 @@ using UnityEngine;
 
 public class CommandPromptManager : MonoBehaviour
 {
-    public Action<string> OnCommandResponse;
+    public Action<string[]> OnPrintCommandOutput;
+    public Action OnCommandStatusChange;
 
     [SerializeField]
     private PossibleCommandsSO possibleCommandsSO;
 
-    private string currentCommand;
+    public bool IsCommandInProgress { get; private set; }
+
+    private void Awake()
+    {
+        IsCommandInProgress = false;
+    }
 
     private void OnDestroy()
     {
         possibleCommandsSO.ResetCommandGameEvents();
     }
 
-    public void SubmitCommand(string command)
+    public void SubmitCommand(string inputCommand)
     {
-        string commandLower = command.ToLower();
+        string[] command = inputCommand.ToLower().Split(" ", StringSplitOptions.RemoveEmptyEntries); // splits only by spaces
+        // string[] command = inputCommand.ToLower().Split((char[])null, StringSplitOptions.RemoveEmptyEntries); // splits by all whitespace
 
-        if (commandLower.Length > 0)
+        if (command.Length > 0)
         {
-            string[] splitCommand = commandLower.Split(' ');
-            string baseCommand = splitCommand[0];
-            if (splitCommand.Length > 1)
-            {
-                string[] commandData = splitCommand[1..];
-                ExecuteCommand(baseCommand, commandData);
-            }
-            else
-            {
-                ExecuteCommand(baseCommand, Array.Empty<string>());
-            }
+            string baseCommand = command[0];
+            string[] commandData = command[1..];
+
+            ExecuteCommand(baseCommand, commandData);
         }
     }
 
     private void ExecuteCommand(string command, string[] commandData)
     {
-        if (command == string.Empty)
+        if (string.IsNullOrWhiteSpace(command))
         {
             return;
         }
@@ -48,7 +48,11 @@ public class CommandPromptManager : MonoBehaviour
 
             if (commandData.Length != gameEvent.RequiredArgumentsNumber)
             {
-                RespondToCommand(false, "Invalid number of arguments");
+                RespondToCommand(new CommandResponseData
+                {
+                    ExecutionStatus = CommandExecutionStatus.Failure,
+                    ResponseStringArray = new string[] { "Invalid number of arguments" }
+                });
                 return;
             }
 
@@ -60,15 +64,22 @@ public class CommandPromptManager : MonoBehaviour
         }
         else
         {
-            RespondToCommand(false, command + ": command not found.");
+            RespondToCommand(new CommandResponseData
+            {
+                ExecutionStatus = CommandExecutionStatus.Failure,
+                ResponseStringArray = new string[] { command + ": command not found." }
+            });
         }
     }
 
-    private void RespondToCommand(bool wasSuccessful, string response)
+    private void RespondToCommand(CommandResponseData responseData)
     {
-        string responseString = wasSuccessful ? "" : "Command failed. ";
-        responseString += response;
+        Debug.Log("Command execution status: " + responseData.ExecutionStatus.ToString());
 
-        OnCommandResponse?.Invoke(responseString);
+        OnPrintCommandOutput?.Invoke(responseData.ResponseStringArray);
+
+        IsCommandInProgress = responseData.ExecutionStatus == CommandExecutionStatus.InProgress;
+        
+        OnCommandStatusChange?.Invoke();
     }
 }
