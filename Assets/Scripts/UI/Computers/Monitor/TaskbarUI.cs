@@ -10,19 +10,21 @@ public class TaskbarUI : MonoBehaviour
     private Button passwordCrackingAppButton;
 
     [SerializeField]
-    private Button TracingAppButton;
+    private Button tracingAppButton;
 
     private void Start()
     {
         passwordCrackingAppButton.onClick.AddListener(() => OnAppButtonPressed(MonitorAppsManagerUI.ApplicationType.PasswordCrackingApp));
-        TracingAppButton.onClick.AddListener(() => OnAppButtonPressed(MonitorAppsManagerUI.ApplicationType.TracingApp));
+        tracingAppButton.onClick.AddListener(() => OnAppButtonPressed(MonitorAppsManagerUI.ApplicationType.TracingApp));
 
         // Temporary
         TracingManager.Instance.OnTracingStarted += () =>
         {
             if (monitorAppsManager.IsAppOpen(MonitorAppsManagerUI.ApplicationType.TracingApp))
             {
-                monitorAppsManager.GetOpenApp(MonitorAppsManagerUI.ApplicationType.TracingApp).SetAppMinimized(false);
+                MonitorAppUI tracingApp = monitorAppsManager.GetOpenApp(MonitorAppsManagerUI.ApplicationType.TracingApp);
+                tracingApp.SetAppMinimized(false);
+                monitorAppsManager.FocusApp(MonitorAppsManagerUI.ApplicationType.TracingApp);
             }
             else
             {
@@ -35,7 +37,14 @@ public class TaskbarUI : MonoBehaviour
     {
         if (monitorAppsManager.IsAppOpen(applicationType))
         {
-            monitorAppsManager.ToggleMinimizeApp(applicationType);
+            if (monitorAppsManager.IsAppMinimized(applicationType) || monitorAppsManager.IsAppFocused(applicationType))
+            {
+                monitorAppsManager.ToggleMinimizeApp(applicationType);
+            }
+            else
+            {
+                monitorAppsManager.FocusApp(applicationType);
+            }
         }
         else
         {

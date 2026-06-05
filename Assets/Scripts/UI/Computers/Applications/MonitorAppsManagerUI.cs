@@ -27,10 +27,12 @@ public class MonitorAppsManagerUI : MonoBehaviour
     private TracingAppUI tracingAppPrefab;
 
     private Dictionary<ApplicationType, MonitorAppUI> openApps;
+    private List<ApplicationType> lastFocusedApps;
 
     private void Start()
     {
         openApps = new();
+        lastFocusedApps = new();
     }
 
     public MonitorAppUI OpenApplication(ApplicationType application)
@@ -59,12 +61,23 @@ public class MonitorAppsManagerUI : MonoBehaviour
         }
         instantiatedApp.InitializeApp(this, application);
         openApps[application] = instantiatedApp;
+        lastFocusedApps.Add(application);
         return instantiatedApp;
     }
 
     public bool IsAppOpen(ApplicationType applicationType)
     {
         return openApps.ContainsKey(applicationType) && openApps[applicationType] != null;
+    }
+
+    public bool IsAppMinimized(ApplicationType applicationType)
+    {
+        return openApps[applicationType].IsMinimized;
+    }
+
+    public bool IsAppFocused(ApplicationType applicationType)
+    {
+        return lastFocusedApps.Count > 0 && applicationType == lastFocusedApps[^1];
     }
 
     public MonitorAppUI GetOpenApp(ApplicationType applicationType)
@@ -75,14 +88,62 @@ public class MonitorAppsManagerUI : MonoBehaviour
     public void ToggleMinimizeApp(ApplicationType applicationType)
     {
         MonitorAppUI monitorApp = openApps[applicationType];
-        monitorApp.SetAppMinimized(!monitorApp.IsMinimized);
+        bool targetState = !monitorApp.IsMinimized;
+        monitorApp.SetAppMinimized(targetState);
+        if (!targetState)
+        {
+            FocusApp(applicationType);
+        }
+        else
+        {
+            TryRemoveFocusedApp(applicationType);
+            FocusLastApp();
+        }
+    }
+
+    public void TryMinimizeApp(ApplicationType applicationType)
+    {
+        if (IsAppOpen(applicationType) && !openApps[applicationType].IsMinimized)
+        {
+            ToggleMinimizeApp(applicationType);
+        }
+    }
+
+    public void FocusApp(ApplicationType applicationType)
+    {
+        MonitorAppUI montiorApp = openApps[applicationType];
+        montiorApp.BringAppToFront();
+        TryRemoveFocusedApp(applicationType);
+        lastFocusedApps.Add(applicationType);
+    }
+
+    private void FocusLastApp()
+    {
+        if (lastFocusedApps.Count > 0)
+        {
+            ApplicationType applicationType = lastFocusedApps[^1];
+            FocusApp(applicationType);
+        }
     }
 
     public void CloseApp(ApplicationType applicationType)
     {
         MonitorAppUI monitorApp = openApps[applicationType];
-        monitorApp.CloseApp();
+        monitorApp.CloseAppFromAppsManager();
         openApps[applicationType] = null;
+        TryRemoveFocusedApp(applicationType);
+        FocusLastApp();
+    }
+
+    private bool TryRemoveFocusedApp(ApplicationType applicationType)
+    {
+        if (lastFocusedApps.Contains(applicationType))
+        {
+            lastFocusedApps.Remove(applicationType);
+            return true;
+        }
+
+        return false;
     }
 
     public void OpenDoorApp()

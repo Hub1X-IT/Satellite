@@ -13,9 +13,9 @@ public class MonitorAppUI : MonoBehaviour
     [SerializeField]
     private Button appMinimizeButton;
 
-    private MonitorAppsManagerUI currentMonitorAppManager;
+    private MonitorAppsManagerUI currentMonitorAppsManager;
 
-    public MonitorAppsManagerUI CurrentMonitorAppManager => currentMonitorAppManager;
+    public MonitorAppsManagerUI CurrentMonitorAppManager => currentMonitorAppsManager;
 
     public bool IsMinimized { get; private set; }
 
@@ -26,13 +26,13 @@ public class MonitorAppUI : MonoBehaviour
         appCloseButton.onClick.AddListener(CloseApp);
         if (appMinimizeButton != null)
         {
-            appMinimizeButton.onClick.AddListener(() => SetAppMinimized(true));
+            appMinimizeButton.onClick.AddListener(() => currentMonitorAppsManager.TryMinimizeApp(AppType));
         }
     }
 
     public void InitializeApp(MonitorAppsManagerUI monitorAppManager, MonitorAppsManagerUI.ApplicationType appType)
     {
-        currentMonitorAppManager = monitorAppManager;
+        currentMonitorAppsManager = monitorAppManager;
         AppType = appType;
 
         IsMinimized = false;
@@ -47,6 +47,11 @@ public class MonitorAppUI : MonoBehaviour
     public void CloseApp()
     {
         Debug.Log($"Close app: {gameObject.name}");
+        currentMonitorAppsManager.CloseApp(AppType);
+    }
+
+    public void CloseAppFromAppsManager()
+    {
         gameObject.SetActive(false);
         Destroy(gameObject);
     }
@@ -55,11 +60,6 @@ public class MonitorAppUI : MonoBehaviour
     {
         gameObject.SetActive(!minimized);
         IsMinimized = minimized;
-
-        if (!minimized)
-        {
-            BringAppToFront();
-        }
     }
 
     public void BringAppToFront()
