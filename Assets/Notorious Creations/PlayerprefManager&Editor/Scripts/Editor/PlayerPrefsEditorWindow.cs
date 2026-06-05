@@ -28,6 +28,8 @@ public class PlayerPrefsEditorWindow : EditorWindow
     private PinTabView pinTabView;
     private HideSeekTabView hideSeekTabView;
     private NotificationsTabView notificationsTabView;
+    private CategoryTabView categoryTabView;
+    private VisualElement categoryTabContent; // The empty view for Category
     private List<string> playerPrefKeys = new List<string>(); 
     private double lastCheckTime = 0;
     private int lastPrefsCount = 0;
@@ -39,6 +41,12 @@ public class PlayerPrefsEditorWindow : EditorWindow
     [SerializeField] private List<string> serializedPinnedKeys = new List<string>();
     [SerializeField] public HidePlayerPrefItem[] HidePlayerPrefContains = new HidePlayerPrefItem[0];
     private HashSet<string> pinnedKeys = new HashSet<string>();
+    
+    // Category tracking
+    [SerializeField] private List<string> availableCategories = new List<string> { "UnCategorized" };
+    [SerializeField] private List<string> categoryKeys = new List<string>();
+    [SerializeField] private List<string> categoryValues = new List<string>();
+    private Dictionary<string, string> prefCategories = new Dictionary<string, string>();
     
     // Track last updated date and time for each PlayerPref
     [SerializeField] private Dictionary<string, string> lastUpdatedTimes = new Dictionary<string, string>();
@@ -63,6 +71,13 @@ public class PlayerPrefsEditorWindow : EditorWindow
 
     public void CreateGUI()
     {
+        // Rebuild category dictionary from serialized lists
+        prefCategories.Clear();
+        for (int i = 0; i < Math.Min(categoryKeys.Count, categoryValues.Count); i++)
+        {
+            prefCategories[categoryKeys[i]] = categoryValues[i];
+        }
+
         // Initialize notification system
         PlayerPrefChangeNotifier.Initialize();
         
@@ -124,6 +139,19 @@ public class PlayerPrefsEditorWindow : EditorWindow
             if (currentTabIndex == 0) RefreshPlayerPrefsList();
             else if (currentTabIndex == 4) RefreshNotificationsTab();
         };
+
+        // Create Category tab content
+        categoryTabContent = new VisualElement();
+        categoryTabContent.name = "CategoryTabContent";
+        categoryTabContent.style.flexGrow = 1;
+        categoryTabContent.style.display = DisplayStyle.None;
+        mainContentContainer.Add(categoryTabContent);
+
+        categoryTabView = new CategoryTabView(categoryTabContent, () => {
+            // Optional: Actions when category list is interacted with
+            RefreshPlayerPrefsList();
+        });
+
         // Provide a callback to PinTabView for pin/unpin
         pinTabView.OnPinToggle = (key, pinned) => {
             if (pinnedKeys.Contains(key)) {
@@ -187,7 +215,7 @@ public class PlayerPrefsEditorWindow : EditorWindow
         EditorApplication.update += PollPrefs;
 
 
-        var tabNames = new List<string> { "All", "Pin", "Live", "Hide & Seek", "Notifications" }; 
+        var tabNames = new List<string> { "All", "Pin", "Live", "Hide & Seek", "Notifications", "Category" }; 
         var tabButtons = new List<Button>(); 
         int currentTab = currentTabIndex;
         VisualElement allTabContent = new VisualElement();
@@ -217,6 +245,7 @@ public class PlayerPrefsEditorWindow : EditorWindow
                 tab3Content.style.display = (tabIdx == 2) ? DisplayStyle.Flex : DisplayStyle.None;
                 hideSeekTabContent.style.display = (tabIdx == 3) ? DisplayStyle.Flex : DisplayStyle.None;
                 notificationsTabContent.style.display = (tabIdx == 4) ? DisplayStyle.Flex : DisplayStyle.None;
+                categoryTabContent.style.display = (tabIdx == 5) ? DisplayStyle.Flex : DisplayStyle.None;
                 // Show/hide Live tab alpha label
                 liveTabAlphaLabel.style.display = (tabIdx == 2) ? DisplayStyle.Flex : DisplayStyle.None;
                 if (tabIdx == 0) RefreshPlayerPrefsList(); // Refresh All tab when switching to it
@@ -224,6 +253,7 @@ public class PlayerPrefsEditorWindow : EditorWindow
                 else if (tabIdx == 2) RefreshTab3ListView();
                 else if (tabIdx == 3) RefreshHideSeekTabView();
                 else if (tabIdx == 4) RefreshNotificationsTab();
+                else if (tabIdx == 5) RefreshCategoryTabView();
             }) { text = tabNames[i] };
             tabButtons.Add(tabBtn);
             tabs.Add(tabBtn);
@@ -242,6 +272,7 @@ public class PlayerPrefsEditorWindow : EditorWindow
             tab3Content.style.display = (tabToSelect == 2) ? DisplayStyle.Flex : DisplayStyle.None;
             hideSeekTabContent.style.display = (tabToSelect == 3) ? DisplayStyle.Flex : DisplayStyle.None;
             notificationsTabContent.style.display = (tabToSelect == 4) ? DisplayStyle.Flex : DisplayStyle.None;
+            categoryTabContent.style.display = (tabToSelect == 5) ? DisplayStyle.Flex : DisplayStyle.None;
             liveTabAlphaLabel.style.display = (tabToSelect == 2) ? DisplayStyle.Flex : DisplayStyle.None;
 
             // If we're starting on All tab, refresh its content 
@@ -257,6 +288,8 @@ public class PlayerPrefsEditorWindow : EditorWindow
             else if (tabToSelect == 3) RefreshHideSeekTabView();
             // If we're starting on Notifications tab, refresh its content
             else if (tabToSelect == 4) RefreshNotificationsTab();
+            // If we're starting on Category tab, refresh its content
+            else if (tabToSelect == 5) RefreshCategoryTabView();
         }
 
         // Toolbar (search, filter, delete all)
@@ -340,26 +373,84 @@ public class PlayerPrefsEditorWindow : EditorWindow
         
         // Set up ListView structure immediately
         leftPane.makeItem = () => {
+            var row = new VisualElement();
+            row.style.flexDirection = FlexDirection.Row;
+            row.style.alignItems = Align.Center;
+            row.style.minHeight = 24;
+            row.style.paddingLeft = 8;
+            row.style.paddingRight = 8;
+            row.style.paddingTop = 4;
+            row.style.paddingBottom = 4;
+
             var label = new Label();
+            label.name = "keyLabel";
             label.style.unityTextAlign = TextAnchor.MiddleLeft;
             label.style.fontSize = 12;
-            label.style.paddingLeft = 8;
-            label.style.paddingRight = 8;
-            label.style.paddingTop = 4;
-            label.style.paddingBottom = 4;
-            label.style.minHeight = 24;
+            label.style.flexGrow = 1;
+            label.style.minWidth = 100;
+            row.Add(label);
+
+            var categoryDropdown = new DropdownField();
+            categoryDropdown.name = "categoryDropdown";
+            categoryDropdown.style.width = 120;
+            categoryDropdown.style.marginLeft = 8;
+            row.Add(categoryDropdown);
             
-            return label;
+            return row;
         };
         
         leftPane.bindItem = (item, index) =>
         {
-            var label = item as Label;
+            var row = item as VisualElement;
+            var label = row.Q<Label>("keyLabel");
+            var dropdown = row.Q<DropdownField>("categoryDropdown");
             
             if (index >= playerPrefKeys.Count) return;
             
             string key = playerPrefKeys[index];
             label.text = key;
+
+            // Update dropdown choices to include all available categories + "Add New..."
+            var choices = new List<string>(availableCategories);
+            choices.Add("Add New...");
+            dropdown.choices = choices;
+
+            // Set current category
+            string currentCategory = prefCategories.ContainsKey(key) ? prefCategories[key] : "UnCategorized";
+            dropdown.SetValueWithoutNotify(currentCategory);
+
+            // Handle category changes — unregister previous callback if one exists
+            var previousCallback = dropdown.userData as EventCallback<ChangeEvent<string>>;
+            if (previousCallback != null)
+                dropdown.UnregisterValueChangedCallback(previousCallback);
+            EventCallback<ChangeEvent<string>> callback = evt => {
+                if (evt.newValue == "Add New...")
+                {
+                    // Revert to previous value temporarily
+                    dropdown.SetValueWithoutNotify(evt.previousValue);
+                    
+                    // Show dialog to add new category
+                    TextInputDialog.Show("New Category", "Enter name for new category:", "", newCat => {
+                        if (!string.IsNullOrEmpty(newCat) && newCat != "Add New...")
+                        {
+                            if (!availableCategories.Contains(newCat))
+                            {
+                                availableCategories.Add(newCat);
+                            }
+                            prefCategories[key] = newCat;
+                            SaveCategoryData();
+                            RefreshPlayerPrefsList();
+                        }
+                    });
+                }
+                else
+                {
+                    prefCategories[key] = evt.newValue;
+                    SaveCategoryData();
+                }
+            };
+            dropdown.userData = callback;
+            dropdown.RegisterValueChangedCallback(callback);
         };
         // Add a right pane with details and edit controls
         var rightPane = new VisualElement();
@@ -878,6 +969,18 @@ typeFilterDropdown.RegisterValueChangedCallback(evt => {
         EditorUtility.SetDirty(this);
     }
 
+    private void SaveCategoryData()
+    {
+        categoryKeys.Clear();
+        categoryValues.Clear();
+        foreach (var kvp in prefCategories)
+        {
+            categoryKeys.Add(kvp.Key);
+            categoryValues.Add(kvp.Value);
+        }
+        SaveChanges();
+    }
+
     // Track last known values for change detection
     private Dictionary<string, string> lastKnownValues = new Dictionary<string, string>();
     private void PollPrefs()
@@ -991,10 +1094,69 @@ typeFilterDropdown.RegisterValueChangedCallback(evt => {
                 {
                     RefreshNotificationsTab();
                 }
+                // Update Category tab in real time if open
+                if (currentTabIndex == 5)
+                {
+                    RefreshCategoryTabView();
+                }
                 lastPrefsCount = keys.Count;
                 SaveChanges();
             }
         }
+    }
+
+    private void RefreshCategoryTabView()
+    {
+        if (categoryTabView == null) return;
+
+        var userToRawMap = GetUserKeyToRegistryKeyMap();
+        var allItems = new List<(string key, string type, string value)>();
+
+        foreach (var kvp in userToRawMap)
+        {
+            string userKey = kvp.Key;
+            
+            if (hideSeekTabView != null && hideSeekTabView.ShouldHideKey(userKey, "All"))
+            {
+                continue; // Apply All tab filters to category view too
+            }
+
+            string typeDesc = "Unknown";
+            string valueStr = "";
+            
+            // Re-use logic to get type/value
+            int iVal = PlayerPrefs.GetInt(userKey, int.MinValue);
+            bool isInt = (iVal != int.MinValue) || PlayerPrefs.GetInt(userKey, int.MaxValue) == int.MinValue;
+            if (isInt)
+            {
+                typeDesc = "int";
+                valueStr = iVal.ToString();
+            }
+            else
+            {
+                float fVal = PlayerPrefs.GetFloat(userKey, float.MinValue);
+                bool isFloat = (fVal != float.MinValue) || PlayerPrefs.GetFloat(userKey, float.MaxValue) == float.MinValue;
+                if (isFloat)
+                {
+                    typeDesc = "float";
+                    valueStr = fVal.ToString("F3");
+                }
+                else
+                {
+                    string sVal = PlayerPrefs.GetString(userKey, "\0");
+                    bool isString = (sVal != "\0" || PlayerPrefs.GetString(userKey, " ") == "\0");
+                    if (isString)
+                    {
+                        typeDesc = "string";
+                        valueStr = sVal;
+                    }
+                }
+            }
+
+            allItems.Add((userKey, typeDesc, valueStr));
+        }
+
+        categoryTabView.Refresh(availableCategories, prefCategories, allItems);
     }
 
     // Helper to refresh Tab3 ListView (Last Updated)
