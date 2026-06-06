@@ -157,18 +157,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SmartphoneToggle"",
+                    ""name"": ""SmartphoneEnable"",
                     ""type"": ""Button"",
                     ""id"": ""2313d576-ef07-4496-8ef9-e49ebd06663b"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""GuidebookToggle"",
-                    ""type"": ""Button"",
-                    ""id"": ""6734d569-cc08-49fb-b98a-ca945a1927fb"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -269,18 +260,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SmartphoneToggle"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3e01cbf8-0ce9-48e2-974c-bd596cc3a01e"",
-                    ""path"": ""<Keyboard>/g"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""GuidebookToggle"",
+                    ""action"": ""SmartphoneEnable"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -309,13 +289,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""Dialogue"",
-            ""id"": ""5b6b2377-0126-480e-afa7-fa74d145346a"",
+            ""name"": ""Smartphone"",
+            ""id"": ""1b53f462-5412-4084-9691-5c45bcd0df17"",
             ""actions"": [
                 {
-                    ""name"": ""NextSentence"",
+                    ""name"": ""SmartphoneDisable"",
                     ""type"": ""Button"",
-                    ""id"": ""ba7cc3f3-3e01-40fd-82b7-2f0a58c1fdb8"",
+                    ""id"": ""c4f92678-c213-42cd-b65f-d482af847fc4"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -325,12 +305,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""43b3073e-5456-4d09-9618-2685de2551be"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""id"": ""b99c59f0-f49d-4e89-bf2d-77511e28efe5"",
+                    ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""NextSentence"",
+                    ""action"": ""SmartphoneDisable"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -396,15 +376,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Return"",
-                    ""type"": ""Button"",
-                    ""id"": ""a0fada47-ce97-467e-b38f-8a78811506d2"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -416,17 +387,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""LeftClick"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""703e2517-2e27-4e8a-97e7-1b9ad2d8e24e"",
-                    ""path"": ""<Keyboard>/enter"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Return"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -543,12 +503,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_PlayerWalking_Rotate = m_PlayerWalking.FindAction("Rotate", throwIfNotFound: true);
         m_PlayerWalking_Interact = m_PlayerWalking.FindAction("Interact", throwIfNotFound: true);
         m_PlayerWalking_FlashlightToggle = m_PlayerWalking.FindAction("FlashlightToggle", throwIfNotFound: true);
-        m_PlayerWalking_SmartphoneToggle = m_PlayerWalking.FindAction("SmartphoneToggle", throwIfNotFound: true);
-        m_PlayerWalking_GuidebookToggle = m_PlayerWalking.FindAction("GuidebookToggle", throwIfNotFound: true);
+        m_PlayerWalking_SmartphoneEnable = m_PlayerWalking.FindAction("SmartphoneEnable", throwIfNotFound: true);
         m_PlayerWalking_DialogueSkip = m_PlayerWalking.FindAction("DialogueSkip", throwIfNotFound: true);
-        // Dialogue
-        m_Dialogue = asset.FindActionMap("Dialogue", throwIfNotFound: true);
-        m_Dialogue_NextSentence = m_Dialogue.FindAction("NextSentence", throwIfNotFound: true);
+        // Smartphone
+        m_Smartphone = asset.FindActionMap("Smartphone", throwIfNotFound: true);
+        m_Smartphone_SmartphoneDisable = m_Smartphone.FindAction("SmartphoneDisable", throwIfNotFound: true);
         // Guidebook
         m_Guidebook = asset.FindActionMap("Guidebook", throwIfNotFound: true);
         m_Guidebook_ChangePageLeft = m_Guidebook.FindAction("ChangePageLeft", throwIfNotFound: true);
@@ -556,7 +515,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // Computer
         m_Computer = asset.FindActionMap("Computer", throwIfNotFound: true);
         m_Computer_LeftClick = m_Computer.FindAction("LeftClick", throwIfNotFound: true);
-        m_Computer_Return = m_Computer.FindAction("Return", throwIfNotFound: true);
         // CommandPrompt
         m_CommandPrompt = asset.FindActionMap("CommandPrompt", throwIfNotFound: true);
         m_CommandPrompt_CommandSubmit = m_CommandPrompt.FindAction("CommandSubmit", throwIfNotFound: true);
@@ -569,7 +527,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         UnityEngine.Debug.Assert(!m_All.enabled, "This will cause a leak and performance issues, PlayerInputActions.All.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_PlayerWalking.enabled, "This will cause a leak and performance issues, PlayerInputActions.PlayerWalking.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_Dialogue.enabled, "This will cause a leak and performance issues, PlayerInputActions.Dialogue.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Smartphone.enabled, "This will cause a leak and performance issues, PlayerInputActions.Smartphone.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Guidebook.enabled, "This will cause a leak and performance issues, PlayerInputActions.Guidebook.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Computer.enabled, "This will cause a leak and performance issues, PlayerInputActions.Computer.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_CommandPrompt.enabled, "This will cause a leak and performance issues, PlayerInputActions.CommandPrompt.Disable() has not been called.");
@@ -748,8 +706,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerWalking_Rotate;
     private readonly InputAction m_PlayerWalking_Interact;
     private readonly InputAction m_PlayerWalking_FlashlightToggle;
-    private readonly InputAction m_PlayerWalking_SmartphoneToggle;
-    private readonly InputAction m_PlayerWalking_GuidebookToggle;
+    private readonly InputAction m_PlayerWalking_SmartphoneEnable;
     private readonly InputAction m_PlayerWalking_DialogueSkip;
     /// <summary>
     /// Provides access to input actions defined in input action map "PlayerWalking".
@@ -779,13 +736,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @FlashlightToggle => m_Wrapper.m_PlayerWalking_FlashlightToggle;
         /// <summary>
-        /// Provides access to the underlying input action "PlayerWalking/SmartphoneToggle".
+        /// Provides access to the underlying input action "PlayerWalking/SmartphoneEnable".
         /// </summary>
-        public InputAction @SmartphoneToggle => m_Wrapper.m_PlayerWalking_SmartphoneToggle;
-        /// <summary>
-        /// Provides access to the underlying input action "PlayerWalking/GuidebookToggle".
-        /// </summary>
-        public InputAction @GuidebookToggle => m_Wrapper.m_PlayerWalking_GuidebookToggle;
+        public InputAction @SmartphoneEnable => m_Wrapper.m_PlayerWalking_SmartphoneEnable;
         /// <summary>
         /// Provides access to the underlying input action "PlayerWalking/DialogueSkip".
         /// </summary>
@@ -828,12 +781,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @FlashlightToggle.started += instance.OnFlashlightToggle;
             @FlashlightToggle.performed += instance.OnFlashlightToggle;
             @FlashlightToggle.canceled += instance.OnFlashlightToggle;
-            @SmartphoneToggle.started += instance.OnSmartphoneToggle;
-            @SmartphoneToggle.performed += instance.OnSmartphoneToggle;
-            @SmartphoneToggle.canceled += instance.OnSmartphoneToggle;
-            @GuidebookToggle.started += instance.OnGuidebookToggle;
-            @GuidebookToggle.performed += instance.OnGuidebookToggle;
-            @GuidebookToggle.canceled += instance.OnGuidebookToggle;
+            @SmartphoneEnable.started += instance.OnSmartphoneEnable;
+            @SmartphoneEnable.performed += instance.OnSmartphoneEnable;
+            @SmartphoneEnable.canceled += instance.OnSmartphoneEnable;
             @DialogueSkip.started += instance.OnDialogueSkip;
             @DialogueSkip.performed += instance.OnDialogueSkip;
             @DialogueSkip.canceled += instance.OnDialogueSkip;
@@ -860,12 +810,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @FlashlightToggle.started -= instance.OnFlashlightToggle;
             @FlashlightToggle.performed -= instance.OnFlashlightToggle;
             @FlashlightToggle.canceled -= instance.OnFlashlightToggle;
-            @SmartphoneToggle.started -= instance.OnSmartphoneToggle;
-            @SmartphoneToggle.performed -= instance.OnSmartphoneToggle;
-            @SmartphoneToggle.canceled -= instance.OnSmartphoneToggle;
-            @GuidebookToggle.started -= instance.OnGuidebookToggle;
-            @GuidebookToggle.performed -= instance.OnGuidebookToggle;
-            @GuidebookToggle.canceled -= instance.OnGuidebookToggle;
+            @SmartphoneEnable.started -= instance.OnSmartphoneEnable;
+            @SmartphoneEnable.performed -= instance.OnSmartphoneEnable;
+            @SmartphoneEnable.canceled -= instance.OnSmartphoneEnable;
             @DialogueSkip.started -= instance.OnDialogueSkip;
             @DialogueSkip.performed -= instance.OnDialogueSkip;
             @DialogueSkip.canceled -= instance.OnDialogueSkip;
@@ -903,29 +850,29 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     /// </summary>
     public PlayerWalkingActions @PlayerWalking => new PlayerWalkingActions(this);
 
-    // Dialogue
-    private readonly InputActionMap m_Dialogue;
-    private List<IDialogueActions> m_DialogueActionsCallbackInterfaces = new List<IDialogueActions>();
-    private readonly InputAction m_Dialogue_NextSentence;
+    // Smartphone
+    private readonly InputActionMap m_Smartphone;
+    private List<ISmartphoneActions> m_SmartphoneActionsCallbackInterfaces = new List<ISmartphoneActions>();
+    private readonly InputAction m_Smartphone_SmartphoneDisable;
     /// <summary>
-    /// Provides access to input actions defined in input action map "Dialogue".
+    /// Provides access to input actions defined in input action map "Smartphone".
     /// </summary>
-    public struct DialogueActions
+    public struct SmartphoneActions
     {
         private @PlayerInputActions m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public DialogueActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public SmartphoneActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Dialogue/NextSentence".
+        /// Provides access to the underlying input action "Smartphone/SmartphoneDisable".
         /// </summary>
-        public InputAction @NextSentence => m_Wrapper.m_Dialogue_NextSentence;
+        public InputAction @SmartphoneDisable => m_Wrapper.m_Smartphone_SmartphoneDisable;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_Dialogue; }
+        public InputActionMap Get() { return m_Wrapper.m_Smartphone; }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
         public void Enable() { Get().Enable(); }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
@@ -933,9 +880,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
         public bool enabled => Get().enabled;
         /// <summary>
-        /// Implicitly converts an <see ref="DialogueActions" /> to an <see ref="InputActionMap" /> instance.
+        /// Implicitly converts an <see ref="SmartphoneActions" /> to an <see ref="InputActionMap" /> instance.
         /// </summary>
-        public static implicit operator InputActionMap(DialogueActions set) { return set.Get(); }
+        public static implicit operator InputActionMap(SmartphoneActions set) { return set.Get(); }
         /// <summary>
         /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
         /// </summary>
@@ -943,14 +890,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
         /// </remarks>
-        /// <seealso cref="DialogueActions" />
-        public void AddCallbacks(IDialogueActions instance)
+        /// <seealso cref="SmartphoneActions" />
+        public void AddCallbacks(ISmartphoneActions instance)
         {
-            if (instance == null || m_Wrapper.m_DialogueActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_DialogueActionsCallbackInterfaces.Add(instance);
-            @NextSentence.started += instance.OnNextSentence;
-            @NextSentence.performed += instance.OnNextSentence;
-            @NextSentence.canceled += instance.OnNextSentence;
+            if (instance == null || m_Wrapper.m_SmartphoneActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_SmartphoneActionsCallbackInterfaces.Add(instance);
+            @SmartphoneDisable.started += instance.OnSmartphoneDisable;
+            @SmartphoneDisable.performed += instance.OnSmartphoneDisable;
+            @SmartphoneDisable.canceled += instance.OnSmartphoneDisable;
         }
 
         /// <summary>
@@ -959,21 +906,21 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <remarks>
         /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
         /// </remarks>
-        /// <seealso cref="DialogueActions" />
-        private void UnregisterCallbacks(IDialogueActions instance)
+        /// <seealso cref="SmartphoneActions" />
+        private void UnregisterCallbacks(ISmartphoneActions instance)
         {
-            @NextSentence.started -= instance.OnNextSentence;
-            @NextSentence.performed -= instance.OnNextSentence;
-            @NextSentence.canceled -= instance.OnNextSentence;
+            @SmartphoneDisable.started -= instance.OnSmartphoneDisable;
+            @SmartphoneDisable.performed -= instance.OnSmartphoneDisable;
+            @SmartphoneDisable.canceled -= instance.OnSmartphoneDisable;
         }
 
         /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="DialogueActions.UnregisterCallbacks(IDialogueActions)" />.
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="SmartphoneActions.UnregisterCallbacks(ISmartphoneActions)" />.
         /// </summary>
-        /// <seealso cref="DialogueActions.UnregisterCallbacks(IDialogueActions)" />
-        public void RemoveCallbacks(IDialogueActions instance)
+        /// <seealso cref="SmartphoneActions.UnregisterCallbacks(ISmartphoneActions)" />
+        public void RemoveCallbacks(ISmartphoneActions instance)
         {
-            if (m_Wrapper.m_DialogueActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_SmartphoneActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
@@ -983,21 +930,21 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
         /// </remarks>
-        /// <seealso cref="DialogueActions.AddCallbacks(IDialogueActions)" />
-        /// <seealso cref="DialogueActions.RemoveCallbacks(IDialogueActions)" />
-        /// <seealso cref="DialogueActions.UnregisterCallbacks(IDialogueActions)" />
-        public void SetCallbacks(IDialogueActions instance)
+        /// <seealso cref="SmartphoneActions.AddCallbacks(ISmartphoneActions)" />
+        /// <seealso cref="SmartphoneActions.RemoveCallbacks(ISmartphoneActions)" />
+        /// <seealso cref="SmartphoneActions.UnregisterCallbacks(ISmartphoneActions)" />
+        public void SetCallbacks(ISmartphoneActions instance)
         {
-            foreach (var item in m_Wrapper.m_DialogueActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_SmartphoneActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_DialogueActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_SmartphoneActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
     /// <summary>
-    /// Provides a new <see cref="DialogueActions" /> instance referencing this action map.
+    /// Provides a new <see cref="SmartphoneActions" /> instance referencing this action map.
     /// </summary>
-    public DialogueActions @Dialogue => new DialogueActions(this);
+    public SmartphoneActions @Smartphone => new SmartphoneActions(this);
 
     // Guidebook
     private readonly InputActionMap m_Guidebook;
@@ -1110,7 +1057,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Computer;
     private List<IComputerActions> m_ComputerActionsCallbackInterfaces = new List<IComputerActions>();
     private readonly InputAction m_Computer_LeftClick;
-    private readonly InputAction m_Computer_Return;
     /// <summary>
     /// Provides access to input actions defined in input action map "Computer".
     /// </summary>
@@ -1126,10 +1072,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Computer/LeftClick".
         /// </summary>
         public InputAction @LeftClick => m_Wrapper.m_Computer_LeftClick;
-        /// <summary>
-        /// Provides access to the underlying input action "Computer/Return".
-        /// </summary>
-        public InputAction @Return => m_Wrapper.m_Computer_Return;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1159,9 +1101,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @LeftClick.started += instance.OnLeftClick;
             @LeftClick.performed += instance.OnLeftClick;
             @LeftClick.canceled += instance.OnLeftClick;
-            @Return.started += instance.OnReturn;
-            @Return.performed += instance.OnReturn;
-            @Return.canceled += instance.OnReturn;
         }
 
         /// <summary>
@@ -1176,9 +1115,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @LeftClick.started -= instance.OnLeftClick;
             @LeftClick.performed -= instance.OnLeftClick;
             @LeftClick.canceled -= instance.OnLeftClick;
-            @Return.started -= instance.OnReturn;
-            @Return.performed -= instance.OnReturn;
-            @Return.canceled -= instance.OnReturn;
         }
 
         /// <summary>
@@ -1392,19 +1328,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnFlashlightToggle(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "SmartphoneToggle" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "SmartphoneEnable" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSmartphoneToggle(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "GuidebookToggle" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnGuidebookToggle(InputAction.CallbackContext context);
+        void OnSmartphoneEnable(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "DialogueSkip" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
@@ -1414,19 +1343,19 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnDialogueSkip(InputAction.CallbackContext context);
     }
     /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Dialogue" which allows adding and removing callbacks.
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Smartphone" which allows adding and removing callbacks.
     /// </summary>
-    /// <seealso cref="DialogueActions.AddCallbacks(IDialogueActions)" />
-    /// <seealso cref="DialogueActions.RemoveCallbacks(IDialogueActions)" />
-    public interface IDialogueActions
+    /// <seealso cref="SmartphoneActions.AddCallbacks(ISmartphoneActions)" />
+    /// <seealso cref="SmartphoneActions.RemoveCallbacks(ISmartphoneActions)" />
+    public interface ISmartphoneActions
     {
         /// <summary>
-        /// Method invoked when associated input action "NextSentence" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "SmartphoneDisable" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnNextSentence(InputAction.CallbackContext context);
+        void OnSmartphoneDisable(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Guidebook" which allows adding and removing callbacks.
@@ -1464,13 +1393,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnLeftClick(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Return" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnReturn(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "CommandPrompt" which allows adding and removing callbacks.

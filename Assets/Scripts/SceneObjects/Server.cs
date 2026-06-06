@@ -105,6 +105,7 @@ public class Server : MonoBehaviour
 
         if (active)
         {
+            GameInput.Instance.CurrentInputActions.PlayerWalking.Disable();
             GameInput.Instance.CurrentInputActions.Computer.Enable();
             GameInput.Instance.EscapeAction += ExitServerView;
             CameraController.Instance.SetActiveCinemachineCamera(serverCinemachineCamera);
@@ -112,6 +113,7 @@ public class Server : MonoBehaviour
         else
         {
             GameInput.Instance.CurrentInputActions.Computer.Disable();
+            GameInput.Instance.CurrentInputActions.PlayerWalking.Enable();
             GameInput.Instance.EscapeAction -= ExitServerView;
             CameraController.Instance.ChangeToMainCinemachineCamera();
         }

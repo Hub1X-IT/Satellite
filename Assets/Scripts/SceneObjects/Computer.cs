@@ -8,6 +8,10 @@ public class Computer : MonoBehaviour
 
     private Desk desk;
 
+    // For click sound handling, should be disabled on Guidebook
+    [SerializeField]
+    private bool isRealComputer = true;
+
     [SerializeField]
     private GameEventComputerSO computerViewEnabledGameEvent;
     [SerializeField]
@@ -161,14 +165,20 @@ public class Computer : MonoBehaviour
         if (active)
         {
             GameInput.Instance.CurrentInputActions.PlayerWalking.Disable();
-            GameInput.Instance.CurrentInputActions.Computer.Enable();
+            if (isRealComputer)
+            {
+                GameInput.Instance.CurrentInputActions.Computer.Enable();
+            }
             GameInput.Instance.EscapeAction += ExitComputerView;
             CameraController.Instance.SetActiveCinemachineCamera(computerCinemachineCamera);
             computerViewEnabledGameEvent.RaiseEvent(this);
         }
         else
         {
-            GameInput.Instance.CurrentInputActions.Computer.Disable();
+            if (isRealComputer)
+            {
+                GameInput.Instance.CurrentInputActions.Computer.Disable();
+            }
             GameInput.Instance.EscapeAction -= ExitComputerView;
             CameraController.Instance.ChangeToMainCinemachineCamera();
             computerViewDisabledGameEvent.RaiseEvent();

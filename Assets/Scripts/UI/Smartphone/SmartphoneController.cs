@@ -7,8 +7,6 @@ public class SmartphoneController : MonoBehaviour
 
     private bool isSmartphoneEnabled;
 
-    public bool IsSmartphoneEnabled => isSmartphoneEnabled;
-
     private const string IsPhoneOnParam = "IsPhoneOn";
 
     private void Awake()
@@ -18,25 +16,25 @@ public class SmartphoneController : MonoBehaviour
 
     private void Start()
     {
-        GameInput.Instance.OnSmartphoneToggleAction += () =>
-        {
-            Debug.Log($"Smartphone enabled: {isSmartphoneEnabled}");
-            if (gameObject.activeInHierarchy)
-            {
-                TryToggleSmartphone();
-            }
-        };
+        GameInput.Instance.OnSmartphoneEnableAction += TryEnableSmartphone;
+
+        GameInput.Instance.OnSmartphoneDisableAction += TryDisableSmartphone;
     }
 
-    private void TryToggleSmartphone()
+    private void TryEnableSmartphone()
     {
-        if (isSmartphoneEnabled)
-        {
-            SetSmartphoneEnabled(false);
-        }
-        else if (!isSmartphoneEnabled && !GameManager.Instance.IsInScreenView && !GameManager.Instance.IsGuidebookOrSmartphoneEnabled)
+        if (gameObject.activeInHierarchy && !isSmartphoneEnabled && 
+        !GameManager.Instance.IsInScreenView && !GameManager.Instance.IsGuidebookOrSmartphoneEnabled)
         {
             SetSmartphoneEnabled(true);
+        }
+    }
+
+    private void TryDisableSmartphone()
+    {
+        if (gameObject.activeInHierarchy && isSmartphoneEnabled)
+        {
+            SetSmartphoneEnabled(false);
         }
     }
 
@@ -50,8 +48,18 @@ public class SmartphoneController : MonoBehaviour
         PlayerScriptsController.Instance.SetInteractionEnabled(!enabled);
         PlayerScriptsController.Instance.SetCrosshairEnabled(!enabled);
 
-        GameManager.Instance.SetCursorShown(enabled);
+        if (enabled)
+        {
+            GameInput.Instance.CurrentInputActions.PlayerWalking.Disable();
+            GameInput.Instance.CurrentInputActions.Smartphone.Enable();
+        }
+        else
+        {
+            GameInput.Instance.CurrentInputActions.Smartphone.Disable();
+            GameInput.Instance.CurrentInputActions.PlayerWalking.Enable();
+        }
 
+        GameManager.Instance.SetCursorShown(enabled);
 
         smartphoneAnimator.SetBool(IsPhoneOnParam, enabled);
     }

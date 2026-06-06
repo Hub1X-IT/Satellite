@@ -90,7 +90,6 @@ public class PhonecallUI : MonoBehaviour
 
     private void OnCanEndCall(bool canEnd)
     {
-        Debug.Log(canEnd);
         endCallButton.interactable = canEnd;
     }
 

@@ -23,17 +23,15 @@ public class GameInput : MonoBehaviour
     public event Action OnInteractAction;
 
     public event Action OnFlashlightToggleAction;
-    public event Action OnSmartphoneToggleAction;
-    public event Action OnGuidebookToggleAction;
     public event Action OnDialogueSkipAction;
+    public event Action OnSmartphoneEnableAction;
 
-    public event Action OnNextDialogueSentenceAction;
+    public event Action OnSmartphoneDisableAction;
 
     public event Action OnGuidebookChangePageLeftAction;
     public event Action OnGuidebookChangePageRightAction;
 
     public event Action OnLeftClickPerformedAction;
-    public event Action OnReturnPerformedAction;
 
     public event Action<char> OnKeyboardInputAction;
 
@@ -65,7 +63,7 @@ public class GameInput : MonoBehaviour
 
         CurrentInputActions.All.Enable();
         CurrentInputActions.PlayerWalking.Enable();
-        CurrentInputActions.Dialogue.Disable();
+        CurrentInputActions.Smartphone.Disable();
         CurrentInputActions.Guidebook.Disable();
         CurrentInputActions.Computer.Disable();
         CurrentInputActions.CommandPrompt.Disable();
@@ -73,20 +71,16 @@ public class GameInput : MonoBehaviour
         CurrentInputActions.All.Escape.performed += Escape_performed;
 
         CurrentInputActions.PlayerWalking.Interact.performed += Interact_performed;
-
         CurrentInputActions.PlayerWalking.FlashlightToggle.performed += FlashlightToggle_performed;
-        CurrentInputActions.PlayerWalking.SmartphoneToggle.performed += SmartphoneToggle_performed;
-        CurrentInputActions.PlayerWalking.GuidebookToggle.performed += GuidebookToggle_performed;
-
         CurrentInputActions.PlayerWalking.DialogueSkip.performed += DialogueSkip_performed;
+        CurrentInputActions.PlayerWalking.SmartphoneEnable.performed += SmartphoneEnable_performed;
 
-        CurrentInputActions.Dialogue.NextSentence.performed += NextDialogueSentence_performed;
+        CurrentInputActions.Smartphone.SmartphoneDisable.performed += SmartphoneDisable_performed;
 
         CurrentInputActions.Guidebook.ChangePageRight.performed += GuidebookChangePageLeft_performed;
         CurrentInputActions.Guidebook.ChangePageLeft.performed += GuidebookChangePageRight_performed;
 
         CurrentInputActions.Computer.LeftClick.performed += LeftClick_performed;
-        CurrentInputActions.Computer.Return.performed += Return_performed;
 
         Keyboard.current.onTextInput += Keyboard_onTextInput;
 
@@ -100,18 +94,16 @@ public class GameInput : MonoBehaviour
         CurrentInputActions.All.Escape.performed -= Escape_performed;
 
         CurrentInputActions.PlayerWalking.Interact.performed -= Interact_performed;
-
         CurrentInputActions.PlayerWalking.FlashlightToggle.performed -= FlashlightToggle_performed;
-        CurrentInputActions.PlayerWalking.SmartphoneToggle.performed -= SmartphoneToggle_performed;
-        CurrentInputActions.PlayerWalking.GuidebookToggle.performed -= GuidebookToggle_performed;
+        CurrentInputActions.PlayerWalking.DialogueSkip.performed -= DialogueSkip_performed;
+        CurrentInputActions.PlayerWalking.SmartphoneEnable.performed -= SmartphoneEnable_performed;
 
-        CurrentInputActions.Dialogue.NextSentence.performed -= NextDialogueSentence_performed;
+        CurrentInputActions.Smartphone.SmartphoneDisable.performed -= SmartphoneDisable_performed;
 
         CurrentInputActions.Guidebook.ChangePageRight.performed -= GuidebookChangePageLeft_performed;
         CurrentInputActions.Guidebook.ChangePageLeft.performed -= GuidebookChangePageRight_performed;
 
         CurrentInputActions.Computer.LeftClick.performed -= LeftClick_performed;
-        CurrentInputActions.Computer.Return.performed -= Return_performed;
 
         Keyboard.current.onTextInput -= Keyboard_onTextInput;
 
@@ -143,25 +135,16 @@ public class GameInput : MonoBehaviour
     }
 
     private void Interact_performed(InputAction.CallbackContext _) => OnInteractAction?.Invoke();
-
     private void FlashlightToggle_performed(InputAction.CallbackContext _) => OnFlashlightToggleAction?.Invoke();
-    private void SmartphoneToggle_performed(InputAction.CallbackContext _) => OnSmartphoneToggleAction?.Invoke();
-    private void GuidebookToggle_performed(InputAction.CallbackContext _) => OnGuidebookToggleAction?.Invoke();
     private void DialogueSkip_performed(InputAction.CallbackContext _) => OnDialogueSkipAction?.Invoke();
+    private void SmartphoneEnable_performed(InputAction.CallbackContext _) => OnSmartphoneEnableAction?.Invoke();
 
-    private void NextDialogueSentence_performed(InputAction.CallbackContext _) => OnNextDialogueSentenceAction?.Invoke();
+    private void SmartphoneDisable_performed(InputAction.CallbackContext _) => OnSmartphoneDisableAction?.Invoke();
 
     private void GuidebookChangePageLeft_performed(InputAction.CallbackContext _) => OnGuidebookChangePageLeftAction?.Invoke();
     private void GuidebookChangePageRight_performed(InputAction.CallbackContext _) => OnGuidebookChangePageRightAction?.Invoke();
 
-    private void LeftClick_performed(InputAction.CallbackContext _) {
-        // Disable clicking sound in guidebook view
-        if (!CurrentInputActions.Guidebook.enabled)
-        {
-            OnLeftClickPerformedAction?.Invoke();
-        }
-    }
-    private void Return_performed(InputAction.CallbackContext _) => OnReturnPerformedAction?.Invoke();
+    private void LeftClick_performed(InputAction.CallbackContext _) => OnLeftClickPerformedAction?.Invoke();
 
     private void CommandSubmit_performed(InputAction.CallbackContext _) => OnCommandSubmitAction?.Invoke();
     private void PreviousCommand_preformed(InputAction.CallbackContext _) => OnPreviousCommandAction?.Invoke();

@@ -71,18 +71,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SmartphoneToggle",
+                    "name": "SmartphoneEnable",
                     "type": "Button",
                     "id": "2313d576-ef07-4496-8ef9-e49ebd06663b",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "GuidebookToggle",
-                    "type": "Button",
-                    "id": "6734d569-cc08-49fb-b98a-ca945a1927fb",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -183,18 +174,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SmartphoneToggle",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3e01cbf8-0ce9-48e2-974c-bd596cc3a01e",
-                    "path": "<Keyboard>/g",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "GuidebookToggle",
+                    "action": "SmartphoneEnable",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -223,13 +203,13 @@
             ]
         },
         {
-            "name": "Dialogue",
-            "id": "5b6b2377-0126-480e-afa7-fa74d145346a",
+            "name": "Smartphone",
+            "id": "1b53f462-5412-4084-9691-5c45bcd0df17",
             "actions": [
                 {
-                    "name": "NextSentence",
+                    "name": "SmartphoneDisable",
                     "type": "Button",
-                    "id": "ba7cc3f3-3e01-40fd-82b7-2f0a58c1fdb8",
+                    "id": "c4f92678-c213-42cd-b65f-d482af847fc4",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -239,12 +219,12 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "43b3073e-5456-4d09-9618-2685de2551be",
-                    "path": "<Keyboard>/space",
+                    "id": "b99c59f0-f49d-4e89-bf2d-77511e28efe5",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "NextSentence",
+                    "action": "SmartphoneDisable",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -310,15 +290,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Return",
-                    "type": "Button",
-                    "id": "a0fada47-ce97-467e-b38f-8a78811506d2",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -330,17 +301,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "LeftClick",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "703e2517-2e27-4e8a-97e7-1b9ad2d8e24e",
-                    "path": "<Keyboard>/enter",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Return",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
