@@ -11,10 +11,11 @@ public class GameManager : MonoBehaviour
 
     public bool IsInScreenView { get; set; }
 
-    public bool IsGuidebookOrSmartphoneEnabled { get; set; }
+    public bool IsInSmartphoneView { get; set; }
 
-    public CursorLockMode HiddenCursorLockMode { get; set; }
-    private CursorLockMode ShownCursorLockMode { get; set; } = CursorLockMode.None;
+    private const CursorLockMode HiddenCursorLockMode = CursorLockMode.Locked;
+    private const CursorLockMode ShownCursorLockMode = CursorLockMode.None;
+
 
     private void Awake()
     {
@@ -26,9 +27,8 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
 
-        HiddenCursorLockMode = CursorLockMode.Locked;
         IsInScreenView = false;
-        IsGuidebookOrSmartphoneEnabled = false;
+        IsInSmartphoneView = false;
     }
 
     private void Start()
@@ -41,14 +41,13 @@ public class GameManager : MonoBehaviour
     {
         IsGamePaused = paused;
         SetTimeStarted(!paused);
-        // May be temporary
-        if (!IsInScreenView)
+        if (IsInScreenView || IsInSmartphoneView)
         {
-            SetCursorShown(paused);
+            SetCursorShown(true);
         }
         else
         {
-            SetCursorShown(true);
+            SetCursorShown(paused);
         }
     }
 

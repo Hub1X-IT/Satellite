@@ -23,8 +23,7 @@ public class SmartphoneController : MonoBehaviour
 
     private void TryEnableSmartphone()
     {
-        if (gameObject.activeInHierarchy && !isSmartphoneEnabled && 
-        !GameManager.Instance.IsInScreenView && !GameManager.Instance.IsGuidebookOrSmartphoneEnabled)
+        if (gameObject.activeInHierarchy && !isSmartphoneEnabled && !GameManager.Instance.IsInScreenView)
         {
             SetSmartphoneEnabled(true);
         }
@@ -42,7 +41,7 @@ public class SmartphoneController : MonoBehaviour
     {
         isSmartphoneEnabled = enabled;
 
-        GameManager.Instance.IsGuidebookOrSmartphoneEnabled = enabled;
+        GameManager.Instance.IsInSmartphoneView = enabled;
         
         PlayerScriptsController.Instance.SetPlayerMovementEnabled(!enabled);
         PlayerScriptsController.Instance.SetInteractionEnabled(!enabled);
