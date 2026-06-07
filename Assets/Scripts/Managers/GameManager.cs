@@ -37,7 +37,14 @@ public class GameManager : MonoBehaviour
         PauseGameToMenu(false);
     }
 
-    public void SetGamePaused(bool paused)
+    public void PauseGameToMenu(bool paused)
+    {
+        GamePausedUnpaused?.Invoke(paused);
+        SetGamePaused(paused);
+        ToggleActionMaps(paused);
+    }
+
+    private void SetGamePaused(bool paused)
     {
         IsGamePaused = paused;
         SetTimeStarted(!paused);
@@ -51,10 +58,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void PauseGameToMenu(bool paused)
+    private void ToggleActionMaps(bool isPaused)
     {
-        GamePausedUnpaused?.Invoke(paused);
-        SetGamePaused(paused);
+        if (isPaused)
+        {
+            GameInput.Instance.CurrentInputActions.PlayerWalking.Disable();
+            GameInput.Instance.CurrentInputActions.Smartphone.Disable();
+        }
+        else
+        {
+            if (IsInSmartphoneView)
+            {
+                GameInput.Instance.CurrentInputActions.Smartphone.Enable();
+            }
+            else
+            {
+                GameInput.Instance.CurrentInputActions.PlayerWalking.Enable();
+            }
+        }
     }
 
     public void SetCursorShown(bool shown)
@@ -68,7 +89,7 @@ public class GameManager : MonoBehaviour
         SetTimeScale(started ? 1f : 0f);
     }
 
-    public void SetTimeScale(float timeScale)
+    private void SetTimeScale(float timeScale)
     {
         Time.timeScale = timeScale;
     }
