@@ -7,9 +7,6 @@ using Yarn.Unity;
 public class OurDialogueLinePresenter : DialoguePresenterBase
 {
     [SerializeField]
-    private DialogueCharacterDatabase dialogueCharacterDatabase;
-
-    [SerializeField]
     private CanvasGroup canvasGroup;
 
     [SerializeField]
@@ -30,9 +27,6 @@ public class OurDialogueLinePresenter : DialoguePresenterBase
     [SerializeField]
     private float fadeDownDuration = 0.1f;
 
-    [SerializeField]
-    private ActionMarkupHandler advanceButton;
-
     public override YarnTask OnDialogueCompleteAsync()
     {
         canvasGroup.alpha = 0;
@@ -47,7 +41,7 @@ public class OurDialogueLinePresenter : DialoguePresenterBase
 
     public override async YarnTask RunLineAsync(LocalizedLine line, LineCancellationToken token)
     {
-        DialogueCharacterSO dialogueCharacterSO = dialogueCharacterDatabase.GetDialogueCharacterSO(line.CharacterName);
+        DialogueCharacterSO dialogueCharacterSO = DialogueManager.Instance.GetDialogueCharacterSO(line.CharacterName);
 
         if (dialogueCharacterSO != null)
         {

@@ -17,6 +17,8 @@ public class OurDialogueLineAdvancer : MonoBehaviour
 
         dialogueRunner.onDialogueStart.AddListener(() => SetContinueButtonEnabled(true));
         dialogueRunner.onDialogueComplete.AddListener(() => SetContinueButtonEnabled(false));
+
+        SetContinueButtonEnabled(false);
     }
 
     private void RequestNextLine()

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Yarn.Unity;
 
@@ -13,6 +14,11 @@ public class DialogueManager : MonoBehaviour
 
     public bool IsDialogueRunning => dialogueRunner.IsDialogueRunning;
 
+    [SerializeField]
+    private DialogueCharacterSO[] dialogueCharacters;
+
+    private Dictionary<string, DialogueCharacterSO> dialogueCharactersDictionary;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -23,11 +29,31 @@ public class DialogueManager : MonoBehaviour
         }
         Instance = this;
 
+        dialogueCharactersDictionary = new();
+
+        foreach (var characterSO in dialogueCharacters)
+        {
+            string characterId = characterSO.Id;
+
+            if (dialogueCharactersDictionary.ContainsKey(characterId))
+            {
+                Debug.LogError($"Multiple dialogue characters with ID: {characterId}");
+                continue;
+            }
+
+            dialogueCharactersDictionary[characterId] = characterSO;
+        }
+
         dialogueRunner.onDialogueComplete.AddListener(() => OnDialogueComplete?.Invoke());
     }
 
     public void StartDialogue(string nodeName)
     {
         dialogueRunner.StartDialogue(nodeName);
+    }
+
+    public DialogueCharacterSO GetDialogueCharacterSO(string characterID)
+    {
+        return dialogueCharactersDictionary.TryGetValue(characterID, out var characterSO) ? characterSO : null;
     }
 }

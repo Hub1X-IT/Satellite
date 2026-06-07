@@ -213,7 +213,7 @@ MonoBehaviour:
   fadeOutTimeOnLineFinish: 0.05
   waitTimeBeforeLineStart: 0
   waitTimeAfterLineComplete: 0
-  audioSource: {fileID: 0}
+  audioSource: {fileID: 539303464358534710}
 --- !u!82 &539303464358534710
 AudioSource:
   m_ObjectHideFlags: 0
@@ -467,7 +467,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1440, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1504757510292557512
 MonoBehaviour:
@@ -660,7 +660,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2958262986520364887, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1440
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2958262986520364887, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_SizeDelta.y
@@ -796,12 +796,16 @@ PrefabInstance:
       objectReference: {fileID: 7545569452688597077, guid: ae50974c245d4371abc639edb2cc1d46, type: 3}
     - target: {fileID: 8309902628685535410, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: dialoguePresenters.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8309902628685535410, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: 'dialoguePresenters.Array.data[0]'
       value: 
       objectReference: {fileID: 554498634917330360}
+    - target: {fileID: 8309902628685535410, guid: 52571f68872914e24837210513edea1d, type: 3}
+      propertyPath: 'dialoguePresenters.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2971903403510356433}
     - target: {fileID: 8309902628685535410, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: 'dialoguePresenters.Array.data[2]'
       value: 
@@ -813,6 +817,7 @@ PrefabInstance:
     - {fileID: 8790380584632356852, guid: 52571f68872914e24837210513edea1d, type: 3}
     - {fileID: 9078442560890639579, guid: 52571f68872914e24837210513edea1d, type: 3}
     - {fileID: 2958262987206614836, guid: 52571f68872914e24837210513edea1d, type: 3}
+    - {fileID: 8020628925107869965, guid: 52571f68872914e24837210513edea1d, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 7985477256237130417, guid: 52571f68872914e24837210513edea1d, type: 3}
       insertIndex: -1
@@ -827,9 +832,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7262066351540048079, guid: 52571f68872914e24837210513edea1d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8110116003826646175}
-    - targetCorrespondingSourceObject: {fileID: 7262066351540048079, guid: 52571f68872914e24837210513edea1d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8108139921539973906}
     - targetCorrespondingSourceObject: {fileID: 3416868783655305253, guid: 52571f68872914e24837210513edea1d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5287873982615313130}
@@ -874,7 +876,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3f7c73dd472a44739a1aeb10ccecf3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OurDialoguePresenter
-  dialogueCharacterDatabase: {fileID: 8108139921539973906}
   canvasGroup: {fileID: 3202628035373339399}
   characterNameTextField: {fileID: 2746368962361519189}
   lineTextField: {fileID: 3202628035499555000}
@@ -942,21 +943,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueUIHelper
   dialogueRunner: {fileID: 8515583212174518098}
   dialogueUICanvasGroup: {fileID: 5287873982615313130}
---- !u!114 &8108139921539973906
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7041328982805933871}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89e534d4224bc0d28ae63b058eada642, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DialogueCharacterDatabase
-  dialogueCharacters:
-  - {fileID: 11400000, guid: d22bb76b966b0e3f8833b882b16c50ec, type: 2}
-  - {fileID: 11400000, guid: 5d7e5240a1e07909b960220502ea3a51, type: 2}
 --- !u!4 &7759074305411538257 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7985477256237130417, guid: 52571f68872914e24837210513edea1d, type: 3}
