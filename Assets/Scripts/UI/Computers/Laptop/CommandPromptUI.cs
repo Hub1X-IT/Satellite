@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -31,6 +32,9 @@ public class CommandPromptUI : MonoBehaviour
     [SerializeField]
     private AudioSource cmdAudioSource;
 
+    [SerializeField]
+    private TMP_Text cmdArrows;
+
     private Button outputFieldButton;
 
     private List<string> previousCommandsList;
@@ -44,6 +48,8 @@ public class CommandPromptUI : MonoBehaviour
     private bool isInputFieldInteractable;
 
     private bool shouldToggleFocus;
+
+    private Sequence inputPromptSequence;
 
     private void Awake()
     {
@@ -106,6 +112,11 @@ public class CommandPromptUI : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        inputPromptSequence?.Kill();
+    }
+
     private void ToggleInputFieldFocus()
     {
         shouldToggleFocus = true;
@@ -130,6 +141,15 @@ public class CommandPromptUI : MonoBehaviour
         inputField.interactable = isInputFieldInteractable;
         placeholderTextField.text = isInputFieldInteractable ? DefaultPlaceholderText : CommandInProgressPlaceholderText;
         ToggleInputFieldFocus();
+
+        if (commandPromptManager.IsCommandInProgress)
+        {
+            StartInputPromptAnimation();
+        }
+        else
+        {
+            StopInputPromptAnimation();
+        }
     }
 
     // Current commands
@@ -250,5 +270,33 @@ public class CommandPromptUI : MonoBehaviour
     private void PlayKeyboardSound()
     {
         cmdAudioSource.Play();
+    }
+
+    private void StartInputPromptAnimation()
+    {
+        cmdArrows.SetText("...");
+        Color from = cmdArrows.color;
+        Color to = new(from.r, from.g, from.b, 0.125f);
+        inputPromptSequence?.Kill();
+
+        // Virtual tweens aren't officially supported in sequences, so if any issues will arise with tweaning, this might be the cause.
+        // None noticed so far.
+        inputPromptSequence = DOTween.Sequence()
+            .Insert(0.00f, cmdArrows.DOCharColor(0, from, to, 1))
+            .Insert(0.25f, cmdArrows.DOCharColor(1, from, to, 1))
+            .Insert(0.50f, cmdArrows.DOCharColor(2, from, to, 1))
+
+            .Insert(1.75f, cmdArrows.DOCharColor(0, to, from, 1))
+            .Insert(2.00f, cmdArrows.DOCharColor(1, to, from, 1))
+            .Insert(2.25f, cmdArrows.DOCharColor(2, to, from, 1))
+
+            // .AppendInterval(0.25f)
+            .SetLoops(-1);
+    }
+
+    private void StopInputPromptAnimation()
+    {
+        inputPromptSequence?.Kill();
+        cmdArrows.SetText(">>>");
     }
 }
