@@ -12,7 +12,7 @@ public class CommandPromptUI : MonoBehaviour
     [SerializeField]
     private TMP_InputField inputField;
     [SerializeField]
-    private TMP_Text inputFieldPlaceholderTextField;
+    private TMP_Text placeholderTextField;
 
     private const string DefaultPlaceholderText = "Enter command...";
     private const string CommandInProgressPlaceholderText = "Command execution in progress...";
@@ -84,6 +84,7 @@ public class CommandPromptUI : MonoBehaviour
         outputFieldButton.onClick.AddListener(ToggleInputFieldFocus);
 
         defaultOutputTextField.text = cmdStartText.text;
+        placeholderTextField.text = DefaultPlaceholderText;
     }
 
     // Input field focus handling
@@ -127,7 +128,7 @@ public class CommandPromptUI : MonoBehaviour
     {
         isInputFieldInteractable = !commandPromptManager.IsCommandInProgress;
         inputField.interactable = isInputFieldInteractable;
-        inputFieldPlaceholderTextField.text = isInputFieldInteractable ? DefaultPlaceholderText : CommandInProgressPlaceholderText;
+        placeholderTextField.text = isInputFieldInteractable ? DefaultPlaceholderText : CommandInProgressPlaceholderText;
         ToggleInputFieldFocus();
     }
 

@@ -48,15 +48,11 @@ public class CommandPromptManager : MonoBehaviour
 
             if (commandData.Length != gameEvent.RequiredArgumentsNumber)
             {
-                RespondToCommand(new CommandResponseData
-                {
-                    ExecutionStatus = CommandExecutionStatus.Failure,
-                    ResponseStringArray = new string[] { "Invalid number of arguments" }
-                });
+                RespondToCommand(CommandResponseData.Failure("Invalid number of arguments"));
                 return;
             }
 
-            gameEvent.RaiseEvent(new CommandData()
+            gameEvent.RaiseEvent(new CommandData
             {
                 CommandDataArray = commandData,
                 Response = RespondToCommand,
@@ -64,11 +60,7 @@ public class CommandPromptManager : MonoBehaviour
         }
         else
         {
-            RespondToCommand(new CommandResponseData
-            {
-                ExecutionStatus = CommandExecutionStatus.Failure,
-                ResponseStringArray = new string[] { command + ": command not found." }
-            });
+            RespondToCommand(CommandResponseData.Failure($"{command}: command not found."));
         }
     }
 

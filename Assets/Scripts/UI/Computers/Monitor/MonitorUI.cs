@@ -71,17 +71,15 @@ public class MonitorUI : MonoBehaviour
 
         startSputnikOSGameEvent.EventRaised += (startProgramEventData) =>
         {
-            CommandResponseData responseData = new();
+            CommandResponseData responseData;
 
             if (!ServerConnectionManager.Instance.IsConnectionActive)
             {
-                responseData.ExecutionStatus = CommandExecutionStatus.Failure;
-                responseData.ResponseStringArray = new string[] { "No server connection." };
+                responseData = CommandResponseData.Failure("No server connection.");
             }
             else if (IsSputnikOSStarted)
             {
-                responseData.ExecutionStatus = CommandExecutionStatus.Failure;
-                responseData.ResponseStringArray = new string[] { "SputnikOS is already started." };
+                responseData = CommandResponseData.Failure("SputnikOS is already started.");
             }
             else
             {
@@ -89,15 +87,10 @@ public class MonitorUI : MonoBehaviour
                 monitorStartupScreenUI.StartSputnikOSStartupScreen(() =>
                 {
                     monitorStartupScreenUI.DisableStartupScreen();
-                    startProgramEventData.Response?.Invoke(new CommandResponseData
-                    {
-                        ExecutionStatus = CommandExecutionStatus.Success,
-                        ResponseStringArray = new string[] { "SputnikOS started." }
-                    });
+                    startProgramEventData.Response?.Invoke(CommandResponseData.Success("SputnikOS started."));
                 });
-                
-                responseData.ExecutionStatus = CommandExecutionStatus.InProgress;
-                responseData.ResponseStringArray = new string[] { "Starting SputnikOS..." };
+
+                responseData = CommandResponseData.InProgress("Starting SputnikOS...");
             }
 
             startProgramEventData.Response?.Invoke(responseData);
@@ -173,6 +166,4 @@ public class MonitorUI : MonoBehaviour
         detectionChanceIcon.DOColor(Color.white, 0.2f);
         detectionChanceText.DOColor(Color.white, 0.2f);
     }
-
-
 }

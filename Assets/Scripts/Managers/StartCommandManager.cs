@@ -49,11 +49,7 @@ public class StartCommandManager : MonoBehaviour
                 return;
             }
         }
-        
-        commandData.Response?.Invoke(new CommandResponseData
-        {
-            ExecutionStatus = CommandExecutionStatus.Failure,
-            ResponseStringArray = new string[] { $"No program with name: {programName}" }
-        });
+
+        commandData.Response?.Invoke(CommandResponseData.Failure($"No program with name: {programName}"));
     }
 }

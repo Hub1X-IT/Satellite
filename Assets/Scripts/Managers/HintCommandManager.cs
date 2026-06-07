@@ -12,10 +12,6 @@ public class HintCommandManager : MonoBehaviour
 
     private void OnHintCommand(CommandData commandData)
     {
-        commandData.Response?.Invoke(new CommandResponseData
-        {
-            ExecutionStatus = CommandExecutionStatus.Success,
-            ResponseStringArray = new string[] { "Hint command registered (WIP)" }
-        });
+        commandData.Response?.Invoke(CommandResponseData.Success("Hint command registered (WIP)"));
     }
 }

@@ -19,10 +19,6 @@ public class HelpCommandManager : MonoBehaviour
 
     private void OnHelpCommand(CommandData commandData)
     {
-        commandData.Response?.Invoke(new CommandResponseData
-        {
-            ExecutionStatus = CommandExecutionStatus.Success,
-            ResponseStringArray = helpCommandResponse
-        });
+        commandData.Response?.Invoke(new CommandResponseData(CommandExecutionStatus.Success, helpCommandResponse));
     }
 }

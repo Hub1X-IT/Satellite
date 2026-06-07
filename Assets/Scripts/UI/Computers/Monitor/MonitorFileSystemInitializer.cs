@@ -45,30 +45,21 @@ public class MonitorFileSystemInitializer : MonoBehaviour
         monitorUI.FileExplorer.SetFileExplorerEnabled(false);
     }
 
-    /*
-    private void Start()
-    {
-        // monitorUI.FileExplorer.InitializeFileExplorer(this);
-    }
-    */
-
     private void OnConnectCommand(CommandData commandData)
     {
-        CommandResponseData responseData = new();
-
         if (!monitorUI.IsSputnikOSStarted)
         {
-            responseData.ExecutionStatus = CommandExecutionStatus.Failure;
-            responseData.ResponseStringArray = new string[] { "Cannot connect to target - SputnikOS is not started." };
-            commandData.Response?.Invoke(responseData);
+            commandData.Response?.Invoke(CommandResponseData.Failure("Cannot connect to target - SputnikOS is not started."));
             return;
         }
 
         string ipAddress = commandData.CommandDataArray[0];
+
+        CommandResponseData responseData;
+
         if (rootFolderSO != null)
         {
-            responseData.ExecutionStatus = CommandExecutionStatus.Failure;
-            responseData.ResponseStringArray = new string[] { $"Already connected to target: {currentIPAddress}. Disconnect first." };
+            responseData = CommandResponseData.Failure($"Already connected to target: {currentIPAddress}. Disconnect first.");
         }
         else if (ipAndFolderDictionary.ContainsKey(ipAddress))
         {
@@ -76,8 +67,7 @@ public class MonitorFileSystemInitializer : MonoBehaviour
             monitorUI.FileExplorer.SetFileExplorerEnabled(true);
             monitorUI.FileExplorer.InitializeFileExplorer(this);
             currentIPAddress = ipAddress;
-            responseData.ExecutionStatus = CommandExecutionStatus.Success;
-            responseData.ResponseStringArray = new string[] { $"Connected to target: {ipAddress}" };
+            responseData = CommandResponseData.Success($"Connected to target: {ipAddress}");
             if (ipAndObjectiveDictionary.ContainsKey(ipAddress))
             {
                 objective = ipAndObjectiveDictionary[ipAddress];
@@ -86,8 +76,7 @@ public class MonitorFileSystemInitializer : MonoBehaviour
         }
         else
         {
-            responseData.ExecutionStatus = CommandExecutionStatus.Failure;
-            responseData.ResponseStringArray = new string[] { $"{ipAddress} is not available or is not a valid IP address." };
+            responseData = CommandResponseData.Failure($"{ipAddress} is not available or is not a valid IP address.");
         }
 
         commandData.Response?.Invoke(responseData);
@@ -95,7 +84,7 @@ public class MonitorFileSystemInitializer : MonoBehaviour
 
     private void OnDisconnectCommand(CommandData commandData)
     {
-        CommandResponseData responseData = new();
+        CommandResponseData responseData;
 
         if (rootFolderSO != null)
         {
@@ -103,13 +92,11 @@ public class MonitorFileSystemInitializer : MonoBehaviour
             rootFolderSO = null;
             string ipAddress = currentIPAddress;
             currentIPAddress = null;
-            responseData.ExecutionStatus = CommandExecutionStatus.Success;
-            responseData.ResponseStringArray = new string[] { $"Disconnected successfully from {ipAddress}." };
+            responseData = CommandResponseData.Success($"Disconnected successfully from {ipAddress}.");
         }
         else
         {
-            responseData.ExecutionStatus = CommandExecutionStatus.Failure;
-            responseData.ResponseStringArray = new string[] { "Currently not connected." };
+            responseData = CommandResponseData.Failure("Currently not connected.");
         }
 
         commandData.Response?.Invoke(responseData);
