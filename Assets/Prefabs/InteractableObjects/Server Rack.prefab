@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2790642920046234171}
-  - component: {fileID: 1069305884487713323}
+  - component: {fileID: 1843931941780635372}
   - component: {fileID: 3294847389251461344}
   m_Layer: 3
   m_Name: ServerTrigger
@@ -26,14 +26,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2422069686007235242}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.09, y: 1.267, z: -0.227}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4742351580507593745}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1069305884487713323
+--- !u!65 &1843931941780635372
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -52,8 +52,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.21536802, y: 0.463975, z: 0.6647664}
-  m_Center: {x: -0.040418673, y: -0.09604135, z: -0.09136325}
+  m_Size: {x: 0.3713557, y: 0.22528489, z: 0.08655068}
+  m_Center: {x: 0.007416345, y: 1.1499304, z: -0.23749684}
 --- !u!114 &3294847389251461344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,7 +200,7 @@ MonoBehaviour:
   serverMeshRenderer: {fileID: 5664782463156910150}
   serrverOnMaterial: {fileID: 2100000, guid: 91eb93a3c9e8a62448b2ac89aaf4bcab, type: 2}
   serverOffMaterial: {fileID: 2100000, guid: d649e9bfeee7e72479505632237fa8a5, type: 2}
-  serverEnabledInteractMessage: Server - Use
+  serverEnabledInteractMessage: Use - Server
   serverDisabledInteractMessage: 'Server [No power]'
 --- !u!114 &4771750393475192814
 MonoBehaviour:

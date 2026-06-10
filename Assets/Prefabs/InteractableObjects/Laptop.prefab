@@ -52,8 +52,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.51, y: 0.32, z: 0.4}
-  m_Center: {x: 0, y: 0.155, z: 0}
+  m_Size: {x: 0.40391672, y: 0.25327557, z: 0.045952156}
+  m_Center: {x: 0.0027234554, y: 0.1284464, z: 0.1538747}
 --- !u!114 &8405639058965525378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,8 +98,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1907770380397001964}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.9795019, z: 0, w: 0.20143506}
-  m_LocalPosition: {x: 0.466, y: 0.7659998, z: -0.056}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -128,8 +128,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.53, y: 0.34, z: 0.4}
-  m_Center: {x: 0, y: 0.16, z: -0.008}
+  m_Size: {x: 0.40501416, y: 0.25693488, z: 0.27608326}
+  m_Center: {x: 0.0028698072, y: 0.12799951, z: 0.038979426}
 --- !u!114 &7565309609062968142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,9 +204,8 @@ GameObject:
   - component: {fileID: 7139758631580339467}
   - component: {fileID: 1813508046505078361}
   - component: {fileID: 8268861768285140721}
-  - component: {fileID: 318362617978611311}
   m_Layer: 0
-  m_Name: Laptop 1
+  m_Name: LaptopVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -284,27 +283,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &318362617978611311
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3049297026751218458}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.50666666, y: 0.34082782, z: 2.3677888}
-  m_Center: {x: -0.0035051852, y: 0.0022791247, z: 0.9122988}
 --- !u!1 &8645519111986019656
 GameObject:
   m_ObjectHideFlags: 0
@@ -447,18 +425,6 @@ PrefabInstance:
     - target: {fileID: 2120693372210763740, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2235709797316692239, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3590736367100869470, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3590736367100869470, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.0046691895
       objectReference: {fileID: 0}
     - target: {fileID: 4495773547002825661, guid: 225d71e6c6483ba4eb5e01a04da05c19, type: 3}
       propertyPath: m_AnchorMax.y
