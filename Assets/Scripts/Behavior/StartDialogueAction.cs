@@ -10,7 +10,7 @@ public partial class StartDialogueAction : Action
 {
     [SerializeReference] public BlackboardVariable<string> DialogueNodeName;
 
-    [SerializeReference] public BlackboardVariable<bool> WaitForDialogueEnd;
+    [SerializeReference] public BlackboardVariable<bool> WaitForDialogueEnd = (BlackboardVariable<bool>)true;
 
     protected override Status OnStart()
     {
