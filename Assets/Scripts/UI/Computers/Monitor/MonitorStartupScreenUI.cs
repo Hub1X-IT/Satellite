@@ -20,8 +20,7 @@ public class MonitorStartupScreenUI : MonoBehaviour
     [Tooltip("SputnikOS started after case32 executed")]
     private GameObject[] case4StartupScreenElements;
 
-    [SerializeField]
-    private float objectsActivationInterval;
+    private const float ObjectsActivationInterval = 0.7f;
 
     private float objectsActivationTimer;
     private bool shouldActivateObjects;
@@ -47,7 +46,7 @@ public class MonitorStartupScreenUI : MonoBehaviour
         {
             if (objectsActivationTimer <= 0)
             {
-                objectsActivationTimer = objectsActivationInterval;
+                objectsActivationTimer = ObjectsActivationInterval;
                 if (currentObjectIndex >= currentSelectedStartupScreenElements.Length)
                 {
                     shouldActivateObjects = false;
@@ -93,7 +92,7 @@ public class MonitorStartupScreenUI : MonoBehaviour
             // Debug.Log("Selected case3");
         }
 
-        objectsActivationTimer = objectsActivationInterval;
+        objectsActivationTimer = ObjectsActivationInterval;
         currentObjectIndex = 0;
         shouldActivateObjects = true;
     }
@@ -109,7 +108,7 @@ public class MonitorStartupScreenUI : MonoBehaviour
         currentSelectedStartupScreenElements = case4StartupScreenElements;
         // Debug.Log("Selected case4");
 
-        objectsActivationTimer = objectsActivationInterval;
+        objectsActivationTimer = ObjectsActivationInterval;
         currentObjectIndex = 0;
         shouldActivateObjects = true;
     }
