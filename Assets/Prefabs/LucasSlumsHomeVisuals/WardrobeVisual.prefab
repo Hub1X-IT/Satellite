@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 65
   m_IsActive: 1
 --- !u!4 &1155732624746758309
 Transform:
@@ -46,7 +46,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 65
   m_IsActive: 1
 --- !u!4 &8870188706576762795
 Transform:
@@ -78,7 +78,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 65
   m_IsActive: 1
 --- !u!4 &578049640410473638
 Transform:
@@ -110,7 +110,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 65
   m_IsActive: 1
 --- !u!4 &234649434503245546
 Transform:
@@ -146,7 +146,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 65
   m_IsActive: 1
 --- !u!4 &5125259286404558466
 Transform:
@@ -178,7 +178,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 65
   m_IsActive: 1
 --- !u!4 &439409392742040033
 Transform:
@@ -252,16 +252,49 @@ PrefabInstance:
       propertyPath: m_Name
       value: WardrobeBase
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 101aab6f08fc35b4880c2863c0bd2654, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 65
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 101aab6f08fc35b4880c2863c0bd2654, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 999496045671574422}
   m_SourcePrefab: {fileID: 100100000, guid: 101aab6f08fc35b4880c2863c0bd2654, type: 3}
 --- !u!4 &265279303774173215 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 101aab6f08fc35b4880c2863c0bd2654, type: 3}
   m_PrefabInstance: {fileID: 298591497090342900}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &641101812132782757 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 101aab6f08fc35b4880c2863c0bd2654, type: 3}
+  m_PrefabInstance: {fileID: 298591497090342900}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &999496045671574422
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 641101812132782757}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 30.78897, y: 132.98453, z: 74.84339}
+  m_Center: {x: 0.40665054, y: 17.91921, z: 32.97517}
 --- !u!1001 &1383143892199307500
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -317,6 +350,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 0a2b3577cba5c7645abae849477deb95, type: 3}
       propertyPath: m_Name
       value: DRZWICZKISZAF03
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0a2b3577cba5c7645abae849477deb95, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -384,6 +421,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DRZWICZKISZAF01
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5a525b7b993eda647b61cad91ea797ed, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 65
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -450,6 +491,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DRZWICZKISZAF02
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 846a4957aaaba3b4588c823e814b66ec, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 65
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -515,6 +560,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: c1a315ea33949be4b9331baf39f6fa9a, type: 3}
       propertyPath: m_Name
       value: DRZWICZKISZAF04
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c1a315ea33949be4b9331baf39f6fa9a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
