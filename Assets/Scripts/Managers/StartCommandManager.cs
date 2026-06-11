@@ -40,12 +40,17 @@ public class StartCommandManager : MonoBehaviour
             {
                 startCommandProgram.StartProgramGameEvent.RaiseEvent(new StartProgramEventData
                 {
-                    Response = (responseData) => commandData.Response?.Invoke(responseData),
+                    Response = (responseData) =>
+                    {
+                        commandData.Response?.Invoke(responseData);
+
+                        if (responseData.ExecutionStatus == CommandExecutionStatus.Success && startCommandProgram.ObjectiveGameEvent != null)
+                        {
+                            startCommandProgram.ObjectiveGameEvent.RaiseEvent();
+                        }
+                    },
                 });
-                if (startCommandProgram.ObjectiveGameEvent != null)
-                {
-                    startCommandProgram.ObjectiveGameEvent.RaiseEvent();
-                }
+                
                 return;
             }
         }
