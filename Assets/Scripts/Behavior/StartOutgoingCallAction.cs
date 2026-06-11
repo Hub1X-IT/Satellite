@@ -5,10 +5,10 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "StartOutgoingCallAction", story: "Start outgoing call to [Contact]", category: "Action", id: "cd535f34e8a9528fdd75638f65f9d6ca")]
+[NodeDescription(name: "Start Outgoing Call", story: "Start outgoing call to [Contact]", category: "Action/Phonecall", id: "cd535f34e8a9528fdd75638f65f9d6ca")]
 public partial class StartOutgoingCallAction : Action
 {
- [SerializeReference] public BlackboardVariable<ContactSO> Contact;
+    [SerializeReference] public BlackboardVariable<ContactSO> Contact;
     [SerializeReference] public BlackboardVariable<bool> CanBeEnded = new(true);
     [SerializeReference] public BlackboardVariable<bool> WaitForCallToBeAnswered = new(false);
 
