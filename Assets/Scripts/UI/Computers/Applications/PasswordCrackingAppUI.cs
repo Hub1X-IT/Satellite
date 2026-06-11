@@ -15,6 +15,8 @@ public class PasswordCrackingAppUI : MonoBehaviour
     }
 
     [SerializeField]
+    private GameEventSO onEncodedPasswordDecompressedGameEvent;
+    [SerializeField]
     private GameEventSO onCorrectPasswordDecodedGameEvent;
 
     private MonitorAppUI monitorAppUI;
@@ -160,7 +162,11 @@ public class PasswordCrackingAppUI : MonoBehaviour
     {
         if (newValue.Length == TextCompressor.CompressedTextLength)
         {
-            DecompressPassword(newValue);
+            bool wasDecompressed = TryDecompressPassword(newValue);
+            if (wasDecompressed && onEncodedPasswordDecompressedGameEvent != null)
+            {
+                onEncodedPasswordDecompressedGameEvent.RaiseEvent();
+            }
         }
         else
         {
@@ -176,7 +182,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
         return char.ToUpper(addedChar);
     }
 
-    private void DecompressPassword(string compressedPassword)
+    private bool TryDecompressPassword(string compressedPassword)
     {
         if (TextCompressor.TryGetDecompressedText(compressedPassword, out decompressedPassword))
         {
@@ -195,7 +201,7 @@ public class PasswordCrackingAppUI : MonoBehaviour
             if (currentEncryptedPassword == null)
             {
                 Debug.LogWarning("No encrypted password object found corresponding to the current encrypted password!");
-                return;
+                return false;
             }
 
             Debug.Log("Current encrypted password: " + currentEncryptedPassword.Password + "\nOriginal password: " + currentEncryptedPassword.OriginalPassword);
@@ -204,11 +210,15 @@ public class PasswordCrackingAppUI : MonoBehaviour
 
             decompressedPasswordUI.InitializeConvertedPasswordUI(decompressedPassword, false);
             decompressedPasswordUI.gameObject.SetActive(true);
+
+            return true;
         }
         else
         {
             Debug.Log("Decompression failed.");
             decompressedPasswordUI.gameObject.SetActive(false);
+
+            return false;
         }
     }
 
