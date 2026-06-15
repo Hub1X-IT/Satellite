@@ -31,13 +31,14 @@ public class DataContainerPasswordScreenUI : MonoBehaviour
 
         selfDataContainerSO = dataContainerSO;
 
-        correctPassword = dataContainerSO.DataContainerPassword;
+        correctPassword = dataContainerSO.DataContainerPassword.ToUpper();
         Debug.Log(correctPassword);
 
         string baseAppName = dataContainerSO is FolderSO _ ? BaseAppName_Folder : BaseAppName_File;
         monitorApp.SetAppName(baseAppName + dataContainerSO.SelfName);
 
         passwordInputField.onValidateInput += PasswordInputField_OnValidateInput;
+        passwordInputField.onSubmit.AddListener(CheckPassword);
         submitPasswordButton.onClick.AddListener(CheckPassword);
 
         incorrectPasswordScreen.Disable();
@@ -54,14 +55,18 @@ public class DataContainerPasswordScreenUI : MonoBehaviour
         {
             return '\0';
         }
-        return char.ToUpper(addedChar);
+        return addedChar;
     }
-
 
     private void CheckPassword()
     {
-        string password = passwordInputField.text;
-        if (password == correctPassword)
+        CheckPassword(null);
+    }
+
+    private void CheckPassword(string password = null)
+    {
+        password ??= passwordInputField.text;
+        if (password.ToUpper() == correctPassword)
         {
             selfDataContainerSO.IsLocked = false;
             PasswordGuessed?.Invoke();
