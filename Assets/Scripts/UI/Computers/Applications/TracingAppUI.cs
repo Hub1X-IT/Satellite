@@ -10,18 +10,12 @@ public class TracingAppUI : MonoBehaviour
 
     [SerializeField]
     private TMP_Text remainingTimeTextField;
-
     [SerializeField]
-    private Image[] tracingDots;
-
+    private Slider trackingProgress;
     [SerializeField]
-    private Color connectionActiveDotColor;
+    private GameObject inactiveTrackingNote;
     [SerializeField]
-    private Color notTracedDotColor;
-    [SerializeField]
-    private Color tracedDotColor;
-
-    private int currentTracedDotCount;
+    private GameObject activeTrackingNote;
 
     public void InitializeTracingApp()
     {
@@ -58,38 +52,22 @@ public class TracingAppUI : MonoBehaviour
     {
         if (TracingManager.Instance.IsTracingActive)
         {
-            remainingTimeTextField.text = Mathf.Ceil(TracingManager.Instance.TracingTimer).ToString() + "s";
-
-            int tracedDotCount = (int)Mathf.Round(TracingManager.Instance.TracingProgress * tracingDots.Length);
-            if (tracedDotCount > currentTracedDotCount)
-            {
-                tracingDots[^tracedDotCount].color = tracedDotColor;
-                currentTracedDotCount = tracedDotCount;
-            }
+            remainingTimeTextField.text = Mathf.Ceil(TracingManager.Instance.GetRealRemainingTracingTime()).ToString() + "s";
+            trackingProgress.value = TracingManager.Instance.TracingProgress;
         }
     }
 
     private void ResetTracingUI()
     {
         remainingTimeTextField.text = "";
-
-        foreach (var tracingDot in tracingDots)
-        {
-            tracingDot.color = connectionActiveDotColor;
-        }
+        trackingProgress.value = 0;
+        inactiveTrackingNote.SetActive(true);
+        activeTrackingNote.SetActive(false);
     }
 
     private void InitializeTracingUI()
     {
-        foreach (var tracingDot in tracingDots)
-        {
-            tracingDot.color = notTracedDotColor;
-        }
-        
-        currentTracedDotCount = (int)Mathf.Round(TracingManager.Instance.TracingProgress * tracingDots.Length);
-        for (int i = tracingDots.Length - currentTracedDotCount; i < tracingDots.Length; i++)
-        {
-            tracingDots[i].color = tracedDotColor;
-        }
+        inactiveTrackingNote.SetActive(false);
+        activeTrackingNote.SetActive(true);
     }
 }
