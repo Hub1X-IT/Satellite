@@ -18,8 +18,29 @@ public class DataContainerSO : ScriptableObject
 
     public bool IsLocked { get; set; }
 
+    [SerializeField]
+    private GameEventSO onTryOpenGameEvent;
+    [SerializeField]
+    private GameEventSO onOpenGameEvent;
+
     public virtual void InitializeDataContainerSO()
     {
         IsLocked = IsEncrypted;
+    }
+
+    public void RaiseOnTryOpenGameEvent()
+    {
+        if (onTryOpenGameEvent != null)
+        {
+            onTryOpenGameEvent.RaiseEvent();
+        }
+    }
+
+    public void RaiseOnOpenGameEvent()
+    {
+        if (onOpenGameEvent != null)
+        {
+            onOpenGameEvent.RaiseEvent();
+        }
     }
 }

@@ -58,8 +58,13 @@ public abstract class FileExplorerUIDataContainer : MonoBehaviour
                 ApplicationType.DataContainerPasswordScreen).GetComponent<DataContainerPasswordScreenUI>();
             DataContainerPasswordScreen.InitializeDataContainerPasswordScreen(SelfDataContainerSO);
             DataContainerPasswordScreen.PasswordGuessed += OnDataContainerUnlocked;
+
+            SelfDataContainerSO.RaiseOnTryOpenGameEvent();
+
             return false;
         }
+
+        SelfDataContainerSO.RaiseOnOpenGameEvent();
         return true;
     }
 

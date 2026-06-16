@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class FolderContentUIFile : FileExplorerUIDataContainer
 {
@@ -46,15 +45,10 @@ public class FolderContentUIFile : FileExplorerUIDataContainer
                     OpenApplication(fileAppShortcutSO.TriggeredApplicationType).GetComponent<DoorAppUI>();
                 doorApp.InitializeDoorApp("Door Control System");
             }
-            selfFileSO.TriggerOnOpenEvent();
-        }
-        else
-        {
-            selfFileSO.TriggerOnTryOpenEvent();
         }
     }
 
-    override protected void OnDataContainerUnlocked()
+    protected override void OnDataContainerUnlocked()
     {
         base.OnDataContainerUnlocked();
         TryOpenFileContent();
