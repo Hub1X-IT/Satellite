@@ -10,6 +10,9 @@ public class Lever : MonoBehaviour
 
     [SerializeField]
     private AudioSource leverToggleAudioSource;
+
+    [SerializeField]
+    private AudioSource sparkAudioSource;
     
     [SerializeField]
     private ParticleSystem sparkParticles;
@@ -42,5 +45,6 @@ public class Lever : MonoBehaviour
     private void PlaySparkParticles() //used in Lever Animator as an Event
     {
         sparkParticles.Play();
+        sparkAudioSource.Play();
     }
 }
