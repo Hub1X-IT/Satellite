@@ -259,7 +259,8 @@ public class PasswordCrackingAppUI : MonoBehaviour
             encryptionStepIndex--;
             string convertedPassword = currentEncryptionStep.PreviousPasswordState;
 
-            StartCoroutine(ShowDecodingMessageAndConvertedPassword(false, convertedPassword, encryptionStepIndex == -1));
+            StartCoroutine(ShowDecodingMessageAndConvertedPassword(
+                showErrorMessage: false, convertedPassword: convertedPassword, isFinalStep: encryptionStepIndex == -1, onShownCallback: null));
 
             // shouldShowDecodingMessage = true;
             // shouldShowErrorMessage = true;
@@ -280,14 +281,14 @@ public class PasswordCrackingAppUI : MonoBehaviour
             // shouldShowErrorMessage = true;
             // decodingMessageTimer = DecodingMessageShowTime;
 
-            StartCoroutine(ShowDecodingMessageAndConvertedPassword(true, "", false));
-
-            DetectionManager.Instance.CheckDetection();
+            StartCoroutine(ShowDecodingMessageAndConvertedPassword(
+                showErrorMessage: true, convertedPassword: "", isFinalStep: false, onShownCallback: DetectionManager.Instance.CheckDetection));
         }
     }
 
     // Probably temporary
-    private IEnumerator ShowDecodingMessageAndConvertedPassword(bool showErrorMessage, string convertedPassword, bool isFinalStep)
+    private IEnumerator ShowDecodingMessageAndConvertedPassword(
+        bool showErrorMessage, string convertedPassword, bool isFinalStep, Action onShownCallback)
     {
         currentDecodingMessageObject = Instantiate(decodingMessagePrefab, convertedPasswordsHolder);
         SetButtonsEnabled(false);
@@ -307,6 +308,8 @@ public class PasswordCrackingAppUI : MonoBehaviour
                     onCorrectPasswordDecodedGameEvent.RaiseEvent();
                 }
             }
+
+            onShownCallback?.Invoke();
         }
         SetButtonsEnabled(true);
     }

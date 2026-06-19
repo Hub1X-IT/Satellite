@@ -5,11 +5,8 @@ public class DetectionSoundController : MonoBehaviour
     [SerializeField]
     private AudioSource audioSource;
 
-    void Start()
+    private void Start()
     {
-        DetectionManager.Instance.OnDetectionChanceChanged += (chance) =>
-        {
-            audioSource.Play();
-        };
+        DetectionManager.Instance.OnDetectionLevelIncreased += audioSource.Play;
     }
 }

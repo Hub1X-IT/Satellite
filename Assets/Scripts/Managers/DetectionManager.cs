@@ -7,13 +7,14 @@ public class DetectionManager : MonoBehaviour
 
     public event Action<bool> OnDetectionWarningStateChanged;
     public event Action<int> OnDetectionChanceChanged;
+    public event Action OnDetectionLevelIncreased;
 
     public int CurrentDetectionChance { get; private set; }
 
     private int currentDetectionLevel;
-    public const int DefaultDetectionLevel = 0;
+    private const int DefaultDetectionLevel = 0;
 
-    private static readonly int[] detectionLevels = { 0, 2, 5, 10, 25, 40, 70, 98, 100 };
+    private readonly int[] detectionLevels = { 0, 2, 5, 10, 25, 40, 70, 98, 100 };
     // private readonly int[] detectionLevels = { -1 };
 
     private bool isWarningEnabled;
@@ -98,6 +99,7 @@ public class DetectionManager : MonoBehaviour
         {
             currentDetectionLevel++;
             UpdateDetectionChance();
+            OnDetectionLevelIncreased?.Invoke();
         }
     }
 
