@@ -66,4 +66,9 @@ public class MonitorAppUI : MonoBehaviour
     {
         transform.SetAsLastSibling();
     }
+
+    public bool IsThisAppFocused()
+    {
+        return CurrentMonitorAppManager.IsAppOpen(AppType) && CurrentMonitorAppManager.IsAppFocused(AppType);
+    }
 }
