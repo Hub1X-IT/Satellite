@@ -28,8 +28,11 @@ public class Server : MonoBehaviour
     private string serverEnabledInteractMessage;
     [SerializeField]
     private string serverDisabledInteractMessage;
+    [SerializeField]
+    private string interactionDisabledInteractMessage;
 
     private bool isServerEnabled;
+    private bool isInteractionEnabled;
 
     private void Awake()
     {
@@ -41,6 +44,12 @@ public class Server : MonoBehaviour
             {
                 SetServerViewActive(true);
             }
+        };
+
+        serverTrigger.OnSetInteractable += (interactable) =>
+        {
+            isInteractionEnabled = interactable;
+            UpdateInteractMessage();
         };
 
         // Action may be changed if a different key binding is preferred.
@@ -57,7 +66,6 @@ public class Server : MonoBehaviour
         isInServerView = false;
         wasToggledThisFrame = false;
         SetServerEnabled(true);
-        SetServerTriggerEnabled(true);
     }
 
     private void Start()
@@ -128,10 +136,32 @@ public class Server : MonoBehaviour
     private void SetServerEnabled(bool enabled)
     {
         isServerEnabled = enabled;
-        serverTrigger.InteractVisual.SetInteractMessage(enabled ? serverEnabledInteractMessage : serverDisabledInteractMessage);
+        UpdateInteractMessage();
     }
     private void SetServerOnOffMaterial(bool enabled)
     {
         serverMeshRenderer.material = enabled ? serrverOnMaterial : serverOffMaterial;
+    }
+
+    private void UpdateInteractMessage()
+    {
+        if (isInteractionEnabled)
+        {
+            if (isServerEnabled)
+            {
+                serverTrigger.InteractVisual.SetInteractMessage(serverEnabledInteractMessage);
+                serverTrigger.InteractVisual.ShouldShowInteractionIcon = true;
+            }
+            else
+            {
+                serverTrigger.InteractVisual.SetInteractMessage(serverDisabledInteractMessage);
+                serverTrigger.InteractVisual.ShouldShowInteractionIcon = false;
+            }
+        }
+        else
+        {
+            serverTrigger.InteractVisual.SetInteractMessage(interactionDisabledInteractMessage);
+            serverTrigger.InteractVisual.ShouldShowInteractionIcon = false;
+        }
     }
 }

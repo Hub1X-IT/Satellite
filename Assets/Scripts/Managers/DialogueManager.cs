@@ -19,6 +19,8 @@ public class DialogueManager : MonoBehaviour
 
     private Dictionary<string, DialogueCharacterSO> dialogueCharactersDictionary;
 
+    private readonly string[] interactionNotNeededDialogueNodeNames = { "AdditionalLine1", "AdditionalLine2", "AdditionalLine3" };
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -55,5 +57,11 @@ public class DialogueManager : MonoBehaviour
     public DialogueCharacterSO GetDialogueCharacterSO(string characterID)
     {
         return dialogueCharactersDictionary.TryGetValue(characterID, out var characterSO) ? characterSO : null;
+    }
+
+    public void StartRandomInteractionNotNeededDialogue()
+    {
+        int randomIndex = UnityEngine.Random.Range(0, interactionNotNeededDialogueNodeNames.Length);
+        StartDialogue(interactionNotNeededDialogueNodeNames[randomIndex]);
     }
 }

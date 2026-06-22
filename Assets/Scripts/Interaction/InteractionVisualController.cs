@@ -38,31 +38,35 @@ public class InteractionVisualController : MonoBehaviour
 
     private void ChangeInteractVisual(InteractionTrigger interactableObject)
     {
-        // Debug.Log(interactableObject);
-
-        SetInteractVisualEnabled(previousInteractVisual, false);
+        DisableInteractVisual(previousInteractVisual);
         previousInteractVisual = null;
 
         if (interactableObject != null && interactableObject.InteractVisual != null)
         {
-            SetInteractVisualEnabled(interactableObject.InteractVisual, true);
+            EnableInteractVisual(interactableObject.InteractVisual);
             previousInteractVisual = interactableObject.InteractVisual;
         }
     }
 
-    private void SetInteractVisualEnabled(InteractionVisual interactVisual, bool enabled)
+    private void EnableInteractVisual(InteractionVisual interactVisual)
+    {
+        interactVisual.SetInteractionVisualEnabled(true);
+        
+        string interactMessage = interactVisual.InteractMessage;
+        interactionUI.SetInteractionText(interactMessage);
+
+        interactionUI.SetInteractionTextEnabled(true);
+        interactionUI.SetInteractionIconEnabled(interactVisual.ShouldShowInteractionIcon);
+    }
+
+    private void DisableInteractVisual(InteractionVisual interactVisual)
     {
         if (interactVisual != null)
         {
-            interactVisual.SetInteractionVisualEnabled(enabled);
+            interactVisual.SetInteractionVisualEnabled(false);
         }
 
-        if (enabled)
-        {
-            string interactMessage = interactVisual.InteractMessage;
-            interactionUI.SetInteractionText(interactMessage);
-        }
-
-        interactionUI.SetInteractionTextEnabled(enabled);
+        interactionUI.SetInteractionTextEnabled(false);
+        interactionUI.SetInteractionIconEnabled(false);
     }
 }

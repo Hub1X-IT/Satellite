@@ -9,9 +9,10 @@ public class InteractionUI : MonoBehaviour
     [SerializeField]
     private Image interactionIcon;
 
-    private void Awake()
+    private void Start()
     {
         SetInteractionTextEnabled(false);
+        SetInteractionIconEnabled(false);
     }
 
     public void SetInteractionText(string text)
@@ -22,6 +23,10 @@ public class InteractionUI : MonoBehaviour
     public void SetInteractionTextEnabled(bool enabled)
     {
         interactionTextField.gameObject.SetActive(enabled);
+    }
+
+    public void SetInteractionIconEnabled(bool enabled)
+    {
         interactionIcon.gameObject.SetActive(enabled);
     }
 }

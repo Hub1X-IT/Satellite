@@ -24,18 +24,27 @@ public class InteractionController : MonoBehaviour
 
     private void Start()
     {
-        GameInput.Instance.OnInteractAction += () =>
-        {
-            if (IsInteractionEnabled && TryGetInteractableObject(out InteractionTrigger interactableObject))
-            {
-                interactableObject.Interact();
-            }
-        };
+        GameInput.Instance.OnInteractAction += OnInteractAction;
 
         GameManager.Instance.GamePausedUnpaused += (paused) =>
         {
             SetInteractionEnabled(!paused);
         };
+    }
+
+    private void OnInteractAction()
+    {
+        if (IsInteractionEnabled && TryGetInteractableObject(out InteractionTrigger interactableObject))
+        {
+            if (interactableObject.IsInteractable)
+            {
+                interactableObject.Interact();
+            }
+            else
+            {
+                DialogueManager.Instance.StartRandomInteractionNotNeededDialogue();
+            }
+        }
     }
 
     public bool TryGetInteractableObject(out InteractionTrigger interactableObject)
@@ -49,10 +58,10 @@ public class InteractionController : MonoBehaviour
         }
         */
         if (Physics.Raycast(CameraController.Instance.MainCamera.transform.position, CameraController.Instance.MainCamera.transform.forward,
-        out RaycastHit hit, interactRange, interactableLayerMasks | interactionBlockingLayerMasks))
+            out RaycastHit hit, interactRange, interactableLayerMasks | interactionBlockingLayerMasks))
         {
             interactableObject = hit.transform.GetComponent<InteractionTrigger>();
-            if (interactableObject != null && interactableObject.IsInteractable)
+            if (interactableObject != null)
             {
                 return true;
             }

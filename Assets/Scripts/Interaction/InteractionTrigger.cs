@@ -13,6 +13,7 @@ public class InteractionTrigger : MonoBehaviour
     private bool isInteractableOnStart = true;
 
     public event Action OnInteractionTriggered;
+    public event Action<bool> OnSetInteractable;
 
     public InteractionVisual InteractVisual => interactionVisual;
 
@@ -20,7 +21,7 @@ public class InteractionTrigger : MonoBehaviour
 
     private void Awake()
     {
-        IsInteractable = isInteractableOnStart;
+        SetObjectInteractable(isInteractableOnStart);
     }
 
     private void Start()
@@ -39,10 +40,7 @@ public class InteractionTrigger : MonoBehaviour
     public void SetObjectInteractable(bool interactable)
     {
         IsInteractable = interactable;
-    }
-
-    public void SetInteractionVisual(InteractionVisual interactVisual)
-    {
-        interactionVisual = interactVisual;
+        OnSetInteractable?.Invoke(interactable);
+        InteractVisual.ShouldShowInteractionIcon = interactable;
     }
 }

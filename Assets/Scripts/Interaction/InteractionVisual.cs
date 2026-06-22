@@ -9,6 +9,7 @@ public class InteractionVisual : MonoBehaviour
     private string interactMessage;
 
     public bool IsEnabled { get; private set; }
+    public bool ShouldShowInteractionIcon { get; set; }
 
     public string InteractMessage => interactMessage;
 

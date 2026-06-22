@@ -50,12 +50,14 @@ public class Computer : MonoBehaviour
 
     private bool wasChangedToInThisFrame;
 
-    private bool isComputerTriggerEnabled;
+    private bool isInteractionEnabled;
 
     [SerializeField]
     private string computerEnabledInteractMessage;
     [SerializeField]
     private string computerDisabledInteractMessage;
+    [SerializeField]
+    private string interactionDisabledInteractMessage;
 
     [SerializeField]
     private string changeToComputerText;
@@ -75,17 +77,23 @@ public class Computer : MonoBehaviour
 
         wasChangedToInThisFrame = false;
 
-        isComputerTriggerEnabled = false;
+        // isInteractionEnabled = true;
     }
 
     private void Start()
     {
         computerTrigger.OnInteractionTriggered += () =>
         {
-            if (isComputerTriggerEnabled)
+            if (IsComputerEnabled)
             {
                 SetComputerViewActive(true);
             }
+        };
+
+        computerTrigger.OnSetInteractable += (interactable) =>
+        {
+            isInteractionEnabled = interactable;
+            UpdateInteractMessage();
         };
 
         ComputersChangingUI.ComputerExitTriggered += () =>
@@ -148,13 +156,10 @@ public class Computer : MonoBehaviour
         PlayerScriptsController.Instance.SetCanShowPlayerHUD(!active);
         PlayerScriptsController.Instance.SetFlashlightEnabled(!active);
 
-        ToggleComputerTrigger();
+        SetComputerTriggerEnabled(!active);
 
         // May be a temporary solution
-        if (computerTrigger.IsInteractable)
-        {
-            outline.SetOutlineEnabled(!active);
-        }
+        outline.SetOutlineEnabled(!active);
 
         ComputerViewEnabled?.Invoke(active);
 
@@ -196,7 +201,7 @@ public class Computer : MonoBehaviour
         isInComputerView = false;
         GameInput.Instance.EscapeAction -= ExitComputerView;
 
-        ToggleComputerTrigger();
+        SetComputerTriggerEnabled(true);
 
         ComputerViewEnabled?.Invoke(false);
 
@@ -210,7 +215,7 @@ public class Computer : MonoBehaviour
         isInComputerView = true;
         GameInput.Instance.EscapeAction += ExitComputerView;
 
-        ToggleComputerTrigger();
+        SetComputerTriggerEnabled(false);
 
         ComputerViewEnabled?.Invoke(true);
 
@@ -221,12 +226,31 @@ public class Computer : MonoBehaviour
         wasChangedToInThisFrame = true;
     }
 
-    public void ToggleComputerTrigger()
+    private void SetComputerTriggerEnabled(bool enabled)
     {
-        // computerTrigger.gameObject.SetActive(!isInComputerView && IsComputerEnabled);
-        isComputerTriggerEnabled = !isInComputerView && IsComputerEnabled;
-        computerTrigger.gameObject.SetActive(!isInComputerView);
-        computerTrigger.InteractVisual.SetInteractMessage(isComputerTriggerEnabled ? computerEnabledInteractMessage : computerDisabledInteractMessage);
+        computerTrigger.gameObject.SetActive(enabled);
+    }
+
+    private void UpdateInteractMessage()
+    {
+        if (isInteractionEnabled)
+        {
+            if (IsComputerEnabled)
+            {
+                computerTrigger.InteractVisual.SetInteractMessage(computerEnabledInteractMessage);
+                computerTrigger.InteractVisual.ShouldShowInteractionIcon = true;
+            }
+            else
+            {
+                computerTrigger.InteractVisual.SetInteractMessage(computerDisabledInteractMessage);
+                computerTrigger.InteractVisual.ShouldShowInteractionIcon = false;
+            }
+        }
+        else
+        {
+            computerTrigger.InteractVisual.SetInteractMessage(interactionDisabledInteractMessage);
+            computerTrigger.InteractVisual.ShouldShowInteractionIcon = false;
+        }
     }
 
     private void EnablePlayerMovement()
@@ -248,6 +272,6 @@ public class Computer : MonoBehaviour
     public void SetComputerEnabled(bool enabled)
     {
         IsComputerEnabled = enabled;
-        ToggleComputerTrigger();
+        UpdateInteractMessage();
     }
 }
