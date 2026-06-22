@@ -18,7 +18,7 @@ public class Computer : MonoBehaviour
     private GameEventSO computerViewDisabledGameEvent;
 
     [SerializeField]
-    private Interactable computerTrigger;
+    private InteractionTrigger computerTrigger;
 
     [SerializeField]
     private CinemachineCamera computerCinemachineCamera;

@@ -3,7 +3,7 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     [SerializeField]
-    private Interactable doorTrigger;
+    private InteractionTrigger doorTrigger;
 
     [SerializeField]
     private Animator doorAnimator;

@@ -3,7 +3,7 @@ using UnityEngine;
 public class Smartphone : MonoBehaviour
 {
     [SerializeField]
-    private Interactable interactionTrigger;
+    private InteractionTrigger interactionTrigger;
 
     [SerializeField]
     private GameEventSO phonePickupGameEvent;

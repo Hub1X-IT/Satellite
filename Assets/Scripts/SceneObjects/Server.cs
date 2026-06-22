@@ -6,7 +6,7 @@ public class Server : MonoBehaviour
     [SerializeField]
     private GameEventBoolSO serverViewEnabledGameEvent;
 
-    public Interactable serverTrigger;
+    public InteractionTrigger serverTrigger;
 
     [SerializeField]
     private CinemachineCamera serverCinemachineCamera;

@@ -3,7 +3,7 @@ using UnityEngine;
 public class Lever : MonoBehaviour
 {
     [SerializeField]
-    private Interactable interactionTrigger;
+    private InteractionTrigger interactionTrigger;
 
     [SerializeField]
     private Animator leverAnimator;

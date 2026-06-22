@@ -3,7 +3,7 @@ using UnityEngine;
 public class Lamp : MonoBehaviour
 {
     [SerializeField]
-    private Interactable interactionTrigger;
+    private InteractionTrigger interactionTrigger;
 
     private bool isLampEnabled;
 

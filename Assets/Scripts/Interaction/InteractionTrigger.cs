@@ -1,13 +1,13 @@
 using System;
 using UnityEngine;
 
-public class Interactable : MonoBehaviour
+public class InteractionTrigger : MonoBehaviour
 {
     [SerializeField]
     private bool autoSetLayerOnStart = true;
 
     [SerializeField]
-    InteractionVisual interactionVisual;
+    private InteractionVisual interactionVisual;
 
     [SerializeField]
     private bool isInteractableOnStart = true;
