@@ -17,6 +17,9 @@ public class Lever : MonoBehaviour
     [SerializeField]
     private ParticleSystem sparkParticles;
 
+    [SerializeField]
+    private GameObject guidebookUI; //temp
+
     private const string IsLeverOnParam = "IsLeverOn";
 
     private bool isLeverEnabled;
@@ -32,7 +35,7 @@ public class Lever : MonoBehaviour
     private void SetLeverEnabled(bool enabled)
     {
         isLeverEnabled = enabled;
-
+        
         leverAnimator.SetBool(IsLeverOnParam, enabled);
         leverToggleAudioSource.Play();
     }
@@ -40,6 +43,7 @@ public class Lever : MonoBehaviour
     private void SetLightEnabled() //used in Lever Animator as an Event
     {
         PowerManager.Instance.SetPowerState(!PowerManager.Instance.IsPowerOn);
+        guidebookUI.SetActive(!guidebookUI.activeSelf);
     }
 
     private void PlaySparkParticles() //used in Lever Animator as an Event
