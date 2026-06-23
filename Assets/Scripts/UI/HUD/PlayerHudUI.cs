@@ -7,6 +7,9 @@ public class PlayerHudUI : MonoBehaviour
     [SerializeField]
     private GameObject crosshair;
 
+    [SerializeField]
+    private GameObject flashlightInfo;
+
     private void Start()
     {
         GameManager.Instance.GamePausedUnpaused += (gamePaused) => SetPlayerHUDEnabled(!gamePaused);
@@ -23,5 +26,10 @@ public class PlayerHudUI : MonoBehaviour
     public void SetCrosshairEnabled(bool enabled)
     {
         crosshair.SetActive(enabled);
+    }
+
+    public void SetFlashlightInfoEnabled(bool enabled)
+    {
+        flashlightInfo.SetActive(enabled);
     }
 }

@@ -99,7 +99,7 @@ public class Server : MonoBehaviour
         GameManager.Instance.IsInScreenView = active;
 
         PlayerScriptsController.Instance.SetCanShowPlayerHUD(!active);
-        PlayerScriptsController.Instance.SetFlashlightEnabled(!active);
+        PlayerScriptsController.Instance.UpdateFlashlightState();
 
         PlayerScriptsController.Instance.SetPlayerMovementEnabled(!active);
 

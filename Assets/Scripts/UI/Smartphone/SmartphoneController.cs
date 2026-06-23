@@ -61,6 +61,8 @@ public class SmartphoneController : MonoBehaviour
         GameManager.Instance.SetCursorShown(enabled);
 
         smartphoneAnimator.SetBool(IsPhoneOnParam, enabled);
+
+        PlayerScriptsController.Instance.UpdateFlashlightState();
     }
 
     public void SetCanShowSmartphone(bool canShow)

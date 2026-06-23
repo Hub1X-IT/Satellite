@@ -6,23 +6,28 @@ public class FlashlightController : MonoBehaviour
     private Transform cameraFollowObject;
 
     [SerializeField]
-    private float rotationSpeed = 1f;
+    private float rotationSpeed = 10f;
 
     private Light lightSource;
 
-    private bool isFlashlightEnabled;
+    private bool isFlashlightEnabledByPlayer;
 
     private void Awake()
     {
         lightSource = GetComponent<Light>();
 
-        lightSource.enabled = false;
-        isFlashlightEnabled = false;
+        isFlashlightEnabledByPlayer = false;
     }
 
     private void Start()
     {
-        GameInput.Instance.OnFlashlightToggleAction += ToggleFlashlight;
+        GameInput.Instance.OnFlashlightToggleAction += () =>
+        {
+            isFlashlightEnabledByPlayer = !isFlashlightEnabledByPlayer;
+            UpdateFlashlightState();
+        };
+
+        UpdateFlashlightState();
     }
 
     private void Update()
@@ -30,9 +35,9 @@ public class FlashlightController : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, cameraFollowObject.rotation, Time.deltaTime * rotationSpeed);
     }
 
-    private void ToggleFlashlight()
+    public void UpdateFlashlightState()
     {
-        isFlashlightEnabled = !isFlashlightEnabled;
-        lightSource.enabled = isFlashlightEnabled;
+        lightSource.enabled = isFlashlightEnabledByPlayer && !GameManager.Instance.IsInSmartphoneView && !GameManager.Instance.IsInScreenView;
+        PlayerScriptsController.Instance.SetFlashlightInfoEnabled(!GameManager.Instance.IsInSmartphoneView);
     }
 }

@@ -17,8 +17,6 @@ public class PlayerScriptsController : MonoBehaviour
     [SerializeField]
     private InteractionController playerInteractionController;
 
-    public bool IsInteractionEnabled => playerInteractionController.IsInteractionEnabled;
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -51,23 +49,13 @@ public class PlayerScriptsController : MonoBehaviour
         SetCanShowSmartphone(canShow);
     }
 
-    public void SetCrosshairEnabled(bool enabled)
-    {
-        playerHudUI.SetCrosshairEnabled(enabled);
-    }
+    public void SetCrosshairEnabled(bool enabled) => playerHudUI.SetCrosshairEnabled(enabled);
 
-    public void SetCanShowSmartphone(bool canShow)
-    {
-        smartphoneController.SetCanShowSmartphone(canShow);
-    }
+    public void SetFlashlightInfoEnabled(bool enabled) => playerHudUI.SetFlashlightInfoEnabled(enabled);
 
-    public void SetFlashlightEnabled(bool enabled)
-    {
-        flashlightController.gameObject.SetActive(enabled);
-    }
+    public void SetCanShowSmartphone(bool canShow) => smartphoneController.SetCanShowSmartphone(canShow);
 
-    public void SetInteractionEnabled(bool enabled)
-    {
-        playerInteractionController.SetInteractionEnabled(enabled);
-    }
+    public void UpdateFlashlightState() => flashlightController.UpdateFlashlightState();
+
+    public void SetInteractionEnabled(bool enabled) => playerInteractionController.SetInteractionEnabled(enabled);
 }
