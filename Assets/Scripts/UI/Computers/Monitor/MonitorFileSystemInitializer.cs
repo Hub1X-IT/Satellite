@@ -126,6 +126,6 @@ public class MonitorFileSystemInitializer : MonoBehaviour
         rootFolderSO = null;
         currentIPAddress = null;
 
-        return false;
+        return true;
     }
 }
