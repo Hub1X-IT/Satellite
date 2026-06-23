@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MonitorAppsManagerUI : MonoBehaviour
@@ -33,6 +35,22 @@ public class MonitorAppsManagerUI : MonoBehaviour
     {
         openApps = new();
         lastFocusedApps = new();
+
+        PowerManager.Instance.OnPowerStateChanged += (isPowerOn) =>
+        {
+            if (!isPowerOn)
+            {
+                CloseAllApps();
+            }
+        };
+
+        ServerConnectionManager.Instance.OnServerConnectionStateChanged += (isConnected) =>
+        {
+            if (!isConnected)
+            {
+                CloseAllApps();
+            }
+        };
     }
 
     public bool TryOpenApp(ApplicationType appType, out MonitorAppUI monitorAppUI)
@@ -49,11 +67,7 @@ public class MonitorAppsManagerUI : MonoBehaviour
 
     public MonitorAppUI ForceOpenApp(ApplicationType appType)
     {
-        if (IsAppOpen(appType))
-        {
-            CloseApp(appType);
-        }
-
+        TryCloseApp(appType);
         return OpenApplication(appType);
     }
 
@@ -148,7 +162,7 @@ public class MonitorAppsManagerUI : MonoBehaviour
         }
     }
 
-    public void CloseApp(ApplicationType applicationType)
+    private void CloseApp(ApplicationType applicationType)
     {
         MonitorAppUI monitorApp = openApps[applicationType];
         monitorApp.CloseAppFromAppsManager();
@@ -168,9 +182,24 @@ public class MonitorAppsManagerUI : MonoBehaviour
         return false;
     }
 
-    public void OpenDoorApp()
+    public bool TryCloseApp(ApplicationType appType)
     {
-        // Temporary method (idk whether it's used anywhere)
-        DoorAppUI doorApp = OpenApplication(ApplicationType.DoorApp).GetComponent<DoorAppUI>();
+        if (IsAppOpen(appType))
+        {
+            CloseApp(appType);
+            return true;
+        }
+
+        return false;
+    }
+
+    public void CloseAllApps()
+    {
+        var allAppTypes = Enum.GetValues(typeof(ApplicationType));
+
+        foreach (ApplicationType appType in allAppTypes)
+        {
+            TryCloseApp(appType);
+        }
     }
 }

@@ -8795,35 +8795,27 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 19b1f1b11482ffb4ea77438ba23aad4d, type: 2}
     - target: {fileID: 2773715173536998525, guid: 521f4f33850a94934b739a08a383275d, type: 3}
-      propertyPath: ipAndFolderSerializableDictionary.items.Array.size
+      propertyPath: ipDataInitialArray.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2773715173536998525, guid: 521f4f33850a94934b739a08a383275d, type: 3}
-      propertyPath: ipAndObjectiveSerializableDictionary.items.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2773715173536998525, guid: 521f4f33850a94934b739a08a383275d, type: 3}
-      propertyPath: ipAndFolderSerializableDictionary.items.Array.data[0].key
-      value: 239.121.83.128
-      objectReference: {fileID: 0}
-    - target: {fileID: 2773715173536998525, guid: 521f4f33850a94934b739a08a383275d, type: 3}
-      propertyPath: ipAndFolderSerializableDictionary.items.Array.data[1].key
-      value: test1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2773715173536998525, guid: 521f4f33850a94934b739a08a383275d, type: 3}
-      propertyPath: ipAndFolderSerializableDictionary.items.Array.data[0].value
+      propertyPath: ipDataInitialArray.Array.data[0].FolderSO
       value: 
       objectReference: {fileID: 11400000, guid: 5b13abf0529b617489831190b3a49bbc, type: 2}
     - target: {fileID: 2773715173536998525, guid: 521f4f33850a94934b739a08a383275d, type: 3}
-      propertyPath: ipAndFolderSerializableDictionary.items.Array.data[1].value
+      propertyPath: ipDataInitialArray.Array.data[1].FolderSO
       value: 
       objectReference: {fileID: 11400000, guid: decb61ccf00bcd145a50c04b10442b86, type: 2}
     - target: {fileID: 2773715173536998525, guid: 521f4f33850a94934b739a08a383275d, type: 3}
-      propertyPath: ipAndObjectiveSerializableDictionary.items.Array.data[0].key
+      propertyPath: ipDataInitialArray.Array.data[0].IpAddress
       value: 239.121.83.128
       objectReference: {fileID: 0}
     - target: {fileID: 2773715173536998525, guid: 521f4f33850a94934b739a08a383275d, type: 3}
-      propertyPath: ipAndObjectiveSerializableDictionary.items.Array.data[0].value
+      propertyPath: ipDataInitialArray.Array.data[1].IpAddress
+      value: test1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2773715173536998525, guid: 521f4f33850a94934b739a08a383275d, type: 3}
+      propertyPath: ipDataInitialArray.Array.data[0].OnConnectGameEvent
       value: 
       objectReference: {fileID: 11400000, guid: e1227d759d6807bdd807dfb01c427d83, type: 2}
     - target: {fileID: 4940343725290271655, guid: 521f4f33850a94934b739a08a383275d, type: 3}
@@ -8878,22 +8870,6 @@ PrefabInstance:
       propertyPath: 'availableServersList.Array.data[1]'
       value: 
       objectReference: {fileID: 11400000, guid: 95c6120676c79769582257867e997ab8, type: 2}
-    - target: {fileID: 5069642093851917172, guid: 521f4f33850a94934b739a08a383275d, type: 3}
-      propertyPath: 'availableServersList.Array.data[2]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 602c9a3774bc416e5ab571299f662997, type: 2}
-    - target: {fileID: 5069642093851917172, guid: 521f4f33850a94934b739a08a383275d, type: 3}
-      propertyPath: 'availableServersList.Array.data[3]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 54425eb077bb3690ea0736f515bd4d1b, type: 2}
-    - target: {fileID: 5069642093851917172, guid: 521f4f33850a94934b739a08a383275d, type: 3}
-      propertyPath: 'availableServersList.Array.data[4]'
-      value: 
-      objectReference: {fileID: 11400000, guid: cbbd241f1e23e4f098ec0707c7422cde, type: 2}
-    - target: {fileID: 5069642093851917172, guid: 521f4f33850a94934b739a08a383275d, type: 3}
-      propertyPath: 'availableServersList.Array.data[5]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 1f080a2c33bf4f853b402e3aac7c2782, type: 2}
     - target: {fileID: 5479671100966126590, guid: 521f4f33850a94934b739a08a383275d, type: 3}
       propertyPath: dialogueRunner
       value: 
@@ -9604,7 +9580,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8295782187248086010, guid: ffa1e613c48388f42aaf064733a34462, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.009216309
+      value: -0.008514404
       objectReference: {fileID: 0}
     - target: {fileID: 8975780131838843673, guid: ffa1e613c48388f42aaf064733a34462, type: 3}
       propertyPath: m_AnchorMax.y

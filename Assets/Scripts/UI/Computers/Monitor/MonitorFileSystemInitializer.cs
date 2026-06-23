@@ -1,12 +1,22 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MonitorFileSystemInitializer : MonoBehaviour
 {
+    [Serializable]
+    private class IpData
+    {
+        public string IpAddress;
+        public FolderSO FolderSO;
+        public GameEventSO OnConnectGameEvent;
+    }
+
     // Can be more than one instance in scene - for different computers
 
     [SerializeField]
-    MonitorUI monitorUI;
+    private MonitorUI monitorUI;
 
     private FolderSO rootFolderSO;
 
@@ -17,25 +27,25 @@ public class MonitorFileSystemInitializer : MonoBehaviour
     private GameEventCommandDataSO connectCommandGameEvent;
     [SerializeField]
     private GameEventCommandDataSO disconnectCommandGameEvent;
-    private GameEventSO objective;
 
     public FolderSO RootFolderSO => rootFolderSO;
 
     [SerializeField]
-    private SerializableDictionary<string, FolderSO> ipAndFolderSerializableDictionary;
-    [SerializeField]
-    private SerializableDictionary<string, GameEventSO> ipAndObjectiveSerializableDictionary;
+    private IpData[] ipDataInitialArray;
 
-    private Dictionary<string, FolderSO> ipAndFolderDictionary;
-    private Dictionary<string, GameEventSO> ipAndObjectiveDictionary;
+    private Dictionary<string, IpData> ipDataDictionary;
 
+    private readonly MonitorAppsManagerUI.ApplicationType[] appsToCloseOnDisconnect = {
+        MonitorAppsManagerUI.ApplicationType.DataContainerPasswordScreen,
+        MonitorAppsManagerUI.ApplicationType.NotepadApp,
+        MonitorAppsManagerUI.ApplicationType.DoorApp
+    };
 
     private string currentIPAddress;
 
     private void Awake()
     {
-        ipAndFolderDictionary = ipAndFolderSerializableDictionary.Dictionary;
-        ipAndObjectiveDictionary = ipAndObjectiveSerializableDictionary.Dictionary;
+        ipDataDictionary = ipDataInitialArray.ToDictionary(keySelector: item => item.IpAddress, elementSelector: item => item);
 
         possiblePasswordsSO.InitializePossiblePasswords();
 
@@ -44,7 +54,8 @@ public class MonitorFileSystemInitializer : MonoBehaviour
 
         monitorUI.FileExplorer.SetFileExplorerEnabled(false);
 
-        ServerConnectionManager.Instance.OnServerConnectionStateChanged += (isConnected) => {
+        ServerConnectionManager.Instance.OnServerConnectionStateChanged += (isConnected) =>
+        {
             if (!isConnected) TryDisconnect();
         };
     }
@@ -96,23 +107,22 @@ public class MonitorFileSystemInitializer : MonoBehaviour
 
     public bool TryConnectTo(string ipAddress)
     {
-        if (!ipAndFolderDictionary.ContainsKey(ipAddress)) return false;
-        
+        if (!ipDataDictionary.TryGetValue(ipAddress, out var ipData)) return false;
+
         if (rootFolderSO != null)
         {
             Debug.LogWarning($"Connecting to {ipAddress} while still connected to {currentIPAddress}.");
             TryDisconnect();
         }
 
-        rootFolderSO = ipAndFolderDictionary[ipAddress];
+        rootFolderSO = ipData.FolderSO;
         monitorUI.FileExplorer.SetFileExplorerEnabled(true);
         monitorUI.FileExplorer.InitializeFileExplorer(this);
         currentIPAddress = ipAddress;
-        
-        if (ipAndObjectiveDictionary.ContainsKey(ipAddress))
+
+        if (ipData.OnConnectGameEvent != null)
         {
-            objective = ipAndObjectiveDictionary[ipAddress];
-            objective.RaiseEvent();
+            ipData.OnConnectGameEvent.RaiseEvent();
         }
 
         return true;
@@ -123,6 +133,12 @@ public class MonitorFileSystemInitializer : MonoBehaviour
         if (rootFolderSO == null) return false;
 
         monitorUI.FileExplorer.SetFileExplorerEnabled(false);
+
+        foreach (var appType in appsToCloseOnDisconnect)
+        {
+            monitorUI.AppsManager.TryCloseApp(appType);
+        }
+
         rootFolderSO = null;
         currentIPAddress = null;
 

@@ -22,16 +22,6 @@ public class TracingAppUI : MonoBehaviour
         monitorAppUI = GetComponent<MonitorAppUI>();
         monitorAppUI.SetAppName(AppName);
 
-        PowerManager.Instance.OnPowerStateChanged += (isPowerEnabled) =>
-        {
-            // May need to move this to MonitorAppsManagerUI
-
-            if (!isPowerEnabled && monitorAppUI != null)
-            {
-                monitorAppUI.CloseApp();
-            }
-        };
-
         TracingManager.Instance.OnPlayerTraced += ResetTracingUI;
         TracingManager.Instance.OnTracingStarted += InitializeTracingUI;
         ResetTracingUI();

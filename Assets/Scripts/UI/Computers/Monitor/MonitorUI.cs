@@ -31,10 +31,11 @@ public class MonitorUI : MonoBehaviour
     public bool IsSputnikOSStarted { get; private set; }
 
     public FileExplorerUI FileExplorer => fileExplorer;
+    public MonitorAppsManagerUI AppsManager => appsManager;
 
     private void Awake()
     {
-        fileExplorer.CurrentMonitorAppsManager = appsManager;
+        FileExplorer.CurrentMonitorAppsManager = AppsManager;
 
         IsSputnikOSStarted = false;
     }

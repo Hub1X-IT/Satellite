@@ -93,14 +93,6 @@ public class PasswordCrackingAppUI : MonoBehaviour
 
         pasteMenuUI.InitializeCopyPasteMenuUI(CopyPasteMenuUI.MenuFunction.PasteMenu, inputField);
 
-        PowerManager.Instance.OnPowerStateChanged += (isPowerEnabled) =>
-        {
-            if (!isPowerEnabled && monitorAppUI != null)
-            {
-                monitorAppUI.CloseApp();
-            }
-        };
-
         // shouldShowDecodingMessage = false;
         // shouldShowErrorMessage = false;
 

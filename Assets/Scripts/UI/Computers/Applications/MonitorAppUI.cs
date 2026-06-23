@@ -46,8 +46,12 @@ public class MonitorAppUI : MonoBehaviour
 
     public void CloseApp()
     {
-        Debug.Log($"Close app: {gameObject.name}");
-        currentMonitorAppsManager.CloseApp(AppType);
+        bool wasClosed = currentMonitorAppsManager.TryCloseApp(AppType);
+
+        if (!wasClosed)
+        {
+            Debug.LogError($"Closing app: {gameObject.name} failed even though the app is open");
+        }
     }
 
     public void CloseAppFromAppsManager()
