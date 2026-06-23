@@ -35,11 +35,33 @@ public class MonitorAppsManagerUI : MonoBehaviour
         lastFocusedApps = new();
     }
 
-    public MonitorAppUI OpenApplication(ApplicationType application)
+    public bool TryOpenApp(ApplicationType appType, out MonitorAppUI monitorAppUI)
+    {
+        if (IsAppOpen(appType))
+        {
+            monitorAppUI = null;
+            return false;
+        }
+
+        monitorAppUI = OpenApplication(appType);
+        return true;
+    }
+
+    public MonitorAppUI ForceOpenApp(ApplicationType appType)
+    {
+        if (IsAppOpen(appType))
+        {
+            CloseApp(appType);
+        }
+
+        return OpenApplication(appType);
+    }
+
+    private MonitorAppUI OpenApplication(ApplicationType appType)
     {
         MonitorAppUI instantiatedApp;
 
-        switch (application)
+        switch (appType)
         {
             default:
                 return null;
@@ -59,9 +81,9 @@ public class MonitorAppsManagerUI : MonoBehaviour
                 instantiatedApp = Instantiate(tracingAppPrefab.gameObject, appsHolder).GetComponent<MonitorAppUI>();
                 break;
         }
-        instantiatedApp.InitializeApp(this, application);
-        openApps[application] = instantiatedApp;
-        lastFocusedApps.Add(application);
+        instantiatedApp.InitializeApp(this, appType);
+        openApps[appType] = instantiatedApp;
+        lastFocusedApps.Add(appType);
         return instantiatedApp;
     }
 

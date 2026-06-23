@@ -48,7 +48,7 @@ public class TaskbarUI : MonoBehaviour
         }
         else
         {
-            MonitorAppUI monitorApp = monitorAppsManager.OpenApplication(applicationType);
+            MonitorAppUI monitorApp = monitorAppsManager.ForceOpenApp(applicationType);
 
             // that will probably be moved somewhere else
             switch (applicationType)

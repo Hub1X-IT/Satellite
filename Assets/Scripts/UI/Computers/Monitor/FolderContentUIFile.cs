@@ -35,15 +35,19 @@ public class FolderContentUIFile : FileExplorerUIDataContainer
         {
             if (selfFileSO is FileStringSO fileStringSO)
             {
-                NotepadAppUI notepadApp = CurrentMonitorAppsManager.OpenApplication(MonitorAppsManagerUI.
-                    ApplicationType.NotepadApp).GetComponent<NotepadAppUI>();
-                notepadApp.InitializeNotepadAppUI(fileStringSO);
+                if (CurrentMonitorAppsManager.TryOpenApp(MonitorAppsManagerUI.ApplicationType.NotepadApp, out var monitorAppUI))
+                {
+                    var notepadApp = monitorAppUI.GetComponent<NotepadAppUI>();
+                    notepadApp.InitializeNotepadAppUI(fileStringSO);
+                }
             }
-            else if (selfFileSO is FileDoorAppShortcutSO fileAppShortcutSO)
+            else if (selfFileSO is FileDoorAppShortcutSO)
             {
-                DoorAppUI doorApp = CurrentMonitorAppsManager.
-                    OpenApplication(fileAppShortcutSO.TriggeredApplicationType).GetComponent<DoorAppUI>();
-                doorApp.InitializeDoorApp("Door Control System");
+                if (CurrentMonitorAppsManager.TryOpenApp(MonitorAppsManagerUI.ApplicationType.DoorApp, out var monitorAppUI))
+                {
+                    var doorApp = monitorAppUI.GetComponent<DoorAppUI>();
+                    doorApp.InitializeDoorApp("Door Control System");
+                }
             }
         }
     }
