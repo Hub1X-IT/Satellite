@@ -11,6 +11,8 @@ public class PhonecallUI : MonoBehaviour
     private Button acceptCallButton;
     [SerializeField]
     private TMP_Text incomingCallCallerNameTextField;
+    [SerializeField]
+    private AudioSource incomingCallAudioSource;
 
     [Header("Ongoing Call")]
     [SerializeField]
@@ -114,6 +116,8 @@ public class PhonecallUI : MonoBehaviour
     {
         incomingCallCallerNameTextField.text = contactName;
         incomingCallUI.SetActive(true);
+
+        incomingCallAudioSource.Play();
     }
 
     private void StartOutgoingCall(string contactName)
@@ -142,6 +146,7 @@ public class PhonecallUI : MonoBehaviour
         isOutgoingCallActive = false;
         isCallTimerActive = false;
         callingSound.Stop();
+        incomingCallAudioSource.Stop();
     }
 
     private void SetCallTimerText()
