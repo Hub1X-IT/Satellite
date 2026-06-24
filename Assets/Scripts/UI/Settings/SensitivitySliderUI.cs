@@ -28,6 +28,6 @@ public class SensitivitySliderUI : MonoBehaviour
     private void SetSensitivity(float value)
     {
         GameSettingsManager.Instance.SetMouseSensitivity(value);
-        sliderValueTextField.text = $"{Mathf.Round(sensitivitySlider.value / sensitivitySlider.maxValue):P}%";
+        sliderValueTextField.text = $"{(sensitivitySlider.value - sensitivitySlider.minValue) / (sensitivitySlider.maxValue-0.01):P0}";
     }
 }
