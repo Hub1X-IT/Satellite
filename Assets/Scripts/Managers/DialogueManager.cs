@@ -49,9 +49,30 @@ public class DialogueManager : MonoBehaviour
         dialogueRunner.onDialogueComplete.AddListener(() => OnDialogueComplete?.Invoke());
     }
 
-    public void StartDialogue(string nodeName)
+    private void StartDialogue(string nodeName)
     {
         dialogueRunner.StartDialogue(nodeName);
+    }
+
+    public void ForceStartDialogue(string nodeName)
+    {
+        if (IsDialogueRunning)
+        {
+            dialogueRunner.Stop();
+        }
+
+        StartDialogue(nodeName);
+    }
+
+    public bool TryStartDialogue(string nodeName)
+    {
+        if (!IsDialogueRunning)
+        {
+            StartDialogue(nodeName);
+            return true;
+        }
+        
+        return false;
     }
 
     public DialogueCharacterSO GetDialogueCharacterSO(string characterID)
@@ -62,6 +83,6 @@ public class DialogueManager : MonoBehaviour
     public void StartRandomInteractionNotNeededDialogue()
     {
         int randomIndex = UnityEngine.Random.Range(0, interactionNotNeededDialogueNodeNames.Length);
-        StartDialogue(interactionNotNeededDialogueNodeNames[randomIndex]);
+        TryStartDialogue(interactionNotNeededDialogueNodeNames[randomIndex]);
     }
 }

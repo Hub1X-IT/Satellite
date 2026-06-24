@@ -10,10 +10,18 @@ public partial class StartDialogueAction : Action
 {
     [SerializeReference] public BlackboardVariable<string> DialogueNodeName;
     [SerializeReference] public BlackboardVariable<bool> WaitForDialogueEnd = new(true);
+    [SerializeReference] public BlackboardVariable<bool> ForceStartDialogue = new(true);
 
     protected override Status OnStart()
     {
-        DialogueManager.Instance.StartDialogue(DialogueNodeName);
+        if (ForceStartDialogue)
+        {
+            DialogueManager.Instance.ForceStartDialogue(DialogueNodeName);
+        }
+        else
+        {
+            DialogueManager.Instance.TryStartDialogue(DialogueNodeName);
+        }
 
         if (WaitForDialogueEnd)
         {
