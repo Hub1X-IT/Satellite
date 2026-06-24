@@ -21,8 +21,8 @@ public class DoorAppUI : MonoBehaviour
 
     private bool isDoorOpen;
 
-    private const string DoorClosedText = "Door Closed";
-    private const string DoorOpenText = "Door Open";
+    private const string DoorClosedText = "Door Locked";
+    private const string DoorOpenText = "Door Unlocked";
 
     public void InitializeDoorApp(string appName)
     {
