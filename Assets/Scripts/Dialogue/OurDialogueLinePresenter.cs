@@ -16,9 +16,6 @@ public class OurDialogueLinePresenter : DialoguePresenterBase
     private TMP_Text lineTextField;
 
     [SerializeField]
-    private Image characterPortraitImage;
-
-    [SerializeField]
     private bool useFadeEffect = true;
 
     [SerializeField]
@@ -46,14 +43,10 @@ public class OurDialogueLinePresenter : DialoguePresenterBase
         if (dialogueCharacterSO != null)
         {
             characterNameTextField.text = dialogueCharacterSO.DisplayName;
-            characterPortraitImage.sprite = dialogueCharacterSO.Portrait;
-            characterPortraitImage.gameObject.SetActive(true);
         }
         else
         {
             characterNameTextField.text = line.CharacterName;
-            characterPortraitImage.gameObject.SetActive(false);
-            characterPortraitImage.sprite = null;
         }
 
         lineTextField.text = line.TextWithoutCharacterName.Text;
