@@ -24,10 +24,17 @@ public class OurDialogueLinePresenter : DialoguePresenterBase
     [SerializeField]
     private float fadeDownDuration = 0.1f;
 
-    public override YarnTask OnDialogueCompleteAsync()
+    public override async YarnTask OnDialogueCompleteAsync()
     {
-        canvasGroup.alpha = 0;
-        return YarnTask.CompletedTask;
+        // fade down the UI
+        if (useFadeEffect)
+        {
+            await Effects.FadeAlphaAsync(canvasGroup, 1, 0, fadeDownDuration, new()).SuppressCancellationThrow();
+        }
+        else
+        {
+            canvasGroup.alpha = 0;
+        }
     }
 
     public override YarnTask OnDialogueStartedAsync()
