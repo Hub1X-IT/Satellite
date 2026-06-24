@@ -18,6 +18,7 @@ public class Lightbulb : MonoBehaviour
         originalEmissiveIntensity = lightbulbMaterial.GetFloat("_EmissiveIntensity");
         emissiveOnColor = lightbulbMaterial.GetColor("_EmissiveColor");
         PowerManager.Instance.OnPowerStateChanged += SetLightEnabled;
+        SetLightEnabled(true); //temporary fix to why bloom is not applied at the start and only after lever flip
     }
 
     private void SetLightEnabled(bool enabled)
