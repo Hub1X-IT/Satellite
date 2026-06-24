@@ -5,7 +5,6 @@ public class DetectionManager : MonoBehaviour
 {
     public static DetectionManager Instance { get; private set; }
 
-    public event Action<bool> OnDetectionWarningStateChanged;
     public event Action<int> OnDetectionChanceChanged;
     public event Action OnDetectionLevelIncreased;
 
@@ -16,11 +15,6 @@ public class DetectionManager : MonoBehaviour
 
     private readonly int[] detectionLevels = { 0, 2, 5, 10, 25, 40, 70, 98, 100 };
     // private readonly int[] detectionLevels = { -1 };
-
-    private bool isWarningEnabled;
-
-    private const float DetectionWarningTime = 10f;
-    private float detectionWarningTimer;
 
     private void Awake()
     {
@@ -34,18 +28,6 @@ public class DetectionManager : MonoBehaviour
 
         currentDetectionLevel = DefaultDetectionLevel;
         UpdateDetectionChance();
-    }
-
-    private void Update()
-    {
-        if (isWarningEnabled)
-        {
-            detectionWarningTimer -= Time.deltaTime;
-            if (detectionWarningTimer < 0f)
-            {
-                SetDetectionWarningEnabled(false);
-            }
-        }
     }
 
     public void CheckDetection()
@@ -62,8 +44,6 @@ public class DetectionManager : MonoBehaviour
             {
                 TracingManager.Instance.TryIncreaseTracingSpeed();
             }
-
-            SetDetectionWarningEnabled(true);
         }
         else
         {
@@ -107,16 +87,5 @@ public class DetectionManager : MonoBehaviour
     {
         CurrentDetectionChance = detectionLevels[currentDetectionLevel];
         OnDetectionChanceChanged?.Invoke(CurrentDetectionChance);
-    }
-
-    private void SetDetectionWarningEnabled(bool enabled)
-    {
-        isWarningEnabled = enabled;
-        if (enabled)
-        {
-            detectionWarningTimer = DetectionWarningTime;
-        }
-
-        OnDetectionWarningStateChanged?.Invoke(enabled);
     }
 }
