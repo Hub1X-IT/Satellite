@@ -1,6 +1,5 @@
 ﻿using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using Yarn.Unity;
 
 // Modified version of the default LinePresenter
@@ -23,6 +22,11 @@ public class OurDialogueLinePresenter : DialoguePresenterBase
 
     [SerializeField]
     private float fadeDownDuration = 0.1f;
+
+    private void Start()
+    {
+        canvasGroup.alpha = 0;
+    }
 
     public override async YarnTask OnDialogueCompleteAsync()
     {
