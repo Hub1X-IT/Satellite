@@ -581,7 +581,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -100, y: 50}
+  m_AnchoredPosition: {x: -101.5, y: 42.6}
   m_SizeDelta: {x: 185, y: 50}
   m_Pivot: {x: 1, y: 0}
 --- !u!1 &9015027713527592713
@@ -618,8 +618,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -220.6, y: -15}
-  m_SizeDelta: {x: 280, y: 80}
+  m_AnchoredPosition: {x: -220.4, y: -23.5}
+  m_SizeDelta: {x: 277.912, y: 55.1565}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &4100073992851013368
 CanvasRenderer:
@@ -649,7 +649,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Character Name
+  m_text: Samantha
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3b4d58fdb7962034193e2c04cf3f678d, type: 2}
   m_sharedMaterial: {fileID: -7340915476845089944, guid: 3b4d58fdb7962034193e2c04cf3f678d, type: 2}
@@ -676,13 +676,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 45
+  m_fontSizeBase: 45
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -743,19 +743,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2958262985454349539, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 399
-      objectReference: {fileID: 0}
-    - target: {fileID: 2958262985454349539, guid: 52571f68872914e24837210513edea1d, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 2958262985454349539, guid: 52571f68872914e24837210513edea1d, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 2958262985454349539, guid: 52571f68872914e24837210513edea1d, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.8
+      value: 341
       objectReference: {fileID: 0}
     - target: {fileID: 2958262985454349539, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -780,7 +768,7 @@ PrefabInstance:
     - target: {fileID: 2958262986446477831, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: d666fb8c6c02a0474be19c9546da9b9d, type: 3}
+      objectReference: {fileID: 21300000, guid: d5f47dee1260a8ae3bc56e2958541d78, type: 3}
     - target: {fileID: 2958262986446477831, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_Color.a
       value: 1
@@ -796,6 +784,10 @@ PrefabInstance:
     - target: {fileID: 2958262986446477831, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_Color.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2958262986446477831, guid: 52571f68872914e24837210513edea1d, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2958262986520364887, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_Pivot.y
@@ -823,7 +815,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2958262986520364887, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 145
+      value: 152.9382
       objectReference: {fileID: 0}
     - target: {fileID: 2958262986520364887, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -831,7 +823,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2958262986520364887, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -140
+      value: -90.06177
       objectReference: {fileID: 0}
     - target: {fileID: 2958262986520364888, guid: 52571f68872914e24837210513edea1d, type: 3}
       propertyPath: m_fontSize
