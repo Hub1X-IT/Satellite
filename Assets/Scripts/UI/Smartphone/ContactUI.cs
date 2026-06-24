@@ -21,6 +21,9 @@ public class ContactUI : MonoBehaviour
 
     private void CallContact()
     {
-        PhonecallManager.Instance.StartOutgoingCall(thisContactSO, true);
+        // PhonecallManager.Instance.StartOutgoingCall(thisContactSO, true);
+
+        Debug.Log("Calling temporarily disabled");
+        DialogueManager.Instance.StartRandomInteractionNotNeededDialogue();
     }
 }
