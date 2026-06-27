@@ -3,34 +3,25 @@ using UnityEngine;
 public class Lightbulb : MonoBehaviour
 {
     [SerializeField]
-    private GameObject lightSource;
+    private Light lightSource;
 
     [SerializeField]
-    private Material lightbulbMaterial;
+    private Renderer lightbulbVisualRenderer;
 
-    private float originalEmissiveIntensity;
-
-    private Color emissiveOffColor = Color.black;
-    private Color emissiveOnColor;
+    [SerializeField]
+    private Material lightbulbOnMaterial;
+    [SerializeField]
+    private Material lightbulbOffMaterial;
 
     private void Start()
     {
-        originalEmissiveIntensity = lightbulbMaterial.GetFloat("_EmissiveIntensity");
-        emissiveOnColor = lightbulbMaterial.GetColor("_EmissiveColor");
         PowerManager.Instance.OnPowerStateChanged += SetLightEnabled;
-        SetLightEnabled(true); //temporary fix to why bloom is not applied at the start and only after lever flip
+        SetLightEnabled(true);
     }
 
     private void SetLightEnabled(bool enabled)
     {
-        lightSource.SetActive(enabled);
-        if (enabled)
-        {
-            lightbulbMaterial.SetColor("_EmissiveColor", emissiveOnColor * originalEmissiveIntensity);
-        }
-        else
-        {
-            lightbulbMaterial.SetColor("_EmissiveColor", emissiveOffColor * 0f);
-        }
+        lightSource.gameObject.SetActive(enabled);
+        lightbulbVisualRenderer.material = enabled ? lightbulbOnMaterial : lightbulbOffMaterial;
     }
 }
