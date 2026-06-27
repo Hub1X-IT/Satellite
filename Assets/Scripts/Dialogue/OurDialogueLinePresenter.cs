@@ -39,6 +39,8 @@ public class OurDialogueLinePresenter : DialoguePresenterBase
         {
             canvasGroup.alpha = 0;
         }
+        
+        canvasGroup.alpha = 0;
     }
 
     public override YarnTask OnDialogueStartedAsync()
