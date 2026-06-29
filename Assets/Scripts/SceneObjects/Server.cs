@@ -98,7 +98,7 @@ public class Server : MonoBehaviour
         wasToggledThisFrame = true;
         GameManager.Instance.IsInScreenView = active;
 
-        PlayerScriptsController.Instance.SetCanShowPlayerHUD(!active);
+        PlayerScriptsController.Instance.SetCanShowPlayerFPHUD(!active);
         PlayerScriptsController.Instance.UpdateFlashlightState();
 
         PlayerScriptsController.Instance.SetPlayerMovementEnabled(!active);

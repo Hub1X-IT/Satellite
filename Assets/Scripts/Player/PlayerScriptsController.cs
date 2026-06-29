@@ -17,6 +17,9 @@ public class PlayerScriptsController : MonoBehaviour
     [SerializeField]
     private InteractionController playerInteractionController;
 
+    private bool canShowHUD = true;
+    private bool canShowFPHUD = true;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -30,6 +33,9 @@ public class PlayerScriptsController : MonoBehaviour
 
     private void Start()
     {
+        GameManager.Instance.GamePausedUnpaused += (gamePaused) => SetPlayerHUDEnabled(!gamePaused);
+        SetPlayerHUDEnabled(!GameManager.Instance.IsGamePaused);
+        playerHudUI.SetPlayerObjectivesHUDEnabled(!GameManager.Instance.IsGamePaused);
         SetPlayerMovementEnabled(true);
         SetCanShowPlayerHUD(true);
         SetCanShowSmartphone(false);
@@ -44,9 +50,26 @@ public class PlayerScriptsController : MonoBehaviour
 
     public void SetCanShowPlayerHUD(bool canShow)
     {
-        playerHudUI.CanShowPlayerHUD = canShow;
-        playerHudUI.SetPlayerHUDEnabled(!GameManager.Instance.IsGamePaused);
+        canShowHUD = canShow;
+        SetPlayerHUDEnabled(!GameManager.Instance.IsGamePaused);
+    }
+
+    public void SetPlayerHUDEnabled(bool enabled)
+    {
+        SetPlayerFPHUDEnabled(enabled && canShowHUD);
+        playerHudUI.SetPlayerHUDEnabled(enabled && canShowHUD);
+    }
+
+    public void SetCanShowPlayerFPHUD(bool canShow)
+    {
+        canShowFPHUD = canShow;
         SetCanShowSmartphone(canShow);
+        SetPlayerFPHUDEnabled(!GameManager.Instance.IsGamePaused);
+    }
+
+    public void SetPlayerFPHUDEnabled(bool enabled)
+    {
+        playerHudUI.SetPlayerFPHUDEnabled(enabled && canShowFPHUD);
     }
 
     public void SetCrosshairEnabled(bool enabled) => playerHudUI.SetCrosshairEnabled(enabled);

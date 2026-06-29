@@ -16,6 +16,7 @@ public class GameInput : MonoBehaviour
     // public static Vector2 MouseDelta => PlayerInputActions.Computer.MouseDelta.ReadValue<Vector2>();
 
     public float MouseScroll => CurrentInputActions.CommandPrompt.MouseScroll.ReadValue<Vector2>().y;
+    public Vector2 MouseScreenPos => CurrentInputActions.All.MousePos.ReadValue<Vector2>();
     
     public event Action EscapeAction;
     public event Action OnPauseAction;

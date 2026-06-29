@@ -2,13 +2,17 @@ using UnityEngine;
 
 public class PlayerHudUI : MonoBehaviour
 {
-    public bool CanShowPlayerHUD { get; set; }
-
     [SerializeField]
     private GameObject crosshair;
 
     [SerializeField]
     private GameObject flashlightInfo;
+
+    [SerializeField]
+    private GameObject FPHUD;
+
+    [SerializeField]
+    private GameObject objectivesHUD;
 
     private void Start()
     {
@@ -20,7 +24,15 @@ public class PlayerHudUI : MonoBehaviour
     public void SetPlayerHUDEnabled(bool enabled)
     {
         // Enable/disable player HUD only if it is permitted
-        gameObject.SetActive(enabled && CanShowPlayerHUD);
+        gameObject.SetActive(enabled);
+    }
+
+    public void SetPlayerFPHUDEnabled(bool enabled){
+        FPHUD.SetActive(enabled);
+    }
+
+    public void SetPlayerObjectivesHUDEnabled(bool enabled){
+        objectivesHUD.SetActive(enabled);
     }
 
     public void SetCrosshairEnabled(bool enabled)

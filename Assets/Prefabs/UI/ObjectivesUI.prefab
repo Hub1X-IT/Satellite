@@ -147,6 +147,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1383219822268406804}
   - component: {fileID: 1073227884434988056}
+  - component: {fileID: 5606163300840144621}
   m_Layer: 5
   m_Name: ObjectivesUI
   m_TagString: Untagged
@@ -190,6 +191,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chapterTextField: {fileID: 4783554578796468073}
   objectiveTextField: {fileID: 8679154629264492829}
+  canvasGroup: {fileID: 5606163300840144621}
+  hitRect: {fileID: 1383219822268406804}
+  hitBorderWidth: 2000
+--- !u!225 &5606163300840144621
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563033513904359510}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &4226964029937273622
 GameObject:
   m_ObjectHideFlags: 0

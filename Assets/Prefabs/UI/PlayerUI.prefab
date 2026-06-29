@@ -33,8 +33,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3369369424102770370}
-  - {fileID: 1504972577145562006}
-  - {fileID: 8697850368363140985}
+  - {fileID: 6914689518437057835}
   m_Father: {fileID: 3691313598351533487}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -56,14 +55,14 @@ Canvas:
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
-  m_OverrideSorting: 0
+  m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!114 &4919828173750905007
 MonoBehaviour:
@@ -96,6 +95,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crosshair: {fileID: 551558600329925524}
   flashlightInfo: {fileID: 5834090832614816386}
+  FPHUD: {fileID: 572395122393340627}
+  objectivesHUD: {fileID: 2900681038196888192}
 --- !u!114 &4575451719049611331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,7 +143,7 @@ RectTransform:
   - {fileID: 2232445325971329857}
   - {fileID: 4060572739705113667}
   - {fileID: 1181757895394492627}
-  m_Father: {fileID: 1869861400465302161}
+  m_Father: {fileID: 6914689518437057835}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -163,6 +164,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionTextField: {fileID: 1467499386615958453}
   interactionIcon: {fileID: 442688830899429674}
+--- !u!1 &572395122393340627
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6914689518437057835}
+  m_Layer: 5
+  m_Name: FPHUD
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6914689518437057835
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572395122393340627}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1504972577145562006}
+  - {fileID: 8697850368363140985}
+  m_Father: {fileID: 1869861400465302161}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1557238785131273416
 GameObject:
   m_ObjectHideFlags: 0
@@ -1320,11 +1358,11 @@ RectTransform:
   m_Children:
   - {fileID: 1855125902439519153}
   - {fileID: 7957743165276757155}
-  m_Father: {fileID: 1869861400465302161}
+  m_Father: {fileID: 6914689518437057835}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 960, y: 540}
+  m_AnchoredPosition: {x: 175.16321, y: 50.00006}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5834778961385335336
@@ -2321,11 +2359,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerHUDObjectivesUI
       objectReference: {fileID: 0}
+    - target: {fileID: 1563033513904359510, guid: 9291a41787d04ed499cca9a0b9699565, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9291a41787d04ed499cca9a0b9699565, type: 3}
+--- !u!1 &2900681038196888192 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1563033513904359510, guid: 9291a41787d04ed499cca9a0b9699565, type: 3}
+  m_PrefabInstance: {fileID: 4463147195232885462}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &3369369424102770370 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1383219822268406804, guid: 9291a41787d04ed499cca9a0b9699565, type: 3}

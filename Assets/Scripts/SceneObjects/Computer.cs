@@ -153,7 +153,7 @@ public class Computer : MonoBehaviour
         // Disable or enable player movement.
         PlayerScriptsController.Instance.SetPlayerMovementEnabled(!active);
 
-        PlayerScriptsController.Instance.SetCanShowPlayerHUD(!active);
+        PlayerScriptsController.Instance.SetCanShowPlayerFPHUD(!active);
         PlayerScriptsController.Instance.UpdateFlashlightState();
 
         SetComputerTriggerEnabled(!active);
